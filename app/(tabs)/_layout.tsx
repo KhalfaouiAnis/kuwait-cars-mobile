@@ -1,35 +1,85 @@
+import TabBar from '@/core/components/ui/tabBar';
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import React from 'react';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+export const unstable_settings = {
+    initialRouteName: 'categories',
+};
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+    return (
+        <Tabs
+            screenOptions={{
+                headerShown: false,
+                tabBarShowLabel: false,
+            }}
+            tabBar={(props) => <TabBar {...props} />}
+        >
+            <Tabs.Screen
+                name="categories"
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name='home-outline' size={24} color={color}
+                            style={{
+                                display: "flex", alignItems: 'center', justifyContent: 'center',
+                                backgroundColor: "#FFFFFF", borderRadius: 50, padding: 12
+                            }}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="search"
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="search-outline" size={24} color={color}
+                            style={{
+                                display: "flex", alignItems: 'center', justifyContent: 'center',
+                                backgroundColor: "#FFFFFF", borderRadius: 50, padding: 12
+                            }}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="new-ad"
+                options={{
+                    tabBarIcon: ({ color, focused }) => (
+                        <Ionicons color={focused ? '#000' : color} size={42} name='add-outline'
+                            style={{
+                                display: "flex", alignItems: 'center', justifyContent: 'center', textAlign: 'center',
+                                backgroundColor: "#FAED02", borderRadius: 99, padding: 8
+                            }}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="favorites"
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name='heart-outline' size={24} color={color}
+                            style={{
+                                display: "flex", alignItems: 'center', justifyContent: 'center',
+                                backgroundColor: "#FFFFFF", borderRadius: 50, padding: 12
+                            }}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="chat"
+                options={{
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name='chatbox-ellipses-outline' size={24} color={color}
+                            style={{
+                                display: "flex", alignItems: 'center', justifyContent: 'center',
+                                backgroundColor: "#FFFFFF", borderRadius: 50, padding: 12
+                            }}
+                        />
+                    ),
+                }}
+            />
+        </Tabs>
+    );
 }

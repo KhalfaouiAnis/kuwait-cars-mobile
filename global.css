@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.auth-input {
+  @apply border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-4 rounded-lg mb-4 text-base;
+}
+
+.text-primary {
+    @apply text-center text-primary-500 dark:text-primary-50;
+}
