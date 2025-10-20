@@ -1,31 +1,52 @@
+import AppleIcon from "@/assets/svg/apple";
+import { AuthLink } from "@/core/components/ui/_links/auth-link";
+import FacebookButton from "@/core/components/ui/button/FacebookButton";
+import GoogleButton from "@/core/components/ui/button/GoogleButton";
 import Container from "@/core/components/ui/container";
-import { icons } from "@/core/constants/icons";
 import { images } from "@/core/constants/images";
+import { getAnonymousAccessToken } from "@/core/lib/api/authentication/login";
+import { getAuthState } from "@/core/lib/stores/auth.store";
 import { Image } from "expo-image";
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import { Link, useRouter } from "expo-router";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
+  const router = useRouter();
+
+  const handleAnonymousSession = async () => {
+    const token = await getAnonymousAccessToken();
+    if (!token) {
+      return
+    }
+    getAuthState().createAnonymousSesssion(token)
+    router.push("/categories")
+  }
+
   return (
     <Container>
       <View className="flex-1 items-center mt-12">
         <View className="flex items-center">
           <Image source={images.Logo} style={{ width: 175, height: 175, objectFit: 'contain' }} />
-          <Text className="font-extrabold text-2xl mt-12">Welcome to Kiwait Car</Text>
-          <Text className="font-semibold text-lg">Welcome to Kiwait Car</Text>
+          <Text className="font-bold text-3xl mt-12">Welcome to Kuwait Car</Text>
+          <Text className="font-semibold text-lg">Your Trusted Vehicle Sale</Text>
         </View>
         <View className="flex items-center mt-8 gap-y-4">
-          <Link className="border border-[#FAED02] font-bold text-center py-4 w-[300px] rounded-md" href="/(auth)/signin">Sign In</Link>
-          <Link className="border border-[#FAED02] font-bold text-center py-4 w-[300px] rounded-md" href="/(auth)/signup">Sign Up</Link>
-          <Link className="border border-[#FAED02] font-bold text-center py-4 w-[300px] rounded-md" href="/(auth)/signin">As a Guest</Link>
-          <Link className="font-normal text-sm self-end mr-4" href="/(auth)/signin">Skip →</Link>
+          <AuthLink href="/(auth)/signin" label="Sign In" />
+          <AuthLink href="/(auth)/signup" label="Sign Up" />
+          <TouchableOpacity className="border border-[#FAED02] py-4 w-[300px] rounded-md"
+            onPress={handleAnonymousSession}>
+            <Text className="font-bold text-center text-[16px]">
+              As a Guest
+            </Text>
+          </TouchableOpacity>
+          <Link className="font-normal text-sm self-end mr-3" href="/(auth)/signin">Skip →</Link>
         </View>
         <View className="flex items-center py-4">
           <Text className="text-[#B5B5B5] text-sm">or continue with</Text>
-          <View className="flex-row mt-2 gap-x-10">
-            <Image source={icons.Google} style={{ width: 60, height: 60, objectFit: 'contain' }} />
-            <Image source={icons.Apple} style={{ width: 60, height: 60, objectFit: 'contain' }} />
-            <Image source={icons.Facebook} style={{ width: 60, height: 60, objectFit: 'contain' }} />
+          <View className="flex-row mt-4 gap-x-10">
+            <GoogleButton />
+            <AppleIcon />
+            <FacebookButton />
           </View>
         </View>
       </View>

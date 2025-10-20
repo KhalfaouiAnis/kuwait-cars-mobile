@@ -5,7 +5,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export const Providers = ({ children }: PropsWithChildren) => (
-    <GestureHandlerRootView className="flex-1">
+    <GestureHandlerRootView style={{flex: 1}}>
         <SafeAreaProvider>
             <ThemeProvider value={theme}>
                 {children}

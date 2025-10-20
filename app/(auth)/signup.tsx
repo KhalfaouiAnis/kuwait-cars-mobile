@@ -1,12 +1,10 @@
-import Container from "@/core/components/ui/container";
-import { Text, View } from "react-native";
+import FormWrapper from "@/core/components/forms/auth/form-wrapper";
+import SignUpForm from "@/core/components/forms/auth/sign-up-form";
 
-export default function SignUpScreen(){
+export default function SignUpScreen() {
     return (
-        <Container>
-            <View>
-                <Text>SignUp screen</Text>
-            </View>
-        </Container>
+        <FormWrapper title="Sign Up">
+            <SignUpForm />
+        </FormWrapper>
     )
 }

@@ -1,0 +1,45 @@
+import { z } from "zod";
+import { UserRole } from "..";
+
+export const EmailSchema = z.object({
+  email: z.string().email("Please enter a valid email"),
+});
+
+export const PasswordSchema = z.object({
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+export const LoginSchema = z.object({
+  email: EmailSchema.shape.email,
+  password: z.string().min(6, "Password is required"),
+});
+
+export const SignupSchema = z.object({
+  fullname: z.string().min(3, "Name must be at least 3 characters"),
+  city: z.optional(z.string().min(3, "City must be at least 3 characters")),
+  email: z.string().email("Please enter a valid email"),
+  phone: z
+    .string()
+    .min(6, "Please enter a valid phone number")
+    .max(15, "Please enter a valid phone number"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  // .regex(/[A-Z]/, 'Password must contain an uppercase letter')
+  // .regex(/[!@#$%^&*]/, 'Password must contain a special character'),
+  role: z.optional(z.nativeEnum(UserRole)),
+});
+
+export const ResetPasswordSchema = z
+  .object({
+    email: EmailSchema.shape.email,
+    password: PasswordSchema.shape.password,
+    confirmPassword: PasswordSchema.shape.password,
+  })
+  .refine((formData) => formData.confirmPassword !== formData.password, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+export type SignupInterface = z.infer<typeof SignupSchema>;
+export type LoginInterface = z.infer<typeof LoginSchema>;
+export type ResetPasswordInterface = z.infer<typeof ResetPasswordSchema>;
+export type EmailType = z.infer<typeof EmailSchema>;

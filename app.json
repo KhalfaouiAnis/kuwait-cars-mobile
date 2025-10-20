@@ -9,9 +9,21 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "FacebookAppID": "your-facebook-app-id",
+        "FacebookClientToken": "your-client-token",
+        "FacebookDisplayName": "Your App Name",
+        "LSApplicationQueriesSchemes": ["fbapi", "fb-messenger-api"],
+        "NSFaceIDUsageDescription": "Your app uses Apple Sign-In for secure login."
+      },
+      "entitlements": {
+        "com.apple.developer.applesignin": ["Default"]
+      }
     },
     "android": {
+      "windowSoftInputMode": "adjustResize",
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -29,6 +41,26 @@
     "plugins": [
       "expo-router",
       [
+        "react-native-fbsdk-next",
+        {
+          "appId": "your-facebook-app-id",
+          "clientToken": "your-client-token",
+          "displayName": "Your App Name",
+          "scheme": "fb{your-app-id}",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "installAutoInitEnabled": true
+        }
+      ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "androidClientId": "your-android-client-id.googleusercontent.com",
+          "iosClientId": "your-ios-client-id.googleusercontent.com",
+          "iosUrlScheme": "com.googleusercontent.apps.ios-url-schema"
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
@@ -40,7 +72,8 @@
           }
         }
       ],
-      "expo-video"
+      "expo-video",
+      "react-native-fbsdk-next"
     ],
     "experiments": {
       "typedRoutes": true,
