@@ -1,24 +1,42 @@
+import { Inter_Bold, Inter_Medium, Inter_Regular, Inter_SemiBold } from "@/assets/fonts";
+import LanguageLoadingPortal from "@/core/components/ui/portal/language-loading";
 import useAuthStore from "@/core/lib/stores/auth.store";
 import { Providers } from "@/core/providers";
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "../global.css";
 
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 
-  const { _hasHydrated, } = useAuthStore();
+  const [fontsLoaded] = useFonts({
+    InterRegular: Inter_Regular,
+    InterMedium: Inter_Medium,
+    InterSemiBold: Inter_SemiBold,
+    InterBold: Inter_Bold,
+  });
+
+  const { _hasHydrated, bootstrapAsync } = useAuthStore();
 
   useEffect(() => {
-    if (_hasHydrated) {
-      SplashScreen.hideAsync();
-    }
-  }, [_hasHydrated]);
+    bootstrapAsync()
+      .catch(console.error)
+  }, [bootstrapAsync]);
 
-  if (!_hasHydrated) {
+  useEffect(() => {
+    if (fontsLoaded && _hasHydrated) {
+      SplashScreen.hideAsync().then(() => {
+        console.log("Splash hidden now");
+      });
+    }
+  }, [fontsLoaded, _hasHydrated]);
+
+  if (!_hasHydrated || !fontsLoaded) {
     return null;
   }
 
@@ -26,6 +44,7 @@ export default function RootLayout() {
     <Providers>
       <Stack screenOptions={{ headerShown: false }} />
       <StatusBar style="auto" />
+      <LanguageLoadingPortal />
     </Providers>
   )
 }

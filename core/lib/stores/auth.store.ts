@@ -1,25 +1,21 @@
 import { AUTH_STORAGE_KEY } from "@/core/constants";
 import { User } from "@/core/types";
-import { handleTokenValidation } from "@/core/utils/authUtils";
 import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { httpClient } from "../api/httpClient";
 import { zustandStorage } from "./storage";
 
 interface AuthState {
   user: User | null;
   accessToken: string | null;
   refreshToken: string | null;
-  status: "idle" | "signOut" | "signIn";
   _hasHydrated: boolean;
   isAuthenticated: boolean;
-  setHasHydrated: (value: boolean) => void;
-  hydrate: () => void;
   bootstrapAsync: () => Promise<void>;
   createAnonymousSesssion: (token: string) => void;
   setUser: (user: User | null) => void;
   signOut: () => void;
-  signIn: (accessToken: string, refreshToken: string, user: User) => void;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -30,26 +26,27 @@ const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       accessToken: null,
       refreshToken: null,
-      status: "idle",
       bootstrapAsync: async () => {
         try {
-          const { accessToken } = get();
-          if (!accessToken) {
+          const { accessToken, refreshToken } = get();
+          if (!accessToken || !refreshToken) {
             set({ isAuthenticated: false });
             return;
           }
-
-          // Decode to check expiry (local, fast)
           const decoded = jwtDecode<{ exp: number }>(accessToken);
           if (decoded.exp * 1000 < Date.now()) {
-            // Try refresh (from your utils)
-            const refreshed = await handleTokenValidation(); // Your function
-            set({ isAuthenticated: refreshed });
-          } else {
-            set({ isAuthenticated: true });
+            const refreshed = await validateAndRefreshToken(get, set);
+            if (!refreshed) {
+              get().signOut();
+              return;
+            } else {
+              set({ isAuthenticated: true });
+            }
           }
         } catch {
-          set({ isAuthenticated: false });
+          get().signOut();
+        } finally {
+          set({ _hasHydrated: true });
         }
       },
       setUser: (user) => {
@@ -58,42 +55,23 @@ const useAuthStore = create<AuthState>()(
       signOut: () => {
         set({
           user: null,
+          isAuthenticated: false,
           accessToken: null,
           refreshToken: null,
-          status: "signOut",
         });
-      },
-      hydrate: () => {
-        const { accessToken, refreshToken } = get();
-        if (accessToken && refreshToken) {
-          set({ status: "signIn" });
-        } else {
-          set({ accessToken: null, status: "signOut", user: null });
-        }
-      },
-      signIn: (accessToken, refreshToken, user) => {
-        set({ accessToken, refreshToken, user: user });
       },
       createAnonymousSesssion: (token: string) => {
         set({ accessToken: token, refreshToken: "" });
-      },
-      setHasHydrated: (value: boolean) => {
-        set((state) => {
-          return {
-            ...state,
-            _hasHydrated: value,
-          };
-        });
       },
     }),
     {
       name: AUTH_STORAGE_KEY,
       storage: createJSONStorage(() => zustandStorage),
-      onRehydrateStorage: () => {
-        return (state) => {
-          state?.setHasHydrated(true);
-        };
-      },
+      partialize: (state) => ({
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        user: state.user,
+      }),
     }
   )
 );
@@ -104,7 +82,26 @@ export const getAccessToken = () => useAuthStore.getState().accessToken;
 export const getRefreshToken = () => useAuthStore.getState().refreshToken;
 export const getUserId = () => useAuthStore.getState().user?.id;
 export const signOut = () => useAuthStore.getState().signOut();
-// export const hydrateAuth = () => useAuthStore.getState().hydrate();
 export const setAuthState = (newState: Partial<AuthState>) =>
   useAuthStore.setState((prevState) => ({ ...prevState, ...newState }));
 export const getAuthState = () => useAuthStore.getState();
+
+const validateAndRefreshToken = async (
+  get: () => AuthState,
+  set: any
+): Promise<boolean> => {
+  const { refreshToken } = get();
+  if (!refreshToken) return false;
+
+  try {
+    const { data } = await httpClient.post("/auth/refresh-token", {
+      refreshToken,
+    });
+
+    const { accessToken: newToken } = data;
+    set({ accessToken: newToken });
+    return true;
+  } catch {
+    return false;
+  }
+};

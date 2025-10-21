@@ -14,11 +14,16 @@
         "FacebookAppID": "your-facebook-app-id",
         "FacebookClientToken": "your-client-token",
         "FacebookDisplayName": "Your App Name",
-        "LSApplicationQueriesSchemes": ["fbapi", "fb-messenger-api"],
+        "LSApplicationQueriesSchemes": [
+          "fbapi",
+          "fb-messenger-api"
+        ],
         "NSFaceIDUsageDescription": "Your app uses Apple Sign-In for secure login."
       },
       "entitlements": {
-        "com.apple.developer.applesignin": ["Default"]
+        "com.apple.developer.applesignin": [
+          "Default"
+        ]
       }
     },
     "android": {
@@ -43,7 +48,7 @@
       [
         "react-native-fbsdk-next",
         {
-          "appId": "your-facebook-app-id",
+          "appID": "your-facebook-app-id",
           "clientToken": "your-client-token",
           "displayName": "Your App Name",
           "scheme": "fb{your-app-id}",
@@ -73,7 +78,8 @@
         }
       ],
       "expo-video",
-      "react-native-fbsdk-next"
+      "react-native-fbsdk-next",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true,

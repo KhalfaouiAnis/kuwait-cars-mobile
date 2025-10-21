@@ -4,12 +4,14 @@ import { useKeyboardScroll } from "@/core/hooks/use-keyboard-scroll";
 import { Image } from "expo-image";
 import { PropsWithChildren } from "react";
 import { ScrollView, Text, View } from "react-native";
+import AuthHeader from "./auth-header";
 
 export default function FormWrapper({ children, title }: PropsWithChildren<{ title: string }>) {
     const keyboardHeight = useKeyboardScroll()
 
     return (
         <Container>
+            <AuthHeader />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white">
                 <View className="pt-6">
                     <Image source={images.Logo} style={{ width: 160, height: 160, objectFit: "cover" }} />

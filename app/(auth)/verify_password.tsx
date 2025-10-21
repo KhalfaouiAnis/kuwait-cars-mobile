@@ -9,7 +9,7 @@ export default function VerifyPasswordResetCodeScreen() {
                 We sent a reset link to moha...@gmail.com
             </Text>
             <Text className="mt-1 text-base text-center">
-                enter 5 digit code that mentioned in the email
+                enter 6 digit code that mentioned in the email
             </Text>
             <View className="pt-20 px-4">
                 <VerificationCode numberOfElements={6} />

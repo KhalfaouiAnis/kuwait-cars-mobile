@@ -1,4 +1,5 @@
 import AppleIcon from "@/assets/svg/apple";
+import AuthHeader from "@/core/components/forms/auth/auth-header";
 import { AuthLink } from "@/core/components/ui/_links/auth-link";
 import FacebookButton from "@/core/components/ui/button/FacebookButton";
 import GoogleButton from "@/core/components/ui/button/GoogleButton";
@@ -9,6 +10,7 @@ import { getAuthState } from "@/core/lib/stores/auth.store";
 import { Image } from "expo-image";
 import { Link, useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Index() {
   const router = useRouter();
@@ -24,11 +26,12 @@ export default function Index() {
 
   return (
     <Container>
-      <View className="flex-1 items-center mt-12">
+      <AuthHeader />
+      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white">
         <View className="flex items-center">
           <Image source={images.Logo} style={{ width: 175, height: 175, objectFit: 'contain' }} />
-          <Text className="font-bold text-3xl mt-12">Welcome to Kuwait Car</Text>
-          <Text className="font-semibold text-lg">Your Trusted Vehicle Sale</Text>
+          <Text className="font-inter-bold text-3xl mt-12">Welcome to Kuwait Car</Text>
+          <Text className="font-inter-semibold text-lg">Your Trusted Vehicle Sale</Text>
         </View>
         <View className="flex items-center mt-8 gap-y-4">
           <AuthLink href="/(auth)/signin" label="Sign In" />
@@ -49,7 +52,7 @@ export default function Index() {
             <FacebookButton />
           </View>
         </View>
-      </View>
+      </ScrollView>
     </Container>
   );
 }

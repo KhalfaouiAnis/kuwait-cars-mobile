@@ -14,6 +14,13 @@ module.exports = {
         success: "#10b981",
         error: "#ef4444",
       },
+      fontFamily: {
+        inter: ["InterRegular", "sans-serif"],
+        sans: ["InterRegular", "sans-serif"],
+        "inter-medium": ["InterMedium", "sans-serif"],
+        "inter-semibold": ["InterSemiBold", "sans-serif"],
+        "inter-bold": ["InterBold", "sans-serif"],
+      },
     },
   },
   plugins: [],

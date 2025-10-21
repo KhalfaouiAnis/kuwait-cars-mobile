@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import { jwtDecode } from "jwt-decode";
 import { httpClient } from "../lib/api/httpClient";
 import { getAuthState, setAuthState } from "../lib/stores/auth.store";
@@ -9,7 +8,7 @@ export const handleTokenValidation = async (): Promise<boolean> => {
   const { accessToken, refreshToken, signOut } = getAuthState();
 
   if (!accessToken || !refreshToken) {
-    router.replace("/signin");
+    signOut();
     return false;
   }
 
@@ -24,7 +23,6 @@ export const handleTokenValidation = async (): Promise<boolean> => {
 
       if (!data) {
         signOut();
-        // router.replace("/signin");
         return false;
       }
 
@@ -35,10 +33,9 @@ export const handleTokenValidation = async (): Promise<boolean> => {
     // Valid → authenticated
     return true;
   } catch (error) {
-    console.log({ "Auth_Error": error });
+    console.log({ Auth_Error: error });
 
     signOut();
-    // router.replace("/signin");
     return false;
   }
 };

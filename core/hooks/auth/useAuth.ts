@@ -1,10 +1,7 @@
 import {
   attemptLogin,
-  createAccount,
-  requestOTP,
-  verifyOTP,
+  verifyOTP
 } from "@/core/lib/api/authentication/login";
-import useAuthStore from "@/core/lib/stores/auth.store";
 import {
   LoginInterface,
   LoginSchema,
@@ -18,7 +15,7 @@ import { useFormHook } from "../use-form-hook";
 
 export function useSignIn() {
   const router = useRouter();
-  const { signIn } = useAuthStore();
+  // const { signIn } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -29,9 +26,9 @@ export function useSignIn() {
   const onSubmit = async ({ email, password }: LoginInterface) => {
     try {
       const {
-        data: { token, user },
+        data: { accessToken, refreshToken, user },
       } = await attemptLogin(email, password);
-      // signIn(token, user);
+      // signIn(accessToken, refreshToken, user);
       router.replace("/categories");
     } catch (error) {
       console.log({ error });
@@ -60,9 +57,9 @@ export function useSignUp() {
 
   const onSubmit = async (data: SignupInterface) => {
     try {
-      await createAccount(data);
-      await requestOTP(data.email);
-      router.push("/otp_verification");
+      // await createAccount(data);
+      // await requestOTP(data.phone);
+      router.navigate(`/otp_verification?phone=${data.phone}`);
     } catch (error) {
       console.log({ error });
     }
@@ -89,7 +86,7 @@ export function useResetPassword() {
 
 export function useOTP() {
   const router = useRouter();
-  const { signIn } = useAuthStore();
+  // const { signIn } = useAuthStore();
 
   const verifyOtp = async (email: string, code: string) => {
     try {
@@ -97,7 +94,7 @@ export function useOTP() {
         data: { accessToken, refreshToken, user },
       } = await verifyOTP(email, code);
 
-      signIn(accessToken, refreshToken, user);
+      // signIn(accessToken, refreshToken, user);
       router.replace("/categories");
     } catch (error) {
       console.log({ error });

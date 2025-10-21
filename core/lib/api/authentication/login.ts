@@ -2,7 +2,11 @@ import { User, UserRole } from "@/core/types";
 import { httpClient } from "../httpClient";
 
 export const attemptLogin = async (email: string, password: string) => {
-  return httpClient.post<{ token: string; user: User }>("/auth/login", {
+  return httpClient.post<{
+    accessToken: string;
+    refreshToken: string;
+    user: User;
+  }>("/auth/login", {
     email,
     password,
   });
@@ -14,17 +18,17 @@ export const createAccount = async (data: any) => {
   });
 };
 
-export const requestOTP = async (email: string) => {
-  return httpClient.post("/auth/request_otp", { email });
+export const requestOTP = async (phone: string) => {
+  return httpClient.post("/auth/request_otp", { phone });
 };
 
-export const verifyOTP = async (email: string, otp: string) => {
+export const verifyOTP = async (phone: string, otp: string) => {
   return httpClient.post<{
     accessToken: string;
     refreshToken: string;
     user: User;
   }>("/auth/verify_otp", {
-    email,
+    phone,
     otp,
   });
 };

@@ -1,0 +1,37 @@
+import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { Pressable, Text, View } from 'react-native';
+
+type Props = {
+    title: string,
+    headerAction?: {
+        name: keyof typeof Ionicons.glyphMap,
+        onPress: () => void
+    }
+};
+
+const Header = ({ title, headerAction }: Props) => {
+    const onBack = () => {
+        router.canGoBack() && router.back()
+    }
+
+    return (
+        <View className='mb-4 flex flex-row items-center justify-between px-2'>
+            <View className='flex flex-row items-center justify-center'>
+                <Pressable onPress={onBack}>
+                    <Ionicons name='chevron-back' size={24} />
+                </Pressable>
+                <Text className='mx-2 text-center'>{title}</Text>
+            </View>
+            {
+                headerAction && (
+                    <Pressable onPress={headerAction.onPress} >
+                        <Ionicons name={headerAction.name} size={24} />
+                    </Pressable>
+                )
+            }
+        </View>
+    );
+};
+
+export default Header;

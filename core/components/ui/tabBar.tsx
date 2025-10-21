@@ -64,11 +64,11 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        left: 20,
-        right: 20,
+        start: 20,
+        end: 20,
         height: 60,
-        paddingLeft: 4,
-        paddingRight: 4,
+        paddingStart: 4,
+        paddingEnd: 4,
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',

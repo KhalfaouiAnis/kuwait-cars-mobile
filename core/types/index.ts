@@ -12,3 +12,9 @@ export enum UserRole {
   ANONYMOUS = "ANONYMOUS",
   USER = "USER",
 }
+
+export type LanguageCode = "en" | "ar" | "fr" | "es";
+export type Language = { code: LanguageCode; name: string; flag: string };
+
+
+export type TimerMode = 'countdown' | 'elapsed';
