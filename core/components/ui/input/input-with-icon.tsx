@@ -1,11 +1,13 @@
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
+import { ReactNode } from "react";
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
 import { Text, TextInput, TextInputProps, View } from "react-native";
 
 type InputProps<TForm extends FieldValues> = TextInputProps & {
     placeholder: string
-    icon: keyof typeof Ionicons.glyphMap,
+    icon?: keyof typeof Ionicons.glyphMap,
+    customIcon?: ReactNode,
     name: FieldPath<TForm>;
     control: Control<TForm>;
     requiredMark?: boolean;
@@ -15,14 +17,17 @@ type InputProps<TForm extends FieldValues> = TextInputProps & {
     bordered?: boolean
 }
 
-export default function InputWithIcon<TForm extends FieldValues>({ placeholder, icon, label, endIcon, bordered = true, requiredMark, control, name, error, ...props }: InputProps<TForm>) {
+export default function InputWithIcon<TForm extends FieldValues>({ placeholder, icon, label, endIcon, bordered = true, requiredMark, control, name, error, customIcon, ...props }: InputProps<TForm>) {
     return (
         <View>
             {label && <Text className="text-base font-semibold pl-6">{label}</Text>}
             <View className={cn("flex-row items-center", {
                 "border-primary-500 border-[1px] p-2 pl-4 rounded-lg": bordered,
             })}>
-                <Ionicons name={icon} size={20} color={error ? "#D80027" : "#000000"} className={cn("mr-2")} />
+                {
+                    customIcon ? customIcon : <Ionicons name={icon} size={22} color={error ? "#D80027" : "#000000"} className="mr-2" />
+                }
+
                 <Controller
                     name={name}
                     control={control}

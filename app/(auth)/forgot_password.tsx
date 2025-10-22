@@ -1,24 +1,36 @@
+import Whatsapp from "@/assets/svg/whatsapp";
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { useFormHook } from "@/core/hooks/use-form-hook";
-import { EmailSchema, EmailType } from "@/core/types/schema/auth";
+import { RequestResetPasswordInterface, RequestResetPasswordSchema } from "@/core/types/schema/auth";
 import { Link } from "expo-router";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 export default function ForgotPasswordScreen() {
-    const { control, formState: { errors, isSubmitting }, handleSubmit } = useFormHook(EmailSchema, { defaultValues: { email: "" } })
+    const { control, formState: { errors, isSubmitting }, handleSubmit } = useFormHook(RequestResetPasswordSchema,
+        {
+            defaultValues: { email: "", phone: "" }
+        })
 
-    const onSubmit = (data: EmailType) => {
+    const onSubmit = (data: RequestResetPasswordInterface) => {
 
     }
 
     return (
         <FormWrapper title="Forgot Password">
             <Text className="mt-6 text-base text-center">
-                Please enter your email to reset the password
+                Please enter your email or phone number to reset the password
             </Text>
-            <View className="pt-20 px-4">
-                <Text className="text-base font-semibold pl-6 mb-2">Your Email</Text>
+            <View className="pt-6 px-4">
+                <InputWithIcon
+                    control={control}
+                    name="phone"
+                    error={errors.phone?.message}
+                    keyboardType="phone-pad"
+                    customIcon={<Whatsapp classname="mr-1" />}
+                    placeholder="Enter your Whatsapp number"
+                />
+                <Text className="ml-14 my-1 text-gray-400 text-base">Or</Text>
                 <InputWithIcon
                     control={control}
                     name="email"

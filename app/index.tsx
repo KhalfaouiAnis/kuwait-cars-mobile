@@ -1,58 +1,57 @@
-import AppleIcon from "@/assets/svg/apple";
-import AuthHeader from "@/core/components/forms/auth/auth-header";
-import { AuthLink } from "@/core/components/ui/_links/auth-link";
-import FacebookButton from "@/core/components/ui/button/FacebookButton";
-import GoogleButton from "@/core/components/ui/button/GoogleButton";
+import Flag from "@/assets/svg/flag";
 import Container from "@/core/components/ui/container";
+import { SUPPORTED_LANGUAGES } from "@/core/constants";
 import { images } from "@/core/constants/images";
-import { getAnonymousAccessToken } from "@/core/lib/api/authentication/login";
-import { getAuthState } from "@/core/lib/stores/auth.store";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import { Language } from "@/core/types";
+import { cn } from "@/core/utils/cn";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { Link, useRouter } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
+  const { setLang, lang: currentLang } = useUserPreferencesStore();
+  const { t } = useTranslation();
 
-  const handleAnonymousSession = async () => {
-    const token = await getAnonymousAccessToken();
-    if (!token) {
-      return
-    }
-    getAuthState().createAnonymousSesssion(token)
-    router.push("/categories")
+  const handleSelect = async (lang: Language) => {
+    // setLang(lang.code);
+    // i18n.changeLanguage(lang.code);
+    router.push("/profile")
   }
 
+  const renderItem = ({ item }: { item: Language }) => (
+    <TouchableOpacity
+      style={{ boxShadow: "0.3em 0.3em 1em rgba(0, 0, 0, 0.25)", shadowRadius: 8 }}
+      className={cn("flex-row items-center justify-between w-64 px-4 py-2 mt-4 rounded-lg bg-[#FFFFFFB2] ", {
+        "border border-zinc-300": currentLang === item.code
+      })}
+      onPress={() => handleSelect(item)}
+    >
+      <Flag name={item.code} />
+      <Text className="text-base text-gray-900 font-medium">{t(item.name)}</Text>
+      <Ionicons name="chevron-forward" size={20} />
+    </TouchableOpacity>
+  );
+
   return (
-    <Container>
-      <AuthHeader />
-      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white">
-        <View className="flex items-center">
-          <Image source={images.Logo} style={{ width: 175, height: 175, objectFit: 'contain' }} />
-          <Text className="font-inter-bold text-3xl mt-12">Welcome to Kuwait Car</Text>
-          <Text className="font-inter-semibold text-lg">Your Trusted Vehicle Sale</Text>
-        </View>
-        <View className="flex items-center mt-8 gap-y-4">
-          <AuthLink href="/(auth)/signin" label="Sign In" />
-          <AuthLink href="/(auth)/signup" label="Sign Up" />
-          <TouchableOpacity className="border border-[#FAED02] py-4 w-[300px] rounded-md"
-            onPress={handleAnonymousSession}>
-            <Text className="font-bold text-center text-[16px]">
-              As a Guest
-            </Text>
-          </TouchableOpacity>
-          <Link className="font-normal text-sm self-end mr-3" href="/(auth)/signin">Skip →</Link>
-        </View>
-        <View className="flex items-center py-4">
-          <Text className="text-[#B5B5B5] text-sm">or continue with</Text>
-          <View className="flex-row mt-4 gap-x-10">
-            <GoogleButton />
-            <AppleIcon />
-            <FacebookButton />
-          </View>
-        </View>
-      </ScrollView>
+    <Container backgroundColor="#FAED02">
+      <View className="flex-1 items-center mt-6 gap-y-2 w-full">
+        <FlatList
+          data={SUPPORTED_LANGUAGES}
+          keyExtractor={(item) => item.code}
+          renderItem={renderItem}
+          className='flex-1'
+          ListHeaderComponent={
+            <View className="flex items-center mb-6">
+              <Image source={images.Logo}
+                style={{ width: 175, height: 175, objectFit: 'contain', borderRadius: 100, borderWidth: 4 }} />
+            </View>
+          }
+        />
+      </View>
     </Container>
   );
 }

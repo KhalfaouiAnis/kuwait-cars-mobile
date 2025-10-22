@@ -19,7 +19,7 @@ export const createAccount = async (data: any) => {
 };
 
 export const requestOTP = async (phone: string) => {
-  return httpClient.post("/auth/request_otp", { phone });
+  return httpClient.post("/auth/request-otp", { phone });
 };
 
 export const verifyOTP = async (phone: string, otp: string) => {
@@ -27,7 +27,7 @@ export const verifyOTP = async (phone: string, otp: string) => {
     accessToken: string;
     refreshToken: string;
     user: User;
-  }>("/auth/verify_otp", {
+  }>("/auth/verify-otp", {
     phone,
     otp,
   });

@@ -28,6 +28,11 @@ export const SignupSchema = z.object({
   role: z.optional(z.nativeEnum(UserRole)),
 });
 
+export const RequestResetPasswordSchema = z.object({
+    email: z.optional(EmailSchema.shape.email),
+    phone: z.optional(SignupSchema.shape.phone)
+})
+
 export const ResetPasswordSchema = z
   .object({
     email: EmailSchema.shape.email,
@@ -42,4 +47,5 @@ export const ResetPasswordSchema = z
 export type SignupInterface = z.infer<typeof SignupSchema>;
 export type LoginInterface = z.infer<typeof LoginSchema>;
 export type ResetPasswordInterface = z.infer<typeof ResetPasswordSchema>;
+export type RequestResetPasswordInterface = z.infer<typeof RequestResetPasswordSchema>;
 export type EmailType = z.infer<typeof EmailSchema>;

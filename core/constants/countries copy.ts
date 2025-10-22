@@ -105,7 +105,6 @@ export const COUNTRIES = [
   { name: "Iraq", cca2: "IQ", callingCode: ["964"], flag: "🇮🇶" },
   { name: "Ireland", cca2: "IE", callingCode: ["353"], flag: "🇮🇪" },
   { name: "Isle of Man", cca2: "IM", callingCode: ["44"], flag: "🇮🇲" },
-  { name: "Israel", cca2: "IL", callingCode: ["972"], flag: "🇮🇱" },
   { name: "Italy", cca2: "IT", callingCode: ["39"], flag: "🇮🇹" },
   { name: "Jamaica", cca2: "JM", callingCode: ["1876"], flag: "🇯🇲" },
   { name: "Japan", cca2: "JP", callingCode: ["81"], flag: "🇯🇵" },

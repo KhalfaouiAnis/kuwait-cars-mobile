@@ -13,7 +13,7 @@ export enum UserRole {
   USER = "USER",
 }
 
-export type LanguageCode = "en" | "ar" | "fr" | "es";
+export type LanguageCode = "en" | "ar" | "fr" | "es" | "in" | "jo";
 export type Language = { code: LanguageCode; name: string; flag: string };
 
 
