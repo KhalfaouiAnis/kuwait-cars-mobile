@@ -19,8 +19,8 @@ type InputProps<TForm extends FieldValues> = TextInputProps & {
 
 export default function InputWithIcon<TForm extends FieldValues>({ placeholder, icon, label, endIcon, bordered = true, requiredMark, control, name, error, customIcon, ...props }: InputProps<TForm>) {
     return (
-        <View>
-            {label && <Text className="text-base font-semibold pl-6">{label}</Text>}
+        <View className="flex-1">
+            {label && <Text className="text-base font-semibold pl-6 mb-1">{label}</Text>}
             <View className={cn("flex-row items-center", {
                 "border-primary-500 border-[1px] p-2 pl-4 rounded-lg": bordered,
             })}>

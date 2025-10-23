@@ -1,7 +1,8 @@
 import Ad from "@/core/components/layout/ads/Ad";
 import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
-import { Dimensions, FlatList, Text, View } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { Dimensions, FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -9,7 +10,7 @@ const FILTERS = [
     "category", "brand", "Year of manufacture", "price", "hhh", "fgffg"
 ]
 
-export const listings = [
+const listings = [
     {
         id: "listing-1",
         images: [
@@ -19,7 +20,7 @@ export const listings = [
             { image: images.CarToyota },
         ],
         badge: "Super DEAL",
-        name: "Chevrolet",
+        name: "Chevrolet corvette",
         datePosted: "2015",
         price: "$525000",
         description: "Great deal on my car",
@@ -41,7 +42,7 @@ export const listings = [
         name: "Hundai",
         datePosted: "2018",
         price: "$625000",
-        description: "Great deal on my car",
+        description: "Great deal on my hundai car",
         mielage: "km 82.354",
         location: "kuwait",
         distanceFromMyLocation: "1km",
@@ -60,7 +61,7 @@ export const listings = [
         name: "Mercedes",
         datePosted: "2018",
         price: "$1625000",
-        description: "Great deal on my car",
+        description: "Great deal on my Mercedes car",
         mielage: "km 80.054",
         location: "kuwait",
         distanceFromMyLocation: "12km",
@@ -75,20 +76,40 @@ const getItemLayout = (data: any, index: number) => ({
     index,
 });
 
-export default function FavoritesScreen() {
+export default function AdsByCategoryScreen() {
     return (
-        <Container>
-            <View className="w-full px-2 mt-12">
-                <View className="flex-row items-center justify-center mb-6">
-                    <Text className="font-inter-bold text-center text-3xl">My Favorites</Text>
+        <Container header={
+            <View className="flex mb-4 mt-4 pl-2">
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {
+                        FILTERS.map(filter => (
+                            <View key={filter} className="ml-2 border border-gray-400 p-2 rounded-lg flex-row items-center">
+                                <Text className="mr-2">{filter}</Text>
+                                <Ionicons name="chevron-down" size={16} />
+                            </View>
+                        ))
+                    }
+                </ScrollView>
+            </View>
+        }>
+            <View className="w-full pl-4">
+                <View className="flex-row items-center gap-x-2 mb-4">
+                    <TouchableOpacity className="border border-gray-400 p-2 rounded-lg flex-row items-center gap-x-2">
+                        <Ionicons name="grid" size={20} />
+                        <Text>change view</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity className="border border-gray-400 p-2 rounded-lg flex-row items-center gap-x-2">
+                        <Ionicons name="filter" size={20} />
+                        <Text>change view</Text>
+                    </TouchableOpacity>
                 </View>
                 <FlatList
                     data={listings}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2"><Ad adData={item} /></View>}
-                    contentContainerStyle={{ paddingBottom: 100 }}
+                    renderItem={({ item }) => <View className="mb-2 me-1"><Ad adData={item} /></View>}
+                    contentContainerStyle={{ paddingBottom: 160 }}
                     showsVerticalScrollIndicator={false}
-                    // className="bg-transparent pe-1"
+                    className="bg-transparent me-2"
                     getItemLayout={getItemLayout}
                     removeClippedSubviews={false}
                 />

@@ -1,5 +1,6 @@
+import { HIDE_TABBAR_ROUTES } from '@/core/constants';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { NavigationRoute, ParamListBase } from '@react-navigation/native';
+import { NavigationRoute, ParamListBase, useNavigationState } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,6 +9,8 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
     const { bottom } = useSafeAreaInsets();
     const colorScheme = useColorScheme();
     const isDark = colorScheme === 'dark';
+
+    const currentRoute = useNavigationState((state) => state?.routes[state.index]?.name);
 
     const onPress = useCallback((route: NavigationRoute<ParamListBase, string>, isFocused: boolean) => {
         const event = navigation.emit({
@@ -27,6 +30,10 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
             target: key,
         })
     }, [navigation])
+
+    if (HIDE_TABBAR_ROUTES.includes(currentRoute)) {
+        return null;
+    }
 
     return (
         <View

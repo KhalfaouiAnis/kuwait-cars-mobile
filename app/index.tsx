@@ -24,9 +24,9 @@ export default function Index() {
 
   const renderItem = ({ item }: { item: Language }) => (
     <TouchableOpacity
-      style={{ boxShadow: "0.3em 0.3em 1em rgba(0, 0, 0, 0.25)", shadowRadius: 8 }}
-      className={cn("flex-row items-center justify-between w-64 px-4 py-2 mt-4 rounded-lg bg-[#FFFFFFB2] ", {
-        "border border-zinc-300": currentLang === item.code
+      className={cn("flex-row items-center justify-between w-64 px-4 py-2 my-2 rounded-lg bg-[#FFFFFFB2] ", {
+        "border border-zinc-300": currentLang === item.code,
+        "border-b-4 border-r-2 border-gray-200": currentLang !== item.code,
       })}
       onPress={() => handleSelect(item)}
     >
@@ -43,7 +43,9 @@ export default function Index() {
           data={SUPPORTED_LANGUAGES}
           keyExtractor={(item) => item.code}
           renderItem={renderItem}
-          className='flex-1'
+          className='flex-1 w-full'
+          showsVerticalScrollIndicator={false}
+          contentContainerClassName="items-center"
           ListHeaderComponent={
             <View className="flex items-center mb-6">
               <Image source={images.Logo}

@@ -1,7 +1,4 @@
-import {
-  attemptLogin,
-  verifyOTP
-} from "@/core/lib/api/authentication/login";
+import { attemptLogin, verifyOTP } from "@/core/lib/api/authentication/login";
 import {
   LoginInterface,
   LoginSchema,
@@ -75,7 +72,9 @@ export function useResetPassword() {
     control,
     formState: { errors, isSubmitting },
     handleSubmit,
-  } = useFormHook(ResetPasswordSchema, { defaultValues: { email: "" } });
+  } = useFormHook(ResetPasswordSchema, {
+    defaultValues: { email: "", password: "", confirmPassword: "" },
+  });
 
   const onSubmit = (data: ResetPasswordInterface) => {
     router.replace("/authentication_success");

@@ -7,6 +7,21 @@ export interface User {
   role: UserRole;
 }
 
+export interface AdType {
+  id: string
+  images: { image: any }[];
+  badge: string;
+  name: string
+  datePosted: string
+  price: string
+  description: string
+  mielage: string
+  location: string
+  distanceFromMyLocation: string
+  engine: string
+  gearType: string
+}
+
 export enum UserRole {
   ADMIN = "ADMIN",
   ANONYMOUS = "ANONYMOUS",
@@ -16,5 +31,4 @@ export enum UserRole {
 export type LanguageCode = "en" | "ar" | "fr" | "es" | "in" | "jo";
 export type Language = { code: LanguageCode; name: string; flag: string };
 
-
-export type TimerMode = 'countdown' | 'elapsed';
+export type TimerMode = "countdown" | "elapsed";

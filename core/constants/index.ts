@@ -17,3 +17,5 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: "jo", name: "أردو", flag: "JO" },
   { code: "in", name: "भारतीय", flag: "🇮🇳" },
 ];
+
+export const HIDE_TABBAR_ROUTES: string[] = [];

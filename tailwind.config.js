@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
-  content: ["./app/**/*.tsx", "./core/components/**/*.tsx"],
+  content: [
+    "./app/**/*.tsx",
+    "./core/components/**/*.tsx",
+  ],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
@@ -25,3 +29,4 @@ module.exports = {
   },
   plugins: [],
 };
+ 
