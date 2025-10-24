@@ -4,7 +4,7 @@ import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import PhoneInput from "@/core/components/ui/input/phone-input";
 import { images } from "@/core/constants/images";
 import { useProfile } from "@/core/hooks/auth/profile";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
 
@@ -58,7 +58,7 @@ export default function EditProfileScreen() {
                             name="city"
                         />
                         <InputWithIcon
-                            icon="code"
+                            customIcon={<MaterialCommunityIcons name="email-seal-outline" size={24} color="black" />}
                             placeholder="Zip code"
                             label="Zip code"
                             error={errors.city?.message}

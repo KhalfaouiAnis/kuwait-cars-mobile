@@ -30,7 +30,7 @@ export default function ChangePasswordScreen() {
                     </View>
                 </View>
 
-                <View className="flex-1 py-2 mt-2 gap-y-8">
+                <View className="flex-1 py-2 mt-2 gap-y-12">
                     <InputWithIcon
                         control={control} name="password" secureTextEntry label="New password"
                         icon="lock-closed-outline" placeholder="New password" requiredMark endIcon="eye-outline"

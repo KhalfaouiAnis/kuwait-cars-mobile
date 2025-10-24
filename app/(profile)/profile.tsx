@@ -2,17 +2,18 @@ import ProfileHeader from "@/core/components/layout/header/profile-header";
 import { SettingsLink } from "@/core/components/ui/_links/settings-link";
 import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 export default function ProfileScreen() {
     return (
-        <Container 
+        <Container
+            scrollable
             backgroundColor="#FAED02"
             header={<ProfileHeader title="Profile" />}
-            >
+        >
             <View className="flex-1 mt-2 bg-white px-4 py-2">
                 <View className="flex-row justify-between w-full border border-primary-500 rounded-lg px-4 pt-1 pb-3">
                     <View>
@@ -37,17 +38,31 @@ export default function ProfileScreen() {
                     </View>
                 </View>
 
-                <View className="flex-1 py-2 px-4 mt-4 border border-primary-500 rounded-lg gap-y-6">
-                    <SettingsLink href={"/change-password"} icon="key-outline" label="Change password" />
-                    <SettingsLink href={"/my-ads"} icon="file-tray-stacked-outline" label="My ads" />
-                    <SettingsLink href={"/"} icon="card-outline" label="My payments" />
-                    <SettingsLink href={"/recently-viewed"} icon="eye-outline" label="Recently viewed" />
-                    <SettingsLink href={"/general-condition"} icon="warning-outline" label="General condition" />
-
-                    <SettingsLink href={"/change-language"} icon="language-outline" label="Language" />
-                    <SettingsLink href={"/"} icon="notifications" label="Notification" />
-                    <SettingsLink href={"/"} icon="phone-portrait-outline" label="Contact customer service" />
-                    <SettingsLink href={"/"} icon="log-out-outline" label="Logout" />
+                <View className="flex-1 py-2 px-4 mt-4 border bg-white border-primary-500 rounded-lg gap-y-6">
+                    <SettingsLink
+                        href={"/change-password"}
+                        icon={<Feather name="key" size={24} color="black" />}
+                        label="Change password" />
+                    <SettingsLink href={"/my-ads"}
+                        icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color="black" />}
+                        label="My ads" />
+                    <SettingsLink href={"/(profile)/(audio)/index"}
+                        icon={<Ionicons name="card" size={24} color="black" />}
+                        label="My payments" />
+                    <SettingsLink href={"/recently-viewed"}
+                        icon={<Ionicons name="eye-outline" size={24} color="black" />}
+                        label="Recently viewed" />
+                    <SettingsLink href={"/general-condition"}
+                        icon={<AntDesign name="exclamation-circle" size={24} color="black" />}
+                        label="General condition" />
+                    <SettingsLink href={"/change-language"} icon={<Ionicons name="language-outline" size={24} color="black" />} label="Language" />
+                    <SettingsLink href={"/"}
+                        icon={<MaterialIcons name="notifications-active" size={24} color="black" />}
+                        label="Notification" />
+                    <SettingsLink href={"/"}
+                        icon={<Ionicons name="call-outline" size={24} color="black" />}
+                        label="Contact customer service" />
+                    <SettingsLink href={"/"} icon={<Ionicons name="log-out-outline" size={24} color="black" />} label="Logout" />
                 </View>
             </View>
         </Container>

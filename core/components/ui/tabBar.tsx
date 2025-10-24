@@ -45,6 +45,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                 },
             ]}
             pointerEvents="box-none"
+            className='opacity-90'
         >
             {state.routes.map((route, index: number) => {
                 const { options } = descriptors[route.key];

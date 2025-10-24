@@ -12,8 +12,8 @@ const ProfileHeader = ({ title }: { title: string }) => {
             <Pressable onPress={onBack}>
                 <Ionicons name='chevron-back' size={22} />
             </Pressable>
-            <View className='w-full flex-row items-center justify-center'>
-                <Text className='font-inter-bold text-xl'>{title}</Text>
+            <View className='w-full flex-row items-center'>
+                <Text className='font-inter-bold text-xl text-center'>{title}</Text>
             </View>
         </View>
     );
