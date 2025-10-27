@@ -76,9 +76,12 @@ const getItemLayout = (data: any, index: number) => ({
     index,
 });
 
-export default function AdsByCategoryScreen() {
+export default function ModelDetailsScreen() {
+
+    console.log("hellooooooo");
+    
     return (
-        <Container header={
+        <Container  header={
             <View className="flex mb-4 mt-4 pl-2">
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {

@@ -5,7 +5,8 @@ export default function ProfileLayout() {
         <Stack
             screenOptions={{
                 headerShown: false,
-                contentStyle: { backgroundColor: 'transparent' }
+                contentStyle: { backgroundColor: 'transparent' },
+                animation: "slide_from_left"
             }}
         />
     )

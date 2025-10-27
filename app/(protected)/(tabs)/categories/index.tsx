@@ -2,22 +2,25 @@ import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
 import { Image } from "expo-image";
+import { Link } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function CategoriesScreen() {
     return (
         <Container
-            header={<MainHeader />}
+            header={<MainHeader drawer back={false} />}
             scrollable
         >
             <View className="mt-4 flex-row items-center gap-2 mx-2 flex-wrap">
-                <View className="items-center gap-y-2 w-[108px] p-2 inset-0 border border-primary-500 rounded-xl">
-                    <Image
-                        source={images.BrakesCategory}
-                        style={{ width: 70, height: 70, objectFit: "cover" }}
-                    />
-                    <Text className="font-inter-medium text-center">Brakes</Text>
-                </View>
+                <Link href={"/categories/4f5f4/"}>
+                    <View className="items-center gap-y-2 w-[108px] p-2 inset-0 border border-primary-500 rounded-xl">
+                        <Image
+                            source={images.BrakesCategory}
+                            style={{ width: 70, height: 70, objectFit: "cover" }}
+                        />
+                        <Text className="font-inter-medium text-center">Brakes</Text>
+                    </View>
+                </Link>
                 <View className="items-center gap-y-2 w-[108px] p-2 inset-0 border border-primary-500 rounded-xl">
                     <Image
                         source={images.CarAccessoriesCategory}

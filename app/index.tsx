@@ -19,7 +19,7 @@ export default function Index() {
   const handleSelect = async (lang: Language) => {
     // setLang(lang.code);
     // i18n.changeLanguage(lang.code);
-    router.push("/chat/chat_id")
+    router.push("/categories")
   }
 
   const renderItem = ({ item }: { item: Language }) => (

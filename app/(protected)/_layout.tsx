@@ -8,6 +8,15 @@ export default function ProtectedLayout() {
     // }
 
     return (
-        <Stack screenOptions={{ headerShown: false }} />
+        <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen
+                name="(profile)"
+                options={{
+                    animation: 'slide_from_left',
+                    animationDuration: 200,
+                    gestureEnabled: false,
+                }}
+            />
+        </Stack>
     )
 }

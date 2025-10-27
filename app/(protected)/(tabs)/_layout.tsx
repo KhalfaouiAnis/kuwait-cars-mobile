@@ -1,6 +1,5 @@
 import TabBar from '@/core/components/ui/tabBar';
-import { Ionicons } from '@expo/vector-icons';
-import { DrawerToggleButton } from '@react-navigation/drawer';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 
 export const unstable_settings = {
@@ -13,7 +12,6 @@ export default function TabLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,
-                headerLeft: () => <DrawerToggleButton />
             }}
             tabBar={(props) => <TabBar {...props} />}
         >
@@ -21,7 +19,7 @@ export default function TabLayout() {
                 name="categories"
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Ionicons name='home-outline' size={24} color={color}
+                        <Feather name="home" size={24} color={color}
                             style={{
                                 display: "flex", alignItems: 'center', justifyContent: 'center',
                                 backgroundColor: "#FFFFFF", borderRadius: 50, padding: 12

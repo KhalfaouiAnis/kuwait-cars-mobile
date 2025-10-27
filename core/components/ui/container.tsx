@@ -2,8 +2,8 @@ import { PropsWithChildren, ReactNode } from 'react';
 import { ScrollView } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const Container = ({ children, backgroundColor, header, scrollable, showSrawer }:
-    PropsWithChildren<{ backgroundColor?: string, header?: ReactNode, scrollable?: boolean, showSrawer?: boolean }>
+const Container = ({ children, backgroundColor, header, scrollable }:
+    PropsWithChildren<{ backgroundColor?: string, header?: ReactNode, scrollable?: boolean }>
 ) => {
     const { bottom } = useSafeAreaInsets()
     return <SafeAreaView edges={['top', 'left', 'right']} className='flex-1' style={{ marginBottom: bottom, backgroundColor }}>
