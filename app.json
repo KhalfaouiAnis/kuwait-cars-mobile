@@ -39,12 +39,6 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      [
-        "react-native-gesture-handler",
-        {
-          "enableExperimentalWebGestureImplementation": true
-        }
-      ],
       "expo-router",
       [
         "react-native-fbsdk-next",

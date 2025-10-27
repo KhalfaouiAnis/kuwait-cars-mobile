@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
 
-const ProfileHeader = ({ title }: { title: string }) => {
+const ChatHeader = ({ username, phone }: { username: string, phone: string }) => {
     const onBack = () => {
         router.canGoBack() && router.back()
     }
@@ -13,10 +13,11 @@ const ProfileHeader = ({ title }: { title: string }) => {
                 <Ionicons name='chevron-back' size={22} />
             </Pressable>
             <View className='w-full items-center justify-center'>
-                <Text className='font-inter-bold text-2xl text-center'>{title}</Text>
+                <Text className='font-inter-semibold text-2xl text-center'>{username}</Text>
+                <Text className='font-inter text-lg text-center'>{phone}</Text>
             </View>
         </View>
     );
 };
 
-export default ProfileHeader;
+export default ChatHeader;

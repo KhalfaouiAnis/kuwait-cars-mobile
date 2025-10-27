@@ -18,4 +18,4 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: "in", name: "भारतीय", flag: "🇮🇳" },
 ];
 
-export const HIDE_TABBAR_ROUTES: string[] = [];
+export const HIDE_TABBAR_ROUTES: string[] = ["/chat/chat_id"];

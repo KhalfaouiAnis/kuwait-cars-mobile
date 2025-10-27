@@ -1,14 +1,15 @@
 import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
-import { FlatList, Image, Text, TextInput, View } from "react-native";
+import { FlatList, Image, Pressable, Text, TextInput, View } from "react-native";
 import Reanimated, {
     interpolate,
     SharedValue,
     useAnimatedStyle
 } from 'react-native-reanimated';
 
+import ConfirmDeleteDialog from "@/core/components/ui/dialog/confirm-delete-dialog";
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
 const ReanimatedView = Reanimated.View;
@@ -96,7 +97,7 @@ const listings = [
     },
 ]
 
-const RightAction = ({ progress }: { progress: SharedValue<number> }) => {
+const RightAction = ({ progress, handleDelete }: { progress: SharedValue<number>, handleDelete: () => void }) => {
     const animatedStyle = useAnimatedStyle(() => {
         const threshold = 0.3;
         const opacity = interpolate(progress.value, [threshold, 1], [0, 1])
@@ -111,7 +112,9 @@ const RightAction = ({ progress }: { progress: SharedValue<number> }) => {
                 <AntDesign name="folder-open" size={24} color="#3641B7" />
             </View>
             <View className="bg-[#FFE7E5] px-2 py-4 rounded-xl">
-                <Ionicons name="trash-outline" size={24} color="#F44336" />
+                <Pressable onPress={handleDelete}>
+                    <Ionicons name="trash-outline" size={24} color="#F44336" />
+                </Pressable>
             </View>
         </ReanimatedView>
     );
@@ -119,8 +122,8 @@ const RightAction = ({ progress }: { progress: SharedValue<number> }) => {
 
 
 export default function ChatScreen() {
-    const swipeRefs = useRef(new Map()).current;
     const swipeableRef = useRef<any>(null);
+    const [show, setShow] = useState<boolean>(false)
 
     const renderItem = ({ item }: {
         item: {
@@ -132,16 +135,13 @@ export default function ChatScreen() {
             unreadCount: number;
         }
     }) => {
-        swipeRefs.set(item.id, swipeableRef); // Store ref for closing others
-
-
 
         return (
             <Swipeable
                 ref={swipeableRef}
                 friction={2}
                 rightThreshold={40}
-                renderRightActions={(progress) => <RightAction progress={progress} />}
+                renderRightActions={(progress) => <RightAction progress={progress} handleDelete={() => setShow(true)} />}
             >
                 <View className="flex-row border-b py-4 items-center justify-around border-primary-500">
                     <View className="w-2/12 border border-gray-100 rounded-full items-center justify-center p-1 me-1">
@@ -181,6 +181,7 @@ export default function ChatScreen() {
                     <Text className="text-[#3641B7]">8 Requests</Text>
                 </View>
                 <View className="w-dvw h-[1px] bg-primary-500 px-0 mx-0" />
+
                 <FlatList
                     data={listings}
                     keyExtractor={item => item.id}
@@ -189,6 +190,7 @@ export default function ChatScreen() {
                     renderItem={renderItem}
                 />
             </View>
+            <ConfirmDeleteDialog show={show} setShow={setShow} />
         </Container>
     )
 }

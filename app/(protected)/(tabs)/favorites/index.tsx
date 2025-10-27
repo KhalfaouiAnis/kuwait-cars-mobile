@@ -86,9 +86,8 @@ export default function FavoritesScreen() {
                     data={listings}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => <View className="mb-2"><Ad adData={item} /></View>}
-                    contentContainerStyle={{ paddingBottom: 100 }}
+                    contentContainerStyle={{ paddingBottom: 130 }}
                     showsVerticalScrollIndicator={false}
-                    // className="bg-transparent pe-1"
                     getItemLayout={getItemLayout}
                     removeClippedSubviews={false}
                 />

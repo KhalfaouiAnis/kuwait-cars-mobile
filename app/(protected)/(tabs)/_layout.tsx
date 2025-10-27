@@ -1,5 +1,6 @@
 import TabBar from '@/core/components/ui/tabBar';
 import { Ionicons } from '@expo/vector-icons';
+import { DrawerToggleButton } from '@react-navigation/drawer';
 import { Tabs } from 'expo-router';
 
 export const unstable_settings = {
@@ -12,6 +13,7 @@ export default function TabLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,
+                headerLeft: () => <DrawerToggleButton />
             }}
             tabBar={(props) => <TabBar {...props} />}
         >
