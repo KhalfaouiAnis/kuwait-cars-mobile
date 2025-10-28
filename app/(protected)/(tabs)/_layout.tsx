@@ -58,7 +58,7 @@ export default function TabLayout() {
                 name="favorites"
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Ionicons name='heart-outline' size={24} color={color}
+                        <Ionicons name='star-outline' size={24} color={color}
                             style={{
                                 display: "flex", alignItems: 'center', justifyContent: 'center',
                                 backgroundColor: "#FFFFFF", borderRadius: 50, padding: 12

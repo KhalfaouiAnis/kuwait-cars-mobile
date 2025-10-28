@@ -1,4 +1,4 @@
-import { COUNTRIES } from '@/core/constants/countries';
+import { COUNTRIES } from '@/core/constants/';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
@@ -58,7 +58,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
     return (
         <View className="w-full">
             {label && <Text className="text-base font-semibold pl-6">{label}</Text>}
-            <View className='flex-row items-center border-primary-500 border-[1px] rounded-lg p-2'>
+            <View className='flex-row items-center border-primary-500 border rounded-lg p-2'>
                 <TouchableOpacity
                     className={`flex-row items-center pl-2 py-3 ${error ? 'border-red-500' : ''}`}
                     onPress={() => setShowModal(true)}

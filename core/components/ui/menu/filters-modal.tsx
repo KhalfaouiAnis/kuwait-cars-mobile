@@ -38,11 +38,11 @@ const SortModal: React.FC<SortModalProps> = ({ visible, onClose, onSelect, curre
         <Modal
             visible={visible}
             transparent
-            animationType="slide" // Slides up from bottom
+            animationType="slide"
             onRequestClose={onClose}
         >
-            <View className="flex-1 justify-end bg-black/20"> {/* Semi-transparent backdrop */}
-                <View className="bg-white rounded-t-2xl p-0 max-h-80"> {/* Rounded top, max height to prevent full screen */}
+            <View className="flex-1 justify-end">
+                <View className="bg-white rounded-t-2xl p-0 max-h-80">
                     <View className="w-12 h-1 bg-gray-300 rounded-full self-center mt-4 mb-2" />
 
                     <View className="px-4 pb-2">
@@ -56,7 +56,6 @@ const SortModal: React.FC<SortModalProps> = ({ visible, onClose, onSelect, curre
                         showsVerticalScrollIndicator={false}
                     />
 
-                    {/* Close Button */}
                     <TouchableOpacity
                         className="p-4 border-t border-gray-200"
                         onPress={onClose}

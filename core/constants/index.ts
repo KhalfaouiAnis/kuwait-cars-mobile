@@ -18,4 +18,14 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: "in", name: "भारतीय", flag: "🇮🇳" },
 ];
 
-export const HIDE_TABBAR_ROUTES: string[] = ["/chat/chat_id"];
+export const COUNTRIES = [
+  { name: "Kuwait", cca2: "KW", callingCode: ["965"], flag: "🇰🇼" },
+];
+
+export const HIDE_TABBAR_ROUTES: string[] = ["new-ad"];
+
+export const CATEGORIES = [
+  { id: "Cars 1", label: "Cars 1" },
+  { id: "Cars 2", label: "Cars 2" },
+  { id: "Cars 3", label: "Cars 3" },
+];
