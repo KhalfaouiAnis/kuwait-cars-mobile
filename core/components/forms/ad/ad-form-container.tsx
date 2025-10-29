@@ -6,19 +6,23 @@ import Container from "../../ui/container";
 
 interface FormContainerProps {
     title: string,
+    previous: () => string,
     reset: () => void,
     children: ReactNode
 }
 
-export default function AdFormContainer({ children, reset, title }: FormContainerProps) {
-    const onBack = () => {
-        router.canGoBack() && router.back()
+export default function AdFormContainer({ children, reset, previous, title }: FormContainerProps) {
+    const handlePrevious = () => {
+        const result = previous()
+        if (result === "route") {
+            router.canGoBack() && router.back()
+        }
     }
 
     return (
         <Container>
             <View className='mt-1 flex flex-row items-center justify-between px-4 mb-2 mx-2'>
-                <Pressable onPress={onBack}>
+                <Pressable onPress={handlePrevious}>
                     <Ionicons name='chevron-back' size={22} />
                 </Pressable>
                 <Text className='font-inter-semibold text-2xl text-center'>{title}</Text>

@@ -7,8 +7,8 @@ type LeaveDialogProps = {
     onLeave?: () => void;
 };
 
-export default function LeaveDialog({ isDirty, onLeave }: LeaveDialogProps) {
-    const { showDialog, handleLeave, handleStay } = useLeaveConfirmation({ isDirty, onLeave });
+export default function LeaveDialog({ isDirty }: LeaveDialogProps) {
+    const { showDialog, handleLeave, handleStay } = useLeaveConfirmation({ hasUnsavedChanges: isDirty });
 
     return (
         <Modal
@@ -25,16 +25,16 @@ export default function LeaveDialog({ isDirty, onLeave }: LeaveDialogProps) {
                     <Text className="text-base text-gray-600 text-center mb-6">
                         You have unsaved changes. Do you want to leave?
                     </Text>
-                    <View className="flex-row justify-between">
+                    <View className="flex-row justify-between gap-x-2">
                         <TouchableOpacity
-                            className="flex-1 bg-gray-300 rounded-lg p-3 ml-2"
+                            className="flex-1 bg-gray-300 rounded-3xl p-3 ml-2"
                             onPress={handleStay}
                             activeOpacity={0.7}
                         >
                             <Text className="text-gray-800 text-center font-semibold">Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            className="flex-1 bg-red-500 rounded-lg p-3 mr-2"
+                            className="flex-1 bg-red-500 rounded-3xl p-3 mr-2"
                             onPress={handleLeave}
                             activeOpacity={0.7}
                         >

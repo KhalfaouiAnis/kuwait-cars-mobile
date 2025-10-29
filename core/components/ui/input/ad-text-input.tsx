@@ -11,7 +11,7 @@ type AdTextInputProps<TForm extends FieldValues> = TextInputProps & {
 export default function AdTextInput<TForm extends FieldValues>({ control, name, error, ...props }: AdTextInputProps<TForm>) {
     return (
         <View className="w-full">
-            <View className='flex-row items-center justify-between border-[#FBFBFB] bg-gray-50 border-2 p-3 shadow-md'>
+            <View className='flex-row items-center justify-between border-[#FBFBFB] shadow-bottom-small border-2 p-3'>
                 <View className='me-3 flex-1'>
                     <Controller
                         name={name}

@@ -1,14 +1,10 @@
+import { StepProps } from "@/core/types";
 import { cn } from "@/core/utils/cn";
 import { EvilIcons, Ionicons, Octicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
-
-interface StepProps {
-    control: any,
-    errors: any
-}
 
 export default function AddMedia({ control, errors }: StepProps) {
     const [tab, setTab] = useState(0)
@@ -71,7 +67,7 @@ export default function AddMedia({ control, errors }: StepProps) {
 
     return (
         <View>
-            <View className="flex-row items-center justify-center">
+            <View className="flex-row items-center justify-center mb-6">
                 <TouchableOpacity className={cn("rounded-xl w-1/2 h-2", {
                     "bg-[#EEEEEE]": tab !== 0,
                     "bg-primary-500": tab === 0

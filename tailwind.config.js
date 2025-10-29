@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: [
-    "./app/**/*.tsx",
-    "./core/components/**/*.tsx",
-  ],
+  content: ["./app/**/*.tsx", "./core/components/**/*.tsx"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
@@ -25,8 +22,10 @@ module.exports = {
         "inter-semibold": ["InterSemiBold", "sans-serif"],
         "inter-bold": ["InterBold", "sans-serif"],
       },
+      boxShadow: {
+        "bottom-small": "0 0 2px rgba(0, 0, 0, 0.2)",
+      },
     },
   },
   plugins: [],
 };
- 

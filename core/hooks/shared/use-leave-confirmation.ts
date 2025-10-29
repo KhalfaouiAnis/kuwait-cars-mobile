@@ -1,42 +1,67 @@
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useNavigation, usePathname } from "expo-router";
 import { useCallback, useState } from "react";
-import { BackHandler } from "react-native";
 
 type UseLeaveConfirmationProps = {
-  isDirty: boolean;
-  onLeave?: () => void;
+  hasUnsavedChanges: boolean;
+  onConfirmLeave?: () => void;
+  onCancelLeave?: () => void;
 };
 
 export const useLeaveConfirmation = ({
-  isDirty,
-  onLeave,
+  hasUnsavedChanges,
+  onConfirmLeave,
+  onCancelLeave,
 }: UseLeaveConfirmationProps) => {
-  const [showDialog, setShowDialog] = useState(false);
+  const [showDialog, setShowDialog] = useState(true);
+  const navigation = useNavigation();
+  const pathname = usePathname();
+
+  const handleBack = useCallback(() => {
+    if (!hasUnsavedChanges || pathname !== "/new-ad") {
+      return true;
+    }
+
+    setShowDialog(true);
+
+    return false;
+  }, [hasUnsavedChanges]);
 
   useFocusEffect(
     useCallback(() => {
-      const onBackPress = () => {
-        if (!isDirty) return true;
+      const unsubscribe = navigation.addListener("beforeRemove", (e) => {
+        e.preventDefault();
+        if (handleBack()) {
+          navigation.dispatch(e.data.action);
+        }
+      });
 
-        setShowDialog(true);
-        return false; // Block exit
-      };
-
-      const subscription = BackHandler.addEventListener(
-        "hardwareBackPress",
-        onBackPress
-      );
-
-      return () => subscription.remove();
-    }, [isDirty])
+      return unsubscribe;
+    }, [navigation, handleBack])
   );
+
+  // useEffect(() => {
+  //   const onBackPress = () => {
+  //     if (!isDirty) return true;
+
+  //     setShowDialog(true);
+  //     return false;
+  //   };
+
+  //   const subscription = BackHandler.addEventListener(
+  //     "hardwareBackPress",
+  //     onBackPress
+  //   );
+
+  //   return () => subscription.remove();
+  // }, [isDirty]);
 
   const handleLeave = () => {
     setShowDialog(false);
-    onLeave?.();
+    onConfirmLeave?.();
   };
 
   const handleStay = () => {
+    onCancelLeave?.();
     setShowDialog(false);
   };
 

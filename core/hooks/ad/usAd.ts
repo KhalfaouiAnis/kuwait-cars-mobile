@@ -1,6 +1,4 @@
-import {
-  PostCarAdInterface, PostCarAdSchema
-} from "@/core/types/schema/carAd";
+import { PostCarAdInterface, PostCarAdSchema } from "@/core/types/schema/carAd";
 import { useRouter } from "expo-router";
 import { useFormHook } from "../use-form-hook";
 
@@ -10,21 +8,29 @@ export function useAd() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    trigger
+    formState: { errors, isSubmitting, isDirty },
+    trigger,
+    reset,
   } = useFormHook(PostCarAdSchema, {
-    defaultValues: {
-      
-    },
+    defaultValues: {},
   });
 
   const onSubmit = async (data: PostCarAdInterface) => {
     try {
-      router.navigate(`/profile`);
+      router.navigate(`/my-ads`);
     } catch (error) {
       console.log({ error });
     }
   };
 
-  return { control, handleSubmit, onSubmit, errors, isSubmitting, trigger };
+  return {
+    control,
+    handleSubmit,
+    onSubmit,
+    errors,
+    isSubmitting,
+    isDirty,
+    trigger,
+    reset,
+  };
 }

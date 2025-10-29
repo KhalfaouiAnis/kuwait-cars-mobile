@@ -1,7 +1,11 @@
+import AdDetails from "@/core/components/forms/ad/ad-details";
+import AdDetailsStep2 from "@/core/components/forms/ad/ad-details-step-2";
 import AdFormContainer from "@/core/components/forms/ad/ad-form-container";
 import AddMedia from "@/core/components/forms/ad/add-media";
 import ChooseLocation from "@/core/components/forms/ad/choose-location";
+import ChoosePlan from "@/core/components/forms/ad/choose-plan";
 import PostAd from "@/core/components/forms/ad/post-ad";
+import AdPublishSuccess from "@/core/components/forms/ad/success";
 import { useAd } from "@/core/hooks/ad/usAd";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -15,8 +19,9 @@ const getStepTitle = (step: number) => {
         case 3:
             return "Add Media"
         case 4:
-            return "Add Ad Details"
         case 5:
+            return "Add Ad Details"
+        case 6:
             return "Choose Plans"
         default:
             return ""
@@ -24,10 +29,18 @@ const getStepTitle = (step: number) => {
 }
 
 export default function NewAdScreen() {
-    const { control, errors, trigger } = useAd()
+    const { control, errors, trigger, reset } = useAd()
     const [currentStep, setCurrentStep] = useState(1);
     const stepTitle = getStepTitle(currentStep)
-    const totalSteps = 4;
+    const totalSteps = 6;
+
+    const handlePrevious = () => {
+        if (currentStep === 1) {
+            return "route"
+        }
+        setCurrentStep(currentStep - 1)
+        return "steps"
+    }
 
     const handleNext = async () => {
         let isValid = false;
@@ -49,13 +62,26 @@ export default function NewAdScreen() {
                 return <ChooseLocation control={control} errors={errors} />;
             case 3:
                 return <AddMedia control={control} errors={errors} />;
+            case 4:
+                return <AdDetails control={control} errors={errors} />;
+            case 5:
+                return <AdDetailsStep2 control={control} errors={errors} />;
+            case 6:
+                return <ChoosePlan />;
             default:
                 return null;
         }
     };
 
+    const handleReset = () => {
+        reset()
+        setCurrentStep(1)
+    }
+
+    if (currentStep > totalSteps) return <AdPublishSuccess />
+
     return (
-        <AdFormContainer title={stepTitle} reset={() => { setCurrentStep(1) }}>
+        <AdFormContainer title={stepTitle} reset={handleReset} previous={handlePrevious}>
             {renderCurrentStep()}
             <View className="mt-auto mb-4">
                 <TouchableOpacity
