@@ -9,28 +9,33 @@ interface SortModalProps {
 }
 
 const sortOptions = [
-    { id: 'price-asc', label: 'Lowest Price', icon: 'arrow-down' },
-    { id: 'price-desc', label: 'Highest Price', icon: 'arrow-up' },
-    { id: 'date-asc', label: 'Oldest', icon: 'time-outline' },
-    { id: 'date-desc', label: 'Newest', icon: 'time' },
+    { id: 'best-match', label: 'Best match' },
+    { id: 'price-asc', label: 'Lowest price' },
+    { id: 'price-desc', label: 'Highest price' },
+    { id: 'date-desc', label: 'Newest' },
+    { id: 'date-asc', label: 'Oldest' },
 ];
 
 const SortModal: React.FC<SortModalProps> = ({ visible, onClose, onSelect, currentSort }) => {
     const handleSelect = (id: string) => {
         onSelect(id);
-        onClose();
+        // onClose();
     };
 
     const renderItem = ({ item }: { item: typeof sortOptions[0] }) => (
         <TouchableOpacity
-            className={`flex-row items-center p-4 border-b border-gray-200 ${item.id === currentSort ? 'bg-blue-50' : ''}`}
+            className={`flex-row items-center p-4 border-b border-gray-200 ${item.id === currentSort ? 'bg-primary-500' : ''}`}
             onPress={() => handleSelect(item.id)}
         >
-            <Ionicons name={item.icon as any} size={20} color="gray" className="mr-3" />
-            <Text className={`flex-1 text-base ${item.id === currentSort ? 'font-semibold text-blue-600' : 'text-gray-800'}`}>
-                {item.label}
-            </Text>
-            {item.id === currentSort && <Ionicons name="checkmark" size={20} color="blue" />}
+            <View className="flex-row items-center gap-x-4">
+                {item.id === currentSort && (
+                    <Ionicons name="checkmark" size={20} />
+                )}
+                <Text className="text-base font-inter">
+                    {item.label}
+                </Text>
+
+            </View>
         </TouchableOpacity>
     );
 
@@ -42,26 +47,21 @@ const SortModal: React.FC<SortModalProps> = ({ visible, onClose, onSelect, curre
             onRequestClose={onClose}
         >
             <View className="flex-1 justify-end">
-                <View className="bg-white rounded-t-2xl p-0 max-h-80">
-                    <View className="w-12 h-1 bg-gray-300 rounded-full self-center mt-4 mb-2" />
-
-                    <View className="px-4 pb-2">
-                        <Text className="text-lg font-semibold text-gray-800">Sort By</Text>
-                    </View>
+                <View className="bg-white rounded-t-2xl p-0">
+                    <TouchableOpacity
+                        className="self-end p-1 m-4 rounded-full bg-gray-200"
+                        onPress={onClose}
+                    >
+                        <Ionicons name="close" size={22} />
+                    </TouchableOpacity>
 
                     <FlatList
                         data={sortOptions}
                         keyExtractor={(item) => item.id}
                         renderItem={renderItem}
+                        style={{ paddingBottom: 80 }}
                         showsVerticalScrollIndicator={false}
                     />
-
-                    <TouchableOpacity
-                        className="p-4 border-t border-gray-200"
-                        onPress={onClose}
-                    >
-                        <Text className="text-center text-blue-600 font-medium">Cancel</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         </Modal>

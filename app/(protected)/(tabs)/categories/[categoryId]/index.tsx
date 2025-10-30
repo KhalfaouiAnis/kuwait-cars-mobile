@@ -1,17 +1,20 @@
 import Ad from "@/core/components/layout/ads/Ad";
+import renderBrandFilters from "@/core/components/layout/ads/filters/brand/brand-filter";
+import renderPriceFilters from "@/core/components/layout/ads/filters/price-filter";
+import renderYearFilters from "@/core/components/layout/ads/filters/year-filter";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
+import FilterModal from "@/core/components/ui/menu/filter-modal";
 import SortModal from "@/core/components/ui/menu/filters-modal";
 import { images } from "@/core/constants/images";
+import useFiltersStore from "@/core/lib/stores/filters.store";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Dimensions, FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-const { height: screenHeight } = Dimensions.get('window');
+type FilterValues = "brand" | "year" | "price"
 
-const FILTERS = [
-    "category", "brand", "Year of manufacture", "price", "hhh", "fgffg"
-]
+const FILTERS: { label: string, value: FilterValues }[] = [{ label: "Brand", value: "brand" }, { label: "Year of manufacture", value: "year" }, { label: "Price", value: "price" }]
 
 const listings = [
     {
@@ -73,36 +76,44 @@ const listings = [
     },
 ]
 
-const getItemLayout = (data: any, index: number) => ({
-    length: screenHeight * 0.4 + 16, // Item height + margin
-    offset: (screenHeight * 0.4 + 16) * index,
-    index,
-});
-
 export default function ModelsByCategoryScreen() {
-    const [sortBy, setSortBy] = useState('date-desc'); // Initial sort
+    const [activeFilter, setActiveFilter] = useState<'brand' | 'year' | 'price' | null>(null);
+    const { year, brand, price } = useFiltersStore()
     const [modalVisible, setModalVisible] = useState(false);
+    const [sortBy, setSortBy] = useState('date-desc');
+    const [view, setView] = useState<"vertical" | "horizontal">('vertical');
+
+    const openFilterModal = (filterType: typeof activeFilter) => setActiveFilter(filterType);
+    const closeFilterModal = () => setActiveFilter(null);
+
+    const renderMap: Record<string, (selectedValues: (string | number)[], onToggle: (value: string | number) => void) => React.ReactNode> = { brand: renderBrandFilters, year: renderYearFilters, price: renderPriceFilters };
+
+    console.log({ year, brand, price });
+
     return (
         <Container header={
             <View className="flex mb-4 mt-4 pl-2">
-                <MainHeader back={false} />
+                <MainHeader back={true} />
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {
                         FILTERS.map(filter => (
-                            <View key={filter} className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center">
-                                <Text className="mr-2">{filter}</Text>
-                                <Ionicons name="chevron-down" size={16} style={{ fontWeight: "bold" }} />
-                            </View>
+                            <Pressable key={filter.value} onPress={() => openFilterModal(filter.value)}>
+                                <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center">
+                                    <Text className="mr-2">{filter.label}</Text>
+                                    <Ionicons name="chevron-down" size={16} style={{ fontWeight: "bold" }} />
+                                </View>
+                            </Pressable>
                         ))
                     }
                 </ScrollView>
             </View>
         }>
-            <View className="w-full pl-4">
+            <View className="w-full pl-4 relative">
                 <View className="flex-row items-center gap-x-2 mb-4">
-                    <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2">
+                    <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2"
+                        onPress={() => setView(prevState => prevState === "horizontal" ? "vertical" : "horizontal")}
+                    >
                         <Fontisto name="nav-icon-list-a" size={16} color="black" />
-                        {/* <MaterialCommunityIcons name="view-list-outline" size={16} color="black" /> */}
                         <Text>change view</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2"
@@ -112,17 +123,32 @@ export default function ModelsByCategoryScreen() {
                         <Text>sort by</Text>
                     </TouchableOpacity>
                 </View>
+
                 <FlatList
                     data={listings}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2 me-1"><Ad adData={item} /></View>}
-                    contentContainerStyle={{ paddingBottom: 180 }}
+                    renderItem={({ item }) => <View className="mb-2 me-1"><Ad data={item} view={view} /></View>}
+                    contentContainerStyle={{ paddingBottom: 200, position: "relative", zIndex: 2 }}
                     showsVerticalScrollIndicator={false}
                     className="bg-transparent me-2"
-                    getItemLayout={getItemLayout}
+                    // getItemLayout={getItemLayout}
                     removeClippedSubviews={false}
                 />
+                <View className="absolute right-4 bottom-4 z-20">
+                    <Pressable className="p-2 rounded-full bg-primary-500">
+                        <Ionicons name="add" size={32} />
+                    </Pressable>
+                </View>
             </View>
+            {activeFilter && (
+                <FilterModal
+                    visible={!!activeFilter}
+                    onClose={closeFilterModal}
+                    filterType={activeFilter}
+                    title={activeFilter}
+                    renderFilter={renderMap[activeFilter]}
+                />
+            )}
             <SortModal
                 visible={modalVisible}
                 onClose={() => setModalVisible(false)}

@@ -1,6 +1,7 @@
 import { HIDE_TABBAR_ROUTES } from '@/core/constants';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { NavigationRoute, ParamListBase, useNavigationState } from '@react-navigation/native';
+import { NavigationRoute, ParamListBase } from '@react-navigation/native';
+import { usePathname } from 'expo-router';
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,7 +11,9 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
     const colorScheme = useColorScheme();
     const isDark = colorScheme === 'dark';
 
-    const currentRoute = useNavigationState((state) => state?.routes[state.index]?.name);
+    const pathname = usePathname()
+
+    console.log({ pathname });
 
     const onPress = useCallback((route: NavigationRoute<ParamListBase, string>, isFocused: boolean) => {
         const event = navigation.emit({
@@ -31,7 +34,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
         })
     }, [navigation])
 
-    if (HIDE_TABBAR_ROUTES.includes(currentRoute)) {
+    if (HIDE_TABBAR_ROUTES.includes(pathname) || pathname.startsWith("/categories/")) {
         return null;
     }
 

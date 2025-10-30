@@ -25,7 +25,7 @@ export default function Index() {
   const renderItem = ({ item }: { item: Language }) => (
     <TouchableOpacity
       className={cn("flex-row items-center justify-between w-64 px-4 py-2 my-2 rounded-lg bg-[#FFFFFFB2] ", {
-        "border border-zinc-300": currentLang === item.code,
+        "border border-green-300": currentLang === item.code,
         "border-b-4 border-r-2 border-gray-200": currentLang !== item.code,
       })}
       onPress={() => handleSelect(item)}

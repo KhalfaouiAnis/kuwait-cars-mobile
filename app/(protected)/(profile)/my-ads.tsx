@@ -79,7 +79,7 @@ const renderItem = ({ item }: {
                 </Animated.View>
             )
         }}>
-            <View className="mb-6 rounded-lg p-1 flex-row items-center">
+            <View className="rounded-lg p-1 flex-row items-center mb-4 mx-1 border-gray-100 border">
                 <Image source={item.image} style={{ width: 60, height: 40, objectFit: 'cover' }} />
                 <View className="gap-y-3 flex-1 mx-4">
                     <Text className="font-inter-semibold">{item.name}</Text>
@@ -105,10 +105,10 @@ const renderItem = ({ item }: {
                     </View>
                 </View>
                 <View className="flex flex-col h-24 justify-between">
-                    <View className="flex-row gap-x-1 mt-4">
+                    <View className="flex-row gap-x-1 mt-2">
                         <Text className="font-semibold">{item.price}</Text>
                     </View>
-                    <TouchableOpacity className="bg-error py-1 px-3 rounded-lg">
+                    <TouchableOpacity className="bg-error py-1 px-3 mb-1 rounded-lg">
                         <Text className="text-white text-sm">
                             Edit Ad
                         </Text>
@@ -122,13 +122,14 @@ const renderItem = ({ item }: {
 export default function MyAdsScreen() {
     return (
         <Container header={<ProfileHeader title="My Ads" />}>
-            <View className="flex-1 px-2">
+            <View className="flex-1 mx-2">
                 <View className="flex-1 border-2 border-gray-100 rounded-lg">
                     <FlatList
                         data={listings}
                         keyExtractor={item => item.id}
                         renderItem={renderItem}
                         contentContainerStyle={{ paddingBottom: 100 }}
+                        className="my-4"
                         showsVerticalScrollIndicator={false}
                         removeClippedSubviews={false}
                     />

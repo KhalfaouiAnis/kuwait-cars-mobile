@@ -4,7 +4,7 @@ import { Pressable, TextInput, View } from 'react-native';
 
 const MainHeader = ({ drawer = false, back = true }: { drawer?: boolean, back?: boolean }) => {
     const onBack = () => {
-        // router.canGoBack() && router.back()
+        router.canGoBack() && router.back()
     }
 
     const openProfile = () => {

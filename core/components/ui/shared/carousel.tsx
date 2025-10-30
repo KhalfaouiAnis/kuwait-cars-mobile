@@ -35,7 +35,6 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
         <View className={`w-full ${className}`}>
             <ScrollView
                 ref={scrollViewRef}
-                pagingEnabled
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 onScroll={handleScroll}

@@ -9,8 +9,7 @@ import { listings } from "../(tabs)/favorites";
 export default function RecentlyViewedAdsScreen() {
     return (
         <Container
-            header={<ProfileHeader title="Recently Viewed" />}
-        >
+            header={<ProfileHeader title="Recently Viewed" />}>
             <View className="w-full px-2 mt-12">
                 <FlatList
                     data={listings}
@@ -29,7 +28,7 @@ export default function RecentlyViewedAdsScreen() {
                                         style={{ width: 140, height: 100, objectFit: "contain", borderRadius: 8 }} />
                                 </LinearGradient>
                             </View>
-                            <View className="flex-1 flex mt-4">
+                            <View className="flex-1 flex mt-4 py-4">
                                 <View className="flex-row items-center justify-between px-1">
                                     <Text className="font-semibold">{item.name}</Text>
                                     <Text>{item.price}</Text>
@@ -39,7 +38,7 @@ export default function RecentlyViewedAdsScreen() {
                                 </View>
                                 <View className="flex-1 flex-row items-center justify-between px-1 mt-4">
                                     <Text className="text-gray-500 text-xs">viewed 12 minutes ago</Text>
-                                    <Ionicons name="heart-outline" size={22} />
+                                    <Ionicons name="star-outline" size={22} />
                                 </View>
                             </View>
                         </View>

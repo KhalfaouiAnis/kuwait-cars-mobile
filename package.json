@@ -16,6 +16,7 @@
     "@expo/vector-icons": "^15.0.2",
     "@hookform/resolvers": "^5.2.2",
     "@invertase/react-native-apple-authentication": "^2.4.1",
+    "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-google-signin/google-signin": "^16.0.0",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/drawer": "^7.7.0",
