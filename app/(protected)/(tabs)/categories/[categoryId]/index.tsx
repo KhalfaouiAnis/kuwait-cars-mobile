@@ -1,19 +1,19 @@
 import Ad from "@/core/components/layout/ads/Ad";
 import renderBrandFilters from "@/core/components/layout/ads/filters/brand/brand-filter";
+import FilteringModal from "@/core/components/layout/ads/filters/filtering-modal";
 import renderPriceFilters from "@/core/components/layout/ads/filters/price-filter";
 import renderYearFilters from "@/core/components/layout/ads/filters/year-filter";
 import renderSortingContent from "@/core/components/layout/ads/sorting/sorting";
+import SortingModal from "@/core/components/layout/ads/sorting/sorting-modal";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
-import FilterModal from "@/core/components/ui/dialog/filter-modal";
 import { images } from "@/core/constants/images";
+import { FilterAdsBy } from "@/core/types";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-type FilterValues = "sorting" | "brand" | "year" | "price"
-
-const FILTERS: { label: string, value: FilterValues }[] = [{ label: "Brand", value: "brand" }, { label: "Year of manufacture", value: "year" }, { label: "Price", value: "price" }]
+const FILTERS: { label: string, value: FilterAdsBy }[] = [{ label: "Brand", value: "brand" }, { label: "Year of manufacture", value: "year" }, { label: "Price", value: "price" }]
 
 const listings = [
     {
@@ -76,14 +76,15 @@ const listings = [
 ]
 
 export default function ModelsByCategoryScreen() {
-    const [activeFilter, setActiveFilter] = useState<FilterValues | null>(null);
+    const [activeFilter, setActiveFilter] = useState<FilterAdsBy | null>(null);
+    const [displaySortingModal, setDisplaySortingModal] = useState(false)
     const [view, setView] = useState<"vertical" | "horizontal">('vertical');
 
     const openFilterModal = (filterType: typeof activeFilter) => setActiveFilter(filterType);
     const closeFilterModal = () => setActiveFilter(null);
 
     const renderMap: Record<string, (selectedValues: (string | number)[], onToggle: (value: string | number) => void) => React.ReactNode> =
-        { brand: renderBrandFilters, year: renderYearFilters, price: renderPriceFilters, sorting: renderSortingContent };
+        { brand: renderBrandFilters, year: renderYearFilters, price: renderPriceFilters };
 
     return (
         <Container header={
@@ -112,7 +113,7 @@ export default function ModelsByCategoryScreen() {
                         <Text>change view</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2"
-                        onPress={() => openFilterModal("sorting")}
+                        onPress={() => setDisplaySortingModal(true)}
                     >
                         <MaterialCommunityIcons name="sort" size={18} color="black" />
                         <Text>sort by</Text>
@@ -135,14 +136,18 @@ export default function ModelsByCategoryScreen() {
                 </View>
             </View>
             {activeFilter && (
-                <FilterModal
+                <FilteringModal
                     visible={!!activeFilter}
                     onClose={closeFilterModal}
                     filterType={activeFilter}
-                    title={activeFilter}
                     renderFilter={renderMap[activeFilter]}
                 />
             )}
+            {displaySortingModal && <SortingModal
+                visible={displaySortingModal}
+                onClose={() => setDisplaySortingModal(false)}
+                renderFilter={renderSortingContent}
+            />}
         </Container>
     )
 }

@@ -10,35 +10,36 @@ interface FiltersState {
   setBrand: (brand: string[]) => void;
   setYear: (year: string[]) => void;
   setPrice: (price: number[]) => void;
+
   setSorting: (sorting: string[]) => void;
 
   toggleFilter: (
     filterType: keyof Omit<
       FiltersState,
-      "setSorting" | "setBrand" | "setYear" | "setPrice"
+      "setBrand" | "setYear" | "setPrice" | "setSorting"
     >,
     value: string | number
   ) => void;
   clearFilter: (
     filterType: keyof Omit<
       FiltersState,
-      "setSorting" | "setBrand" | "setYear" | "setPrice"
+      "setBrand" | "setYear" | "setPrice" | "setSorting"
     >
   ) => void;
   clearAll: () => void;
 }
 
-const useFiltersStore = create<FiltersState>()((set, get) => ({
+const useSortingAndFilteringStore = create<FiltersState>()((set, get) => ({
   brand: [],
   year: [],
-  price: [],
+  price: [0, 0],
 
   sorting: [],
 
   setYear: (year) => set({ year }),
   setPrice: (price) => set({ price }),
   setBrand: (brand) => set({ brand }),
-  
+
   setSorting: (sorting) => set({ sorting }),
 
   toggleFilter: (filterType, value) => {
@@ -56,7 +57,8 @@ const useFiltersStore = create<FiltersState>()((set, get) => ({
       year: [],
       price: [],
       brand: [],
+      sorting: [],
     }),
 }));
 
-export default useFiltersStore;
+export default useSortingAndFilteringStore;

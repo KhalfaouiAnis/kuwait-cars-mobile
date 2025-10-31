@@ -102,3 +102,6 @@ export const YEARS: SelectOption[] = generateYears().map((year) => ({
   label: year,
   value: year,
 }));
+
+export const OVERALL_MIN_PRICE = 0;
+export const OVERALL_MAX_PRICE = 100000;

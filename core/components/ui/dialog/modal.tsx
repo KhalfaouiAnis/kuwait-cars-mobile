@@ -1,30 +1,20 @@
-import useFiltersStore from '@/core/lib/stores/filters.store';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import React, { ReactNode } from 'react';
+import { Modal, TouchableOpacity, View } from 'react-native';
 
-type FilterValues = "sorting" | "brand" | "year" | "price"
-
-interface FilterModalProps {
+interface AppModalProps {
     visible: boolean;
+    renderContent: () => ReactNode,
     onClose: () => void;
-    filterType: FilterValues
-    renderFilter: (selectedValues: (string | number)[], onToggle: (value: string | number) => void) => React.ReactNode;
-    title?: string;
+    header?: ReactNode;
 }
 
-const FilterModal: React.FC<FilterModalProps> = ({
+const AppModal: React.FC<AppModalProps> = ({
     visible,
+    renderContent,
     onClose,
-    filterType,
-    renderFilter,
-    title = 'Filters',
+    header,
 }) => {
-    const { [filterType]: selectedValues, toggleFilter } = useFiltersStore();
-
-    const handleToggle = (value: string | number) => {
-        toggleFilter(filterType, value);
-    };
 
     return (
         <Modal
@@ -37,16 +27,16 @@ const FilterModal: React.FC<FilterModalProps> = ({
                 <TouchableOpacity className="flex-1" onPress={onClose} activeOpacity={1} />
                 <View className="bg-white rounded-t-lg p-4 pb-14 max-h-[90%] flex-1">
                     <View className="flex-row justify-between items-center mb-4">
-                        <Text className="text-xl font-bold capitalize">{title}</Text>
+                        {header}
                         <TouchableOpacity onPress={onClose}>
                             <Ionicons name="close" size={24} color="gray" />
                         </TouchableOpacity>
                     </View>
-                    {renderFilter(selectedValues, handleToggle)}
+                    {renderContent()}
                 </View>
             </View>
         </Modal>
     );
 };
 
-export default FilterModal;
+export default AppModal;

@@ -46,3 +46,5 @@ export interface StepProps {
   control: Control<PostCarAdInterface>;
   errors: FieldErrors<PostCarAdInterface>;
 }
+
+export type FilterAdsBy = "brand" | "year" | "price"

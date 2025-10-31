@@ -1,5 +1,5 @@
 import { YEARS as YearsConstant } from '@/core/constants';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useMemo, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import SearchField from './search-field';
@@ -15,16 +15,12 @@ const YearFilterContent: React.FC<YearFilterContentProps> = ({ selectedYears, on
     const filteredYears = useMemo(() => {
         let years = YearsConstant;
 
-        if (selectedYears.length > 0) {
-            years = YearsConstant.filter(year => selectedYears.includes(year.label));
-        }
-
         if (searchQuery) {
             years = years.filter(year => year.label.toLowerCase().includes(searchQuery.toLowerCase()));
         }
 
         return years;
-    }, [selectedYears, searchQuery]);
+    }, [searchQuery]);
 
     const renderYearOption = ({ item }: { item: typeof YearsConstant[0] }) => {
         const isSelected = selectedYears.includes(item.value);
@@ -36,11 +32,7 @@ const YearFilterContent: React.FC<YearFilterContentProps> = ({ selectedYears, on
                 <View className="flex-1">
                     <Text className="font-medium">{item.label}</Text>
                 </View>
-                <Ionicons
-                    name='checkmark-circle'
-                    size={20}
-                    color='gray'
-                />
+                <MaterialCommunityIcons name={isSelected ? "check-circle-outline" : "checkbox-blank-circle-outline"} size={20} color="gray" />
             </TouchableOpacity>
         );
     };

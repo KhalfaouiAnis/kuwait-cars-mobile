@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
 interface SortingContentProps {
@@ -26,11 +26,7 @@ const SortingContent: React.FC<SortingContentProps> = ({ selectedOptions, onTogg
                 <View className="flex-1">
                     <Text className="font-medium">{item.label}</Text>
                 </View>
-                <Ionicons
-                    name='checkmark-circle'
-                    size={20}
-                    color='gray'
-                />
+                <MaterialCommunityIcons name={isSelected ? "check-circle-outline" : "checkbox-blank-circle-outline"} size={20} color="gray" />
             </TouchableOpacity>
 
         );
@@ -48,6 +44,6 @@ const SortingContent: React.FC<SortingContentProps> = ({ selectedOptions, onTogg
     );
 };
 
-export default function renderSortingContent(selectedOptions: (string | number)[], onToggleOption: (value: string | number) => void) {
+export default function renderSortingContent(selectedOptions: (string)[], onToggleOption: (value: string) => void) {
     return <SortingContent selectedOptions={selectedOptions as string[]} onToggleOption={onToggleOption} />
 }
