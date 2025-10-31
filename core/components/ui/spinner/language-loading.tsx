@@ -1,7 +1,7 @@
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { ActivityIndicator, Text, View } from "react-native";
 
-export default function LanguageLoadingPortal() {
+export default function LanguageLoadingSpinner() {
     const { isI18NLoading } = useUserPreferencesStore()
 
     if (isI18NLoading) return (

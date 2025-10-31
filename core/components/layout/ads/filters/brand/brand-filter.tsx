@@ -17,6 +17,9 @@ const mockCars = [
     { id: '3', label: 'Ford Mustang', value: 'ford-mustang', brand: 'american', icon: 'car-sport' },
     { id: '4', label: 'Tesla Model 3', value: 'tesla-model3', brand: 'american', icon: 'car-sport' },
     { id: '5', label: 'BMW X5', value: 'bmw-x5', brand: 'european', icon: 'car-sport' },
+    { id: '6', label: 'BMW X5', value: 'bmw-x5', brand: 'european', icon: 'car-sport' },
+    { id: '7', label: 'BMW X5', value: 'bmw-x5', brand: 'european', icon: 'car-sport' },
+    { id: '8', label: 'BMW X5', value: 'bmw-x5', brand: 'european', icon: 'car-sport' },
 ];
 
 interface BrandFilterContentProps {

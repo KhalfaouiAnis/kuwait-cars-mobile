@@ -1,5 +1,6 @@
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import { SettingsLink } from "@/core/components/ui/_links/settings-link";
+import Switch from "@/core/components/ui/button/switch";
 import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
 import { AntDesign, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
@@ -56,9 +57,12 @@ export default function ProfileScreen() {
                         icon={<AntDesign name="exclamation-circle" size={24} color="black" />}
                         label="General condition" />
                     <SettingsLink href={"/change-language"} icon={<Ionicons name="language-outline" size={24} color="black" />} label="Language" />
-                    <SettingsLink href={"/"}
-                        icon={<MaterialIcons name="notifications-active" size={24} color="black" />}
-                        label="Notification" />
+                    <View className="w-full  flex-row items-center">
+                        <MaterialIcons name="notifications-active" size={24} color="black" />
+                        <Text className="ms-2 me-auto">Notification</Text>
+                        <Switch value={true} onValueChange={() => { }} />
+                    </View>
+
                     <SettingsLink href={"/"}
                         icon={<Ionicons name="call-outline" size={24} color="black" />}
                         label="Contact customer service" />

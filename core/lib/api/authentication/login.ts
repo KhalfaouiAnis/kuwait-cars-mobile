@@ -1,13 +1,13 @@
 import { User, UserRole } from "@/core/types";
 import { httpClient } from "../httpClient";
 
-export const attemptLogin = async (email: string, password: string) => {
+export const attemptLogin = async (phone: string, password: string) => {
   return httpClient.post<{
     accessToken: string;
     refreshToken: string;
     user: User;
   }>("/auth/login", {
-    email,
+    phone,
     password,
   });
 };

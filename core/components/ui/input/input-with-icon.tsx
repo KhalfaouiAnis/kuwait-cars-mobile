@@ -1,8 +1,8 @@
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
-import { Text, TextInput, TextInputProps, View } from "react-native";
+import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 
 type InputProps<TForm extends FieldValues> = TextInputProps & {
     placeholder: string
@@ -18,6 +18,8 @@ type InputProps<TForm extends FieldValues> = TextInputProps & {
 }
 
 export default function InputWithIcon<TForm extends FieldValues>({ placeholder, icon, label, endIcon, bordered = true, requiredMark, control, name, error, customIcon, ...props }: InputProps<TForm>) {
+    const [showPassword, setShowPassword] = useState(false)
+    
     return (
         <View className="flex-1">
             {label && <Text className="text-base font-semibold pl-6 mb-1">{label}</Text>}
@@ -27,7 +29,6 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
                 {
                     customIcon ? customIcon : <Ionicons name={icon} size={22} color={error ? "#D80027" : "#000000"} className="mr-2" />
                 }
-
                 <Controller
                     name={name}
                     control={control}
@@ -39,13 +40,14 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
                             onChangeText={onChange}
                             value={value as string}
                             {...props}
+                            secureTextEntry={!showPassword}
                         />
                     )}
                 />
                 {endIcon && (
-                    <View>
-                        <Ionicons name={endIcon} size={20} color={error ? "#D80027" : "#677185"} />
-                    </View>
+                    <Pressable onPress={() => setShowPassword(prevState => !prevState)}>
+                        <Ionicons name={showPassword ? "eye-off-outline" : endIcon} size={20} color={error ? "#D80027" : "#677185"} />
+                    </Pressable>
                 )}
                 {requiredMark && (
                     <View>

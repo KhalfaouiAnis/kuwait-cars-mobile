@@ -10,7 +10,10 @@ export const PasswordSchema = z.object({
 });
 
 export const LoginSchema = z.object({
-  email: EmailSchema.shape.email,
+  phone: z
+    .string()
+    .min(6, "Please enter a valid phone number")
+    .max(15, "Please enter a valid phone number"),
   password: z.string().min(6, "Password is required"),
 });
 
@@ -29,9 +32,9 @@ export const SignupSchema = z.object({
 });
 
 export const RequestResetPasswordSchema = z.object({
-    email: z.optional(EmailSchema.shape.email),
-    phone: z.optional(SignupSchema.shape.phone)
-})
+  email: z.optional(EmailSchema.shape.email),
+  phone: z.optional(SignupSchema.shape.phone),
+});
 
 export const ResetPasswordSchema = z
   .object({
@@ -47,5 +50,7 @@ export const ResetPasswordSchema = z
 export type SignupInterface = z.infer<typeof SignupSchema>;
 export type LoginInterface = z.infer<typeof LoginSchema>;
 export type ResetPasswordInterface = z.infer<typeof ResetPasswordSchema>;
-export type RequestResetPasswordInterface = z.infer<typeof RequestResetPasswordSchema>;
+export type RequestResetPasswordInterface = z.infer<
+  typeof RequestResetPasswordSchema
+>;
 export type EmailType = z.infer<typeof EmailSchema>;

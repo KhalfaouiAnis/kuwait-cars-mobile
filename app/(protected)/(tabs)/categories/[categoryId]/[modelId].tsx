@@ -1,121 +1,142 @@
-import Ad from "@/core/components/layout/ads/Ad";
 import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
-import { Ionicons } from "@expo/vector-icons";
-import { Dimensions, FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-
-const { height: screenHeight } = Dimensions.get('window');
-
-const FILTERS = [
-    "category", "brand", "Year of manufacture", "price", "hhh", "fgffg"
-]
-
-const listings = [
-    {
-        id: "listing-1",
-        images: [
-            { image: images.CarChevrolet },
-            { image: images.CarHyunday },
-            { image: images.CarMercedes },
-            { image: images.CarToyota },
-        ],
-        badge: "Super DEAL",
-        name: "Chevrolet corvette",
-        datePosted: "2015",
-        price: "$525000",
-        description: "Great deal on my car",
-        mielage: "km 192.354",
-        location: "kuwait",
-        distanceFromMyLocation: "3km",
-        engine: "Petrol- 10",
-        gearType: "Manual"
-    },
-    {
-        id: "listing-2",
-        images: [
-            { image: images.CarHyunday },
-            { image: images.CarChevrolet },
-            { image: images.CarMercedes },
-            { image: images.CarToyota },
-        ],
-        badge: "Super DEAL 2",
-        name: "Hundai",
-        datePosted: "2018",
-        price: "$625000",
-        description: "Great deal on my hundai car",
-        mielage: "km 82.354",
-        location: "kuwait",
-        distanceFromMyLocation: "1km",
-        engine: "Petrol- 1.2",
-        gearType: "Automatic"
-    },
-    {
-        id: "listing-3",
-        images: [
-            { image: images.CarMercedes },
-            { image: images.CarHyunday },
-            { image: images.CarChevrolet },
-            { image: images.CarToyota },
-        ],
-        badge: "Super DEAL 3",
-        name: "Mercedes",
-        datePosted: "2018",
-        price: "$1625000",
-        description: "Great deal on my Mercedes car",
-        mielage: "km 80.054",
-        location: "kuwait",
-        distanceFromMyLocation: "12km",
-        engine: "Petrol- 1.8",
-        gearType: "Automatic"
-    },
-]
-
-const getItemLayout = (data: any, index: number) => ({
-    length: screenHeight * 0.4 + 16, // Item height + margin
-    offset: (screenHeight * 0.4 + 16) * index,
-    index,
-});
+import { Feather, Ionicons } from "@expo/vector-icons";
+import { Image } from "expo-image";
+import { Pressable, ScrollView, Text, View } from 'react-native';
 
 export default function ModelDetailsScreen() {
-
-    console.log("hellooooooo");
-    
     return (
-        <Container  header={
-            <View className="flex mb-4 mt-4 pl-2">
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {
-                        FILTERS.map(filter => (
-                            <View key={filter} className="ml-2 border border-gray-400 p-2 rounded-lg flex-row items-center">
-                                <Text className="mr-2">{filter}</Text>
-                                <Ionicons name="chevron-down" size={16} />
-                            </View>
-                        ))
-                    }
-                </ScrollView>
+        <Container scrollable header={
+            <View className="flex-row items-center justify-between mb-2 mt-4 px-4">
+                <Pressable><Ionicons name="chevron-back" size={22} /></Pressable>
+                <View className="flex-row items-center gap-x-3">
+                    <Pressable><Ionicons name="flag" size={22} /></Pressable>
+                    <Feather name="share-2" size={22} color="black" />
+                    <Pressable><Ionicons name="star-outline" size={22} /></Pressable>
+                </View>
             </View>
         }>
-            <View className="w-full pl-4">
-                <View className="flex-row items-center gap-x-2 mb-4">
-                    <TouchableOpacity className="border border-gray-400 p-2 rounded-lg flex-row items-center gap-x-2">
-                        <Ionicons name="grid" size={20} />
-                        <Text>change view</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity className="border border-gray-400 p-2 rounded-lg flex-row items-center gap-x-2">
-                        <Ionicons name="filter" size={20} />
-                        <Text>change view</Text>
-                    </TouchableOpacity>
+            <View className="flex-1 p-1">
+                <View className="">
+                    <Image source={images.CarHyunday} style={{ height: 260, objectFit: "cover", borderRadius: 8 }} />
+                    <View className="w-full rounded-lg flex-row gap-x-2 items-center justify-center bg-[#EFE4E4] mt-[2px] py-2">
+                        <View className="p-2 rounded-lg bg-white">
+                            <Image source={images.CarHyunday} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
+                        </View>
+                        <View className="p-2 rounded-lg bg-white">
+                            <Image source={images.CarMercedes} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
+                        </View>
+                        <View className="p-2 rounded-lg bg-white">
+                            <Image source={images.CarChevrolet} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
+                        </View>
+                    </View>
+                    <View className="px-4">
+                        <View className="gap-y-2 py-1">
+                            <Text className="font-inter-semibold">CHEVEROLET CORVETTE</Text>
+                            <View className="flex-row items-center justify-between">
+                                <Text className="font-inter-medium text-lg">Hyunday Tucson</Text>
+                                <Text className="font-inter-semibold text-lg">$52500</Text>
+                            </View>
+                            <View className="flex-row items-center">
+                                <Ionicons name="location-outline" size={22} />
+                                <Text className="font-inter text-base">Kuwait</Text>
+                                <Text className="font-inter text-gray-400 ms-1">1km</Text>
+                            </View>
+                        </View>
+                        <View className="border-y border-gray-200 gap-y-2 py-3">
+                            <View className="flex-row items-center justify-between">
+                                <Text className="font-inter-bold">Specification</Text>
+                                <Text className="font-inter text-xs text-gray-400">07/10/2025</Text>
+                            </View>
+                            <View className="flex-row items-center justify-center gap-x-3">
+                                <View className="border border-primary-500 rounded-md items-center justify-center py-1 px-4 ">
+                                    <Text className="font-inter-semibold">2023</Text>
+                                    <Text>Year</Text>
+                                </View>
+                                <View className="border border-primary-500 rounded-md items-center justify-center py-1 px-4 ">
+                                    <Text className="font-inter-semibold">Km</Text>
+                                    <Text className="text-sm text-gray-400">192.354</Text>
+                                </View>
+                                <View className="border border-primary-500 rounded-md items-center justify-center py-1 px-4 ">
+                                    <Text className="font-inter-semibold">MANUAL</Text>
+                                    <Text>Transmission</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View className="gap-y-1 py-3">
+                            <Text className="font-inter-bold">Description</Text>
+                            <Text numberOfLines={3} className="font-inter font-light text-start">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur tempora corrupti repudiandae,
+                                aut eius recusandae placeat laboriosam omnis officiis vel sed aspernatur voluptatibus vero dolor
+                                aliquid quidem, nobis debitis nihil.
+                            </Text>
+                        </View>
+                        <View>
+                            <View className="flex-row items-center border border-primary-500 rounded-lg p-2 gap-x-2">
+                                <Image source={images.Mohamed} style={{ borderRadius: 50, width: 40, height: 40, objectFit: 'cover' }} />
+                                <View>
+                                    <Text className="font-inter-semibold">Abu Mohamed</Text>
+                                    <Text>Since 2025</Text>
+                                </View>
+                            </View>
+                            <View className="flex-row items-center justify-center gap-x-6 mt-3">
+                                <View className="border border-primary-500 py-1 px-3 rounded-lg items-center min-w-24">
+                                    <Ionicons name="chatbox-ellipses-outline" size={24} color={"#00A6DA"} />
+                                    <Text className="font-inter text-xs">Chat</Text>
+                                </View>
+                                <View className="border border-primary-500 py-1 px-3 rounded-lg items-center min-w-24">
+                                    <Ionicons name="logo-whatsapp" size={24} color="#25D366" />
+                                    <Text className="font-inter text-xs">WhatsApp</Text>
+                                </View>
+                                <View className="border border-primary-500 py-1 px-3 rounded-lg items-center min-w-24">
+                                    <Ionicons name="call-outline" size={24} color={"#25D366"} />
+                                    <Text className="font-inter text-xs">Contact</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View className="gap-y-1 mt-2 mb-4">
+                            <Text className="font-inter-semibold">Similar ads</Text>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent elevation-sm me-4">
+                                    <Image source={images.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
+                                    <View className="gap-y-5">
+                                        <Text className="font-inter-medium max-w-36" numberOfLines={2}>Mercedes Benz C-Class - 2023</Text>
+                                        <View className="flex-row items-center justify-end">
+                                            <Text className="me-10 font-inter-medium">$52500</Text>
+                                            <Pressable>
+                                                <Ionicons name="star-outline" size={20} />
+                                            </Pressable>
+                                        </View>
+                                    </View>
+                                </View>
+                                <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent elevation-sm me-4">
+                                    <Image source={images.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
+                                    <View className="gap-y-5">
+                                        <Text className="font-inter-medium max-w-36" numberOfLines={2}>Chevrolet Corvette - 2023</Text>
+                                        <View className="flex-row items-center justify-end">
+                                            <Text className="me-10 font-inter-medium">$52500</Text>
+                                            <Pressable>
+                                                <Ionicons name="star-outline" size={20} />
+                                            </Pressable>
+                                        </View>
+                                    </View>
+                                </View>
+                                <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent elevation-sm me-4">
+                                    <Image source={images.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
+                                    <View className="gap-y-5">
+                                        <Text className="font-inter-medium max-w-36" numberOfLines={2}>Toyota - 2021</Text>
+                                        <View className="flex-row items-center justify-end">
+                                            <Text className="me-10 font-inter-medium">$52500</Text>
+                                            <Pressable>
+                                                <Ionicons name="star-outline" size={20} />
+                                            </Pressable>
+                                        </View>
+                                    </View>
+                                </View>
+                            </ScrollView>
+                        </View>
+                    </View>
                 </View>
-                <FlatList
-                    data={listings}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2 me-1"><Ad adData={item} /></View>}
-                    contentContainerStyle={{ paddingBottom: 160 }}
-                    showsVerticalScrollIndicator={false}
-                    className="bg-transparent me-2"
-                    getItemLayout={getItemLayout}
-                    removeClippedSubviews={false}
-                />
             </View>
         </Container>
     )

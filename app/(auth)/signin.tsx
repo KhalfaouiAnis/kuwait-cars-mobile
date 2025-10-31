@@ -3,7 +3,7 @@ import SignInForm from "@/core/components/forms/auth/sign-in-form";
 
 export default function SignInScreen() {
     return (
-        <FormWrapper title="Sign Up">
+        <FormWrapper title="Sign In">
             <SignInForm />
         </FormWrapper>
     )

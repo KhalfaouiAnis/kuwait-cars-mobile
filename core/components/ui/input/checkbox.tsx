@@ -1,4 +1,4 @@
-import CheckboxIcon from "@/assets/svg/remember-me";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 
@@ -25,7 +25,7 @@ export default function Checkbox({
     return (
         <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
             <View style={{ width: size, height: size }} className="justify-center items-center">
-                <CheckboxIcon checked={isChecked} color={isChecked ? "green" : "black"} />
+                <MaterialCommunityIcons name={isChecked ? "checkbox-marked-outline" : "checkbox-blank-outline"} size={24} color={isChecked ? "green" : "black"} />
             </View>
         </TouchableOpacity>
     )

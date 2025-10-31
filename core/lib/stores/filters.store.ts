@@ -5,15 +5,25 @@ interface FiltersState {
   year: string[];
   price: number[];
 
+  sorting: string[];
+
   setBrand: (brand: string[]) => void;
   setYear: (year: string[]) => void;
   setPrice: (price: number[]) => void;
+  setSorting: (sorting: string[]) => void;
+
   toggleFilter: (
-    filterType: keyof Omit<FiltersState, "setBrand" | "setYear" | "setPrice">,
+    filterType: keyof Omit<
+      FiltersState,
+      "setSorting" | "setBrand" | "setYear" | "setPrice"
+    >,
     value: string | number
   ) => void;
   clearFilter: (
-    filterType: keyof Omit<FiltersState, "setBrand" | "setYear" | "setPrice">
+    filterType: keyof Omit<
+      FiltersState,
+      "setSorting" | "setBrand" | "setYear" | "setPrice"
+    >
   ) => void;
   clearAll: () => void;
 }
@@ -23,9 +33,13 @@ const useFiltersStore = create<FiltersState>()((set, get) => ({
   year: [],
   price: [],
 
+  sorting: [],
+
   setYear: (year) => set({ year }),
   setPrice: (price) => set({ price }),
   setBrand: (brand) => set({ brand }),
+  
+  setSorting: (sorting) => set({ sorting }),
 
   toggleFilter: (filterType, value) => {
     const current = get()[filterType] as (string | number)[];

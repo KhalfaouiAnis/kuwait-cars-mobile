@@ -16,7 +16,7 @@ export default function SignUpForm() {
                     control={control} name="fullname"
                 />
                 <PhoneInput control={control} name="phone" error={errors.phone?.message} />
-                <InputWithIcon icon="lock-closed-outline" placeholder="PASSWORD" requiredMark endIcon="eye-outline"
+                <InputWithIcon icon="lock-closed-outline" placeholder="YOUR PASSWORD" requiredMark endIcon="eye-outline"
                     error={errors.password?.message}
                     control={control} name="password" secureTextEntry
                 />
@@ -29,7 +29,7 @@ export default function SignUpForm() {
                     control={control} name="city"
                 />
             </View>
-            <View className="flex-row items-center justify-between mt-20">
+            <View className="flex-row items-center justify-between mt-2">
                 <View className="flex-row items-center gap-x-1">
                     <Checkbox
                         initialValue={false}

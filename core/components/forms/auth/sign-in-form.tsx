@@ -9,22 +9,22 @@ export default function SignInForm() {
     return (
         <View className="pt-20 px-4 pb-10">
             <View className="gap-y-3">
-            <InputWithIcon
-                icon="person-outline"
-                placeholder="Login"
-                name="email"
-                error={errors.email?.message}
-                control={control}
-            />
-            <InputWithIcon
-                icon="lock-closed-outline"
-                placeholder="PASSWORD"
-                endIcon="eye-outline"
-                name="password"
-                error={errors.password?.message}
-                secureTextEntry
-                control={control}
-            />
+                <InputWithIcon
+                    icon="call-outline"
+                    placeholder="Phone Number"
+                    name="phone"
+                    error={errors.phone?.message}
+                    control={control}
+                />
+                <InputWithIcon
+                    icon="lock-closed-outline"
+                    placeholder="PASSWORD"
+                    endIcon="eye-outline"
+                    name="password"
+                    error={errors.password?.message}
+                    secureTextEntry
+                    control={control}
+                />
             </View>
             <View className="flex-row items-center justify-between mt-4">
                 <View className="flex-row items-center gap-x-1">

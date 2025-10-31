@@ -53,7 +53,6 @@ const YearFilterContent: React.FC<YearFilterContentProps> = ({ selectedYears, on
                 keyExtractor={(item) => item.id}
                 renderItem={renderYearOption}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: 40 }}
                 ListEmptyComponent={<Text className="text-center text-gray-500 py-4">No year match your filters</Text>}
             />
         </View>

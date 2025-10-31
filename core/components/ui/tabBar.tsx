@@ -13,8 +13,6 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
 
     const pathname = usePathname()
 
-    console.log({ pathname });
-
     const onPress = useCallback((route: NavigationRoute<ParamListBase, string>, isFocused: boolean) => {
         const event = navigation.emit({
             type: 'tabPress',

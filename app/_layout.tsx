@@ -1,5 +1,5 @@
 import { Inter_Bold, Inter_Medium, Inter_Regular, Inter_SemiBold } from "@/assets/fonts";
-import LanguageLoadingPortal from "@/core/components/ui/portal/language-loading";
+import LanguageLoadingSpinner from "@/core/components/ui/spinner/language-loading";
 import useAuthStore from "@/core/lib/stores/auth.store";
 import { Providers } from "@/core/providers";
 import { useFonts } from "expo-font";
@@ -7,13 +7,12 @@ import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import "../global.css";
 
+import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-
   const [fontsLoaded] = useFonts({
     InterRegular: Inter_Regular,
     InterMedium: Inter_Medium,
@@ -44,7 +43,7 @@ export default function RootLayout() {
     <Providers>
       <Stack screenOptions={{ headerShown: false }} />
       <StatusBar style="auto" />
-      <LanguageLoadingPortal />
+      <LanguageLoadingSpinner />
     </Providers>
   )
 }

@@ -18,13 +18,13 @@ export function useSignIn() {
     handleSubmit,
     formState: { errors, isSubmitting },
     control,
-  } = useFormHook(LoginSchema, { defaultValues: { email: "", password: "" } });
+  } = useFormHook(LoginSchema, { defaultValues: { phone: "", password: "" } });
 
-  const onSubmit = async ({ email, password }: LoginInterface) => {
+  const onSubmit = async ({ phone, password }: LoginInterface) => {
     try {
       const {
         data: { accessToken, refreshToken, user },
-      } = await attemptLogin(email, password);
+      } = await attemptLogin(phone, password);
       // signIn(accessToken, refreshToken, user);
       router.replace("/categories");
     } catch (error) {

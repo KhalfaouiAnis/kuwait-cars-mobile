@@ -1,8 +1,8 @@
-import Whatsapp from "@/assets/svg/whatsapp";
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { useFormHook } from "@/core/hooks/use-form-hook";
 import { RequestResetPasswordInterface, RequestResetPasswordSchema } from "@/core/types/schema/auth";
+import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
@@ -27,10 +27,12 @@ export default function ForgotPasswordScreen() {
                     name="phone"
                     error={errors.phone?.message}
                     keyboardType="phone-pad"
-                    customIcon={<Whatsapp classname="mr-1" />}
+                    customIcon={<Ionicons name="logo-whatsapp" size={24} color="#25D366" className="mr-2" />}
+                    icon="logo-whatsapp"
+                    
                     placeholder="Enter your Whatsapp number"
                 />
-                <Text className="ml-14 my-1 text-gray-400 text-base">Or</Text>
+                <Text className="my-1 text-gray-400 text-base text-center">Or</Text>
                 <InputWithIcon
                     control={control}
                     name="email"

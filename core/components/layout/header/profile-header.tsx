@@ -8,7 +8,7 @@ const ProfileHeader = ({ title }: { title: string }) => {
     }
 
     return (
-        <View className='mt-1 flex flex-row items-center justify-center px-4 mb-2 border-b border-primary-500'>
+        <View className='mt-1 flex flex-row items-center justify-center px-4 mb-2'>
             <Pressable onPress={onBack}>
                 <Ionicons name='chevron-back' size={22} />
             </Pressable>

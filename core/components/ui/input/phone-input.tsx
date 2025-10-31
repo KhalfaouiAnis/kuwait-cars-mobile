@@ -8,6 +8,8 @@ type PhoneInputProps<TForm extends FieldValues> = {
     name: FieldPath<TForm>;
     control: Control<TForm>;
     onChangeText?: (fullNumber: string) => void;
+    showCode?: boolean;
+    placeHolder?: string
     value?: string;
     label?: string;
     error?: string;
@@ -20,7 +22,7 @@ type Country = {
     flag: string;
 };
 
-export default function PhoneInput<TForm extends FieldValues>({ onChangeText, control, name, error, label }: PhoneInputProps<TForm>) {
+export default function PhoneInput<TForm extends FieldValues>({ onChangeText, control, name, error, label, showCode = false, placeHolder = "PHONE NUMBER" }: PhoneInputProps<TForm>) {
     const [selectedCountry, setSelectedCountry] = useState<Country>(COUNTRIES[0]);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -66,7 +68,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                     disabled
                 >
                     <Text className="mr-1 text-2xl">{selectedCountry.flag}</Text>
-                    <Text className="mr-1 text-base">+{selectedCountry.callingCode}</Text>
+                    {showCode && (<Text className="mr-1 text-base">+{selectedCountry.callingCode}</Text>)}
                     <Ionicons name="chevron-down" size={20} color="#8E8E93" className='pt-1' />
                 </TouchableOpacity>
                 <Controller
@@ -81,6 +83,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                                 onChange(text)
                             }}
                             keyboardType="phone-pad"
+                            placeholder={placeHolder}
                             returnKeyType="done"
                         />
                     )}

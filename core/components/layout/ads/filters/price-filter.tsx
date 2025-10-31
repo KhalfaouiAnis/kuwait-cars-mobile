@@ -8,7 +8,7 @@ const OVERALL_MAX = 100000;
 
 const PriceFilterContent: React.FC = () => {
     const { price, setPrice } = useFiltersStore();
-    const [localRange, setLocalRange] = useState(price);
+    const [localRange, setLocalRange] = useState(price.length > 0 ? price : [OVERALL_MIN, OVERALL_MAX / 2]);
 
     const handleRangeChange = (values: number[]) => {
         setLocalRange(values);
