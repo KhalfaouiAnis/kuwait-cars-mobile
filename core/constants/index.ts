@@ -4,9 +4,11 @@ import { generateYears } from "../utils/date";
 export const COURSE_PAGE_SIZE = 6;
 export const AUTH_STORAGE_KEY = "KC_AUTH_STORAGE";
 export const USER_PREFERENCES_STORAGE_KEY = "KC_USER_PREFERENCES_STORAGE";
+export const ADS_STORAGE_KEY = "KC_ADS_STORAGE";
 
 export const MAX_VIDEO_SIZE = 1024 * 1024 * 100;
 export const MAX_IMAGE_SIZE = 1024 * 1024 * 5;
+
 export const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 export const ACCEPTED_IMAGE_TYPES = ["image/jpg", "image/png", "image/jpeg"];
 

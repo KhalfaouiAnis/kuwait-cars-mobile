@@ -6,7 +6,7 @@ import { Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-nati
 const { width: screenWidth } = Dimensions.get('window');
 
 type CarouselItem = {
-    image: string;
+    url: string;
 };
 
 type CarouselProps = {
@@ -50,7 +50,7 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
                     >
                         <View className="w-full h-64 rounded-lg overflow-hidden shadow-md relative">
                             <Image
-                                source={item.image}
+                                source={item.url}
                                 className="w-full h-full"
                                 style={{ width: screenWidth - 40, height: 260, objectFit: "cover" }}
                             />
