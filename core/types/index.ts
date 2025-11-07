@@ -1,6 +1,4 @@
-import { PostCarAdInterface } from "@/core/types/schema/carAd";
-import { Control, FieldErrors } from "react-hook-form";
-import { LocationInterface, MediaInterface } from "./schema/ad";
+import { LocationInterface } from "./schema/ad";
 
 export interface User {
   id: string;
@@ -20,15 +18,13 @@ type BaseAd = {
   category_id: string;
   subcategory_id: string;
   location: LocationInterface;
-  thambnail_image: string;
-  images: MediaInterface[];
+  thumbnail_image: string;
   additional_number?: string;
   plan: string;
-  created_at: string
+  created_at: string;
 };
 
 export type CarAd = BaseAd & {
-  video: MediaInterface;
   mileage: string;
   exterior_color: string;
   model?: string;
@@ -43,7 +39,7 @@ export type CarAd = BaseAd & {
 
 export interface AdType {
   id: string;
-  images: { image: any }[];
+  images: { url: any }[];
   badge: string;
   name: string;
   datePosted: string;
@@ -72,10 +68,5 @@ export type SelectOption = {
   label: string;
   value: string;
 };
-
-export interface StepProps {
-  control: Control<PostCarAdInterface>;
-  errors: FieldErrors<PostCarAdInterface>;
-}
 
 export type FilterAdsBy = "brand" | "year" | "price";

@@ -54,7 +54,7 @@ export default function Ad({ data, view = "horizontal" }: Props) {
         <View className="flex-row flex-1 rounded-lg border border-gray-200 bg-transparent">
             <View className="w-1/3">
                 <Image
-                    source={data.images[0].image}
+                    source={data.images[0].url}
                     style={{ width: "auto", height: 104, objectFit: "cover", borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}
                 />
             </View>

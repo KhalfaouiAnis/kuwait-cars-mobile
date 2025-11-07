@@ -11,11 +11,11 @@ export default function CategoriesScreen() {
             scrollable
         >
             <View className="mt-4 mx-2 flex-row justify-center gap-3 flex-wrap">
-                <CategoryLink href="/categories/4f5f4/" image={images.BrakesCategory} label="Cars for sale" />
-                <CategoryLink href="/categories/4f5f4/" image={images.EngineCoolingSystemCategory} label="New cars" />
-                <CategoryLink href="/categories/4f5f4/" image={images.AirConditionCategory} label="Motorcycles" />
-                <CategoryLink href="/categories/4f5f4/" image={images.LexusNX250Category} label="Classic cars" />
-                <CategoryLink href="/categories/4f5f4/" image={images.BlackHawkStreetHU01UHPCategory} label="Damaged cars" />
+                <CategoryLink href="/categories/cars/5h4f55f" image={images.BrakesCategory} label="Cars for sale" />
+                <CategoryLink href="/categories/cars/5h4f55f" image={images.EngineCoolingSystemCategory} label="New cars" />
+                <CategoryLink href="/categories/cars/5h4f55f" image={images.AirConditionCategory} label="Motorcycles" />
+                <CategoryLink href="/categories/cars/5h4f55f" image={images.LexusNX250Category} label="Classic cars" />
+                <CategoryLink href="/categories/cars/5h4f55f" image={images.BlackHawkStreetHU01UHPCategory} label="Damaged cars" />
             </View>
         </Container>
     )

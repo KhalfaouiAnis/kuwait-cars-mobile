@@ -1,14 +1,17 @@
-import { StepProps } from "@/core/types";
+import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { cn } from "@/core/utils/cn";
 import { EvilIcons, Ionicons, Octicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-export default function AddMedia({ control, errors }: StepProps) {
+export default function AddMedia({ control, errors, setValue }: VehicleAdFormSteps) {
     const [tab, setTab] = useState(0)
-    const [selectedPhotos, setSelectedPhotos] = useState<string[]>([])
+    const [thumbnail, setThumbnail] = useState<any>(null);
+    const [images, setImages] = useState<any[]>([]);
+    const [video, setVideo] = useState<any>(null);
+
     useEffect(() => {
         (async () => {
             const libraryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -23,42 +26,99 @@ export default function AddMedia({ control, errors }: StepProps) {
         })();
     }, []);
 
-    const pickFromGallery = async (video: boolean) => {
+    const pickFromGallery = async (videoType: boolean, allowsMultipleSelection: boolean) => {
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: [video ? "videos" : "images"],
-            allowsMultipleSelection: true,
-            aspect: [4, 3],
-            quality: 0.8, // Balance quality/size
-        });
-
-        if (!result.canceled) {
-            const newUris = result.assets.map((asset) => asset.uri);
-            setSelectedPhotos((prev) => [...prev, ...newUris]); // Append to existing
-        }
-    };
-
-    const takeFromCamera = async (video: boolean) => {
-        const result = await ImagePicker.launchCameraAsync({
-            mediaTypes: [video ? "videos" : "images"],
+            mediaTypes: [videoType ? "videos" : "images"],
+            allowsMultipleSelection,
             aspect: [4, 3],
             quality: 0.8,
         });
 
-        if (!result.canceled) {
-            setSelectedPhotos((prev) => [...prev, result.assets[0].uri]);
+        if (result.canceled || !result.assets) return;
+
+        if (allowsMultipleSelection) {
+            const newFiles = result.assets.map(asset => ({
+                uri: asset.uri,
+                type: asset.mimeType,
+                name: asset.fileName,
+                size: asset.fileSize,
+            }));
+            setImages((prev) => [...prev, ...newFiles]);
+            setValue?.('images', [...images, ...newFiles]);
+            return
         }
+
+        const fileObj: any = {
+            uri: result.assets[0].uri,
+            type: result.assets[0].mimeType,
+            name: result.assets[0].fileName,
+            size: result.assets[0].fileSize,
+            duration: result.assets[0].duration ? result.assets[0].duration * 1000 : undefined
+        };
+
+        if (videoType) {
+            setVideo(fileObj);
+            setValue?.('video', fileObj);
+            return;
+        }
+
+        if (!videoType && !allowsMultipleSelection) {
+            setThumbnail(fileObj)
+            setValue?.('thumbnail', fileObj);
+            return;
+        }
+
+        setImages(prevState => {
+            setValue?.('images', [...prevState, fileObj]);
+            return [...prevState, fileObj]
+        })
+    };
+
+    const takeFromCamera = async (videoType: boolean, forThumbnail: boolean) => {
+        const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: [videoType ? "videos" : "images"],
+            aspect: [4, 3],
+            quality: 0.8,
+        });
+
+        if (result.canceled || !result.assets) return;
+
+        const fileObj: any = {
+            uri: result.assets[0].uri,
+            type: result.assets[0].mimeType,
+            name: result.assets[0].fileName,
+            duration: result.assets[0].duration ? result.assets[0].duration * 1000 : undefined
+        };
+
+
+        if (videoType) {
+            setVideo(fileObj);
+            setValue?.('video', fileObj);
+            return;
+        }
+
+        if (forThumbnail) {
+            setThumbnail(fileObj)
+            setValue?.('thumbnail', fileObj);
+            return;
+        }
+
+        setImages(prevState => {
+            setValue?.('images', [...prevState, fileObj]);
+            return [...prevState, fileObj]
+        })
     };
 
     const removePhoto = (uri: string) => {
-        setSelectedPhotos((prev) => prev.filter((u) => u !== uri));
+        setImages((prev) => prev.filter((u) => u.uri !== uri));
     };
 
-    const renderPhoto = ({ item }: { item: string }) => (
-        <View className="relative mr-2 mb-2">
-            <Image source={{ uri: item }} style={{ width: 80, height: 80, borderRadius: 8 }} />
+    const renderPhoto = (photoUri: string, key: string) => (
+        <View key={key} className="relative mr-2 mb-2">
+            <Image source={{ uri: photoUri }} style={{ width: 80, height: 80, borderRadius: 8 }} />
             <TouchableOpacity
                 className="absolute top-1 right-1 bg-red-500 rounded-full w-6 h-6 justify-center items-center"
-                onPress={() => removePhoto(item)}
+                onPress={() => removePhoto(photoUri)}
             >
                 <Ionicons name="close" size={16} color="white" />
             </TouchableOpacity>
@@ -66,16 +126,22 @@ export default function AddMedia({ control, errors }: StepProps) {
     );
 
     return (
-        <View>
-            <View className="flex-row items-center justify-center mb-6">
-                <TouchableOpacity className={cn("rounded-xl w-1/2 h-2", {
+        <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+            <View className="flex-row items-center justify-center mb-6 gap-2">
+                <TouchableOpacity className={cn("rounded-full p-4", {
                     "bg-[#EEEEEE]": tab !== 0,
                     "bg-primary-500": tab === 0
-                })} onPress={() => setTab(0)} />
-                <TouchableOpacity className={cn("rounded-xl w-1/2 h-2", {
+                })} onPress={() => setTab(0)} >
+                    <Text>Photos</Text>
+                </TouchableOpacity>
+                <TouchableOpacity className={cn("rounded-full p-4", {
                     "bg-[#EEEEEE]": tab !== 1,
                     "bg-primary-500": tab === 1
-                })} onPress={() => setTab(1)} />
+                })} onPress={() => setTab(1)} >
+                    <Text>
+                        Video
+                    </Text>
+                </TouchableOpacity>
             </View>
             {tab === 0 ? (
                 <View className="gap-y-8">
@@ -86,7 +152,7 @@ export default function AddMedia({ control, errors }: StepProps) {
                     <View className="">
                         <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
                         <TouchableOpacity className="w-full items-center justify-center h-40 gap-y-3 rounded-3xl border-2 border-primary-500"
-                            onPress={() => pickFromGallery(false)}
+                            onPress={() => pickFromGallery(false, true)}
                         >
                             <EvilIcons name="image" size={24} color="#9E9E9E" />
                             <Text>Select file</Text>
@@ -99,7 +165,7 @@ export default function AddMedia({ control, errors }: StepProps) {
                     </View>
                     <TouchableOpacity
                         className="rounded-2xl gap-x-2 py-4 px-6 bg-primary-500 flex-row items-center justify-center"
-                        onPress={() => takeFromCamera(false)}
+                        onPress={() => takeFromCamera(false, false)}
                     >
                         <Ionicons name="camera" size={18} color={"#A8A8A8"} />
                         <Text className="font-inter-semibold">Open Camera & Take Photo</Text>
@@ -114,7 +180,7 @@ export default function AddMedia({ control, errors }: StepProps) {
                     <View className="">
                         <Text className="text-xl font-inter-bold mb-1">Add Videos</Text>
                         <TouchableOpacity className="w-full items-center justify-center h-40 gap-y-3 rounded-3xl border-2 border-primary-500"
-                            onPress={() => pickFromGallery(true)}
+                            onPress={() => pickFromGallery(true, false)}
                         >
                             <Octicons name="video" size={24} color="#9E9E9E" />
                             <Text>Select file</Text>
@@ -127,13 +193,16 @@ export default function AddMedia({ control, errors }: StepProps) {
                     </View>
                     <TouchableOpacity
                         className="rounded-2xl gap-x-2 py-4 px-6 bg-primary-500 flex-row items-center justify-center"
-                        onPress={() => takeFromCamera(true)}
+                        onPress={() => takeFromCamera(true, false)}
                     >
                         <Ionicons name="camera" size={18} color={"#A8A8A8"} />
                         <Text className="font-inter-semibold">Open Camera & Take Video</Text>
                     </TouchableOpacity>
                 </View>
             )}
-        </View>
+            <View className="flex-row flex-wrap gap-1">
+                {images.map(image => renderPhoto(image.uri, image.name))}
+            </View>
+        </ScrollView>
     )
 }

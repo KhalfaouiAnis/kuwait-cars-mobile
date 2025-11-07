@@ -9,6 +9,10 @@ export const httpClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL + "/api",
 });
 
+export const publicHttpClient = axios.create({
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
+});
+
 let isRefreshing = false;
 let failedQueue: any[] = [];
 

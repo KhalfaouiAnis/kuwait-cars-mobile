@@ -1,10 +1,12 @@
 import { Language, SelectOption } from "../types";
 import { generateYears } from "../utils/date";
 
-export const COURSE_PAGE_SIZE = 6;
+export const ADS_PAGE_SIZE = "12";
+
 export const AUTH_STORAGE_KEY = "KC_AUTH_STORAGE";
 export const USER_PREFERENCES_STORAGE_KEY = "KC_USER_PREFERENCES_STORAGE";
 export const ADS_STORAGE_KEY = "KC_ADS_STORAGE";
+export const VEHICLES_ADS_STORAGE_KEY = "KC_VEHICLES_ADS_STORAGE";
 
 export const MAX_VIDEO_SIZE = 1024 * 1024 * 100;
 export const MAX_IMAGE_SIZE = 1024 * 1024 * 5;
@@ -64,7 +66,7 @@ export const SUBSCRIPTION_PLANS = [
   },
 ];
 
-export const HIDE_TABBAR_ROUTES: string[] = ["new-ad"];
+export const HIDE_TABBAR_ROUTES: string[] = ["/new-ad"];
 
 export const CATEGORIES: SelectOption[] = [
   { id: "Cars 1", label: "Cars 1", value: "Cars 1" },
@@ -98,6 +100,11 @@ export const CITIES: SelectOption[] = [
     value: "Mubarek Al-Kabeer",
   },
 ];
+
+export const Blocks: SelectOption[] = [
+  {id: "Block_1", label: "Block 1", value: "Block 1"},
+  {id: "Block_2", label: "Block 2", value: "Block 2"},
+]
 
 export const YEARS: SelectOption[] = generateYears().map((year) => ({
   id: year,

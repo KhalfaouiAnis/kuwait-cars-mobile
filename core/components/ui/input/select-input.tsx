@@ -57,7 +57,6 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                                         visible={showModal}
                                         animationType="slide"
                                         transparent={false}
-                                        className='h-fit'
                                         onRequestClose={() => setShowModal(false)}
                                     >
                                         <TouchableOpacity
@@ -72,7 +71,6 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                                                     <TouchableOpacity onPress={() => setShowModal(false)} className="mr-3">
                                                         <Ionicons name="close" size={24} color="#8E8E93" />
                                                     </TouchableOpacity>
-                                                    <Text className="text-lg font-semibold">Select</Text>
                                                 </View>
                                                 <FlatList
                                                     data={options}

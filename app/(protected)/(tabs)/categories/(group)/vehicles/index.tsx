@@ -4,7 +4,7 @@ import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
 import { View } from "react-native";
 
-export default function AccessoriesScreen() {
+export default function VehiclesScreen() {
     return (
         <Container
             header={<MainHeader drawer back={false} />}

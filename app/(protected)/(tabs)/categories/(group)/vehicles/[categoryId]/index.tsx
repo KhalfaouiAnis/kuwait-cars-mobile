@@ -19,10 +19,10 @@ const listings = [
     {
         id: "listing-1",
         images: [
-            { url: images.CarChevrolet },
-            { url: images.CarHyunday },
-            { url: images.CarMercedes },
-            { url: images.CarToyota },
+            { image: images.CarChevrolet },
+            { image: images.CarHyunday },
+            { image: images.CarMercedes },
+            { image: images.CarToyota },
         ],
         badge: "Super DEAL",
         name: "Chevrolet corvette",
@@ -38,10 +38,10 @@ const listings = [
     {
         id: "listing-2",
         images: [
-            { url: images.CarHyunday },
-            { url: images.CarChevrolet },
-            { url: images.CarMercedes },
-            { url: images.CarToyota },
+            { image: images.CarHyunday },
+            { image: images.CarChevrolet },
+            { image: images.CarMercedes },
+            { image: images.CarToyota },
         ],
         badge: "Super DEAL 2",
         name: "Hundai",
@@ -57,10 +57,10 @@ const listings = [
     {
         id: "listing-3",
         images: [
-            { url: images.CarMercedes },
-            { url: images.CarHyunday },
-            { url: images.CarChevrolet },
-            { url: images.CarToyota },
+            { image: images.CarMercedes },
+            { image: images.CarHyunday },
+            { image: images.CarChevrolet },
+            { image: images.CarToyota },
         ],
         badge: "Super DEAL 3",
         name: "Mercedes",

@@ -1,4 +1,3 @@
-import Carousel from "@/core/components/ui/shared/carousel";
 import { CarAd } from "@/core/types";
 import { AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -14,10 +13,9 @@ export default function CarsAd({ data, view = "horizontal" }: Props) {
     if (view === "vertical") {
         return (
             <Pressable onPress={()=> router.push("/categories/4f5f4/jdhkgkd")} className="w-full rounded-lg p-2 border border-gray-200 shadow-transparent bg-transparent">
-                <Carousel
-                    // badge={<View className="p-1 bg-primary-500 rounded-md"><Text className="text-gray-950">{data.badge}</Text></View>}
-                    items={data.images}
-                />
+                {/* <Carousel
+                    items={data}
+                /> */}
                 <View className="mt-3 px-2 pb-2">
                     <View className="flex-1 flex-row items-center justify-between">
                         <Text className="font-inter-semibold text-lg">{data.title} {data.created_at}</Text>
@@ -54,7 +52,7 @@ export default function CarsAd({ data, view = "horizontal" }: Props) {
         <View className="flex-row flex-1 rounded-lg border border-gray-200 bg-transparent">
             <View className="w-1/3">
                 <Image
-                    source={data.thambnail_image}
+                    source={data.thumbnail_image}
                     style={{ width: "auto", height: 104, objectFit: "cover", borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}
                 />
             </View>

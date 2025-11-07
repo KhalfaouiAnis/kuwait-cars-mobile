@@ -1,4 +1,7 @@
-import { PostCarAdInterface, PostCarAdSchema } from "@/core/types/schema/carAd";
+import {
+  VehicleAdInterface,
+  VehicleAdSchema,
+} from "@/core/types/schema/vehicleAd";
 import { useRouter } from "expo-router";
 import { useFormHook } from "../use-form-hook";
 
@@ -11,11 +14,12 @@ export function useAd() {
     formState: { errors, isSubmitting, isDirty },
     trigger,
     reset,
-  } = useFormHook(PostCarAdSchema, {
+    setValue,
+  } = useFormHook(VehicleAdSchema, {
     defaultValues: {},
   });
 
-  const onSubmit = async (data: PostCarAdInterface) => {
+  const onSubmit = async (data: VehicleAdInterface) => {
     try {
       router.navigate(`/my-ads`);
     } catch (error) {
@@ -25,6 +29,7 @@ export function useAd() {
 
   return {
     control,
+    setValue,
     handleSubmit,
     onSubmit,
     errors,

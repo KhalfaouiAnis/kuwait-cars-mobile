@@ -2,7 +2,6 @@ import AdDetails from "@/core/components/forms/ad/ad-details";
 import AdDetailsStep2 from "@/core/components/forms/ad/ad-details-step-2";
 import AdFormContainer from "@/core/components/forms/ad/ad-form-container";
 import AddMedia from "@/core/components/forms/ad/add-media";
-import ChooseLocation from "@/core/components/forms/ad/choose-location";
 import ChoosePlan from "@/core/components/forms/ad/choose-plan";
 import PostAd from "@/core/components/forms/ad/post-ad";
 import AdPublishSuccess from "@/core/components/forms/ad/success";
@@ -15,13 +14,11 @@ const getStepTitle = (step: number) => {
         case 1:
             return "Post an Ad"
         case 2:
-            return "Choose Location"
-        case 3:
             return "Add Media"
+        case 3:
         case 4:
-        case 5:
             return "Add Ad Details"
-        case 6:
+        case 5:
             return "Choose Plans"
         default:
             return ""
@@ -29,10 +26,10 @@ const getStepTitle = (step: number) => {
 }
 
 export default function NewAdScreen() {
-    const { control, errors, trigger, reset } = useAd()
+    const { control, errors, trigger, reset, setValue } = useAd()
     const [currentStep, setCurrentStep] = useState(1);
     const stepTitle = getStepTitle(currentStep)
-    const totalSteps = 6;
+    const totalSteps = 5;
 
     const handlePrevious = () => {
         if (currentStep === 1) {
@@ -45,7 +42,7 @@ export default function NewAdScreen() {
     const handleNext = async () => {
         let isValid = false;
         if (currentStep === 1) {
-            isValid = await trigger(['category', 'location', "title", "price"]);
+            isValid = await trigger(['category_id', 'location', "title", "price"]);
         } else if (currentStep === 2) {
             isValid = await trigger(['location']);
         }
@@ -59,14 +56,12 @@ export default function NewAdScreen() {
             case 1:
                 return <PostAd control={control} errors={errors} />;
             case 2:
-                return <ChooseLocation control={control} errors={errors} />;
+                return <AddMedia control={control} errors={errors} setValue={setValue} />;
             case 3:
-                return <AddMedia control={control} errors={errors} />;
-            case 4:
                 return <AdDetails control={control} errors={errors} />;
-            case 5:
+            case 4:
                 return <AdDetailsStep2 control={control} errors={errors} />;
-            case 6:
+            case 5:
                 return <ChoosePlan />;
             default:
                 return null;

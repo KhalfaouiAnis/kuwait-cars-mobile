@@ -1,4 +1,4 @@
-import { ADS_STORAGE_KEY } from "@/core/constants";
+import { ADS_PAGE_SIZE, ADS_STORAGE_KEY } from "@/core/constants";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { httpClient } from "../api/httpClient";
@@ -32,7 +32,15 @@ const useAdsStore = create<AdsState>()(
         const { year } = useSortingAndFilteringStore.getState();
         if (loading || !hasMore) return;
 
-        const { data: responseData } = await httpClient.post("/ads", { year });
+        const params = new URLSearchParams({
+          limit: ADS_PAGE_SIZE,
+          direction: "forward",
+          ...(cursor && { cursor }),
+        });
+
+        const { data: responseData } = await httpClient.post(`/ads?${params}`, {
+          year,
+        });
 
         const { data, pagination } = responseData;
         set({
