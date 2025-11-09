@@ -1,5 +1,4 @@
-import { useFocusEffect, useNavigation, usePathname } from "expo-router";
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 
 type UseLeaveConfirmationProps = {
   hasUnsavedChanges: boolean;
@@ -12,48 +11,15 @@ export const useLeaveConfirmation = ({
   onConfirmLeave,
   onCancelLeave,
 }: UseLeaveConfirmationProps) => {
-  const [showDialog, setShowDialog] = useState(true);
-  const navigation = useNavigation();
-  const pathname = usePathname();
+  const [showDialog, setShowDialog] = useState(() => hasUnsavedChanges);
 
-  const handleBack = useCallback(() => {
-    if (!hasUnsavedChanges || pathname !== "/new-ad") {
-      return true;
+  useEffect(() => {
+    if (hasUnsavedChanges) {
+      setShowDialog(true);
+    } else {
+      setShowDialog(false);
     }
-
-    setShowDialog(true);
-
-    return false;
   }, [hasUnsavedChanges]);
-
-  useFocusEffect(
-    useCallback(() => {
-      const unsubscribe = navigation.addListener("beforeRemove", (e) => {
-        e.preventDefault();
-        if (handleBack()) {
-          navigation.dispatch(e.data.action);
-        }
-      });
-
-      return unsubscribe;
-    }, [navigation, handleBack])
-  );
-
-  // useEffect(() => {
-  //   const onBackPress = () => {
-  //     if (!isDirty) return true;
-
-  //     setShowDialog(true);
-  //     return false;
-  //   };
-
-  //   const subscription = BackHandler.addEventListener(
-  //     "hardwareBackPress",
-  //     onBackPress
-  //   );
-
-  //   return () => subscription.remove();
-  // }, [isDirty]);
 
   const handleLeave = () => {
     setShowDialog(false);

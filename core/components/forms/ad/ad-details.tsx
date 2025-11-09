@@ -1,16 +1,19 @@
 import { CAR_COLORS, YEARS } from "@/core/constants";
 import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import AdTextInput from "../../ui/input/ad-text-input";
 import SelectInput from "../../ui/input/select-input";
 import { renderColorOption, renderYearOption } from "./select-option/render-option";
+import Init from "./unit";
+
 
 export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
             className="flex-1 bg-white"
-            contentContainerStyle={{ paddingBottom: 60 }}>
+            contentContainerStyle={{ paddingBottom: 60 }}
+        >
             <View className="flex-row items-center justify-center w-full">
                 <View className="border border-primary-500 w-2/5" />
                 <Text className="px-2 text-error font-inter-medium text-lg">Required Information</Text>
@@ -27,27 +30,20 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                     <Text className="ms-4 text-gray-400 mt-1">Required</Text>
                 </View>
                 <View>
-                    <View className="flex-row gap-1 flex-1">
-                        <SelectInput
-                            control={control}
-                            name="car.color_exterior"
-                            options={CAR_COLORS}
-                            renderOption={renderColorOption}
-                            error={errors.car?.color_exterior?.message} placeholder="Color Exterior" />
-                        <TouchableOpacity className="py-1 px-3">
-                            <Text>KM</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <SelectInput
+                        control={control}
+                        name="car.color_exterior"
+                        options={CAR_COLORS}
+                        renderOption={renderColorOption}
+                        error={errors.car?.color_exterior?.message} placeholder="Color Exterior" />
                     <Text className="ms-4 text-gray-400 mt-1">Required</Text>
                 </View>
                 <View>
-                    <View className="flex-row gap-1 flex-1">
-                        <View className="w-[80%]">
+                    <View className="flex-row gap-1 items-center">
+                        <View className="w-[84%]">
                             <AdTextInput control={control} name="car.mileage" error={errors.car?.mileage?.message} placeholder="Mileage (0 - 1000000)" />
                         </View>
-                        <TouchableOpacity className="py-1 px-3 flex-1 items-center justify-center border border-gray-100">
-                            <Text>KM</Text>
-                        </TouchableOpacity>
+                        <Init />
                     </View>
                     <Text className="ms-4 text-gray-400 mt-1">Required</Text>
                 </View>

@@ -1,13 +1,15 @@
 import { SUBSCRIPTION_PLANS } from "@/core/constants";
+import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import SubscriptionCard from "./subscription-card";
 
-export default function ChoosePlan() {
-    const [selectedPlan, setSelectedPlan] = useState(SUBSCRIPTION_PLANS[0].id);
+export default function ChoosePlan({ setValue, getValue }: VehicleAdFormSteps) {
+    const [selectedPlan, setSelectedPlan] = useState(getValue?.("plan"))
 
     const handleSelectPlan = (plan: string) => {
-        setSelectedPlan(plan);
+        setSelectedPlan(plan)
+        setValue?.("plan", plan)
     };
 
     return (
@@ -18,7 +20,7 @@ export default function ChoosePlan() {
                         <SubscriptionCard
                             key={plan.id}
                             plan={plan}
-                            isSelected={plan.id === selectedPlan}
+                            isSelected={plan.title === selectedPlan}
                             onSelect={handleSelectPlan}
                         />
                     ))}

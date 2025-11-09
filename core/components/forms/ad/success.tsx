@@ -1,5 +1,6 @@
 import SuccessIcon from "@/assets/svg/success";
 import Container from "@/core/components/ui/container";
+import { Link } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function AdPublishSuccess() {
@@ -19,9 +20,9 @@ export default function AdPublishSuccess() {
                     <TouchableOpacity className="bg-primary-500 py-3 mt-4 rounded-lg items-center">
                         <Text className="text-lg font-inter-bold text-secondary-900">View my listing</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="bg-primary-500 py-3 mt-4 rounded-lg items-center">
+                    <Link href={"/categories"} className="bg-primary-500 py-3 mt-4 rounded-lg items-center">
                         <Text className="text-lg font-inter-bold text-secondary-900">Main menu</Text>
-                    </TouchableOpacity>
+                    </Link>
                 </View>
             </View>
         </Container>

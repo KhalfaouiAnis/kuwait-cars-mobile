@@ -1,16 +1,21 @@
+import { useAdMedia } from "@/core/hooks/ad/useAdMedia";
 import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { cn } from "@/core/utils/cn";
-import { EvilIcons, Ionicons, Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import AppModal from "../../ui/dialog/modal";
+import VideoPlayer from "../../ui/shared/video-player";
+import PickFromGalleryGallery from "./media/open-gallery-button";
+import TakePhotoButton from "./media/take-photo-button";
 
-export default function AddMedia({ control, errors, setValue }: VehicleAdFormSteps) {
-    const [tab, setTab] = useState(0)
-    const [thumbnail, setThumbnail] = useState<any>(null);
-    const [images, setImages] = useState<any[]>([]);
-    const [video, setVideo] = useState<any>(null);
+const MAX_IMAGES = 10;
+
+export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSteps) {
+    const { images, thumbnail, video, tab, setTab, addMedia, removeMedia, setThumbnail, setImages, setVideo } = useAdMedia(setValue)
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -26,101 +31,23 @@ export default function AddMedia({ control, errors, setValue }: VehicleAdFormSte
         })();
     }, []);
 
-    const pickFromGallery = async (videoType: boolean, allowsMultipleSelection: boolean) => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: [videoType ? "videos" : "images"],
-            allowsMultipleSelection,
-            aspect: [4, 3],
-            quality: 0.8,
-        });
+    useEffect(() => {
+        const thambnail = getValue?.("thumbnail")
+        thambnail && setThumbnail(thambnail)
+        const images = getValue?.("images")
+        images && setImages(images)
+        const video = getValue?.("video")
+        video && setVideo(video)
+    }, [getValue, setThumbnail, setImages, setVideo])
 
-        if (result.canceled || !result.assets) return;
-
-        if (allowsMultipleSelection) {
-            const newFiles = result.assets.map(asset => ({
-                uri: asset.uri,
-                type: asset.mimeType,
-                name: asset.fileName,
-                size: asset.fileSize,
-            }));
-            setImages((prev) => [...prev, ...newFiles]);
-            setValue?.('images', [...images, ...newFiles]);
-            return
-        }
-
-        const fileObj: any = {
-            uri: result.assets[0].uri,
-            type: result.assets[0].mimeType,
-            name: result.assets[0].fileName,
-            size: result.assets[0].fileSize,
-            duration: result.assets[0].duration ? result.assets[0].duration * 1000 : undefined
-        };
-
-        if (videoType) {
-            setVideo(fileObj);
-            setValue?.('video', fileObj);
-            return;
-        }
-
-        if (!videoType && !allowsMultipleSelection) {
-            setThumbnail(fileObj)
-            setValue?.('thumbnail', fileObj);
-            return;
-        }
-
-        setImages(prevState => {
-            setValue?.('images', [...prevState, fileObj]);
-            return [...prevState, fileObj]
-        })
-    };
-
-    const takeFromCamera = async (videoType: boolean, forThumbnail: boolean) => {
-        const result = await ImagePicker.launchCameraAsync({
-            mediaTypes: [videoType ? "videos" : "images"],
-            aspect: [4, 3],
-            quality: 0.8,
-        });
-
-        if (result.canceled || !result.assets) return;
-
-        const fileObj: any = {
-            uri: result.assets[0].uri,
-            type: result.assets[0].mimeType,
-            name: result.assets[0].fileName,
-            duration: result.assets[0].duration ? result.assets[0].duration * 1000 : undefined
-        };
-
-
-        if (videoType) {
-            setVideo(fileObj);
-            setValue?.('video', fileObj);
-            return;
-        }
-
-        if (forThumbnail) {
-            setThumbnail(fileObj)
-            setValue?.('thumbnail', fileObj);
-            return;
-        }
-
-        setImages(prevState => {
-            setValue?.('images', [...prevState, fileObj]);
-            return [...prevState, fileObj]
-        })
-    };
-
-    const removePhoto = (uri: string) => {
-        setImages((prev) => prev.filter((u) => u.uri !== uri));
-    };
-
-    const renderPhoto = (photoUri: string, key: string) => (
+    const renderPhoto = (photoUri: string, type: "thumbnail" | "video" | "images", key: string) => (
         <View key={key} className="relative mr-2 mb-2">
-            <Image source={{ uri: photoUri }} style={{ width: 80, height: 80, borderRadius: 8 }} />
+            <Image source={{ uri: photoUri }} style={{ width: "auto", height: type === "thumbnail" ? 200 : 80, borderRadius: 8 }} />
             <TouchableOpacity
-                className="absolute top-1 right-1 bg-red-500 rounded-full w-6 h-6 justify-center items-center"
-                onPress={() => removePhoto(photoUri)}
+                className="absolute -top-4 -right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                onPress={() => removeMedia(photoUri, type === "thumbnail", type === "video")}
             >
-                <Ionicons name="close" size={16} color="white" />
+                <Ionicons name="close" size={20} color="white" />
             </TouchableOpacity>
         </View>
     );
@@ -144,33 +71,51 @@ export default function AddMedia({ control, errors, setValue }: VehicleAdFormSte
                 </TouchableOpacity>
             </View>
             {tab === 0 ? (
-                <View className="gap-y-8">
-                    <View className="gap-y-2">
-                        <Text className="font-inter-semibold text-3xl">Good pictures sell faster</Text>
-                        <Text numberOfLines={2}>Capture the front, back, and sides — buyers love seeing the full view</Text>
+                !thumbnail ? (
+                    <View className="gap-y-8">
+                        <View className="gap-y-2">
+                            <Text className="font-inter-semibold text-3xl">Good pictures sell faster</Text>
+                            <Text numberOfLines={2}>Capture the front, back, and sides — buyers love seeing the full view</Text>
+                        </View>
+                        <View>
+                            <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
+                            <PickFromGalleryGallery addMedia={() => addMedia(false, false, true)} />
+                        </View>
+                        <View className="flex-row items-center justify-center">
+                            <View className="border border-gray-300 w-2/5" />
+                            <Text className="px-2">Or</Text>
+                            <View className="border border-gray-300 w-2/5" />
+                        </View>
+                        <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => addMedia(true, false, true)} />
                     </View>
-                    <View className="">
-                        <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
-                        <TouchableOpacity className="w-full items-center justify-center h-40 gap-y-3 rounded-3xl border-2 border-primary-500"
-                            onPress={() => pickFromGallery(false, true)}
-                        >
-                            <EvilIcons name="image" size={24} color="#9E9E9E" />
-                            <Text>Select file</Text>
-                        </TouchableOpacity>
+                ) : (
+                    <View className="gap-y-8">
+                        <View>
+                            <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
+                            {renderPhoto(thumbnail.uri, "thumbnail", thumbnail.name)}
+                            <Text className="justify-end ml-auto mr-4 font-semibold">Picked {images.length + 1} of {MAX_IMAGES}</Text>
+                        </View>
+
+                        {images.length < MAX_IMAGES && (
+                            <View>
+                                <TouchableOpacity className="w-full items-center justify-center h-12 gap-y-3 rounded-3xl border-2 border-primary-500"
+                                    onPress={() => setShowModal(true)}
+                                >
+                                    <Text>Add secondary photos</Text>
+                                </TouchableOpacity>
+                                <AppModal
+                                    onClose={() => setShowModal(false)}
+                                    visible={showModal}
+                                    renderContent={() => <View className="gap-y-4">
+                                        <PickFromGalleryGallery small addMedia={() => addMedia(false, false, false)} />
+                                        <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => addMedia(true, false, false)} />
+                                    </View>}
+                                />
+                            </View>
+                        )}
+
                     </View>
-                    <View className="flex-row items-center justify-center">
-                        <View className="border border-gray-300 w-2/5" />
-                        <Text className="px-2">Or</Text>
-                        <View className="border border-gray-300 w-2/5" />
-                    </View>
-                    <TouchableOpacity
-                        className="rounded-2xl gap-x-2 py-4 px-6 bg-primary-500 flex-row items-center justify-center"
-                        onPress={() => takeFromCamera(false, false)}
-                    >
-                        <Ionicons name="camera" size={18} color={"#A8A8A8"} />
-                        <Text className="font-inter-semibold">Open Camera & Take Photo</Text>
-                    </TouchableOpacity>
-                </View>
+                )
             ) : (
                 <View className="gap-y-8">
                     <View className="gap-y-2">
@@ -178,30 +123,34 @@ export default function AddMedia({ control, errors, setValue }: VehicleAdFormSte
                         <Text numberOfLines={2}>A 10–30 second clip can help buyers see your car’s true condition</Text>
                     </View>
                     <View className="">
-                        <Text className="text-xl font-inter-bold mb-1">Add Videos</Text>
-                        <TouchableOpacity className="w-full items-center justify-center h-40 gap-y-3 rounded-3xl border-2 border-primary-500"
-                            onPress={() => pickFromGallery(true, false)}
-                        >
-                            <Octicons name="video" size={24} color="#9E9E9E" />
-                            <Text>Select file</Text>
-                        </TouchableOpacity>
+                        <Text className="text-xl font-inter-bold mb-1">Add Videos *</Text>
+                        <PickFromGalleryGallery video addMedia={() => addMedia(false, true, false)} />
                     </View>
                     <View className="flex-row items-center justify-center">
                         <View className="border border-gray-300 w-2/5" />
                         <Text className="px-2">Or</Text>
                         <View className="border border-gray-300 w-2/5" />
                     </View>
-                    <TouchableOpacity
-                        className="rounded-2xl gap-x-2 py-4 px-6 bg-primary-500 flex-row items-center justify-center"
-                        onPress={() => takeFromCamera(true, false)}
-                    >
-                        <Ionicons name="camera" size={18} color={"#A8A8A8"} />
-                        <Text className="font-inter-semibold">Open Camera & Take Video</Text>
-                    </TouchableOpacity>
+                    <TakePhotoButton addMedia={() => addMedia(true, true, false)} label="Open Camera & Take Video" />
                 </View>
             )}
-            <View className="flex-row flex-wrap gap-1">
-                {images.map(image => renderPhoto(image.uri, image.name))}
+            <View className="flex-row flex-wrap gap-3 mt-8 pb-8">
+                {images.map(image => (
+                    <View className="w-[31%]" key={image.name}>
+                        {renderPhoto(image.uri, "images", image.name)}
+                    </View>
+                ))}
+                {video && (<View className="relative w-full pr-2">
+                    <VideoPlayer source={video.uri} />
+                    <TouchableOpacity
+                        className="absolute -top-4 -right-0 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                        onPress={() => removeMedia(video.uri, false, true)}
+                    >
+                        <Ionicons name="close" size={20} color="white" />
+                    </TouchableOpacity>
+                </View>
+                )
+                }
             </View>
         </ScrollView>
     )

@@ -5,7 +5,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 interface Props {
     plan: any,
     isSelected: boolean,
-    onSelect?: (plan: any) => void
+    onSelect: (plan: string) => void
 }
 
 export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) {
@@ -33,7 +33,9 @@ export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) 
                     </View>
                 ))}
             </View>
-            <TouchableOpacity className="mt-4 ms-8 bg-primary-500 py-2 items-center justify-center rounded-3xl">
+            <TouchableOpacity className="mt-4 ms-8 bg-primary-500 py-2 items-center justify-center rounded-3xl"
+                onPress={() => onSelect(plan.title)}
+            >
                 <Text className="font-inter-semibold text-lg">
                     Choose this plan
                 </Text>

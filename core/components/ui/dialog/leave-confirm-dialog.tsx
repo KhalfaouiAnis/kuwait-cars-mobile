@@ -1,21 +1,20 @@
-import { useLeaveConfirmation } from '@/core/hooks/shared/use-leave-confirmation';
 import React from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 
 type LeaveDialogProps = {
-    isDirty: boolean;
+    show: boolean;
     onLeave?: () => void;
+    onStay?: () => void
 };
 
-export default function LeaveDialog({ isDirty }: LeaveDialogProps) {
-    const { showDialog, handleLeave, handleStay } = useLeaveConfirmation({ hasUnsavedChanges: isDirty });
+export default function LeaveDialog({ show, onLeave, onStay }: LeaveDialogProps) {
 
     return (
         <Modal
-            visible={showDialog}
+            visible={show}
             transparent
             animationType="fade"
-            onRequestClose={handleStay}
+            onRequestClose={onStay}
         >
             <View className="flex-1 justify-center items-center bg-black/50">
                 <View className="bg-white rounded-lg p-6 w-80 mx-4">
@@ -28,14 +27,14 @@ export default function LeaveDialog({ isDirty }: LeaveDialogProps) {
                     <View className="flex-row justify-between gap-x-2">
                         <TouchableOpacity
                             className="flex-1 bg-gray-300 rounded-3xl p-3 ml-2"
-                            onPress={handleStay}
+                            onPress={onStay}
                             activeOpacity={0.7}
                         >
                             <Text className="text-gray-800 text-center font-semibold">Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             className="flex-1 bg-red-500 rounded-3xl p-3 mr-2"
-                            onPress={handleLeave}
+                            onPress={onLeave}
                             activeOpacity={0.7}
                         >
                             <Text className="text-white text-center font-semibold">Leave</Text>

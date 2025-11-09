@@ -1,8 +1,8 @@
-import { StepProps } from "@/core/types";
+import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { ScrollView, Text, View } from "react-native";
 import AdTextInput from "../../ui/input/ad-text-input";
 
-export default function AdDetailsStep2({ control, errors }: StepProps) {
+export default function AdDetailsStep2({ control, errors }: VehicleAdFormSteps) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}

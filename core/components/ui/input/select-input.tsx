@@ -33,7 +33,9 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                         elevation: 2,
                         backgroundColor: "white", shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: {
                             width: 4, height: 4
-                        }
+                        },
+                        borderColor: error ? "#D80027" : undefined,
+                        borderWidth: error ? 1 : undefined,
                     }}
                 >
                     <Controller
@@ -47,7 +49,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                             return (
                                 <View>
                                     <TextInput
-                                        className={` ${error ? 'border-red-500' : 'text-[#333]'}`}
+                                        className="text-[#333]"
                                         value={value}
                                         editable={false}
                                         pointerEvents="none"

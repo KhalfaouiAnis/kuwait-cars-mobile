@@ -1,6 +1,7 @@
 import {
   Control,
   FieldErrors,
+  UseFormGetValues,
   UseFormSetValue
 } from "react-hook-form";
 import { z } from "zod";
@@ -14,7 +15,8 @@ export const VehicleAdSchema = BaseAdSchema.merge(
       brand: z.string().min(1, "Brand is required"),
       mark: z.string().min(1, "Mark is required"),
       color_exterior: z.string().min(1, "Color is required"),
-      mileage: z.coerce.number().min(1, "Mileage is required"),
+      mileage: z.string().min(1, "Mileage is required"),
+      mileage_unit: z.string().optional(),
       plan: z.string().min(1, "Plan is required"),
 
       model: z.string().optional(),
@@ -37,6 +39,7 @@ export interface VehicleAdFormSteps {
   control: Control<VehicleAdInterface>;
   errors: FieldErrors<VehicleAdInterface>;
   setValue?: UseFormSetValue<VehicleAdInterface>;
+  getValue?: UseFormGetValues<VehicleAdInterface>;
 }
 
 export type VehicleAdFilters = {};

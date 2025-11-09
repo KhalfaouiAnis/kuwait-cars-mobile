@@ -5,9 +5,12 @@ import AddMedia from "@/core/components/forms/ad/add-media";
 import ChoosePlan from "@/core/components/forms/ad/choose-plan";
 import PostAd from "@/core/components/forms/ad/post-ad";
 import AdPublishSuccess from "@/core/components/forms/ad/success";
+import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useAd } from "@/core/hooks/ad/usAd";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { toast } from "sonner-native";
 
 const getStepTitle = (step: number) => {
     switch (step) {
@@ -26,28 +29,54 @@ const getStepTitle = (step: number) => {
 }
 
 export default function NewAdScreen() {
-    const { control, errors, trigger, reset, setValue } = useAd()
+    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit } = useAd()
+    const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const stepTitle = getStepTitle(currentStep)
     const totalSteps = 5;
 
     const handlePrevious = () => {
         if (currentStep === 1) {
+            if (Object.keys(dirtyFields).length > 0) {
+                setShowDialog(true)
+                return "invalid-form";
+            }
             return "route"
         }
         setCurrentStep(currentStep - 1)
         return "steps"
     }
 
+    const MyErrors = errors;
+
     const handleNext = async () => {
         let isValid = false;
         if (currentStep === 1) {
-            isValid = await trigger(['category_id', 'location', "title", "price"]);
+            isValid = await trigger(['car.mark', 'location', "title", "price"]);
         } else if (currentStep === 2) {
-            isValid = await trigger(['location']);
+            isValid = await trigger(['video', "thumbnail", "images"]);
+        } else if (currentStep === 3) {
+            isValid = await trigger(["year", "car.color_exterior", "car.mileage"])
+        } else if (currentStep === 4) {
+            isValid = await trigger(["title", "description", "additional_number"])
+        } else if (currentStep === 5) {
+            isValid = await trigger(["plan"])
         }
-        if (currentStep < totalSteps) {
+
+        handleSubmit(onSubmit)
+
+        if (Object.keys(errors).length > 0) {
+            Object.entries(errors).forEach(([_, error]) => {
+                if (error.message) {
+                    toast.error(`${error.message}`)
+                }
+            })
+        }
+
+        if (isValid && currentStep < totalSteps) {
             setCurrentStep((prev) => prev + 1);
+        } else if (isValid) {
+            handleSubmit(onSubmit)
         }
     }
 
@@ -56,13 +85,13 @@ export default function NewAdScreen() {
             case 1:
                 return <PostAd control={control} errors={errors} />;
             case 2:
-                return <AddMedia control={control} errors={errors} setValue={setValue} />;
+                return <AddMedia control={control} errors={errors} setValue={setValue} getValue={getValues} />;
             case 3:
                 return <AdDetails control={control} errors={errors} />;
             case 4:
                 return <AdDetailsStep2 control={control} errors={errors} />;
             case 5:
-                return <ChoosePlan />;
+                return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} />;
             default:
                 return null;
         }
@@ -71,6 +100,16 @@ export default function NewAdScreen() {
     const handleReset = () => {
         reset()
         setCurrentStep(1)
+    }
+
+    const handleLeave = () => {
+        setShowDialog(false)
+        reset()
+        router.canGoBack() && router.back()
+    }
+
+    const handleStay = () => {
+        setShowDialog(false)
     }
 
     if (currentStep > totalSteps) return <AdPublishSuccess />
@@ -82,13 +121,18 @@ export default function NewAdScreen() {
                 <TouchableOpacity
                     className="py-3 w-full rounded-lg bg-primary-500 disabled:bg-yellow-200"
                     onPress={handleNext}
-                    disabled={currentStep >= totalSteps}
+                // disabled={currentStep >= totalSteps}
                 >
                     <Text className="text-center text-xl font-inter-semibold">
                         Next
                     </Text>
                 </TouchableOpacity>
             </View>
+            <LeaveDialog
+                onLeave={handleLeave}
+                onStay={handleStay}
+                show={showDialog}
+            />
         </AdFormContainer>
     )
 }
