@@ -11,13 +11,11 @@ import { BaseAdSchema } from "./ad";
 export const VehicleAdSchema = BaseAdSchema.merge(
   z.object({
     car: z.object({
-      category: z.string().min(1, "Category is required"),
       brand: z.string().min(1, "Brand is required"),
       mark: z.string().min(1, "Mark is required"),
-      color_exterior: z.string().min(1, "Color is required"),
+      exterior_color: z.string().min(1, "Color is required"),
       mileage: z.string().min(1, "Mileage is required"),
       mileage_unit: z.string().optional(),
-      plan: z.string().min(1, "Plan is required"),
 
       model: z.string().optional(),
       body_type: z.string().optional(),

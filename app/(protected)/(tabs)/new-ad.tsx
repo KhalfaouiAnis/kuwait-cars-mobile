@@ -9,7 +9,7 @@ import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useAd } from "@/core/hooks/ad/usAd";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { toast } from "sonner-native";
 
 const getStepTitle = (step: number) => {
@@ -29,7 +29,7 @@ const getStepTitle = (step: number) => {
 }
 
 export default function NewAdScreen() {
-    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit } = useAd()
+    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useAd()
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const stepTitle = getStepTitle(currentStep)
@@ -47,7 +47,9 @@ export default function NewAdScreen() {
         return "steps"
     }
 
-    const MyErrors = errors;
+    const onError = (errors: any) => {
+        console.log('Validation failed:', errors);
+    };
 
     const handleNext = async () => {
         let isValid = false;
@@ -56,17 +58,20 @@ export default function NewAdScreen() {
         } else if (currentStep === 2) {
             isValid = await trigger(['video', "thumbnail", "images"]);
         } else if (currentStep === 3) {
-            isValid = await trigger(["year", "car.color_exterior", "car.mileage"])
+            isValid = await trigger(["year", "car.exterior_color", "car.mileage"])
         } else if (currentStep === 4) {
             isValid = await trigger(["title", "description", "additional_number"])
         } else if (currentStep === 5) {
             isValid = await trigger(["plan"])
         }
 
-        handleSubmit(onSubmit)
-
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
+
+                if (Array.isArray(error) && error.length > 0) {
+                    toast.error(`${error[0].message}`)
+                }
+
                 if (error.message) {
                     toast.error(`${error.message}`)
                 }
@@ -76,7 +81,7 @@ export default function NewAdScreen() {
         if (isValid && currentStep < totalSteps) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            handleSubmit(onSubmit)
+            handleSubmit(onSubmit, onError)()
         }
     }
 
@@ -121,10 +126,10 @@ export default function NewAdScreen() {
                 <TouchableOpacity
                     className="py-3 w-full rounded-lg bg-primary-500 disabled:bg-yellow-200"
                     onPress={handleNext}
-                // disabled={currentStep >= totalSteps}
+                    disabled={isSubmitting}
                 >
                     <Text className="text-center text-xl font-inter-semibold">
-                        Next
+                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : "Next"}
                     </Text>
                 </TouchableOpacity>
             </View>

@@ -15,6 +15,7 @@ export const useAdMedia = (setValue: any) => {
     const options: ImagePicker.ImagePickerOptions | undefined = {
       mediaTypes: [videoType ? "videos" : "images"],
       aspect: [4, 3],
+      videoMaxDuration: 30,
       quality: videoType ? 1 : 0.8,
     };
     const result = await (fromCamera

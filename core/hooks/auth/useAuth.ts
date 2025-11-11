@@ -1,4 +1,5 @@
 import { attemptLogin, verifyOTP } from "@/core/lib/api/authentication/login";
+import { authStore } from "@/core/lib/stores/auth.store";
 import {
   LoginInterface,
   LoginSchema,
@@ -12,7 +13,6 @@ import { useFormHook } from "../use-form-hook";
 
 export function useSignIn() {
   const router = useRouter();
-  // const { signIn } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -25,7 +25,12 @@ export function useSignIn() {
       const {
         data: { accessToken, refreshToken, user },
       } = await attemptLogin(phone, password);
-      // signIn(accessToken, refreshToken, user);
+      authStore.setState({
+        accessToken,
+        refreshToken,
+        user,
+        isAuthenticated: true,
+      });
       router.replace("/categories");
     } catch (error) {
       console.log({ error });
@@ -85,15 +90,13 @@ export function useResetPassword() {
 
 export function useOTP() {
   const router = useRouter();
-  // const { signIn } = useAuthStore();
-
   const verifyOtp = async (email: string, code: string) => {
     try {
       const {
         data: { accessToken, refreshToken, user },
       } = await verifyOTP(email, code);
 
-      // signIn(accessToken, refreshToken, user);
+      authStore.setState({ accessToken, refreshToken, user });
       router.replace("/categories");
     } catch (error) {
       console.log({ error });

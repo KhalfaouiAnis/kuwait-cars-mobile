@@ -3,12 +3,14 @@ import { SettingsLink } from "@/core/components/ui/_links/settings-link";
 import Switch from "@/core/components/ui/button/switch";
 import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
+import { authStore } from "@/core/lib/stores/auth.store";
 import { AntDesign, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 export default function ProfileScreen() {
+    const { signOut } = authStore.getState()
     return (
         <Container
             scrollable
@@ -63,10 +65,11 @@ export default function ProfileScreen() {
                         <Switch value={true} onValueChange={() => { }} />
                     </View>
 
-                    <SettingsLink href={"/"}
+                    <SettingsLink
+                        href={"/"}
                         icon={<Ionicons name="call-outline" size={24} color="black" />}
                         label="Contact customer service" />
-                    <SettingsLink href={"/"} icon={<Ionicons name="log-out-outline" size={24} color="black" />} label="Logout" />
+                    <SettingsLink onPress={signOut} icon={<Ionicons name="log-out-outline" size={24} color="black" />} label="Logout" />
                 </View>
             </View>
         </Container>

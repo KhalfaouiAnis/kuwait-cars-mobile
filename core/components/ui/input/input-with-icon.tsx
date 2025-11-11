@@ -40,7 +40,7 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
                             onChangeText={onChange}
                             value={value as string}
                             {...props}
-                            secureTextEntry={!showPassword}
+                            secureTextEntry={props.secureTextEntry && !showPassword}
                         />
                     )}
                 />

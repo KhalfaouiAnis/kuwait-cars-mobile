@@ -18,7 +18,7 @@ export const FileSchema = z
     type: z.string(),
     name: z.string().optional(),
     duration: z.coerce.number().optional(),
-    fileSize: z.coerce.number().optional(),
+    size: z.coerce.number().optional(),
   })
   .refine(
     (file) => {
@@ -38,8 +38,8 @@ export const FileSchema = z
 
         if (
           file.type.startsWith("image/") &&
-          file.fileSize &&
-          file.fileSize > MAX_IMAGE_SIZE
+          file.size &&
+          file.size > MAX_IMAGE_SIZE
         ) {
           throw new Error(
             `Image size must be ${MAX_IMAGE_SIZE / (1024 * 1024)}MB or less.`
@@ -48,8 +48,8 @@ export const FileSchema = z
 
         if (
           file.type.startsWith("video/") &&
-          file.fileSize &&
-          file.fileSize > MAX_VIDEO_SIZE
+          file.size &&
+          file.size > MAX_VIDEO_SIZE
         ) {
           throw new Error(
             `Video size must be ${MAX_VIDEO_SIZE / (1024 * 1024)}MB or less.`
@@ -77,20 +77,19 @@ export const FileSchema = z
 export const createFileSchema = (customMessage?: string) =>
   z
     .object({
-      uri: z.string().url().or(z.string().startsWith("file://")),
-      type: z.string(),
+      uri: z.string().url().or(z.string().startsWith("file://")).optional(),
+      type: z.string().optional(),
       name: z.string().optional(),
       duration: z.coerce.number().optional(),
-      fileSize: z.coerce.number().optional(),
+      size: z.coerce.number().optional(),
     })
     .refine(
       (file) => {
-        if (!file.uri)
-          return customMessage || "This file is required";
+        if (!file.uri) return false;
         try {
           if (
-            !file.type.startsWith("image/") &&
-            !file.type.startsWith("video/")
+            !file.type?.startsWith("image/") &&
+            !file.type?.startsWith("video/")
           ) {
             throw new Error(
               `File must be a supported format (${[
@@ -102,8 +101,8 @@ export const createFileSchema = (customMessage?: string) =>
 
           if (
             file.type.startsWith("image/") &&
-            file.fileSize &&
-            file.fileSize > MAX_IMAGE_SIZE
+            file.size &&
+            file.size > MAX_IMAGE_SIZE
           ) {
             throw new Error(
               `Image size must be ${MAX_IMAGE_SIZE / (1024 * 1024)}MB or less.`
@@ -112,8 +111,8 @@ export const createFileSchema = (customMessage?: string) =>
 
           if (
             file.type.startsWith("video/") &&
-            file.fileSize &&
-            file.fileSize > MAX_VIDEO_SIZE
+            file.size &&
+            file.size > MAX_VIDEO_SIZE
           ) {
             throw new Error(
               `Video size must be ${MAX_VIDEO_SIZE / (1024 * 1024)}MB or less.`
@@ -121,8 +120,6 @@ export const createFileSchema = (customMessage?: string) =>
           }
 
           if (file.duration && file.type?.startsWith("video/")) {
-            console.log({ duration: file.duration });
-
             const durationMs = file.duration;
             if (durationMs < 10000 || durationMs > 30000) {
               throw new Error("Video duration must be 10-30s");
@@ -135,31 +132,32 @@ export const createFileSchema = (customMessage?: string) =>
           throw new Error(customMessage || `Invalid file`);
         }
       },
-      { message: customMessage || "File validation failed", path: ["url"] }
+      { message: customMessage || "File validation failed" }
     );
 
 export const MultiFileSchema = (customMessage?: string) =>
   z.array(createFileSchema(customMessage));
 
 export const BaseAdSchema = z.object({
-  title: z.string().min(3, "Title is required"),
-  description: z.string().min(3, "Title is required"),
+  title: z.string().min(3, "The title field is required"),
+  description: z.string().min(3, "The description field is required"),
+  location: LocationSchema,
   year: z.coerce
-    .number({ message: "Year field is required" })
+    .number({ message: "The year field is required" })
     .min(0)
     .max(new Date().getFullYear()),
+
   price: z.coerce.number().optional(),
+  additional_number: z.string().optional(),
 
   category_id: z.string(),
   subcategory_id: z.string(),
 
-  location: LocationSchema,
   thumbnail: createFileSchema("Thumbnail must be a valid image under 5MB"),
   images: MultiFileSchema("Images must be valid files under 5MB each"),
   video: createFileSchema("Video must be 10-30 seconds and under 100MB"),
-  plan: z.string(),
 
-  additional_number: z.string().optional(),
+  plan: z.string().min(1, "Plan is required"),
 });
 
 export type LocationInterface = z.infer<typeof LocationSchema>;

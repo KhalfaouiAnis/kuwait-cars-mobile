@@ -6,7 +6,7 @@ import GoogleButton from "@/core/components/ui/button/GoogleButton";
 import Container from "@/core/components/ui/container";
 import { images } from "@/core/constants/images";
 import { getAnonymousAccessToken } from "@/core/lib/api/authentication/login";
-import { getAuthState } from "@/core/lib/stores/auth.store";
+import { authStore } from "@/core/lib/stores/auth.store";
 import { Image } from "expo-image";
 import { Link, useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -20,7 +20,7 @@ export default function Index() {
         if (!token) {
             return
         }
-        getAuthState().createAnonymousSesssion(token)
+        authStore().createAnonymousSesssion(token)
         router.push("/categories")
     }
 

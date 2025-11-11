@@ -13,7 +13,7 @@ import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-const FILTERS: { label: string, value: FilterAdsBy }[] = [{ label: "Brand", value: "brand" }, { label: "Year of manufacture", value: "year" }, { label: "Price", value: "price" }]
+const FILTERS: { label: string, value: FilterAdsBy }[] = [{ label: "Brand", value: "brand" }, { label: "Year", value: "year" }, { label: "Price", value: "price" }]
 
 const listings = [
     {
@@ -107,14 +107,12 @@ export default function ModelsByCategoryScreen() {
             <View className="w-full pl-4 relative">
                 <View className="flex-row items-center gap-x-2 mb-4">
                     <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2"
-                        onPress={() => setView(prevState => prevState === "horizontal" ? "vertical" : "horizontal")}
-                    >
+                        onPress={() => setView(prevState => prevState === "horizontal" ? "vertical" : "horizontal")}>
                         <Fontisto name="nav-icon-list-a" size={16} color="black" />
                         <Text>change view</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2"
-                        onPress={() => setDisplaySortingModal(true)}
-                    >
+                        onPress={() => setDisplaySortingModal(true)}>
                         <MaterialCommunityIcons name="sort" size={18} color="black" />
                         <Text>sort by</Text>
                     </TouchableOpacity>

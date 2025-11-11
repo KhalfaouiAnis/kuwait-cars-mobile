@@ -22,9 +22,10 @@ export default function RootLayout() {
 
   const { _hasHydrated, bootstrapAsync } = useAuthStore();
 
+  console.log({ _hasHydrated });
+
   useEffect(() => {
     bootstrapAsync()
-      .catch(console.error)
   }, [bootstrapAsync]);
 
   useEffect(() => {

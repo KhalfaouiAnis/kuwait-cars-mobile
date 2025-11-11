@@ -1,5 +1,5 @@
 import { ADS_PAGE_SIZE, VEHICLES_ADS_STORAGE_KEY } from "@/core/constants";
-import { VehicleAd } from "@/core/types/ads";
+import { VehicleAdInterface } from "@/core/types/schema/vehicleAd";
 import { isAxiosError } from "axios";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -8,15 +8,15 @@ import useSortingAndFilteringStore from "../sorting-filtering.store";
 import { zustandStorage } from "../storage";
 
 interface VehicleAdsState {
-  ads: VehicleAd[];
+  ads: VehicleAdInterface[];
   loading: boolean;
   error: string | null;
   nextCursor: string | null;
   hasMore: boolean;
 
   fetchVehicleAds: (cursor?: string) => Promise<void>;
-  createVehicleAd: (data: Partial<VehicleAd>) => Promise<VehicleAd>;
-  updateVehicleAd: (id: string, data: Partial<VehicleAd>) => Promise<VehicleAd>;
+  createVehicleAd: (data: Partial<VehicleAdInterface>) => Promise<VehicleAdInterface>;
+  updateVehicleAd: (id: string, data: Partial<VehicleAdInterface>) => Promise<VehicleAdInterface>;
   deleteVehicleAd: (id: string) => Promise<void>;
 }
 

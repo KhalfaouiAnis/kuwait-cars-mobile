@@ -1,7 +1,9 @@
+import { httpClient } from "@/core/lib/api/httpClient";
 import {
   VehicleAdInterface,
   VehicleAdSchema,
 } from "@/core/types/schema/vehicleAd";
+import { isAxiosError } from "axios";
 import { useRouter } from "expo-router";
 import { useFormHook } from "../use-form-hook";
 
@@ -22,8 +24,9 @@ export function useAd() {
       plan: "pro",
       price: 222,
       car: {
-        mileage: "dmdmmd",
+        mileage: "125,320 KM",
         mark: "kawasaki",
+        brand: "fff",
       },
       location: {
         area: "area 1",
@@ -31,17 +34,54 @@ export function useAd() {
         district: "district 1",
       },
       thumbnail: {},
-      images: [{}],
+      images: [],
       video: {},
+      category_id: "cars_for_sale",
+      subcategory_id: "sport_cars",
     },
   });
 
   const onSubmit = async (data: VehicleAdInterface) => {
     try {
-      console.log(data);
-      // router.navigate(`/my-ads`);
+      const formData = new FormData();
+
+      Object.entries(data).forEach(([key, value]) => {
+        if (["string", "number"].includes(typeof value)) {
+          formData.append(key, value as string);
+        }
+      });
+      formData.append("car", JSON.stringify(data.car));
+      formData.append("location", JSON.stringify(data.location));
+      formData.append("thumbnail", data.thumbnail as any);
+      formData.append("video", data.video as any);
+      data.images.forEach((image) => formData.append("images", image as any));
+
+      const response = await httpClient.post("/ads/create", formData);
+
+      console.log(response.data);
+
+      // const response = await fetch(
+      //   process.env.EXPO_PUBLIC_API_URL + "/api/ads/create",
+      //   {
+      //     method: "POST",
+      //     body: formData,
+      //     headers: {},
+      //   }
+      // );
+
+      // const json = await response.json();
+      // console.log({ json });
+
+      // router.navigate("/my-ads");
     } catch (error) {
-      console.log({ error });
+      if (isAxiosError(error)) {
+        if (error.code === "ERR_NETWORK") {
+          console.log("Network error - Check baseURL, IP, or CORS");
+        } else if (error.response?.status === 400) {
+          console.log("Bad Request:", error.response.data); // Multer details
+        }
+      }
+      console.error("Submit error:", error);
     }
   };
 

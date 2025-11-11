@@ -1,12 +1,11 @@
 import AppleIcon from '@/assets/svg/apple';
 import { httpClient } from '@/core/lib/api/httpClient';
-import useAuthStore from '@/core/lib/stores/auth.store';
+import { authStore } from '@/core/lib/stores/auth.store';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { useRouter } from 'expo-router';
 import { Alert, Platform, TouchableOpacity } from 'react-native';
 
 export default function AppleButton({ onSuccess }: { onSuccess?: (user: any) => void }) {
-    const { signIn } = useAuthStore()
     const router = useRouter();
 
     if (Platform.OS !== 'ios') return null; // iOS only
@@ -25,7 +24,7 @@ export default function AppleButton({ onSuccess }: { onSuccess?: (user: any) => 
             const res = await httpClient.post('/auth/facebook', { identityToken, fullName });
 
             const { accessToken, refreshToken, user } = res.data
-            signIn(accessToken, refreshToken, user)
+            authStore.setState({ accessToken, refreshToken, user })
 
             onSuccess?.(user)
             router.replace('/categories');

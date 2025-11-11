@@ -2,24 +2,27 @@ import Flag from "@/assets/svg/flag";
 import Container from "@/core/components/ui/container";
 import { SUPPORTED_LANGUAGES } from "@/core/constants";
 import { images } from "@/core/constants/images";
+import i18n from "@/core/i18n/i18n";
+import { authStore } from "@/core/lib/stores/auth.store";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { Language } from "@/core/types";
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
+  const { isAuthenticated } = authStore()
   const { setLang, lang: currentLang } = useUserPreferencesStore();
   const { t } = useTranslation();
 
   const handleSelect = async (lang: Language) => {
-    // setLang(lang.code);
-    // i18n.changeLanguage(lang.code);
-    router.push("/new-ad")
+    setLang(lang.code);
+    i18n.changeLanguage(lang.code);
+    router.push("/signin")
   }
 
   const renderItem = ({ item }: { item: Language }) => (
@@ -35,6 +38,8 @@ export default function Index() {
       <Ionicons name="chevron-forward" size={20} />
     </TouchableOpacity>
   );
+
+  if (isAuthenticated) return <Redirect href={"/categories"} />
 
   return (
     <Container backgroundColor="#FAED02">

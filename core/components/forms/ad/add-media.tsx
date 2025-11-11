@@ -32,8 +32,8 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
     }, []);
 
     useEffect(() => {
-        const thambnail = getValue?.("thumbnail")
-        thambnail && setThumbnail(thambnail)
+        const thumbnail = getValue?.("thumbnail")
+        thumbnail && setThumbnail(thumbnail)
         const images = getValue?.("images")
         images && setImages(images)
         const video = getValue?.("video")
@@ -71,24 +71,7 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                 </TouchableOpacity>
             </View>
             {tab === 0 ? (
-                !thumbnail ? (
-                    <View className="gap-y-8">
-                        <View className="gap-y-2">
-                            <Text className="font-inter-semibold text-3xl">Good pictures sell faster</Text>
-                            <Text numberOfLines={2}>Capture the front, back, and sides — buyers love seeing the full view</Text>
-                        </View>
-                        <View>
-                            <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
-                            <PickFromGalleryGallery addMedia={() => addMedia(false, false, true)} />
-                        </View>
-                        <View className="flex-row items-center justify-center">
-                            <View className="border border-gray-300 w-2/5" />
-                            <Text className="px-2">Or</Text>
-                            <View className="border border-gray-300 w-2/5" />
-                        </View>
-                        <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => addMedia(true, false, true)} />
-                    </View>
-                ) : (
+                thumbnail && thumbnail.uri ? (
                     <View className="gap-y-8">
                         <View>
                             <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
@@ -115,6 +98,23 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                         )}
 
                     </View>
+                ) : (
+                    <View className="gap-y-8">
+                        <View className="gap-y-2">
+                            <Text className="font-inter-semibold text-3xl">Good pictures sell faster</Text>
+                            <Text numberOfLines={2}>Capture the front, back, and sides — buyers love seeing the full view</Text>
+                        </View>
+                        <View>
+                            <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
+                            <PickFromGalleryGallery addMedia={() => addMedia(false, false, true)} />
+                        </View>
+                        <View className="flex-row items-center justify-center">
+                            <View className="border border-gray-300 w-2/5" />
+                            <Text className="px-2">Or</Text>
+                            <View className="border border-gray-300 w-2/5" />
+                        </View>
+                        <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => addMedia(true, false, true)} />
+                    </View>
                 )
             ) : (
                 <View className="gap-y-8">
@@ -140,7 +140,7 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                         {renderPhoto(image.uri, "images", image.name)}
                     </View>
                 ))}
-                {video && (<View className="relative w-full pr-2">
+                {video && video.uri && (<View className="relative w-full pr-2">
                     <VideoPlayer source={video.uri} />
                     <TouchableOpacity
                         className="absolute -top-4 -right-0 bg-red-500 rounded-full w-7 h-7 justify-center items-center"

@@ -1,11 +1,12 @@
-import { Stack } from "expo-router";
+import useAuthStore from "@/core/lib/stores/auth.store";
+import { Redirect, Stack } from "expo-router";
 
 export default function ProtectedLayout() {
-    // const { isAuthenticated } = useAuthStore();
+    const { isAuthenticated } = useAuthStore();
 
-    // if (!isAuthenticated) {
-    //     return <Redirect href="/signin" />;
-    // }
+    if (!isAuthenticated) {
+        return <Redirect href="/signin" />;
+    }
 
     return (
         <Stack screenOptions={{ headerShown: false }}>

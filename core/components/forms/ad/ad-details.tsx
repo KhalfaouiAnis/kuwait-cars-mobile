@@ -32,10 +32,10 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                 <View>
                     <SelectInput
                         control={control}
-                        name="car.color_exterior"
+                        name="car.exterior_color"
                         options={CAR_COLORS}
                         renderOption={renderColorOption}
-                        error={errors.car?.color_exterior?.message} placeholder="Color Exterior" />
+                        error={errors.car?.exterior_color?.message} placeholder="Exterior color" />
                     <Text className="ms-4 text-gray-400 mt-1">Required</Text>
                 </View>
                 <View>

@@ -1,9 +1,7 @@
 import { handleTokenValidation } from "@/core/utils/authUtils";
 import axios from "axios";
 import { router } from "expo-router";
-import { getAuthState } from "../stores/auth.store";
-
-const { accessToken, signOut } = getAuthState();
+import { authStore } from "../stores/auth.store";
 
 export const httpClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL + "/api",
@@ -29,9 +27,16 @@ const processQueue = (error: any, token: string | null = null) => {
 
 httpClient.interceptors.request.use(
   async (config) => {
+    const { accessToken } = authStore.getState();
+
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
+
+    if (config.data instanceof FormData) {
+      config.headers["Content-Type"] = "multipart/form-data";
+    }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -40,6 +45,8 @@ httpClient.interceptors.request.use(
 httpClient.interceptors.response.use(
   (response) => response,
   async (error) => {
+    const { accessToken, signOut } = authStore.getState();
+
     const originalRequest = error.config;
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
@@ -59,7 +66,7 @@ httpClient.interceptors.response.use(
       try {
         const authenticated = await handleTokenValidation();
 
-        if(authenticated){
+        if (authenticated) {
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         }
 
@@ -78,3 +85,6 @@ httpClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+console.log({ isRefreshing });
+console.log({ failedQueue });
