@@ -3,7 +3,7 @@ import {
   VehicleAdInterface,
   VehicleAdSchema,
 } from "@/core/types/schema/vehicleAd";
-import { isAxiosError } from "axios";
+import { AxiosProgressEvent, isAxiosError } from "axios";
 import { useRouter } from "expo-router";
 import { useFormHook } from "../use-form-hook";
 
@@ -41,7 +41,10 @@ export function useAd() {
     },
   });
 
-  const onSubmit = async (data: VehicleAdInterface) => {
+  const onSubmit = async (
+    data: VehicleAdInterface,
+    onUploadProgress?: (progressEvent: AxiosProgressEvent) => void
+  ) => {
     try {
       const formData = new FormData();
 
@@ -56,7 +59,9 @@ export function useAd() {
       formData.append("video", data.video as any);
       data.images.forEach((image) => formData.append("images", image as any));
 
-      const response = await httpClient.post("/ads/create", formData);
+      const response = await httpClient.post("/ads/create", formData, {
+        onUploadProgress,
+      });
 
       console.log(response.data);
 

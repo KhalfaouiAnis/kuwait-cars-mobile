@@ -6,6 +6,7 @@ import ChoosePlan from "@/core/components/forms/ad/choose-plan";
 import PostAd from "@/core/components/forms/ad/post-ad";
 import AdPublishSuccess from "@/core/components/forms/ad/success";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
+import UploadProgress from "@/core/components/ui/shared/upload-progress";
 import { useAd } from "@/core/hooks/ad/usAd";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -27,13 +28,16 @@ const getStepTitle = (step: number) => {
             return ""
     }
 }
+const totalSteps = 5;
 
 export default function NewAdScreen() {
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useAd()
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isUploading, setIsUploading] = useState(false);
+
     const stepTitle = getStepTitle(currentStep)
-    const totalSteps = 5;
 
     const handlePrevious = () => {
         if (currentStep === 1) {
@@ -67,11 +71,9 @@ export default function NewAdScreen() {
 
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
-
                 if (Array.isArray(error) && error.length > 0) {
                     toast.error(`${error[0].message}`)
                 }
-
                 if (error.message) {
                     toast.error(`${error.message}`)
                 }
@@ -81,7 +83,15 @@ export default function NewAdScreen() {
         if (isValid && currentStep < totalSteps) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            handleSubmit(onSubmit, onError)()
+            setIsUploading(true);
+            setUploadProgress(0);
+            handleSubmit((data) => onSubmit(data, (progressEvent) => {
+                if (progressEvent.total) {
+                    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setUploadProgress(progress);
+                }
+            }), onError)();
+            setUploadProgress(100);
         }
     }
 
@@ -121,6 +131,13 @@ export default function NewAdScreen() {
 
     return (
         <AdFormContainer title={stepTitle} reset={handleReset} previous={handlePrevious}>
+            {
+                isUploading && uploadProgress < 100 && (
+                    <View className="mb-1">
+                        <UploadProgress uploadProgress={uploadProgress} />
+                    </View>
+                )
+            }
             {renderCurrentStep()}
             <View className="mt-auto mb-4">
                 <TouchableOpacity
@@ -129,7 +146,7 @@ export default function NewAdScreen() {
                     disabled={isSubmitting}
                 >
                     <Text className="text-center text-xl font-inter-semibold">
-                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : "Next"}
+                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : currentStep === 5 ? "Submit" : "Next"}
                     </Text>
                 </TouchableOpacity>
             </View>
