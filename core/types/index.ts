@@ -5,8 +5,11 @@ export interface User {
   fullname: string;
   phone: string;
   email: string;
-  avatar?: string;
   role: UserRole;
+  city?: string
+  province?: string
+  zip_code?: string;
+  avatar?: string;
 }
 
 type BaseAd = {

@@ -8,7 +8,7 @@ const MainHeader = ({ drawer = false, back = true }: { drawer?: boolean, back?: 
     }
 
     const openProfile = () => {
-        router.push("/(protected)/(profile)/profile")
+        router.push("/profile")
     }
 
     return (

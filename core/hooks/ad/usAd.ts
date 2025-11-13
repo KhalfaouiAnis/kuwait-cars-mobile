@@ -77,7 +77,7 @@ export function useAd() {
       // const json = await response.json();
       // console.log({ json });
 
-      // router.navigate("/my-ads");
+      router.navigate("/my-ads");
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.code === "ERR_NETWORK") {

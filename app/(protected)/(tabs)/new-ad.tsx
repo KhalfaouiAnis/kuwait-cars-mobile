@@ -51,8 +51,17 @@ export default function NewAdScreen() {
         return "steps"
     }
 
-    const onError = (errors: any) => {
-        console.log('Validation failed:', errors);
+    const onError = () => {
+        if (Object.keys(errors).length > 0) {
+            Object.entries(errors).forEach(([_, error]) => {
+                if (Array.isArray(error) && error.length > 0) {
+                    toast.error(`${error[0].message}`)
+                }
+                if (error.message) {
+                    toast.error(`${error.message}`)
+                }
+            })
+        }
     };
 
     const handleNext = async () => {

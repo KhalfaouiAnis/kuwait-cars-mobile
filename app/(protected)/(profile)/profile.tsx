@@ -10,7 +10,8 @@ import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 export default function ProfileScreen() {
-    const { signOut } = authStore.getState()
+    const { signOut, user } = authStore.getState();
+
     return (
         <Container
             scrollable
@@ -20,23 +21,31 @@ export default function ProfileScreen() {
             <View className="flex-1 mt-2 bg-white px-4 py-2">
                 <View className="flex-row justify-between w-full border border-primary-500 rounded-lg px-4 pt-1 pb-3">
                     <View>
-                        <Text className="font-inter-semibold text-xl">Mohamed Tunisia</Text>
+                        <Text className="font-inter-bold text-xl">{user?.fullname}</Text>
                         <Text className="my-2 font-inter">View and edit profile</Text>
-                        <View className="flex-row items-center">
+                        <View className="flex-row items-start">
                             <Ionicons name="location-outline" size={20} color="#FAED02" />
-                            <Text className="ml-2">Kuwait</Text>
+                            <Text className="ms-2">{user?.city}</Text>
                         </View>
                     </View>
                     <View className="items-end">
                         <View className="relative">
-                            <Image source={images.Logo} style={{ width: 75, height: 75 }} contentFit="cover" />
+                            <Image
+                                source={user?.avatar
+                                    ? { uri: `${process.env.EXPO_PUBLIC_API_URL}${user?.avatar}` }
+                                    : images.DefaultAvatar}
+                                style={{ width: 75, height: 75, borderRadius: 50 }}
+                                contentFit="cover"
+                            />
                             <Pressable className="absolute -left-7 bottom-1 z-10 bg-white rounded-full p-2">
                                 <Ionicons name="camera-outline" size={24} />
                             </Pressable>
                         </View>
-                        <Link href={"/profile-edit"} className="flex-row px-4 py-2 bg-primary-500 rounded-lg mt-4">
-                            <Text className="mr-2 font-inter-semibold">Edit Profile</Text>
-                            <Ionicons name="pencil-outline" size={18} />
+                        <Link href={"/profile-edit"} className="bg-primary-500 rounded-lg w-full mt-4">
+                            <View className="flex-row px-3 py-2 items-center justify-center gap-1">
+                                <Text className="font-inter-semibold text-sm">Edit Profile</Text>
+                                <Feather name="edit-3" size={16} color="black" />
+                            </View>
                         </Link>
                     </View>
                 </View>

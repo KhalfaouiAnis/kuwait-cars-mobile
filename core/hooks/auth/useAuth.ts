@@ -78,7 +78,7 @@ export function useResetPassword() {
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useFormHook(ResetPasswordSchema, {
-    defaultValues: { email: "", password: "", confirmPassword: "" },
+    defaultValues: { phone: "", password: "", confirmPassword: "" },
   });
 
   const onSubmit = (data: ResetPasswordInterface) => {

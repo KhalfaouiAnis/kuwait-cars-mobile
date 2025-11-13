@@ -13,10 +13,10 @@ export const listings = [
     {
         id: "listing-1",
         images: [
-            { image: images.CarChevrolet },
-            { image: images.CarHyunday },
-            { image: images.CarMercedes },
-            { image: images.CarToyota },
+            { url: images.CarChevrolet },
+            { url: images.CarHyunday },
+            { url: images.CarMercedes },
+            { url: images.CarToyota },
         ],
         badge: "Super DEAL",
         name: "Chevrolet",
@@ -32,10 +32,10 @@ export const listings = [
     {
         id: "listing-2",
         images: [
-            { image: images.CarHyunday },
-            { image: images.CarChevrolet },
-            { image: images.CarMercedes },
-            { image: images.CarToyota },
+            { url: images.CarHyunday },
+            { url: images.CarChevrolet },
+            { url: images.CarMercedes },
+            { url: images.CarToyota },
         ],
         badge: "Super DEAL 2",
         name: "Hundai",
@@ -51,10 +51,10 @@ export const listings = [
     {
         id: "listing-3",
         images: [
-            { image: images.CarMercedes },
-            { image: images.CarHyunday },
-            { image: images.CarChevrolet },
-            { image: images.CarToyota },
+            { url: images.CarMercedes },
+            { url: images.CarHyunday },
+            { url: images.CarChevrolet },
+            { url: images.CarToyota },
         ],
         badge: "Super DEAL 3",
         name: "Mercedes",
@@ -85,7 +85,7 @@ export default function FavoritesScreen() {
                 <FlatList
                     data={listings}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2"><Ad adData={item} /></View>}
+                    renderItem={({ item }) => <View className="mb-2"><Ad data={item} view="vertical" /></View>}
                     contentContainerStyle={{ paddingBottom: 130 }}
                     showsVerticalScrollIndicator={false}
                     getItemLayout={getItemLayout}

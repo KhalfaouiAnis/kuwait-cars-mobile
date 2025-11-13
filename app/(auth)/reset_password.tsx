@@ -1,7 +1,7 @@
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { useResetPassword } from "@/core/hooks/auth/useAuth";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 export default function ResetPasswordScreen() {
     const { control, errors, isSubmitting, handleSubmit, onSubmit } = useResetPassword()
@@ -13,26 +13,35 @@ export default function ResetPasswordScreen() {
             </Text>
             <View className="pt-2 px-4 my-1">
                 <InputWithIcon
+                    icon="call-outline"
+                    placeholder="Phone Number"
+                    name="phone"
+                    error={errors.phone?.message}
                     control={control}
-                    name="email"
-                    error={errors.email?.message}
-                    icon="mail-outline" placeholder="Enter your email" label="Your Email" />
+                    label="Your Phone"
+                />
                 <InputWithIcon
-                    control={control}
                     name="password"
-                    error={errors.email?.message}
-                    icon="lock-closed-outline" placeholder="Create New Password" label="New Password" endIcon="eye-outline" />
+                    control={control}
+                    error={errors.password?.message}
+                    label="New Password" endIcon="eye-outline"
+                    icon="lock-closed-outline" placeholder="Create New Password"
+                />
                 <InputWithIcon
                     control={control}
                     name="confirmPassword"
                     error={errors.confirmPassword?.message}
-                    icon="lock-closed-outline" placeholder="Confirm Password" label="Confirm Password" endIcon="eye-outline" />
+                    label="Confirm Password" endIcon="eye-outline"
+                    icon="lock-closed-outline" placeholder="Confirm Password"
+                />
             </View>
             <View className="px-4">
                 <TouchableOpacity className="bg-primary-500 py-3 mt-4 rounded-lg items-center"
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}>
-                    <Text className="text-lg font-semibold text-secondary-900">Reset password</Text>
+                    <Text className="text-lg font-semibold text-secondary-900">
+                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : "Reset password"}
+                    </Text>
                 </TouchableOpacity>
             </View>
         </FormWrapper>

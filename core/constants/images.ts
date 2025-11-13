@@ -4,6 +4,7 @@ import BMW3SeriesE46Category from "@/assets/images/BMW_3_Series_E46_Rear_Tail_Li
 import BrakesCategory from "@/assets/images/Brakes.png";
 import CarAccessoriesCategory from "@/assets/images/Car_Accessories.png";
 import CarChevrolet from "@/assets/images/chevrolet-corvette.png";
+import DefaultAvatar from "@/assets/images/default_avatar.jpg";
 import DeleteMessage from "@/assets/images/delete-message.png";
 import EngineCoolingSystemCategory from "@/assets/images/Engine_cooling_system.png";
 import CarHyunday from "@/assets/images/hyunday-tucson.png";
@@ -25,6 +26,7 @@ export const images = {
   AvatarVideoBoy,
   AvatarVideoGirl,
   DeleteMessage,
+  DefaultAvatar,
   Mohamed,
   Logo,
   NoContent,

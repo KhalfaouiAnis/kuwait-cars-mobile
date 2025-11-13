@@ -24,10 +24,19 @@ export default function SignUpForm() {
                     error={errors.email?.message}
                     control={control} name="email"
                 />
-                <InputWithIcon icon="location-outline" placeholder="YOUR CITY"
-                    error={errors.city?.message}
-                    control={control} name="city"
-                />
+                <View className="w-full flex-row items-center justify-center gap-1">
+                    <InputWithIcon icon="location-outline" placeholder="YOUR CITY"
+                        error={errors.city?.message}
+                        control={control} name="city"
+                    />
+                    <View>
+                        <Text className="text-lg">OR</Text>
+                    </View>
+                    <InputWithIcon placeholder="ZIP code"
+                        error={errors.zip_code?.message}
+                        control={control} name="zip_code"
+                    />
+                </View>
             </View>
             <View className="flex-row items-center justify-between mt-2">
                 <View className="flex-row items-center gap-x-1">

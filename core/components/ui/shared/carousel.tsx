@@ -52,7 +52,8 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
                             <Image
                                 source={item.url}
                                 className="w-full h-full"
-                                style={{ width: screenWidth - 40, height: 260, objectFit: "cover" }}
+                                style={{ width: screenWidth - 40, height: 260 }}
+                                contentFit="cover"
                             />
                             <View className="absolute top-2 left-2">
                                 {badge}

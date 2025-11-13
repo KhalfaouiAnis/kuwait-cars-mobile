@@ -19,7 +19,6 @@ export const LoginSchema = z.object({
 
 export const SignupSchema = z.object({
   fullname: z.string().min(3, "Name must be at least 3 characters"),
-  city: z.optional(z.string().min(3, "City must be at least 3 characters")),
   email: z.string().email("Please enter a valid email"),
   phone: z
     .string()
@@ -29,6 +28,8 @@ export const SignupSchema = z.object({
   // .regex(/[A-Z]/, 'Password must contain an uppercase letter')
   // .regex(/[!@#$%^&*]/, 'Password must contain a special character'),
   role: z.optional(z.nativeEnum(UserRole)),
+  city: z.optional(z.string().min(3, "City must be at least 3 characters")),
+  zip_code: z.string().optional(),
 });
 
 export const RequestResetPasswordSchema = z.object({
@@ -38,11 +39,11 @@ export const RequestResetPasswordSchema = z.object({
 
 export const ResetPasswordSchema = z
   .object({
-    email: EmailSchema.shape.email,
-    password: PasswordSchema.shape.password,
-    confirmPassword: PasswordSchema.shape.password,
+    phone: z.string().optional(),
+    password: z.string({message: "Password is required"}).min(6),
+    confirmPassword: z.string({message: "Password is required"}).min(6),
   })
-  .refine((formData) => formData.confirmPassword !== formData.password, {
+  .refine((formData) => formData.confirmPassword === formData.password, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });

@@ -1,5 +1,6 @@
 import { SelectOption } from '@/core/types';
 import { Ionicons } from '@expo/vector-icons';
+import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
@@ -7,14 +8,17 @@ import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableO
 type SelectInputProps<TForm extends FieldValues> = TextInputProps & {
     name: FieldPath<TForm>;
     control: Control<TForm>;
+    renderOption: (option: SelectOption) => ReactNode
+    options: SelectOption[]
     onChangeText?: (text: string) => void;
     value?: string;
     error?: string;
-    renderOption: (option: SelectOption) => ReactNode
-    options: SelectOption[]
+    label?: string;
+    primary?: boolean
+    icon?: ReactNode,
 }
 
-export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, ...props }: SelectInputProps<TForm>) {
+export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, icon, ...props }: SelectInputProps<TForm>) {
     const [showModal, setShowModal] = useState(false);
 
     const renderSelectOption = (option: SelectOption, handleSelect: any) => (
@@ -27,17 +31,20 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
 
     return (
         <View className="w-full">
+            {label && <Text className="text-base font-semibold pl-6 mb-1">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}>
-                <View className='flex-row items-center justify-between p-3'
-                    style={{
-                        elevation: 2,
-                        backgroundColor: "white", shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: {
-                            width: 4, height: 4
-                        },
-                        borderColor: error ? "#D80027" : undefined,
-                        borderWidth: error ? 1 : undefined,
+                <View className={clsx('flex-row items-center p-3 border bg-white', {
+                    "border-primary-500": primary,
+                    "border-error": error,
+                    "rounded-lg": primary
+                })}
+                    style={primary ? {} : {
+                        elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },
                     }}
                 >
+                    <View className='items-center me-2'>
+                        {icon}
+                    </View>
                     <Controller
                         name={name}
                         control={control}
@@ -58,7 +65,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                                     <Modal
                                         visible={showModal}
                                         animationType="slide"
-                                        transparent={false}
+                                        transparent
                                         onRequestClose={() => setShowModal(false)}
                                     >
                                         <TouchableOpacity
@@ -87,7 +94,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                             )
                         }}
                     />
-                    <View>
+                    <View className='ms-auto'>
                         <Ionicons name='chevron-forward' size={20} />
                     </View>
                 </View>

@@ -22,7 +22,7 @@ export default function Index() {
   const handleSelect = async (lang: Language) => {
     setLang(lang.code);
     i18n.changeLanguage(lang.code);
-    router.push("/signin")
+    router.push("/welcome")
   }
 
   const renderItem = ({ item }: { item: Language }) => (

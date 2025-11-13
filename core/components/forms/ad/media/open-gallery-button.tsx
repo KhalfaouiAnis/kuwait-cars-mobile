@@ -2,7 +2,7 @@ import { EvilIcons, Octicons } from "@expo/vector-icons";
 import { clsx } from "clsx";
 import { Text, TouchableOpacity } from "react-native";
 
-export default function PickFromGalleryGallery({ addMedia, small, video }: { addMedia: () => Promise<void>, small?: boolean, video?: boolean }) {
+export default function PickFromGalleryGallery({ addMedia, small, video }: { addMedia: () => void, small?: boolean, video?: boolean }) {
     return (
         <TouchableOpacity className={clsx("items-center justify-center", {
             "rounded-full gap-x-2 py-4 px-6 bg-primary-500 flex-row": small,

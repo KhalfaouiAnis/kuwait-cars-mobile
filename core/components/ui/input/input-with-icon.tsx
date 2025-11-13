@@ -27,7 +27,7 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
                 "border-primary-500 border-[1px] p-2 pl-4 rounded-lg": bordered,
             })}>
                 {
-                    customIcon ? customIcon : <Ionicons name={icon} size={22} color={error ? "#D80027" : "#000000"} className="mr-2" />
+                    customIcon ? customIcon : <Ionicons name={icon} size={24} color={error ? "#D80027" : "#000000"} className="mr-2" />
                 }
                 <Controller
                     name={name}
