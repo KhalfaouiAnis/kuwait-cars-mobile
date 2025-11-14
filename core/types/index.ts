@@ -6,13 +6,13 @@ export interface User {
   phone: string;
   email: string;
   role: UserRole;
-  city?: string
-  province?: string
+  city?: string;
+  province?: string;
   zip_code?: string;
   avatar?: string;
 }
 
-type BaseAd = {
+export type BaseAd = {
   id: string;
   title: string;
   description: string;
@@ -21,10 +21,11 @@ type BaseAd = {
   category_id: string;
   subcategory_id: string;
   location: LocationInterface;
-  thumbnail_image: string;
+  thumbnail: string;
   additional_number?: string;
   plan: string;
   created_at: string;
+  viewed_at?: string | number | Date;
 };
 
 export type CarAd = BaseAd & {

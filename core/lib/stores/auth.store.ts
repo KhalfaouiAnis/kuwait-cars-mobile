@@ -1,5 +1,5 @@
 import { AUTH_STORAGE_KEY } from "@/core/constants";
-import { User } from "@/core/types";
+import { BaseAd, User } from "@/core/types";
 import {
   handleTokenValidation,
   validateAndRefreshToken,
@@ -11,6 +11,7 @@ import { zustandStorage } from "./storage";
 
 interface AuthState {
   user: User | null;
+  recentlyViewedAds: BaseAd[];
   accessToken: string | null;
   refreshToken: string | null;
   _hasHydrated: boolean;
@@ -18,6 +19,8 @@ interface AuthState {
   bootstrapAsync: () => Promise<void>;
   createAnonymousSesssion: (token: string) => void;
   setUser: (user: User | null) => void;
+  addToRecentlyViewed: (ad: BaseAd) => void;
+  clearRecentlyViewed: () => void;
   signOut: () => void;
 }
 
@@ -25,6 +28,22 @@ const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       user: null,
+      recentlyViewedAds: [
+        {
+          id: "ad1",
+          category_id: "vehicles",
+          created_at: "now",
+          description: "ad description",
+          location: { area: "aa", block: "bb", district: "dd" },
+          plan: "pro",
+          price: 123,
+          subcategory_id: "mercedes",
+          title: "Mercedes",
+          year: 2019,
+          viewed_at: new Date(),
+          thumbnail: "https://placehold.co/600x400/png",
+        },
+      ],
       _hasHydrated: false,
       isAuthenticated: false,
       accessToken: null,
@@ -60,6 +79,13 @@ const useAuthStore = create<AuthState>()(
       setUser: (user) => {
         set({ user });
       },
+      addToRecentlyViewed: (newAd) => {
+        const { recentlyViewedAds } = get();
+        const filtered = recentlyViewedAds.filter((ad) => ad.id !== newAd.id);
+        const updated = [newAd, ...filtered].slice(0, 5);
+        set({ recentlyViewedAds: updated });
+      },
+      clearRecentlyViewed: () => set({ recentlyViewedAds: [] }),
       signOut: () => {
         set({
           user: null,
@@ -79,6 +105,7 @@ const useAuthStore = create<AuthState>()(
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         user: state.user,
+        recentlyViewedAds: state.recentlyViewedAds,
       }),
     }
   )
