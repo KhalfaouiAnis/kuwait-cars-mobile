@@ -8,11 +8,11 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
+import PickFromGalleryGallery from "../../ui/button/open-gallery-button";
+import TakePhotoButton from "../../ui/button/take-photo-button";
 import AppModal from "../../ui/dialog/modal";
 import PhoneInput from "../../ui/input/phone-input";
 import SelectInput from "../../ui/input/select-input";
-import PickFromGalleryGallery from "../ad/media/open-gallery-button";
-import TakePhotoButton from "../ad/media/take-photo-button";
 import { renderLocationOption } from "../ad/select-option/render-option";
 
 export default function EditProfileForm() {
@@ -95,7 +95,7 @@ export default function EditProfileForm() {
                         customIcon={<MaterialCommunityIcons name="email-seal-outline" size={24} color="black" />}
                         placeholder="Zip code"
                         label="Zip code"
-                        error={errors.city?.message}
+                        error={errors.zip_code?.message}
                         control={control}
                         name="zip_code"
                     />

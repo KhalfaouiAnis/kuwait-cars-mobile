@@ -42,7 +42,7 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="new-ad"
+                name="create"
                 options={{
                     tabBarIcon: ({ color, focused }) => (
                         <Ionicons color={focused ? '#000' : color} size={42} name='add-outline'

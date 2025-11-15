@@ -66,7 +66,7 @@ export const SUBSCRIPTION_PLANS = [
   },
 ];
 
-export const HIDE_TABBAR_ROUTES: string[] = ["/new-ad"];
+export const HIDE_TABBAR_ROUTES: string[] = ["/create/flowOne", "/create/flowTwo", "/create/flowThree"];
 
 export const CATEGORIES: SelectOption[] = [
   { id: "Cars 1", label: "Cars 1", value: "Cars 1" },

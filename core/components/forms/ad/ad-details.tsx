@@ -2,6 +2,7 @@ import { CAR_COLORS, YEARS } from "@/core/constants";
 import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { ScrollView, Text, View } from "react-native";
 import AdTextInput from "../../ui/input/ad-text-input";
+import RadioGroup from "../../ui/input/radio-group";
 import SelectInput from "../../ui/input/select-input";
 import { renderColorOption, renderYearOption } from "./select-option/render-option";
 import Init from "./unit";
@@ -23,10 +24,10 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                 <View>
                     <SelectInput
                         control={control}
-                        name="year"
+                        name="car.year"
                         options={YEARS}
                         renderOption={renderYearOption}
-                        error={errors.year?.message} placeholder="Year" />
+                        error={errors.car?.year?.message} placeholder="Year" />
                     <Text className="ms-4 text-gray-400 mt-1">Required</Text>
                 </View>
                 <View>
@@ -54,14 +55,51 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View className="gap-y-2 mt-4">
-                <AdTextInput control={control} name="car.model" error={errors.car?.model?.message} placeholder="Model" />
-                <AdTextInput control={control} name="car.body_type" error={errors.car?.body_type?.message} placeholder="Body type" />
-                <AdTextInput control={control} name="car.fuel_type" error={errors.car?.fuel_type?.message} placeholder="Fuel type" />
-                <AdTextInput control={control} name="car.color_interior" error={errors.car?.color_interior?.message} placeholder="Color interior" />
-                <AdTextInput control={control} name="car.seats_material" error={errors.car?.seats_material?.message} placeholder="Seats material" />
-                <AdTextInput control={control} name="car.body_condition" error={errors.car?.body_condition?.message} placeholder="Body condition" />
-                <AdTextInput control={control} name="car.cylinders" error={errors.car?.cylinders?.message} placeholder="cylinders" />
-                <AdTextInput control={control} name="car.transmission" error={errors.car?.transmission?.message} placeholder="Transmission" />
+                <RadioGroup
+                    name="car.fuel_type"
+                    control={control}
+                    label="Fuel Type"
+                    options={[
+                        { id: "1", label: "Petrol", value: "Petrol" },
+                        { id: "2", label: "Diesel", value: "Diesel" },
+                        { id: "3", label: "Electric", value: "Electric" },
+                        { id: "4", label: "Hybrid", value: "Hybrid" },
+                    ]}
+                />
+                <RadioGroup
+                    name="car.cylinders"
+                    control={control}
+                    label="Cylinders"
+                    options={[
+                        { id: "2", label: "2", value: "2" },
+                        { id: "4", label: "4", value: "4" },
+                        { id: "5", label: "5", value: "5" },
+                        { id: "6", label: "6", value: "6" },
+                        { id: "8", label: "8", value: "8" },
+                        { id: "10", label: "10", value: "10" },
+                        { id: "12", label: "12", value: "12" },
+                    ]}
+                />
+                <RadioGroup
+                    name="car.transmission"
+                    control={control}
+                    label="Transmission"
+                    options={[{ id: "auto", label: "Auto", value: "Auto" }, { id: "manual", label: "Manual", value: "Manual" }]}
+                />
+                <RadioGroup
+                    name="car.under_warranty"
+                    control={control}
+                    label="Under warranty"
+                    options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
+                />
+                <RadioGroup
+                    name="car.roof"
+                    control={control}
+                    label="Roof"
+                    options={[{ id: "Sunroof", label: "Sunroof", value: "Sunroof" }, { id: "Panoramic", label: "Panoramic", value: "Panoramic" },
+                    { id: "Convertible Roof", label: "Convertible Roof", value: "Convertible Roof" }
+                    ]}
+                />
             </View>
         </ScrollView>
     )

@@ -71,7 +71,7 @@ export default function NewAdScreen() {
         } else if (currentStep === 2) {
             isValid = await trigger(['video', "thumbnail", "images"]);
         } else if (currentStep === 3) {
-            isValid = await trigger(["year", "car.exterior_color", "car.mileage"])
+            isValid = await trigger(["car.exterior_color", "car.mileage"])
         } else if (currentStep === 4) {
             isValid = await trigger(["title", "description", "additional_number"])
         } else if (currentStep === 5) {

@@ -6,10 +6,10 @@ import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import PickFromGalleryGallery from "../../ui/button/open-gallery-button";
+import TakePhotoButton from "../../ui/button/take-photo-button";
 import AppModal from "../../ui/dialog/modal";
 import VideoPlayer from "../../ui/shared/video-player";
-import PickFromGalleryGallery from "./media/open-gallery-button";
-import TakePhotoButton from "./media/take-photo-button";
 
 const MAX_IMAGES = 10;
 

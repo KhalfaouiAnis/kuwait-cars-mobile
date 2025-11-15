@@ -142,20 +142,28 @@ export const BaseAdSchema = z.object({
   title: z.string().min(3, "The title field is required"),
   description: z.string().min(3, "The description field is required"),
   location: LocationSchema,
-  year: z.coerce
-    .number({ message: "The year field is required" })
-    .min(0)
-    .max(new Date().getFullYear()),
 
   price: z.coerce.number().optional(),
-  additional_number: z.string().optional(),
+  province: z.string().optional(),
+  zip_code: z.string().optional(),
 
   category_id: z.string(),
   subcategory_id: z.string(),
 
   thumbnail: createFileSchema("Thumbnail must be a valid image under 5MB"),
-  images: MultiFileSchema("Images must be valid files under 5MB each"),
-  video: createFileSchema("Video must be 10-30 seconds and under 100MB"),
+  images: MultiFileSchema(
+    "Images must be valid files under 5MB each"
+  ).optional(),
+  video: createFileSchema(
+    "Video must be 10-30 seconds and under 100MB"
+  ).optional(),
+
+  additional_number: z.string().optional(),
+
+  contact_whatsapp: z.coerce.boolean().optional(),
+  receive_calls: z.coerce.boolean().optional(),
+  xcar_calls: z.coerce.boolean().optional(),
+  xcar_chat: z.coerce.boolean().optional(),
 
   plan: z.string().min(1, "Plan is required"),
 });

@@ -2,7 +2,7 @@ import {
   Control,
   FieldErrors,
   UseFormGetValues,
-  UseFormSetValue
+  UseFormSetValue,
 } from "react-hook-form";
 import { z } from "zod";
 
@@ -16,17 +16,16 @@ export const VehicleAdSchema = BaseAdSchema.merge(
       exterior_color: z.string().min(1, "Color is required"),
       mileage: z.string().min(1, "Mileage is required"),
       mileage_unit: z.string().optional(),
+      year: z.coerce
+        .number({ message: "The year field is required" })
+        .min(0)
+        .max(new Date().getFullYear()),
 
-      model: z.string().optional(),
-      body_type: z.string().optional(),
       fuel_type: z.string().optional(),
-      color_interior: z.string().optional(),
-      seats_material: z.string().optional(),
-      body_condition: z.string().optional(),
       cylinders: z.string().optional(),
       transmission: z.string().optional(),
-      description: z.string().optional(),
-      additional_number: z.string().optional(),
+      under_warranty: z.coerce.boolean().optional(),
+      roof: z.string().optional(),
     }),
   })
 );

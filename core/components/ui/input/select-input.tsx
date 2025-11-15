@@ -34,9 +34,9 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
             {label && <Text className="text-base font-semibold pl-6 mb-1">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}>
                 <View className={clsx('flex-row items-center p-3 border bg-white', {
-                    "border-primary-500": primary,
+                    "border-primary-500 rounded-lg": primary,
                     "border-error": error,
-                    "rounded-lg": primary
+                    "border-transparent": !primary && !error,
                 })}
                     style={primary ? {} : {
                         elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },

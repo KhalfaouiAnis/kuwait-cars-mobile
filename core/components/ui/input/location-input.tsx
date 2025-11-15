@@ -23,7 +23,7 @@ export default function LocationInput({ control, errors }: VehicleAdFormSteps) {
                         <TextInput
                             className={` ${errors.location?.root ? 'border-red-500' : 'text-[#333]'}`}
                             editable={false}
-                            placeholder='Choose your linsting or service location'
+                            placeholder='Location'
                             pointerEvents="none"
                         />
                         <Modal
