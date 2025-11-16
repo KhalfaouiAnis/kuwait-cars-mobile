@@ -1,4 +1,4 @@
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
@@ -33,7 +33,7 @@ export default function ChangePasswordForm() {
                         <Image
                             source={user?.avatar
                                 ? { uri: `${process.env.EXPO_PUBLIC_API_URL}${user?.avatar}` }
-                                : images.DefaultAvatar}
+                                : IMAGES.DefaultAvatar}
                             style={{ width: 75, height: 75, borderRadius: 50 }}
                             contentFit="cover"
                         />

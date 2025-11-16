@@ -1,5 +1,5 @@
 import Container from "@/core/components/ui/container";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Pressable, ScrollView, Text, View } from 'react-native';
@@ -18,16 +18,16 @@ export default function ModelDetailsScreen() {
         }>
             <View className="flex-1 p-1">
                 <View className="">
-                    <Image source={images.CarHyunday} style={{ height: 260, objectFit: "cover", borderRadius: 8 }} />
+                    <Image source={IMAGES.CarHyunday} style={{ height: 260, objectFit: "cover", borderRadius: 8 }} />
                     <View className="w-full rounded-lg flex-row gap-x-2 items-center justify-center bg-[#EFE4E4] mt-[2px] py-2">
                         <View className="p-2 rounded-lg bg-white">
-                            <Image source={images.CarHyunday} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
+                            <Image source={IMAGES.CarHyunday} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
                         </View>
                         <View className="p-2 rounded-lg bg-white">
-                            <Image source={images.CarMercedes} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
+                            <Image source={IMAGES.CarMercedes} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
                         </View>
                         <View className="p-2 rounded-lg bg-white">
-                            <Image source={images.CarChevrolet} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
+                            <Image source={IMAGES.CarChevrolet} style={{ height: 70, width: 90, objectFit: "cover", borderRadius: 8 }} />
                         </View>
                     </View>
                     <View className="px-4">
@@ -73,7 +73,7 @@ export default function ModelDetailsScreen() {
                         </View>
                         <View>
                             <View className="flex-row items-center border border-primary-500 rounded-lg p-2 gap-x-2">
-                                <Image source={images.Mohamed} style={{ borderRadius: 50, width: 40, height: 40, objectFit: 'cover' }} />
+                                <Image source={IMAGES.Mohamed} style={{ borderRadius: 50, width: 40, height: 40, objectFit: 'cover' }} />
                                 <View>
                                     <Text className="font-inter-semibold">Abu Mohamed</Text>
                                     <Text>Since 2025</Text>
@@ -98,7 +98,7 @@ export default function ModelDetailsScreen() {
                             <Text className="font-inter-semibold">Similar ads</Text>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                 <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent elevation-sm me-4">
-                                    <Image source={images.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
+                                    <Image source={IMAGES.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
                                     <View className="gap-y-5">
                                         <Text className="font-inter-medium max-w-36" numberOfLines={2}>Mercedes Benz C-Class - 2023</Text>
                                         <View className="flex-row items-center justify-end">
@@ -110,7 +110,7 @@ export default function ModelDetailsScreen() {
                                     </View>
                                 </View>
                                 <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent elevation-sm me-4">
-                                    <Image source={images.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
+                                    <Image source={IMAGES.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
                                     <View className="gap-y-5">
                                         <Text className="font-inter-medium max-w-36" numberOfLines={2}>Chevrolet Corvette - 2023</Text>
                                         <View className="flex-row items-center justify-end">
@@ -122,7 +122,7 @@ export default function ModelDetailsScreen() {
                                     </View>
                                 </View>
                                 <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent elevation-sm me-4">
-                                    <Image source={images.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
+                                    <Image source={IMAGES.CarChevrolet} style={{ height: 80, width: 130, objectFit: "cover", borderRadius: 8 }} />
                                     <View className="gap-y-5">
                                         <Text className="font-inter-medium max-w-36" numberOfLines={2}>Toyota - 2021</Text>
                                         <View className="flex-row items-center justify-end">

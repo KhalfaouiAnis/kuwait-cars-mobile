@@ -4,7 +4,10 @@ import {
   MAX_IMAGE_SIZE,
   MAX_VIDEO_SIZE,
 } from "@/core/constants";
+import { Ad_CATEGORIES } from "@/core/constants/ad";
 import { z } from "zod";
+
+export type AdCategory = (typeof Ad_CATEGORIES)[number];
 
 export const LocationSchema = z.object({
   district: z.string(),
@@ -147,8 +150,9 @@ export const BaseAdSchema = z.object({
   province: z.string().optional(),
   zip_code: z.string().optional(),
 
-  category_id: z.string(),
-  subcategory_id: z.string(),
+  category_id: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]], {
+    required_error: "Category is required",
+  }),
 
   thumbnail: createFileSchema("Thumbnail must be a valid image under 5MB"),
   images: MultiFileSchema(

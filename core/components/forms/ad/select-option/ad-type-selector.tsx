@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
 
 interface Mark { label: string; value: string; }
@@ -13,15 +12,14 @@ interface Category { id: string, label: string; regions: Region[]; }
 
 type DataItem = Category;
 
-type VehicleMarkSelectorProps<TForm extends FieldValues> = TextInputProps & {
-    name: FieldPath<TForm>;
-    control: Control<TForm>;
+type AdTypeSelectorProps = TextInputProps & {
+    onChange: (value: any) => void,
+    data: DataItem[];
     selectedValue?: string;
     placeholder?: string;
-    data: DataItem[];
 }
 
-export default function VehicleMarkSelector<TForm extends FieldValues>({ control, name, data, placeholder, selectedValue, ...props }: VehicleMarkSelectorProps<TForm>) {
+export default function AdTypeSelector({ data, onChange, placeholder, selectedValue, ...props }: AdTypeSelectorProps) {
     const [showModal, setShowModal] = useState(false);
     const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
 
@@ -85,6 +83,11 @@ export default function VehicleMarkSelector<TForm extends FieldValues>({ control
         );
     };
 
+    const handleSelect = (value: string) => {
+        onChange(value);
+        setShowModal(false)
+    };
+
     return (
         <>
             <Pressable onPress={() => setShowModal(true)}>
@@ -96,58 +99,46 @@ export default function VehicleMarkSelector<TForm extends FieldValues>({ control
                         }
                     }}
                 >
-                    <Controller
-                        name={name}
-                        control={control}
-                        render={({ field: { onChange, value } }) => {
-                            const handleSelect = (value: string) => {
-                                onChange(value);
-                                setShowModal(false)
-                            };
-                            return (
-                                <View>
-                                    <TextInput
-                                        className={"text-[#333]"}
-                                        value={value}
-                                        editable={false}
-                                        pointerEvents="none"
-                                        placeholder='Choose Category'
-                                        {...props}
-                                    />
-                                    <Modal
-                                        visible={showModal}
-                                        animationType="slide"
-                                        transparent={false}
-                                        onRequestClose={() => setShowModal(false)}
-                                    >
-                                        <TouchableOpacity
-                                            activeOpacity={1}
-                                            onPress={() => setShowModal(false)}
-                                            className="flex-1 justify-end bg-black/20">
-                                            <TouchableOpacity
-                                                activeOpacity={0.8}
-                                                onPress={() => { }}
-                                                className="bg-white pt-2 mb-10 rounded-t-2xl p-2 w-full h-[86%] min-h-0">
-                                                <View className="flex-row items-center p-4">
-                                                    <TouchableOpacity onPress={() => setShowModal(false)} className="me-3">
-                                                        <Ionicons name="close" size={24} color="#8E8E93" />
-                                                    </TouchableOpacity>
-                                                </View>
-                                                <FlatList
-                                                    data={data}
-                                                    renderItem={({ item }) => renderItem(item, 1, [], handleSelect)}
-                                                    keyExtractor={(_, index) => index.toString()}
-                                                    showsVerticalScrollIndicator={false}
-                                                    style={{ marginBottom: 20 }}
-                                                    nestedScrollEnabled
-                                                />
-                                            </TouchableOpacity>
+                    <View>
+                        <TextInput
+                            className={"text-[#333]"}
+                            editable={false}
+                            pointerEvents="none"
+                            value={selectedValue}
+                            placeholder='Choose Category'
+                            {...props}
+                        />
+                        <Modal
+                            visible={showModal}
+                            animationType="slide"
+                            transparent={false}
+                            onRequestClose={() => setShowModal(false)}
+                        >
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => setShowModal(false)}
+                                className="flex-1 justify-end bg-black/20">
+                                <TouchableOpacity
+                                    activeOpacity={0.8}
+                                    onPress={() => { }}
+                                    className="bg-white pt-2 mb-10 rounded-t-2xl p-2 w-full h-[86%] min-h-0">
+                                    <View className="flex-row items-center p-4">
+                                        <TouchableOpacity onPress={() => setShowModal(false)} className="me-3">
+                                            <Ionicons name="close" size={24} color="#8E8E93" />
                                         </TouchableOpacity>
-                                    </Modal>
-                                </View>
-                            )
-                        }}
-                    />
+                                    </View>
+                                    <FlatList
+                                        data={data}
+                                        renderItem={({ item }) => renderItem(item, 1, [], handleSelect)}
+                                        keyExtractor={(_, index) => index.toString()}
+                                        showsVerticalScrollIndicator={false}
+                                        style={{ marginBottom: 20 }}
+                                        nestedScrollEnabled
+                                    />
+                                </TouchableOpacity>
+                            </TouchableOpacity>
+                        </Modal>
+                    </View>
                     <View>
                         <Ionicons name='chevron-forward' size={20} />
                     </View>

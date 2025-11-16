@@ -4,7 +4,7 @@ import { AuthLink } from "@/core/components/ui/_links/auth-link";
 import FacebookButton from "@/core/components/ui/button/FacebookButton";
 import GoogleButton from "@/core/components/ui/button/GoogleButton";
 import Container from "@/core/components/ui/container";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { getAnonymousAccessToken } from "@/core/lib/api/authentication/login";
 import { authStore } from "@/core/lib/stores/auth.store";
 import { Image } from "expo-image";
@@ -29,7 +29,7 @@ export default function Index() {
             <AuthHeader />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white">
                 <View className="flex items-center">
-                    <Image source={images.Logo} style={{ width: 175, height: 175, objectFit: 'contain' }} />
+                    <Image source={IMAGES.Logo} style={{ width: 175, height: 175, objectFit: 'contain' }} />
                     <Text className="font-inter-bold text-3xl mt-12">Welcome to Kuwait Car</Text>
                     <Text className="font-inter-semibold text-lg">Your Trusted Vehicle Sale</Text>
                 </View>

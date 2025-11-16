@@ -1,6 +1,6 @@
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { CITIES } from "@/core/constants";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { useAvatar } from "@/core/hooks/user/use-avatar";
 import { useProfile } from "@/core/hooks/user/use-profile";
 import { authStore } from "@/core/lib/stores/auth.store";
@@ -42,7 +42,7 @@ export default function EditProfileForm() {
                                 <Image
                                     source={user?.avatar
                                         ? { uri: `${process.env.EXPO_PUBLIC_API_URL}${user?.avatar}` }
-                                        : images.DefaultAvatar}
+                                        : IMAGES.DefaultAvatar}
                                     style={{ width: 75, height: 75, borderRadius: 50 }}
                                     contentFit="cover"
                                 />

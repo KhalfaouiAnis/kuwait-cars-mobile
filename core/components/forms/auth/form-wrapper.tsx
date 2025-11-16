@@ -1,5 +1,5 @@
 import Container from "@/core/components/ui/container";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { useKeyboardScroll } from "@/core/hooks/use-keyboard-scroll";
 import { Image } from "expo-image";
 import { PropsWithChildren } from "react";
@@ -14,7 +14,7 @@ export default function FormWrapper({ children, title }: PropsWithChildren<{ tit
             <AuthHeader />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white">
                 <View className="pt-6">
-                    <Image source={images.Logo} style={{ width: 160, height: 160, objectFit: "cover" }} />
+                    <Image source={IMAGES.Logo} style={{ width: 160, height: 160, objectFit: "cover" }} />
                 </View>
                 <View className="w-full pt-5 mt-5 bg-primary-500 rounded-t-[26px]">
                     <View className="items-center justify-center w-full">

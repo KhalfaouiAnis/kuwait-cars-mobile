@@ -1,5 +1,5 @@
 import Container from "@/core/components/ui/container";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { FlatList, Image, Pressable, Text, TextInput, View } from "react-native";
 import Reanimated, {
     interpolate,
@@ -17,7 +17,7 @@ const ReanimatedView = Reanimated.View;
 const listings = [
     {
         id: "1",
-        avatar: images.AvatarVideoBoy,
+        avatar: IMAGES.AvatarVideoBoy,
         username: "Michael tony",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "10 min",
@@ -25,7 +25,7 @@ const listings = [
     },
     {
         id: "2",
-        avatar: images.AvatarVideoGirl,
+        avatar: IMAGES.AvatarVideoGirl,
         username: "Metal Exchange",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "25 min",
@@ -33,7 +33,7 @@ const listings = [
     },
     {
         id: "3",
-        avatar: images.AvatarVideoBoy,
+        avatar: IMAGES.AvatarVideoBoy,
         username: "Michael tony",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "10 min",
@@ -41,7 +41,7 @@ const listings = [
     },
     {
         id: "4",
-        avatar: images.AvatarVideoGirl,
+        avatar: IMAGES.AvatarVideoGirl,
         username: "Metal Exchange",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "25 min",
@@ -49,7 +49,7 @@ const listings = [
     },
     {
         id: "5",
-        avatar: images.AvatarVideoBoy,
+        avatar: IMAGES.AvatarVideoBoy,
         username: "Michael tony",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "10 min",
@@ -57,7 +57,7 @@ const listings = [
     },
     {
         id: "6",
-        avatar: images.AvatarVideoGirl,
+        avatar: IMAGES.AvatarVideoGirl,
         username: "Metal Exchange",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "25 min",
@@ -65,7 +65,7 @@ const listings = [
     },
     {
         id: "7",
-        avatar: images.AvatarVideoBoy,
+        avatar: IMAGES.AvatarVideoBoy,
         username: "Michael tony",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "10 min",
@@ -73,7 +73,7 @@ const listings = [
     },
     {
         id: "8",
-        avatar: images.AvatarVideoGirl,
+        avatar: IMAGES.AvatarVideoGirl,
         username: "Metal Exchange",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "25 min",
@@ -81,7 +81,7 @@ const listings = [
     },
     {
         id: "9",
-        avatar: images.AvatarVideoBoy,
+        avatar: IMAGES.AvatarVideoBoy,
         username: "Michael tony",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "10 min",
@@ -89,7 +89,7 @@ const listings = [
     },
     {
         id: "10",
-        avatar: images.AvatarVideoGirl,
+        avatar: IMAGES.AvatarVideoGirl,
         username: "Metal Exchange",
         message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         sentAt: "25 min",
@@ -172,7 +172,7 @@ export default function ChatScreen() {
                     />
                     <MaterialIcons name="notifications-active" size={24} color="black" className="me-2" />
                     <Image
-                        source={images.Mohamed}
+                        source={IMAGES.Mohamed}
                         style={{ width: 36, height: 36, objectFit: "cover", borderRadius: 100 }}
                     />
                 </View>

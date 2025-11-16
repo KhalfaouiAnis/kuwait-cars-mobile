@@ -1,6 +1,6 @@
 import Ad from "@/core/components/layout/ads/Ad";
 import Container from "@/core/components/ui/container";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { Dimensions, FlatList, Text, View } from 'react-native';
 
 const { height: screenHeight } = Dimensions.get('window');
@@ -13,10 +13,10 @@ export const listings = [
     {
         id: "listing-1",
         images: [
-            { url: images.CarChevrolet },
-            { url: images.CarHyunday },
-            { url: images.CarMercedes },
-            { url: images.CarToyota },
+            { url: IMAGES.CarChevrolet },
+            { url: IMAGES.CarHyunday },
+            { url: IMAGES.CarMercedes },
+            { url: IMAGES.CarToyota },
         ],
         badge: "Super DEAL",
         name: "Chevrolet",
@@ -32,10 +32,10 @@ export const listings = [
     {
         id: "listing-2",
         images: [
-            { url: images.CarHyunday },
-            { url: images.CarChevrolet },
-            { url: images.CarMercedes },
-            { url: images.CarToyota },
+            { url: IMAGES.CarHyunday },
+            { url: IMAGES.CarChevrolet },
+            { url: IMAGES.CarMercedes },
+            { url: IMAGES.CarToyota },
         ],
         badge: "Super DEAL 2",
         name: "Hundai",
@@ -51,10 +51,10 @@ export const listings = [
     {
         id: "listing-3",
         images: [
-            { url: images.CarMercedes },
-            { url: images.CarHyunday },
-            { url: images.CarChevrolet },
-            { url: images.CarToyota },
+            { url: IMAGES.CarMercedes },
+            { url: IMAGES.CarHyunday },
+            { url: IMAGES.CarChevrolet },
+            { url: IMAGES.CarToyota },
         ],
         badge: "Super DEAL 3",
         name: "Mercedes",

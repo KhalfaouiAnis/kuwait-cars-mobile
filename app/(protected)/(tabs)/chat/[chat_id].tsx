@@ -1,5 +1,5 @@
 import Container from "@/core/components/ui/container";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
 import { FlatList, Image, Pressable, Text, TextInput, View } from "react-native";
@@ -73,7 +73,7 @@ export default function ChatScreen() {
                 "flex-row-reverse": item.senderId === "me"
             })}>
                 <Image
-                    source={item.senderId === "me" ? images.AvatarVideoBoy : images.AvatarVideoGirl}
+                    source={item.senderId === "me" ? IMAGES.AvatarVideoBoy : IMAGES.AvatarVideoGirl}
                     style={{ width: 36, height: 36, objectFit: "cover", borderRadius: 100 }}
                 />
                 <View>

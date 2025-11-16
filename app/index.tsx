@@ -1,7 +1,7 @@
 import Flag from "@/assets/svg/flag";
 import Container from "@/core/components/ui/container";
 import { SUPPORTED_LANGUAGES } from "@/core/constants";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import i18n from "@/core/i18n/i18n";
 import { authStore } from "@/core/lib/stores/auth.store";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
@@ -53,7 +53,7 @@ export default function Index() {
           contentContainerClassName="items-center"
           ListHeaderComponent={
             <View className="flex items-center mb-6">
-              <Image source={images.Logo}
+              <Image source={IMAGES.Logo}
                 style={{ width: 175, height: 175, objectFit: 'contain', borderRadius: 100, borderWidth: 4 }} />
             </View>
           }

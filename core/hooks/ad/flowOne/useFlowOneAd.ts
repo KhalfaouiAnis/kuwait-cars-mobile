@@ -5,7 +5,7 @@ import {
 } from "@/core/types/schema/vehicleAd";
 import { AxiosProgressEvent, isAxiosError } from "axios";
 import { useRouter } from "expo-router";
-import { useFormHook } from "../use-form-hook";
+import { useFormHook } from "../../use-form-hook";
 
 export function useAd() {
   const router = useRouter();
@@ -58,23 +58,11 @@ export function useAd() {
       formData.append("video", data.video as any);
       data.images?.forEach((image) => formData.append("images", image as any));
 
-      const response = await httpClient.post("/ads/create", formData, {
+      const response = await httpClient.post("/ads/flow-one/create", formData, {
         onUploadProgress,
       });
 
       console.log(response.data);
-
-      // const response = await fetch(
-      //   process.env.EXPO_PUBLIC_API_URL + "/api/ads/create",
-      //   {
-      //     method: "POST",
-      //     body: formData,
-      //     headers: {},
-      //   }
-      // );
-
-      // const json = await response.json();
-      // console.log({ json });
 
       router.navigate("/my-ads");
     } catch (error) {

@@ -1,6 +1,6 @@
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Animated, FlatList, Text, TouchableOpacity, View } from "react-native";
@@ -9,7 +9,7 @@ import { Swipeable } from "react-native-gesture-handler";
 const listings = [
     {
         id: "listing-1",
-        image: images.Toyota_1,
+        image: IMAGES.Toyota_1,
         name: "Toyota Yaris Cross",
         seats: "4",
         gearType: "Automatic",
@@ -19,7 +19,7 @@ const listings = [
     },
     {
         id: "listing-2",
-        image: images.Toyota_2,
+        image: IMAGES.Toyota_2,
         name: "Toyota Yaris Cross",
         seats: "5",
         gearType: "Automatic",
@@ -29,7 +29,7 @@ const listings = [
     },
     {
         id: "listing-3",
-        image: images.Toyota_3,
+        image: IMAGES.Toyota_3,
         name: "Toyota Yaris Cross",
         seats: "5",
         gearType: "Automatic",
@@ -39,7 +39,7 @@ const listings = [
     },
     {
         id: "listing-4",
-        image: images.Toyota_4,
+        image: IMAGES.Toyota_4,
         name: "Toyota Yaris Cross",
         seats: "5+2",
         gearType: "Automatic",

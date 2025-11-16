@@ -1,3 +1,4 @@
+import { useWatermarker } from "@/core/hooks/ad/use-water-mark";
 import { useAdMedia } from "@/core/hooks/ad/useAdMedia";
 import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { cn } from "@/core/utils/cn";
@@ -14,6 +15,7 @@ import VideoPlayer from "../../ui/shared/video-player";
 const MAX_IMAGES = 10;
 
 export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSteps) {
+    const { generateWatermarkedUri, WatermarkerCaptureView } = useWatermarker();
     const { images, thumbnail, video, tab, setTab, addMedia, removeMedia, setThumbnail, setImages, setVideo } = useAdMedia(setValue)
     const [showModal, setShowModal] = useState(false)
 
@@ -52,6 +54,18 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
         </View>
     );
 
+    const processAndUpload = async () => {
+        if (!thumbnail) return;
+
+        // You can optionally pass configuration here
+        const watermarkedUri = await generateWatermarkedUri(thumbnail);
+
+        if (watermarkedUri) {
+            setThumbnail(watermarkedUri);
+            console.log("Generated URI:", watermarkedUri);
+        }
+    };
+
     return (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
             <View className="flex-row items-center justify-center mb-6 gap-2">
@@ -69,6 +83,11 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                         Video
                     </Text>
                 </TouchableOpacity>
+                {thumbnail && (
+                    <TouchableOpacity className="p-2 bg-primary-500" onPress={processAndUpload}>
+                        <Text>SHiiit</Text>
+                    </TouchableOpacity>
+                )}
             </View>
             {tab === 0 ? (
                 thumbnail && thumbnail.uri ? (
@@ -152,6 +171,7 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                 )
                 }
             </View>
+            <WatermarkerCaptureView imageUri={thumbnail} />
         </ScrollView>
     )
 }

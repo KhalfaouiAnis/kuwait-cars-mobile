@@ -1,4 +1,4 @@
-import { images } from '@/core/constants/images';
+import { IMAGES } from '@/core/constants/images';
 import { useConfirmDelete } from '@/core/hooks/shared/use-delete-resource';
 import { Image } from 'expo-image';
 import React, { Dispatch, SetStateAction } from 'react';
@@ -23,7 +23,7 @@ export default function ConfirmDeleteDialog({ onDelete, show, setShow }: DeleteD
             <View className="flex-1 justify-center items-center bg-black/50">
                 <View className="bg-white rounded-lg p-6 w-80 mx-4 items-center">
                     <Image
-                        source={images.DeleteMessage}
+                        source={IMAGES.DeleteMessage}
                         style={{ width: 80, height: 80, objectFit: "cover" }}
                     />
                     <Text className="text-lg font-semibold text-center my-4">

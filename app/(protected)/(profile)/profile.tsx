@@ -2,7 +2,7 @@ import ProfileHeader from "@/core/components/layout/header/profile-header";
 import { SettingsLink } from "@/core/components/ui/_links/settings-link";
 import Switch from "@/core/components/ui/button/switch";
 import Container from "@/core/components/ui/container";
-import { images } from "@/core/constants/images";
+import { IMAGES } from "@/core/constants/images";
 import { authStore } from "@/core/lib/stores/auth.store";
 import { AntDesign, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -33,7 +33,7 @@ export default function ProfileScreen() {
                             <Image
                                 source={user?.avatar
                                     ? { uri: `${process.env.EXPO_PUBLIC_API_URL}${user?.avatar}` }
-                                    : images.DefaultAvatar}
+                                    : IMAGES.DefaultAvatar}
                                 style={{ width: 75, height: 75, borderRadius: 50 }}
                                 contentFit="cover"
                             />
