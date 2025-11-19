@@ -1,6 +1,7 @@
 import TabBar from '@/core/components/ui/tabBar';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { View } from 'react-native';
 
 export const unstable_settings = {
     initialRouteName: 'categories',
@@ -45,12 +46,11 @@ export default function TabLayout() {
                 name="create"
                 options={{
                     tabBarIcon: ({ color, focused }) => (
-                        <Ionicons color={focused ? '#000' : color} size={42} name='add-outline'
-                            style={{
-                                display: "flex", alignItems: 'center', justifyContent: 'center', textAlign: 'center',
-                                backgroundColor: "#FAED02", borderRadius: 99, padding: 8
-                            }}
-                        />
+                        <View
+                            className='items-center justify-center bg-primary-500'
+                            style={{ width: 58, height: 58, borderRadius: 50 }}>
+                            <Ionicons color={focused ? '#000' : color} size={38} name='add-outline' />
+                        </View>
                     ),
                 }}
             />

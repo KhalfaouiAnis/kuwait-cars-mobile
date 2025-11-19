@@ -79,7 +79,8 @@
       ],
       "expo-video",
       "react-native-fbsdk-next",
-      "expo-localization"
+      "expo-localization",
+      "expo-speech-recognition"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -1,4 +1,3 @@
-import { useWatermarker } from "@/core/hooks/ad/use-water-mark";
 import { useAdMedia } from "@/core/hooks/ad/useAdMedia";
 import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { cn } from "@/core/utils/cn";
@@ -15,7 +14,6 @@ import VideoPlayer from "../../ui/shared/video-player";
 const MAX_IMAGES = 10;
 
 export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSteps) {
-    const { generateWatermarkedUri, WatermarkerCaptureView } = useWatermarker();
     const { images, thumbnail, video, tab, setTab, addMedia, removeMedia, setThumbnail, setImages, setVideo } = useAdMedia(setValue)
     const [showModal, setShowModal] = useState(false)
 
@@ -44,7 +42,7 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
 
     const renderPhoto = (photoUri: string, type: "thumbnail" | "video" | "images", key: string) => (
         <View key={key} className="relative mr-2 mb-2">
-            <Image source={{ uri: photoUri }} style={{ width: "auto", height: type === "thumbnail" ? 200 : 80, borderRadius: 8 }} />
+            <Image source={{ uri: photoUri }} style={{ width: "auto", height: type === "thumbnail" ? 200 : 80, borderRadius: 8 }} contentFit="cover" />
             <TouchableOpacity
                 className="absolute -top-4 -right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
                 onPress={() => removeMedia(photoUri, type === "thumbnail", type === "video")}
@@ -53,18 +51,6 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
             </TouchableOpacity>
         </View>
     );
-
-    const processAndUpload = async () => {
-        if (!thumbnail) return;
-
-        // You can optionally pass configuration here
-        const watermarkedUri = await generateWatermarkedUri(thumbnail);
-
-        if (watermarkedUri) {
-            setThumbnail(watermarkedUri);
-            console.log("Generated URI:", watermarkedUri);
-        }
-    };
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
@@ -83,11 +69,6 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                         Video
                     </Text>
                 </TouchableOpacity>
-                {thumbnail && (
-                    <TouchableOpacity className="p-2 bg-primary-500" onPress={processAndUpload}>
-                        <Text>SHiiit</Text>
-                    </TouchableOpacity>
-                )}
             </View>
             {tab === 0 ? (
                 thumbnail && thumbnail.uri ? (
@@ -171,7 +152,6 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                 )
                 }
             </View>
-            <WatermarkerCaptureView imageUri={thumbnail} />
         </ScrollView>
     )
 }

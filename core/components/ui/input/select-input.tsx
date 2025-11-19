@@ -2,7 +2,7 @@ import { SelectOption } from '@/core/types';
 import { Ionicons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
-import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
 
 type SelectInputProps<TForm extends FieldValues> = TextInputProps & {
@@ -12,14 +12,16 @@ type SelectInputProps<TForm extends FieldValues> = TextInputProps & {
     options: SelectOption[]
     onChangeText?: (text: string) => void;
     value?: string;
+    required?: boolean;
     error?: string;
     label?: string;
     primary?: boolean
     icon?: ReactNode,
 }
 
-export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, icon, ...props }: SelectInputProps<TForm>) {
+export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, required, icon, ...props }: SelectInputProps<TForm>) {
     const [showModal, setShowModal] = useState(false);
+    const { field: { onChange, value } } = useController({ control, name });
 
     const renderSelectOption = (option: SelectOption, handleSelect: any) => (
         <Pressable
@@ -28,6 +30,11 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
             {renderOption(option)}
         </Pressable>
     );
+
+    const handleSelect = (option: string) => {
+        onChange(option);
+        setShowModal(false)
+    };
 
     return (
         <View className="w-full">
@@ -45,56 +52,49 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                     <View className='items-center me-2'>
                         {icon}
                     </View>
-                    <Controller
-                        name={name}
-                        control={control}
-                        render={({ field: { onChange, value } }) => {
-                            const handleSelect = (option: string) => {
-                                onChange(option);
-                                setShowModal(false)
-                            };
-                            return (
-                                <View>
-                                    <TextInput
-                                        className="text-[#333]"
-                                        value={value}
-                                        editable={false}
-                                        pointerEvents="none"
-                                        {...props}
-                                    />
-                                    <Modal
-                                        visible={showModal}
-                                        animationType="slide"
-                                        transparent
-                                        onRequestClose={() => setShowModal(false)}
-                                    >
-                                        <TouchableOpacity
-                                            activeOpacity={1}
-                                            onPress={() => setShowModal(false)}
-                                            className="flex-1 justify-end bg-black/20">
-                                            <TouchableOpacity
-                                                activeOpacity={1}
-                                                onPress={() => { }}
-                                                className="bg-white pt-2 mb-10 rounded-t-2xl p-4 w-full -max-h-screen-safe-or-80 min-h-0">
-                                                <View className="flex-row items-center p-4">
-                                                    <TouchableOpacity onPress={() => setShowModal(false)} className="mr-3">
-                                                        <Ionicons name="close" size={24} color="#8E8E93" />
-                                                    </TouchableOpacity>
-                                                </View>
-                                                <FlatList
-                                                    data={options}
-                                                    keyExtractor={(item) => item.id}
-                                                    showsVerticalScrollIndicator={false}
-                                                    renderItem={({ item }) => renderSelectOption(item, handleSelect)}
-                                                />
-                                            </TouchableOpacity>
+                    <View>
+                        <TextInput
+                            className="text-[#333]"
+                            value={value}
+                            editable={false}
+                            pointerEvents="none"
+                            {...props}
+                        />
+                        <Modal
+                            visible={showModal}
+                            animationType="slide"
+                            transparent
+                            onRequestClose={() => setShowModal(false)}
+                        >
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => setShowModal(false)}
+                                className="flex-1 justify-end bg-black/20">
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => { }}
+                                    className="bg-white pt-2 mb-10 rounded-t-2xl p-4 w-full -max-h-screen-safe-or-80 min-h-0">
+                                    <View className="flex-row items-center p-4">
+                                        <TouchableOpacity onPress={() => setShowModal(false)} className="mr-3">
+                                            <Ionicons name="close" size={24} color="#8E8E93" />
                                         </TouchableOpacity>
-                                    </Modal>
-                                </View>
-                            )
-                        }}
-                    />
-                    <View className='ms-auto'>
+                                    </View>
+                                    <FlatList
+                                        data={options}
+                                        keyExtractor={(item) => item.id}
+                                        showsVerticalScrollIndicator={false}
+                                        renderItem={({ item }) => renderSelectOption(item, handleSelect)}
+                                    />
+                                </TouchableOpacity>
+                            </TouchableOpacity>
+                        </Modal>
+                    </View>
+                    <View className='ms-auto flex-row items-end'>
+                        {required && (
+                            <View>
+                                <Text className="text-error">*</Text>
+                            </View>
+                        )}
                         <Ionicons name='chevron-forward' size={20} />
                     </View>
                 </View>

@@ -7,7 +7,7 @@ import { AxiosProgressEvent, isAxiosError } from "axios";
 import { useRouter } from "expo-router";
 import { useFormHook } from "../../use-form-hook";
 
-export function useAd() {
+export function useFlowOneAd() {
   const router = useRouter();
 
   const {

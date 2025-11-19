@@ -1,9 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from "expo-image";
 import { ReactNode, useRef, useState } from "react";
-import { Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const { width: screenWidth } = Dimensions.get('window');
+const screenWidth = Dimensions.get('window').width;
+
+const containerWidth = screenWidth - 40;
+const containerHeight = 250;
 
 type CarouselItem = {
     url: string;
@@ -27,10 +30,6 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
         setCurrentIndex(index);
     };
 
-    // const scrollToIndex = (index: number) => {
-    //     scrollViewRef.current?.scrollTo({ x: index * screenWidth, animated: true });
-    // };
-
     return (
         <View className={`w-full ${className}`}>
             <ScrollView
@@ -44,22 +43,25 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
                 {items.map((item, index) => (
                     <TouchableOpacity
                         key={index}
-                        className="w-full flex-1 items-center justify-center relative mr-2"
+                        className="w-full flex-1 items-center justify-center relative me-1 bg-transparent"
                         onPress={() => onItemPress?.(item, index)}
                         activeOpacity={0.8}
                     >
-                        <View className="w-full h-64 rounded-lg overflow-hidden shadow-md relative">
-                            <Image
-                                source={item.url}
-                                className="w-full h-full"
-                                style={{ width: screenWidth - 40, height: 260 }}
-                                contentFit="cover"
-                            />
-                            <View className="absolute top-2 left-2">
+                        <View className="overflow-hidden relative bg-transparent">
+                            <View style={[styles.container, { width: containerWidth, height: containerHeight }]}>
+                                <Image
+                                    style={styles.image}
+                                    source={item.url}
+                                    contentFit="contain"
+                                    placeholder={{ blurhash: "LFDQn%_4?IWC~qj[?H%L00ay?aof" }}
+                                    transition={500}
+                                />
+                            </View>
+                            <View className="absolute top-2 start-2">
                                 {badge}
                             </View>
                             {showIndicators && (
-                                <View className="absolute bottom-4 right-4 bg-gray-500 rounded-lg px-3 py-1 flex-row items-center">
+                                <View className="absolute bottom-4 end-4 bg-gray-500 rounded-lg px-3 py-1 flex-row items-center">
                                     <Text className="text-white text-xs mr-1">{currentIndex + 1}/{items.length}</Text>
                                     <Ionicons name="images-outline" size={14} color="white" />
                                 </View>
@@ -71,3 +73,19 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden',
+        backgroundColor: "transparent",
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "transparent"
+    },
+});

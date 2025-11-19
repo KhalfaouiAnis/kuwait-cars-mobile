@@ -1,7 +1,7 @@
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
 import useAuthStore from "@/core/lib/stores/auth.store";
-import { currentLan } from "@/core/lib/stores/preferences.store";
+import { currentLang } from "@/core/lib/stores/preferences.store";
 import { formatPassedTime } from "@/core/utils/date";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -10,7 +10,7 @@ import { FlatList, Text, View } from "react-native";
 
 export default function RecentlyViewedAdsScreen() {
     const { recentlyViewedAds } = useAuthStore();
-    const locale = currentLan()
+    const locale = currentLang()
     return (
         <Container
             header={<ProfileHeader title="Recently Viewed" />}>

@@ -13,7 +13,7 @@ interface Props {
 export default function Ad({ data, view = "horizontal" }: Props) {
     if (view === "vertical") {
         return (
-            <Pressable onPress={()=> router.push("/categories/4f5f4/jdhkgkd")} className="w-full rounded-lg p-2 border border-gray-200 shadow-transparent bg-transparent">
+            <Pressable onPress={()=> router.push("/categories/4f5f4/jdhkgkd")} className="w-full rounded-lg p-2 border border-primary-500 shadow-transparent bg-transparent">
                 <Carousel
                     badge={<View className="p-1 bg-primary-500 rounded-md"><Text className="text-gray-950">{data.badge}</Text></View>}
                     items={data.images}

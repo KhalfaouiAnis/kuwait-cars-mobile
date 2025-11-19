@@ -1,0 +1,85 @@
+import { useSpeechToForm } from '@/core/hooks/shared/use-speech';
+import { Ionicons } from '@expo/vector-icons';
+import { ReactNode } from "react";
+import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
+
+type AudioInputProps<TForm extends FieldValues> = TextInputProps & {
+    name: FieldPath<TForm>;
+    control: Control<TForm>;
+    required?: boolean;
+    icon?: ReactNode,
+    value?: string;
+    error?: string;
+};
+
+export default function InputWithSpeech<TForm extends FieldValues>({ control, name, error, icon, required, ...props }: AudioInputProps<TForm>) {
+    const {
+        field: { onChange, value },
+    } = useController({
+        control,
+        name,
+    });
+
+    const { isRecordingForThisField, startListening, stopListening } = useSpeechToForm(name, onChange);
+
+    return (
+        <View>
+            <View className='flex-row items-center justify-between p-3 border-transparent bg-white border'
+                style={{
+                    elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },
+                }}
+            >
+                {
+                    icon && <View className='ms-2 items-center'>
+                        {icon}
+                    </View>
+                }
+                <View className='flex-1 flex-row items-center justify-between'>
+                    <TextInput
+                        className="text-[#333]"
+                        value={value}
+                        numberOfLines={1}
+                        onChangeText={onChange}
+                        {...props}
+                    />
+                    <View className='flex-row items-center'>
+                        {
+                            required && <Text className='text-error text-lg'>*</Text>
+                        }
+                        <TouchableOpacity onPress={isRecordingForThisField ? stopListening : startListening} className='border-none bg-transparent'>
+                            {isRecordingForThisField ? (
+                                <Text>🛑</Text>
+                            ) : (
+                                <Ionicons name="mic-outline" size={24} color="black" style={styles.suffixIcon} />
+                            )}
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+            {
+                props.maxLength && (
+                    <Text className='ms-auto mt-1 text-sm text-gray-300'>Left: {props.maxLength - (value?.toString().length || 0)}</Text>
+                )
+            }
+        </View>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+    },
+    input: {
+        flex: 1,
+        height: 40,
+    },
+    suffixIcon: {
+        marginLeft: 8,
+    },
+});

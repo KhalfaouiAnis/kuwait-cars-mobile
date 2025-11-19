@@ -7,7 +7,7 @@ import PostAd from "@/core/components/forms/ad/post-ad";
 import AdPublishSuccess from "@/core/components/forms/ad/success";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import UploadProgress from "@/core/components/ui/shared/upload-progress";
-import { useAd } from "@/core/hooks/ad/usAd";
+import { useFlowOneAd } from "@/core/hooks/ad/flowOne/useFlowOneAd";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
@@ -32,7 +32,7 @@ const totalSteps = 5;
 
 export default function NewAdScreen() {
     const { category_id } = useLocalSearchParams<{ category_id: string }>();
-    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useAd()
+    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useFlowOneAd()
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -108,7 +108,7 @@ export default function NewAdScreen() {
     const renderCurrentStep = () => {
         switch (currentStep) {
             case 1:
-                return <PostAd control={control} errors={errors} />;
+                return <PostAd control={control} errors={errors} setValue={setValue} />;
             case 2:
                 return <AddMedia control={control} errors={errors} setValue={setValue} getValue={getValues} />;
             case 3:
@@ -136,8 +136,6 @@ export default function NewAdScreen() {
     const handleStay = () => {
         setShowDialog(false)
     }
-
-    console.log({ category_id });
 
     if (currentStep > totalSteps) return <AdPublishSuccess />
 

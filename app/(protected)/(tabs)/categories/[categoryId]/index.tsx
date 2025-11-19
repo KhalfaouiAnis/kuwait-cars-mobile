@@ -13,16 +13,16 @@ import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-const FILTERS: { label: string, value: FilterAdsBy }[] = [{ label: "Brand", value: "brand" }, { label: "Year of manufacture", value: "year" }, { label: "Price", value: "price" }]
+const FILTERS: { label: string, value: FilterAdsBy }[] = [{ label: "Brand", value: "brand" }, { label: "Year", value: "year" }, { label: "Price", value: "price" }]
 
 const listings = [
     {
         id: "listing-1",
         images: [
-            { url: IMAGES.CarChevrolet },
-            { url: IMAGES.CarHyunday },
-            { url: IMAGES.CarMercedes },
-            { url: IMAGES.CarToyota },
+            { url: IMAGES.Toyota },
+            { url: IMAGES.Toyota },
+            { url: IMAGES.Toyota_5 },
+            { url: IMAGES.Toyota_5 },
         ],
         badge: "Super DEAL",
         name: "Chevrolet corvette",

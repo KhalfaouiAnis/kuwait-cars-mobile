@@ -26,7 +26,7 @@ export const useWatermarker = () => {
             const uri = await captureRef(viewShotRef.current, {
                 format: "png",
                 quality: 0.9,
-                result: "data-uri",
+                result: "base64",
                 width: TEMP_SIZE,
                 height: TEMP_SIZE,
             });

@@ -33,7 +33,7 @@ const useUserPreferencesStore = create<UserPreferencesState>()(
 
 export default useUserPreferencesStore;
 
-export const currentLan = () => useUserPreferencesStore.getState().lang;
+export const currentLang = () => useUserPreferencesStore.getState().lang;
 
 i18n.on("loading", () => {
   useUserPreferencesStore.getState().setI18NLoading(true);

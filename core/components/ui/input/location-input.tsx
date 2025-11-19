@@ -5,7 +5,7 @@ import { Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react
 import ChooseLocation from '../../forms/ad/choose-location';
 
 
-export default function LocationInput({ control, errors }: VehicleAdFormSteps) {
+export default function LocationInput({ control, errors, getValue }: VehicleAdFormSteps) {
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -19,12 +19,14 @@ export default function LocationInput({ control, errors }: VehicleAdFormSteps) {
                         }
                     }}
                 >
-                    <View>
+                    <View className='flex-row gap-2 items-center'>
+                        <Ionicons name="location-outline" size={24} color="#000000" className="mr-2" />
                         <TextInput
                             className={` ${errors.location?.root ? 'border-red-500' : 'text-[#333]'}`}
                             editable={false}
                             placeholder='Location'
                             pointerEvents="none"
+                            value={getValue?.("location.area") || ""}
                         />
                         <Modal
                             visible={showModal}

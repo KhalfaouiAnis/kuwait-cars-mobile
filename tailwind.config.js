@@ -13,7 +13,7 @@ module.exports = {
           900: "#000000",
         },
         success: "#10b981",
-        error: "#ef4444",
+        error: "#FF123D",
       },
       fontFamily: {
         inter: ["InterRegular", "sans-serif"],
