@@ -1,8 +1,5 @@
-import { IMAGES } from "@/core/constants/images";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { Image } from "react-native";
-import { PhotoManipulator } from "react-native-photo-manipulator";
 
 export const useAdMedia = (setValue: any) => {
   const [tab, setTab] = useState(0);
@@ -43,19 +40,6 @@ export const useAdMedia = (setValue: any) => {
       setVideo(fileObj);
       setValue?.("video", fileObj);
       return;
-    }
-
-    try {
-      const { height } = await Image.getSize(fileObj.uri);
-
-      const overlayed = await PhotoManipulator.overlayImage(
-        fileObj.uri,
-        IMAGES.Watermark,
-        { x: 10, y: height + (height - 100) }
-      );
-      fileObj.uri = overlayed;
-    } catch (error) {
-      console.log(error);
     }
 
     if (forThumbnail) {

@@ -5,8 +5,8 @@ import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from
 
 const screenWidth = Dimensions.get('window').width;
 
-const containerWidth = screenWidth - 40;
-const containerHeight = 250;
+const containerWidth = 320;
+const containerHeight = 240;
 
 type CarouselItem = {
     url: string;
@@ -52,9 +52,9 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
                                 <Image
                                     style={styles.image}
                                     source={item.url}
-                                    contentFit="contain"
                                     placeholder={{ blurhash: "LFDQn%_4?IWC~qj[?H%L00ay?aof" }}
-                                    transition={500}
+                                    contentFit='fill'
+                                    transition={200}
                                 />
                             </View>
                             <View className="absolute top-2 start-2">
@@ -76,14 +76,14 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        alignItems: 'center',
         overflow: 'hidden',
         backgroundColor: "transparent",
+        borderColor: "transparent",
+        borderRadius: 8,
+        borderWidth: 1,
     },
     image: {
-        width: '100%',
-        height: '100%',
+        flex: 1,
         borderRadius: 8,
         borderWidth: 1,
         borderColor: "transparent"

@@ -95,7 +95,7 @@ const useAuthStore = create<AuthState>()(
         });
       },
       createAnonymousSesssion: (token: string) => {
-        set({ accessToken: token, refreshToken: "" });
+        set({ accessToken: token, refreshToken: "", isAuthenticated: true });
       },
     }),
     {

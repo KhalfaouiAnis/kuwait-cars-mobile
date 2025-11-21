@@ -8,7 +8,7 @@ import { IMAGES } from "@/core/constants/images";
 import { getAnonymousAccessToken } from "@/core/lib/api/authentication/login";
 import { authStore } from "@/core/lib/stores/auth.store";
 import { Image } from "expo-image";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -17,10 +17,11 @@ export default function Index() {
 
     const handleAnonymousSession = async () => {
         const token = await getAnonymousAccessToken();
+
         if (!token) {
             return
         }
-        authStore().createAnonymousSesssion(token)
+        authStore.getState().createAnonymousSesssion(token)
         router.push("/categories")
     }
 
@@ -36,13 +37,18 @@ export default function Index() {
                 <View className="flex items-center mt-8 gap-y-4">
                     <AuthLink href="/(auth)/signin" label="Sign In" />
                     <AuthLink href="/(auth)/signup" label="Sign Up" />
-                    <TouchableOpacity className="border border-[#FAED02] py-4 w-[300px] rounded-md"
+                    <TouchableOpacity className="border border-primary-500 py-4 w-[300px] rounded-md"
                         onPress={handleAnonymousSession}>
-                        <Text className="font-bold text-center text-[16px]">
+                        <Text className="font-bold text-center text-base">
                             As a Guest
                         </Text>
                     </TouchableOpacity>
-                    <Link className="font-normal text-sm self-end mr-3" href="/(auth)/signin">Skip →</Link>
+                    <TouchableOpacity className="w-[300px]"
+                        onPress={handleAnonymousSession}>
+                        <Text className="font-normal text-sm self-end mr-3">
+                            Skip →
+                        </Text>
+                    </TouchableOpacity>
                 </View>
                 <View className="flex items-center py-4">
                     <Text className="text-[#B5B5B5] text-sm">or continue with</Text>

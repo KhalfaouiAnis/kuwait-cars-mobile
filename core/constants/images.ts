@@ -7,9 +7,10 @@ import CarChevrolet from "@/assets/images/chevrolet-corvette.jpg";
 import DefaultAvatar from "@/assets/images/default_avatar.jpg";
 import DeleteMessage from "@/assets/images/delete-message.png";
 import EngineCoolingSystemCategory from "@/assets/images/Engine_cooling_system.png";
+import Nature from "@/assets/images/genfill-nature.jpg";
 import CarHyunday from "@/assets/images/hyunday-tucson.png";
-import Logo from "@/assets/images/kuwait_car_logo.png";
 import LexusNX250Category from "@/assets/images/Lexus-NX-250-style-selector-grecianwater-visualizer.png";
+import Logo from "@/assets/images/logo.png";
 import CarMercedes from "@/assets/images/mercedes-amg.png";
 import Mohamed from "@/assets/images/mohamed.png";
 import NoContent from "@/assets/images/nothing-here.png";
@@ -22,17 +23,16 @@ import Toyota_4 from "@/assets/images/toyota_4.png";
 import Toyota_5 from "@/assets/images/toyota_5.jpg";
 import AvatarVideoBoy from "@/assets/images/video-call-boy.png";
 import AvatarVideoGirl from "@/assets/images/video-call-girl.png";
-import Watermark from "@/assets/images/watermark.jpg";
 import ZerexG05PhosphateCategory from "@/assets/images/Zerex_G05_Phosphate_Free_Antifreeze_Coolant_Concentrate_1_GA.png";
 
 export const IMAGES = {
   AvatarVideoBoy,
   AvatarVideoGirl,
+  Nature,
   DeleteMessage,
   DefaultAvatar,
   Mohamed,
   Logo,
-  Watermark,
   NoContent,
   CarChevrolet,
   CarHyunday,

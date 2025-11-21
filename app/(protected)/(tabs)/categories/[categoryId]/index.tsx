@@ -19,9 +19,9 @@ const listings = [
     {
         id: "listing-1",
         images: [
-            { url: IMAGES.Toyota },
-            { url: IMAGES.Toyota },
-            { url: IMAGES.Toyota_5 },
+            { url: IMAGES.Nature },
+            { url: IMAGES.Nature },
+            { url: IMAGES.CarChevrolet },
             { url: IMAGES.Toyota_5 },
         ],
         badge: "Super DEAL",
@@ -41,7 +41,7 @@ const listings = [
             { url: IMAGES.CarHyunday },
             { url: IMAGES.CarChevrolet },
             { url: IMAGES.CarMercedes },
-            { url: IMAGES.CarToyota },
+            { url: IMAGES.Toyota_1 },
         ],
         badge: "Super DEAL 2",
         name: "Hundai",
