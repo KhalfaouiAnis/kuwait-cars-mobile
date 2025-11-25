@@ -42,7 +42,7 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
 
     const renderPhoto = (photoUri: string, type: "thumbnail" | "video" | "images", key: string) => (
         <View key={key} className="relative mr-2 mb-2">
-            <Image source={{ uri: photoUri }} style={{ width: "auto", height: type === "thumbnail" ? 200 : 80, borderRadius: 8 }} contentFit="cover" />
+            <Image source={{ uri: photoUri }} style={{ width: "auto", height: type === "thumbnail" ? 200 : 80, borderRadius: 8 }} contentFit="fill" />
             <TouchableOpacity
                 className="absolute -top-4 -right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
                 onPress={() => removeMedia(photoUri, type === "thumbnail", type === "video")}

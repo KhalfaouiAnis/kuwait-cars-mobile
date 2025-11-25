@@ -1,5 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
+import { Image, Video, getFileSize } from "react-native-compressor";
 
 export const useAdMedia = (setValue: any) => {
   const [tab, setTab] = useState(0);
@@ -20,17 +21,29 @@ export const useAdMedia = (setValue: any) => {
       quality: !videoType ? 0.8 : undefined,
       videoQuality: videoType ? 1 : undefined,
     };
+
     const result = await (fromCamera
       ? ImagePicker.launchCameraAsync(options)
       : ImagePicker.launchImageLibraryAsync(options));
 
     if (result.canceled || !result.assets) return;
 
+    const { uri: originalUri } = result.assets[0];
+
+    const compressedUri = await (videoType
+      ? Video.compress(originalUri, { bitrate: 2 })
+      : Image.compress(originalUri, {
+          output: "jpg",
+          disablePngTransparency: true,
+        }));
+
+    const compressedSize = await getFileSize(compressedUri);
+
     const fileObj: any = {
-      uri: result.assets[0].uri,
+      uri: compressedUri,
       type: result.assets[0].mimeType,
       name: result.assets[0].fileName,
-      size: result.assets[0].fileSize,
+      size: compressedSize,
       duration: result.assets[0].duration
         ? result.assets[0].duration
         : undefined,

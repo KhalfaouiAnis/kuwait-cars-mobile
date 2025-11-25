@@ -9,6 +9,7 @@ export const httpClient = axios.create({
 
 export const publicHttpClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
+  timeout: 120000,
 });
 
 let isRefreshing = false;
