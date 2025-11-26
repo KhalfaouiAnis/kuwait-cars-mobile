@@ -23,9 +23,10 @@ export default function NewAdScreen() {
                     <AdTypeSelector
                         data={CAR_BRAND_TYPES}
                         selectedValue={category}
+                        required
                         onChange={(value) => setCategory(value)}
+                        placeholder="Select Your Category"
                     />
-                    <Text className="ms-4 text-gray-400">Required</Text>
                 </View>
                 <View className="mt-auto mb-4">
                     <TouchableOpacity

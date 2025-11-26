@@ -4,8 +4,8 @@ import { ScrollView, Text, View } from "react-native";
 import AdTextInput from "../../ui/input/ad-text-input";
 import RadioGroup from "../../ui/input/radio-group";
 import SelectInput from "../../ui/input/select-input";
+import PickerSelect from "../../ui/shared/picker-select";
 import { renderColorOption, renderYearOption } from "./select-option/render-option";
-import Init from "./unit";
 
 
 export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
@@ -20,33 +20,37 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                 <Text className="px-2 text-error font-inter-medium text-lg">Required Information</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
-            <View className="gap-y-2 mt-4">
+            <View className="gap-y-4 mt-4">
                 <View>
                     <SelectInput
                         control={control}
                         name="car.year"
                         options={YEARS}
+                        required
                         renderOption={renderYearOption}
                         error={errors.car?.year?.message} placeholder="Year" />
-                    <Text className="ms-4 text-gray-400 mt-1">Required</Text>
                 </View>
                 <View>
                     <SelectInput
                         control={control}
                         name="car.exterior_color"
+                        required
                         options={CAR_COLORS}
                         renderOption={renderColorOption}
                         error={errors.car?.exterior_color?.message} placeholder="Exterior color" />
-                    <Text className="ms-4 text-gray-400 mt-1">Required</Text>
                 </View>
                 <View>
                     <View className="flex-row gap-1 items-center">
-                        <View className="w-[84%]">
-                            <AdTextInput control={control} name="car.mileage" error={errors.car?.mileage?.message} placeholder="Mileage (0 - 1000000)" />
+                        <View className="w-[74%]">
+                            <AdTextInput
+                                control={control}
+                                name="car.mileage"
+                                required
+                                error={errors.car?.mileage?.message}
+                                placeholder="Mileage (0 - 1000000)" />
                         </View>
-                        <Init />
+                        <PickerSelect />
                     </View>
-                    <Text className="ms-4 text-gray-400 mt-1">Required</Text>
                 </View>
             </View>
             <View className="flex-row items-center justify-center w-full mt-4">
@@ -54,16 +58,17 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                 <Text className="px-2 font-inter-medium text-lg">Optional Information</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
-            <View className="gap-y-2 mt-4">
+            <View className="gap-y-4 py-1 mt-4">
                 <RadioGroup
                     name="car.fuel_type"
                     control={control}
                     label="Fuel Type"
+                    fullWidth
                     options={[
-                        { id: "1", label: "Petrol", value: "Petrol" },
-                        { id: "2", label: "Diesel", value: "Diesel" },
-                        { id: "3", label: "Electric", value: "Electric" },
-                        { id: "4", label: "Hybrid", value: "Hybrid" },
+                        { id: "Petrol", label: "Petrol", value: "Petrol" },
+                        { id: "Diesel", label: "Diesel", value: "Diesel" },
+                        { id: "Electric", label: "Electric", value: "Electric" },
+                        { id: "Hybrid", label: "Hybrid", value: "Hybrid" },
                     ]}
                 />
                 <RadioGroup
@@ -84,22 +89,28 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                     name="car.transmission"
                     control={control}
                     label="Transmission"
+                    bordered
+                    fullWidth
                     options={[{ id: "auto", label: "Auto", value: "Auto" }, { id: "manual", label: "Manual", value: "Manual" }]}
                 />
                 <RadioGroup
                     name="car.under_warranty"
                     control={control}
                     label="Under warranty"
+                    fullWidth
+                    bordered
                     options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
                 />
-                <RadioGroup
-                    name="car.roof"
-                    control={control}
-                    label="Roof"
-                    options={[{ id: "Sunroof", label: "Sunroof", value: "Sunroof" }, { id: "Panoramic", label: "Panoramic", value: "Panoramic" },
-                    { id: "Convertible Roof", label: "Convertible Roof", value: "Convertible Roof" }
-                    ]}
-                />
+                <View className="flex-row flex-wrap">
+                    <RadioGroup
+                        name="car.roof"
+                        control={control}
+                        label="Roof"
+                        options={[{ id: "Sunroof", label: "Sunroof", value: "Sunroof" }, { id: "Panoramic", label: "Panoramic", value: "Panoramic" },
+                        { id: "Convertible Roof", label: "Convertible Roof", value: "Convertible Roof" }
+                        ]}
+                    />
+                </View>
             </View>
         </ScrollView>
     )

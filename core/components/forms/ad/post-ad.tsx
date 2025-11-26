@@ -2,7 +2,7 @@ import { CITIES } from "@/core/constants";
 import { CAR_BRAND_TYPES } from "@/core/constants/ad";
 import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import AdTextInput from "../../ui/input/ad-text-input";
 import LocationInput from "../../ui/input/location-input";
 import SelectInput from "../../ui/input/select-input";
@@ -12,7 +12,11 @@ import VehicleMarkSelector from "./select-option/vehicle-mark-selector";
 
 export default function PostAd({ control, errors }: VehicleAdFormSteps) {
     return (
-        <View className="gap-y-3">
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            className="flex-1 bg-white"
+            contentContainerStyle={{ paddingBottom: 10, rowGap: 8 }}
+        >
             <View>
                 <View className="flex-row items-center justify-between">
                     <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
@@ -51,19 +55,22 @@ export default function PostAd({ control, errors }: VehicleAdFormSteps) {
             <AdTextInput control={control} name="price" error={errors.price?.message} placeholder="Write Your Price"
                 required label="Price" keyboardType="number-pad" />
             <InputWithSpeech
-                control={control} name="title" error={errors.title?.message}
+                control={control}
+                name="title"
                 required
-                maxLength={30} placeholder="Write Your Advertisement Title" />
+                maxLength={30}
+                error={errors.title?.message}
+                placeholder="Write Your Advertisement Title" />
             <InputWithSpeech
                 control={control}
                 name="description"
                 maxLength={500}
                 multiline
+                required
                 numberOfLines={4}
                 error={errors.description?.message}
-                required
                 placeholder="Write Your Advertisement Description"
             />
-        </View>
+        </ScrollView>
     )
 }

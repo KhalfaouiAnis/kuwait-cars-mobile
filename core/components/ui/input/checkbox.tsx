@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 type CustomCheckboxProps = {
     onValueChange?: (value: boolean) => void;
@@ -24,9 +24,11 @@ export default function Checkbox({
 
     return (
         <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
-            <View style={{ width: size, height: size }} className="justify-center items-center">
-                <MaterialCommunityIcons name={isChecked ? "checkbox-marked-outline" : "checkbox-blank-outline"} size={24} color={isChecked ? "green" : "black"} />
-            </View>
+            <MaterialCommunityIcons
+                size={size}
+                color={isChecked ? "#FAED02" : "transparent"}
+                name={isChecked ? "checkbox-marked" : "checkbox-blank-outline"}
+            />
         </TouchableOpacity>
     )
 }

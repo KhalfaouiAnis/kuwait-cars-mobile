@@ -47,7 +47,8 @@ export default function VehicleMarkSelector<TForm extends FieldValues>({ control
         if (isLeaf) {
             return (
                 <TouchableOpacity
-                    className={`flex-row items-center my-1 p-3 border border-gray-100 ms-${(level) * 4}`}
+                    className={`flex-row items-center my-1 p-3 border border-transparent bg-white ms-${(level) * 4}`}
+                    style={{ elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
                     onPress={() => handleSelect(item.value)}
                 >
                     <Ionicons
@@ -64,7 +65,8 @@ export default function VehicleMarkSelector<TForm extends FieldValues>({ control
         return (
             <>
                 <TouchableOpacity
-                    className="flex-row items-center my-[2px] p-3 border border-gray-100 rounded-sm"
+                    className="flex-row items-center my-1 p-3 border border-transparent bg-white rounded-sm"
+                    style={{ elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
                     onPress={() => hasChildren && toggleExpand(itemPath)}
                 >
                     <Text className="flex-1 text-sm font-medium ml-3">{item.label}</Text>

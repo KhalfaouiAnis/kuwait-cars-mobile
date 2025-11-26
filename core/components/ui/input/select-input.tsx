@@ -99,7 +99,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                     </View>
                 </View>
             </Pressable>
-            {error && <Text className="text-error text-sm mt-1 ml-2">{error}</Text>}
+            {/* {error && <Text className="text-error text-sm mt-1 ml-2">{error}</Text>} */}
         </View>
     );
 }

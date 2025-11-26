@@ -168,6 +168,7 @@ export const BaseAdSchema = z.object({
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),
   xcar_chat: z.coerce.boolean().optional(),
+  hide_license_plate: z.coerce.boolean().optional(),
 
   plan: z.string().min(1, "Plan is required"),
 });
