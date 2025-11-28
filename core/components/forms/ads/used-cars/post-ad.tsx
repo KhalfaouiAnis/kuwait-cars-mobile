@@ -1,16 +1,17 @@
+import AdTextInput from "@/core/components/ui/input/ad-text-input";
+import LocationInput from "@/core/components/ui/input/location-input";
+import SelectInput from "@/core/components/ui/input/select-input";
+import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import { CITIES } from "@/core/constants";
 import { CAR_BRAND_TYPES } from "@/core/constants/ad";
-import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
+import { AdFormStepProps } from "@/core/types";
+import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView, Text, View } from "react-native";
-import AdTextInput from "../../ui/input/ad-text-input";
-import LocationInput from "../../ui/input/location-input";
-import SelectInput from "../../ui/input/select-input";
-import InputWithSpeech from "../../ui/input/text/speech-input";
-import { renderLocationOption } from "./select-option/render-option";
-import VehicleMarkSelector from "./select-option/vehicle-mark-selector";
+import { renderLocationOption } from "../../../ui/shared/render-option";
+import VehicleMarkSelector from "../shared/ad-type-selector/vehicle-mark-selector";
 
-export default function PostAd({ control, errors }: VehicleAdFormSteps) {
+export default function PostAd({ control, errors }: AdFormStepProps<UsedCarAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -25,7 +26,7 @@ export default function PostAd({ control, errors }: VehicleAdFormSteps) {
                 <VehicleMarkSelector
                     data={CAR_BRAND_TYPES}
                     control={control}
-                    name="car.mark"
+                    name="ad_type"
                 />
             </View>
             <View>

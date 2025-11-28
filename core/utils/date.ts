@@ -7,7 +7,7 @@ export const generateYears = (
 ) => {
   const years = [];
   for (let year = endYear; year >= startYear; year--) {
-    years.push(year.toString());
+    years.push(year);
   }
   return years;
 };

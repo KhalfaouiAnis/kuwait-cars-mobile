@@ -13,7 +13,7 @@ import TakePhotoButton from "../../ui/button/take-photo-button";
 import AppModal from "../../ui/dialog/modal";
 import PhoneInput from "../../ui/input/phone-input";
 import SelectInput from "../../ui/input/select-input";
-import { renderLocationOption } from "../ad/select-option/render-option";
+import { renderLocationOption } from "../../ui/shared/render-option";
 
 export default function EditProfileForm() {
     const { user } = authStore.getState();

@@ -7,64 +7,73 @@ export const useAdMedia = (setValue: any) => {
   const [images, setImages] = useState<any[]>([]);
   const [thumbnail, setThumbnail] = useState<any>(null);
   const [video, setVideo] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   const addMedia = async (
     fromCamera: boolean,
     videoType: boolean,
     forThumbnail: boolean
   ) => {
-    const options: ImagePicker.ImagePickerOptions | undefined = {
-      mediaTypes: [videoType ? "videos" : "images"],
-      aspect: [4, 3],
-      allowsEditing: true,
-      videoMaxDuration: 30,
-      quality: !videoType ? 0.8 : undefined,
-      videoQuality: videoType ? 1 : undefined,
-    };
+    try {
+      const options: ImagePicker.ImagePickerOptions | undefined = {
+        mediaTypes: [videoType ? "videos" : "images"],
+        aspect: [4, 3],
+        allowsEditing: true,
+        videoMaxDuration: 30,
+        quality: !videoType ? 0.8 : undefined,
+        videoQuality: videoType ? 1 : undefined,
+      };
 
-    const result = await (fromCamera
-      ? ImagePicker.launchCameraAsync(options)
-      : ImagePicker.launchImageLibraryAsync(options));
+      const result = await (fromCamera
+        ? ImagePicker.launchCameraAsync(options)
+        : ImagePicker.launchImageLibraryAsync(options));
 
-    if (result.canceled || !result.assets) return;
+      if (result.canceled || !result.assets) return;
 
-    const { uri: originalUri } = result.assets[0];
+      if (videoType) {
+        setLoading(true);
+      }
 
-    const compressedUri = await (videoType
-      ? Video.compress(originalUri, { bitrate: 2 })
-      : Image.compress(originalUri, {
-          output: "jpg",
-          disablePngTransparency: true,
-        }));
+      const { uri: originalUri } = result.assets[0];
 
-    const compressedSize = await getFileSize(compressedUri);
+      const compressedUri = await (videoType
+        ? Video.compress(originalUri, { bitrate: 2 })
+        : Image.compress(originalUri, {
+            output: "jpg",
+            disablePngTransparency: true,
+          }));
 
-    const fileObj: any = {
-      uri: compressedUri,
-      type: result.assets[0].mimeType,
-      name: result.assets[0].fileName,
-      size: compressedSize,
-      duration: result.assets[0].duration
-        ? result.assets[0].duration
-        : undefined,
-    };
+      const compressedSize = await getFileSize(compressedUri);
 
-    if (videoType) {
-      setVideo(fileObj);
-      setValue?.("video", fileObj);
-      return;
+      const fileObj: any = {
+        uri: compressedUri,
+        type: result.assets[0].mimeType,
+        name: result.assets[0].fileName,
+        size: compressedSize,
+        duration: result.assets[0].duration
+          ? result.assets[0].duration
+          : undefined,
+      };
+
+      if (videoType) {
+        setVideo(fileObj);
+        setValue?.("video", fileObj);
+        return;
+      }
+
+      if (forThumbnail) {
+        setThumbnail(fileObj);
+        setValue?.("thumbnail", fileObj);
+        return;
+      }
+
+      setImages((prevState) => {
+        setValue?.("images", [...prevState, fileObj]);
+        return [...prevState, fileObj];
+      });
+    } finally {
+      setLoading(false);
     }
-
-    if (forThumbnail) {
-      setThumbnail(fileObj);
-      setValue?.("thumbnail", fileObj);
-      return;
-    }
-
-    setImages((prevState) => {
-      setValue?.("images", [...prevState, fileObj]);
-      return [...prevState, fileObj];
-    });
   };
 
   const removeMedia = (uri: string, isThumbnail: boolean, isVideo: boolean) => {
@@ -86,12 +95,13 @@ export const useAdMedia = (setValue: any) => {
   };
 
   return {
-    addMedia,
-    removeMedia,
     images,
+    loading,
     thumbnail,
     video,
     tab,
+    addMedia,
+    removeMedia,
     setTab,
     setThumbnail,
     setImages,

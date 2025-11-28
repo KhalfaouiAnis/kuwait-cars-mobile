@@ -112,23 +112,38 @@ export const CAR_BRAND_TYPES = [
     label: "Motorcycles",
     regions: [
       {
-        label: "Asian",
+        label: "Sports motorcycles",
         brands: [
           {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
+            label: "Honda",
+            marks: [{ label: "Honda", value: "Honda" }],
           },
         ],
       },
       {
-        label: "American",
+        label: "Quad bikes",
         brands: [
           {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
+            label: "Quad",
+            marks: [{ label: "Quad", value: "Quad" }],
+          },
+        ],
+      },
+      {
+        label: "Bicycles",
+        brands: [
+          {
+            label: "Bicycle",
+            marks: [{ label: "Bicycle", value: "Bicycle" }],
+          },
+        ],
+      },
+      {
+        label: "Scooter",
+        brands: [
+          {
+            label: "Scooter",
+            marks: [{ label: "Scooter", value: "Scooter" }],
           },
         ],
       },
@@ -224,15 +239,30 @@ export const CAR_BRAND_TYPES = [
         brands: [
           {
             label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
+            marks: [{ label: "Land Cruiser", value: "Toyota-Land Cruiser" }],
           },
         ],
       },
       {
         label: "American",
+        brands: [
+          {
+            label: "Kawasaki",
+            marks: [{ label: "max", value: "Kawasaki-max" }],
+          },
+        ],
+      },
+      {
+        label: "European",
+        brands: [
+          {
+            label: "Kawasaki",
+            marks: [{ label: "max", value: "Kawasaki-max" }],
+          },
+        ],
+      },
+      {
+        label: "Chinese",
         brands: [
           {
             label: "Kawasaki",

@@ -1,3 +1,10 @@
+import {
+  Control,
+  FieldErrors,
+  FieldValues,
+  UseFormGetValues,
+  UseFormSetValue,
+} from "react-hook-form";
 import { LocationInterface } from "./schema/ad";
 
 export interface User {
@@ -70,7 +77,14 @@ export type TimerMode = "countdown" | "elapsed";
 export type SelectOption = {
   id: string;
   label: string;
-  value: string;
+  value: string | number | boolean;
 };
 
 export type FilterAdsBy = "brand" | "year" | "price";
+
+export interface AdFormStepProps<T extends FieldValues> {
+  control: Control<T>;
+  errors: FieldErrors<T>;
+  setValue?: UseFormSetValue<T>;
+  getValue?: UseFormGetValues<T>;
+}

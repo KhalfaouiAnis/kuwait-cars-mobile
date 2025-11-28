@@ -16,11 +16,7 @@ export const VehicleAdSchema = BaseAdSchema.merge(
       exterior_color: z.string().min(1, "Color is required"),
       mileage: z.string().min(1, "Mileage is required"),
       mileage_unit: z.string().optional(),
-      year: z.coerce
-        .number({ message: "The year field is required" })
-        .min(0)
-        .max(new Date().getFullYear()),
-
+      year: z.string().min(1, "Year is required"),
       fuel_type: z.string().optional(),
       cylinders: z.string().optional(),
       transmission: z.string().optional(),

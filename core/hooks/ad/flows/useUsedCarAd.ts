@@ -1,13 +1,13 @@
 import { httpClient } from "@/core/lib/api/httpClient";
 import {
-  VehicleAdInterface,
-  VehicleAdSchema,
-} from "@/core/types/schema/vehicleAd";
+    UsedCarAdInterface,
+    UsedCarAdSchema,
+} from "@/core/types/schema/ads/usedCar";
 import { AxiosProgressEvent, isAxiosError } from "axios";
 import { useRouter } from "expo-router";
 import { useFormHook } from "../../use-form-hook";
 
-export function useFlowOneAd() {
+export function useUsedCarAd() {
   const router = useRouter();
 
   const {
@@ -18,18 +18,14 @@ export function useFlowOneAd() {
     reset,
     setValue,
     getValues,
-  } = useFormHook(VehicleAdSchema, {
+  } = useFormHook(UsedCarAdSchema, {
     defaultValues: {
       title: "title",
       plan: "pro",
       price: 222,
-      car: {
-        mileage: "125,320",
-        mark: "kawasaki",
-        brand: "fff",
-        year: "2024",
-        exterior_color: "None"
-      },
+      mileage: "125,320 KM",
+      model: "kawasaki",
+      brand: "fff",
       location: {
         area: "area 1",
         block: "block 1",
@@ -38,12 +34,12 @@ export function useFlowOneAd() {
       thumbnail: {},
       images: [],
       video: {},
-      category_id: "cars_for_sale",
+      ad_type: "cars_for_sale",
     },
   });
 
   const onSubmit = async (
-    data: VehicleAdInterface,
+    data: UsedCarAdInterface,
     onUploadProgress?: (progressEvent: AxiosProgressEvent) => void
   ) => {
     try {
@@ -54,13 +50,13 @@ export function useFlowOneAd() {
           formData.append(key, value as string);
         }
       });
-      formData.append("car", JSON.stringify(data.car));
+
       formData.append("location", JSON.stringify(data.location));
       formData.append("thumbnail", data.thumbnail as any);
       formData.append("video", data.video as any);
       data.images?.forEach((image) => formData.append("images", image as any));
 
-      const response = await httpClient.post("/ads/flow-one/create", formData, {
+      const response = await httpClient.post("/ads/create", formData, {
         onUploadProgress,
       });
 
@@ -71,8 +67,6 @@ export function useFlowOneAd() {
       if (isAxiosError(error)) {
         if (error.code === "ERR_NETWORK") {
           console.log("Network error - Check baseURL, IP, or CORS");
-        } else if (error.response?.status === 400) {
-          console.log("Bad Request:", error.response.data); // Multer details
         }
       }
       console.error("Submit error:", error);

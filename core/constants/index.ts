@@ -66,7 +66,7 @@ export const SUBSCRIPTION_PLANS = [
   },
 ];
 
-export const HIDE_TABBAR_ROUTES: string[] = ["/create/flowOne", "/create/flowTwo", "/create/flowThree", "/create"];
+export const HIDE_TABBAR_ROUTES: string[] = ["/create"];
 
 export const CATEGORIES: SelectOption[] = [
   { id: "Cars 1", label: "Cars 1", value: "Cars 1" },
@@ -102,13 +102,13 @@ export const CITIES: SelectOption[] = [
 ];
 
 export const Blocks: SelectOption[] = [
-  {id: "Block_1", label: "Block 1", value: "Block 1"},
-  {id: "Block_2", label: "Block 2", value: "Block 2"},
-]
+  { id: "Block_1", label: "Block 1", value: "Block 1" },
+  { id: "Block_2", label: "Block 2", value: "Block 2" },
+];
 
 export const YEARS: SelectOption[] = generateYears().map((year) => ({
-  id: year,
-  label: year,
+  id: year.toString(),
+  label: year.toString(),
   value: year,
 }));
 

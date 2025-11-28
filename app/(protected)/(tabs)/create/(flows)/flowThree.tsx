@@ -1,10 +1,10 @@
-import AdDetails from "@/core/components/forms/ad/ad-details";
-import AdDetailsStep2 from "@/core/components/forms/ad/ad-details-step-2";
-import AdFormContainer from "@/core/components/forms/ad/ad-form-container";
-import AddMedia from "@/core/components/forms/ad/add-media";
-import ChoosePlan from "@/core/components/forms/ad/choose-plan";
-import PostAd from "@/core/components/forms/ad/post-ad";
-import AdPublishSuccess from "@/core/components/forms/ad/success";
+import AdDetails from "@/core/components/forms/ads/rest-categories/ad-details";
+import AdDetailsStep2 from "@/core/components/forms/ads/rest-categories/ad-details-step-2";
+import AddMedia from "@/core/components/forms/ads/rest-categories/add-media";
+import ChoosePlan from "@/core/components/forms/ads/rest-categories/choose-plan";
+import PostAd from "@/core/components/forms/ads/rest-categories/post-ad";
+import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
+import AdPublishSuccess from "@/core/components/forms/ads/shared/success";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import UploadProgress from "@/core/components/ui/shared/upload-progress";
 import { useAd } from "@/core/hooks/ad/usAd";
@@ -107,11 +107,11 @@ export default function NewAdScreen() {
     const renderCurrentStep = () => {
         switch (currentStep) {
             case 1:
-                return <PostAd control={control} errors={errors} />;
+                return <AdDetails control={control} errors={errors} />;
             case 2:
                 return <AddMedia control={control} errors={errors} setValue={setValue} getValue={getValues} />;
             case 3:
-                return <AdDetails control={control} errors={errors} />;
+                return <PostAd control={control} errors={errors} />;
             case 4:
                 return <AdDetailsStep2 control={control} errors={errors} />;
             case 5:

@@ -1,19 +1,19 @@
+import AdTextInput from "@/core/components/ui/input/ad-text-input";
+import RadioGroup from "@/core/components/ui/input/radio-group";
+import SelectInput from "@/core/components/ui/input/select-input";
+import PickerSelect from "@/core/components/ui/shared/picker-select";
 import { CAR_COLORS, YEARS } from "@/core/constants";
-import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
+import { AdFormStepProps } from "@/core/types";
+import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 import { ScrollView, Text, View } from "react-native";
-import AdTextInput from "../../ui/input/ad-text-input";
-import RadioGroup from "../../ui/input/radio-group";
-import SelectInput from "../../ui/input/select-input";
-import PickerSelect from "../../ui/shared/picker-select";
-import { renderColorOption, renderYearOption } from "./select-option/render-option";
+import { renderColorOption, renderYearOption } from "../../../ui/shared/render-option";
 
-
-export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
+export default function AdDetails({ control, errors }: AdFormStepProps<MotorcycleAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
             className="flex-1 bg-white"
-            contentContainerStyle={{ paddingBottom: 60 }}
+            contentContainerStyle={{ paddingBottom: 10 }}
         >
             <View className="flex-row items-center justify-center w-full">
                 <View className="border border-primary-500 w-2/5" />
@@ -24,33 +24,33 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                 <View>
                     <SelectInput
                         control={control}
-                        name="car.year"
+                        name="year"
                         options={YEARS}
                         required
                         renderOption={renderYearOption}
-                        error={errors.car?.year?.message} placeholder="Year" />
+                        error={errors.year?.message}
+                        placeholder="Year" />
                 </View>
                 <View>
                     <SelectInput
                         control={control}
-                        name="car.exterior_color"
+                        name="exterior_color"
                         required
                         options={CAR_COLORS}
                         renderOption={renderColorOption}
-                        error={errors.car?.exterior_color?.message} placeholder="Exterior color" />
+                        error={errors.exterior_color?.message}
+                        placeholder="Exterior color" />
                 </View>
-                <View>
-                    <View className="flex-row gap-1 items-center">
-                        <View className="w-[74%]">
-                            <AdTextInput
-                                control={control}
-                                name="car.mileage"
-                                required
-                                error={errors.car?.mileage?.message}
-                                placeholder="Mileage (0 - 1000000)" />
-                        </View>
-                        <PickerSelect />
+                <View className="flex-row gap-1 items-center">
+                    <View className="w-[74%]">
+                        <AdTextInput
+                            control={control}
+                            name="mileage"
+                            required
+                            error={errors.mileage?.message}
+                            placeholder="Mileage (0 - 1000000)" />
                     </View>
+                    <PickerSelect />
                 </View>
             </View>
             <View className="flex-row items-center justify-center w-full mt-4">
@@ -60,7 +60,7 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
             </View>
             <View className="gap-y-4 py-1 mt-4">
                 <RadioGroup
-                    name="car.fuel_type"
+                    name="fuel_type"
                     control={control}
                     label="Fuel Type"
                     fullWidth
@@ -72,21 +72,19 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                     ]}
                 />
                 <RadioGroup
-                    name="car.cylinders"
+                    name="cylinders"
                     control={control}
                     label="Cylinders"
                     options={[
+                        { id: "1", label: "1", value: "1" },
                         { id: "2", label: "2", value: "2" },
+                        { id: "3", label: "3", value: "3" },
                         { id: "4", label: "4", value: "4" },
-                        { id: "5", label: "5", value: "5" },
                         { id: "6", label: "6", value: "6" },
-                        { id: "8", label: "8", value: "8" },
-                        { id: "10", label: "10", value: "10" },
-                        { id: "12", label: "12", value: "12" },
                     ]}
                 />
                 <RadioGroup
-                    name="car.transmission"
+                    name="transmission"
                     control={control}
                     label="Transmission"
                     bordered
@@ -94,23 +92,13 @@ export default function AdDetails({ control, errors }: VehicleAdFormSteps) {
                     options={[{ id: "auto", label: "Auto", value: "Auto" }, { id: "manual", label: "Manual", value: "Manual" }]}
                 />
                 <RadioGroup
-                    name="car.under_warranty"
+                    name="under_warranty"
                     control={control}
                     label="Under warranty"
                     fullWidth
                     bordered
                     options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
                 />
-                <View className="flex-row flex-wrap">
-                    <RadioGroup
-                        name="car.roof"
-                        control={control}
-                        label="Roof"
-                        options={[{ id: "Sunroof", label: "Sunroof", value: "Sunroof" }, { id: "Panoramic", label: "Panoramic", value: "Panoramic" },
-                        { id: "Convertible Roof", label: "Convertible Roof", value: "Convertible Roof" }
-                        ]}
-                    />
-                </View>
             </View>
         </ScrollView>
     )

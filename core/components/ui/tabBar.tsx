@@ -32,7 +32,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
         })
     }, [navigation])
 
-    if (HIDE_TABBAR_ROUTES.includes(pathname) || pathname.startsWith("/categories/")) {
+    if (HIDE_TABBAR_ROUTES.includes(pathname) || pathname.startsWith("/categories/") || pathname.startsWith("/create/")) {
         return null;
     }
 

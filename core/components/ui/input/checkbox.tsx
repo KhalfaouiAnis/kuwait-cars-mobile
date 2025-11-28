@@ -4,17 +4,19 @@ import { TouchableOpacity } from "react-native";
 
 type CustomCheckboxProps = {
     onValueChange?: (value: boolean) => void;
-    initialValue?: boolean;
+    checked?: boolean;
+    disabled?: boolean;
     size?: number;
     color?: string;
 };
 
 export default function Checkbox({
     onValueChange,
-    initialValue = false,
+    checked = false,
+    disabled,
     size = 24,
 }: CustomCheckboxProps) {
-    const [isChecked, setIsChecked] = useState(initialValue);
+    const [isChecked, setIsChecked] = useState(checked);
 
     const handlePress = () => {
         const newValue = !isChecked;
@@ -23,7 +25,7 @@ export default function Checkbox({
     };
 
     return (
-        <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
+        <TouchableOpacity onPress={handlePress} activeOpacity={0.7} disabled={disabled}>
             <MaterialCommunityIcons
                 size={size}
                 color={isChecked ? "#FAED02" : "transparent"}

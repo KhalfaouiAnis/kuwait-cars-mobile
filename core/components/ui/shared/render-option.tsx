@@ -25,24 +25,24 @@ export const renderLocationOption = (option: SelectOption) => (
     </View>
 )
 
-export const renderYearOption = (option: SelectOption) => (
+export const renderYearOption = (option: SelectOption, selected?: boolean) => (
     <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200 shadow-sm">
         <View className='flex-1 ms-2'>
             <Text className="text-lg">{option.label}</Text>
         </View>
         <View className='pe-2'>
-            <Checkbox size={18} />
+            <Checkbox size={18} checked={selected} disabled />
         </View>
     </View>
 )
 
-export const renderColorOption = (option: SelectOption) => (
+export const renderColorOption = (option: SelectOption, selected?: boolean) => (
     <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200 shadow-sm">
         <View className='flex-1 ms-2'>
             <Text className="text-lg">{option.label}</Text>
         </View>
         <View className='pe-2'>
-            <Checkbox size={18} />
+            <Checkbox size={18} checked={selected} disabled />
         </View>
     </View>
 )

@@ -77,6 +77,40 @@ export const FileSchema = z
     { message: "File validation failed" }
   );
 
+export const VideoSchema = z
+  .object({
+    uri: z.string().url().or(z.string().startsWith("file://")).optional(),
+    type: z.string().optional(),
+    duration: z.coerce.number().optional(),
+    name: z.string().optional(),
+    size: z.coerce.number().optional(),
+  })
+  .refine(
+    (file) => {
+      if (!file.uri) return true;
+
+      try {
+        if (!file.type?.startsWith("video/")) {
+          return false;
+        }
+        if (file.size && file.size > MAX_VIDEO_SIZE) {
+          return false;
+        }
+
+        const durationMs = file?.duration;
+        if (durationMs && (durationMs < 10000 || durationMs > 30000)) {
+          return false;
+        }
+
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
+    { message: "File validation failed" }
+  );
+
 export const createFileSchema = (customMessage?: string) =>
   z
     .object({
@@ -142,8 +176,8 @@ export const MultiFileSchema = (customMessage?: string) =>
   z.array(createFileSchema(customMessage));
 
 export const BaseAdSchema = z.object({
-  title: z.string().min(3, "The title field is required"),
-  description: z.string().min(3, "The description field is required"),
+  title: z.string().min(3, "The title field is required").optional(),
+  description: z.string().min(3, "The description field is required").optional(),
   location: LocationSchema,
 
   price: z.coerce.number().optional(),
@@ -158,9 +192,7 @@ export const BaseAdSchema = z.object({
   images: MultiFileSchema(
     "Images must be valid files under 5MB each"
   ).optional(),
-  video: createFileSchema(
-    "Video must be 10-30 seconds and under 100MB"
-  ).optional(),
+  video: VideoSchema.optional(),
 
   additional_number: z.string().optional(),
 

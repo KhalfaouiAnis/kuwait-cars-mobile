@@ -1,8 +1,8 @@
+import SelectInput from "@/core/components/ui/input/select-input";
 import { Blocks, CITIES } from "@/core/constants";
 import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
 import { Text, View } from "react-native";
-import SelectInput from "../../ui/input/select-input";
-import { renderLocationOption } from "./select-option/render-option";
+import { renderLocationOption } from "../../../ui/shared/render-option";
 
 export default function ChooseLocation({ control, errors }: VehicleAdFormSteps) {
     return (

@@ -1,8 +1,8 @@
+import Container from "@/core/components/ui/container";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { ReactNode } from "react";
 import { Pressable, Text, View } from "react-native";
-import Container from "../../ui/container";
 
 interface FormContainerProps {
     title: string,

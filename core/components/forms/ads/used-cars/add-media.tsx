@@ -1,20 +1,21 @@
+import PickFromGalleryGallery from "@/core/components/ui/button/open-gallery-button";
+import TakePhotoButton from "@/core/components/ui/button/take-photo-button";
+import AppModal from "@/core/components/ui/dialog/modal";
+import VideoPlayer from "@/core/components/ui/shared/video-player";
 import { useAdMedia } from "@/core/hooks/ad/useAdMedia";
-import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
+import { AdFormStepProps } from "@/core/types";
+import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import PickFromGalleryGallery from "../../ui/button/open-gallery-button";
-import TakePhotoButton from "../../ui/button/take-photo-button";
-import AppModal from "../../ui/dialog/modal";
-import VideoPlayer from "../../ui/shared/video-player";
+import { ActivityIndicator, Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-const MAX_IMAGES = 10;
+const MAX_IMAGES = 7;
 
-export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSteps) {
-    const { images, thumbnail, video, tab, setTab, addMedia, removeMedia, setThumbnail, setImages, setVideo } = useAdMedia(setValue)
+export default function AddMedia({ errors, setValue, getValue }: AdFormStepProps<UsedCarAdInterface>) {
+    const { images, thumbnail, video, tab, loading, setTab, addMedia, removeMedia, setThumbnail, setImages, setVideo } = useAdMedia(setValue)
     const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
@@ -74,7 +75,7 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                 thumbnail && thumbnail.uri ? (
                     <View className="gap-y-8">
                         <View>
-                            <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
+                            <Text className="text-xl font-inter-bold mb-1">Add photos <Text className="text-error">*</Text></Text>
                             {renderPhoto(thumbnail.uri, "thumbnail", thumbnail.name)}
                             <Text className="justify-end ml-auto mr-4 font-semibold">Picked {images.length + 1} of {MAX_IMAGES}</Text>
                         </View>
@@ -102,10 +103,10 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                     <View className="gap-y-8">
                         <View className="gap-y-2">
                             <Text className="font-inter-semibold text-3xl">Good pictures sell faster</Text>
-                            <Text numberOfLines={2}>Capture the front, back, and sides — buyers love seeing the full view</Text>
+                            <Text numberOfLines={2} className="text-center">Capture the front, back, and sides — buyers love seeing the full view</Text>
                         </View>
                         <View>
-                            <Text className="text-xl font-inter-bold mb-1">Add photos *</Text>
+                            <Text className="text-xl font-inter-bold mb-1">Add photos <Text className="text-error">*</Text></Text>
                             <PickFromGalleryGallery addMedia={() => addMedia(false, false, true)} />
                         </View>
                         <View className="flex-row items-center justify-center">
@@ -123,7 +124,7 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                         <Text numberOfLines={2}>A 10–30 second clip can help buyers see your car’s true condition</Text>
                     </View>
                     <View className="">
-                        <Text className="text-xl font-inter-bold mb-1">Add Videos *</Text>
+                        <Text className="text-xl font-inter-bold mb-1">Add Videos</Text>
                         <PickFromGalleryGallery video addMedia={() => addMedia(false, true, false)} />
                     </View>
                     <View className="flex-row items-center justify-center">
@@ -140,16 +141,24 @@ export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSt
                         {renderPhoto(image.uri, "images", image.name)}
                     </View>
                 ))}
-                {video && video.uri && (<View className="relative w-full pr-2">
-                    <VideoPlayer source={video.uri} />
-                    <TouchableOpacity
-                        className="absolute -top-4 -right-0 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
-                        onPress={() => removeMedia(video.uri, false, true)}
-                    >
-                        <Ionicons name="close" size={20} color="white" />
-                    </TouchableOpacity>
-                </View>
-                )
+                {
+                    loading && !video?.uri ? (
+                        <View className="relative w-full pr-2">
+                            <ActivityIndicator size="large" color="#FAED02" />
+                        </View>
+                    ) : (
+                        video?.uri && (
+                            <View className="relative w-full pr-2">
+                                <VideoPlayer source={video.uri} />
+                                <TouchableOpacity
+                                    className="absolute -top-4 -right-0 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                                    onPress={() => removeMedia(video.uri, false, true)}
+                                >
+                                    <Ionicons name="close" size={20} color="white" />
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    )
                 }
             </View>
         </ScrollView>

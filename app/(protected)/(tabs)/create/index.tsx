@@ -1,4 +1,4 @@
-import AdTypeSelector from "@/core/components/forms/ad/select-option/ad-type-selector";
+import AdTypeSelector from "@/core/components/forms/ads/shared/ad-type-selector/ad-type-selector";
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
 import { CAR_BRAND_TYPES } from "@/core/constants/ad";
@@ -12,7 +12,7 @@ export default function NewAdScreen() {
 
     const handleNavigate = () => {
         if (!category) return;
-        router.push({ pathname: "/create/flowOne", params: { category_id: category } })
+        router.push({ pathname: "/create/flowFoor", params: { category_id: category } })
     }
 
     return (
@@ -32,6 +32,7 @@ export default function NewAdScreen() {
                     <TouchableOpacity
                         className="py-3 w-full rounded-lg bg-primary-500 disabled:bg-yellow-200"
                         onPress={handleNavigate}
+                        disabled={!category}
                     >
                         <Text className="text-center text-xl font-inter-semibold">
                             Next

@@ -1,11 +1,11 @@
-import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
+import AdTextInput from "@/core/components/ui/input/ad-text-input";
+import Checkbox from "@/core/components/ui/input/checkbox";
+import { AdFormStepProps } from "@/core/types";
+import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView, Text, View } from "react-native";
-import AdTextInput from "../../ui/input/ad-text-input";
-import Checkbox from "../../ui/input/checkbox";
-import RadioGroup from "../../ui/input/radio-group";
 
-export default function AdDetailsStep2({ control, errors, setValue }: VehicleAdFormSteps) {
+export default function AdDetailsStep2({ control, errors, setValue }: AdFormStepProps<SparePartAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -36,17 +36,6 @@ export default function AdDetailsStep2({ control, errors, setValue }: VehicleAdF
                         name="additional_number"
                         keyboardType="numeric"
                         error={errors.additional_number?.message} placeholder="Add Additional Number" />
-                </View>
-
-                <View className="mt-8">
-                    <RadioGroup
-                        name="hide_license_plate"
-                        bordered
-                        control={control}
-                        label="Hide vehicle license plate:"
-                        fullWidth
-                        options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
-                    />
                 </View>
 
                 <View className="flex-row items-center justify-between border border-gray-200 p-2 mt-6">

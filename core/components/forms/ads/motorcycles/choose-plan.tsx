@@ -1,10 +1,11 @@
 import { SUBSCRIPTION_PLANS } from "@/core/constants";
-import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
+import { AdFormStepProps } from "@/core/types";
+import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
-import SubscriptionCard from "./subscription-card";
+import SubscriptionCard from "../shared/subscription-card";
 
-export default function ChoosePlan({ setValue, getValue }: VehicleAdFormSteps) {
+export default function ChoosePlan({ setValue, getValue }: AdFormStepProps<MotorcycleAdInterface>) {
     const [selectedPlan, setSelectedPlan] = useState(getValue?.("plan"))
 
     const handleSelectPlan = (plan: string) => {

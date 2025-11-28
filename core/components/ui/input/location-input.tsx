@@ -1,11 +1,10 @@
-import { VehicleAdFormSteps } from '@/core/types/schema/vehicleAd';
+import { AdFormStepProps } from '@/core/types';
+import { UsedCarAdInterface } from '@/core/types/schema/ads/usedCar';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import ChooseLocation from '../../forms/ad/choose-location';
 
-
-export default function LocationInput({ control, errors, getValue }: VehicleAdFormSteps) {
+export default function LocationInput({ control, errors, getValue }: AdFormStepProps<UsedCarAdInterface>) {
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -48,7 +47,6 @@ export default function LocationInput({ control, errors, getValue }: VehicleAdFo
                                         </TouchableOpacity>
                                         <Text className="text-lg font-semibold">Choose Location</Text>
                                     </View>
-                                    <ChooseLocation control={control} errors={errors} />
                                 </TouchableOpacity>
                             </TouchableOpacity>
                         </Modal>

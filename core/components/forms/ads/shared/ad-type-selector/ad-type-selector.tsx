@@ -3,15 +3,10 @@ import React, { useState } from 'react';
 import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
 
 interface Mark { label: string; value: string; }
-
 interface Brand { label: string; marks: Mark[]; }
-
 interface Region { label: string; brands: Brand[]; }
-
 interface Category { id: string, label: string; regions: Region[]; }
-
 type DataItem = Category;
-
 type AdTypeSelectorProps = TextInputProps & {
     onChange: (value: any) => void,
     data: DataItem[];
