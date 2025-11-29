@@ -1,12 +1,12 @@
 import Flag from "@/assets/svg/flag";
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
+import Checkbox from "@/core/components/ui/input/checkbox";
 import { SUPPORTED_LANGUAGES } from "@/core/constants";
 import i18n from "@/core/i18n/i18n";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { Language } from "@/core/types";
 import { cn } from "@/core/utils/cn";
-import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -33,7 +33,7 @@ export default function ChangeLanguageScreen() {
         >
             <Flag name={item.code} />
             <Text className="text-base text-gray-900 font-medium">{t(item.name)}</Text>
-            <Ionicons name="chevron-forward" size={20} />
+            <Checkbox checked={item.code === currentLang} />
         </TouchableOpacity>
     );
 

@@ -1,7 +1,6 @@
-import { Platform } from "react-native";
 import { httpClient } from "../httpClient";
-const API_TOKEN = "YOUR_API_TOKEN";
-const API_URL = "api.platerecognizer.com";
+const API_TOKEN = "2bf029a8e90c91a3211cc3a33a8277b6fe7f1c30";
+const API_URL = "https://api.platerecognizer.com/v1/plate-reader/";
 
 export const signRequest = async (params: any) => {
   return httpClient.post("/ads/generate-upload-signature", params);
@@ -50,12 +49,13 @@ export const hideLisencePlate = async (media: any) => {
   const formData = new FormData();
 
   formData.append("upload", {
-    uri:
-      Platform.OS === "android" ? media.uri : media.uri.replace("file://", ""),
+    uri: media.uri,
+    // uri: Platform.OS === "android" ? media.uri : media.uri.replace("file://", ""),
     name: media.fileName || "photo.jpg",
     type: media.type || "image/jpeg",
   } as any);
-  // formData.append("regions", "us");
+
+  formData.append("detection_mode", "vehicle");
 
   try {
     const response = await fetch(API_URL, {
@@ -73,27 +73,17 @@ export const hideLisencePlate = async (media: any) => {
     }
 
     const result = await response.json();
-    //     {
-    //   "results": [
-    //     {
-    //       "box": {
-    //         "xmin": 120,
-    //         "ymin": 450,
-    //         "xmax": 340,
-    //         "ymax": 510
-    //       },
-    //       "plate": "ABC1234",
-    //       "confidence": 0.95,
-    //       // ... other fields
-    //     }
-    //   ],
-    //   // ... other response data
+    // box: {
+    //   "xmax": 362,
+    //   "xmin": 233,
+    //   "ymax": 558,
+    //   "ymin": 506
     // }
 
-    // const xmin = 120;
-    // const ymin = 450;
-    // const width = 220; // xmax (340) - xmin (120)
-    // const height = 60; // ymax (510) - ymin (450)
+    // const xmin = 233;
+    // const ymin = 506;
+    // const width = 220; // xmax (362) - xmin (233)
+    // const height = 60; // ymax (558) - ymin (506)
     // const publicId = "your_uploaded_image_public_id";
     // const cloudName = "your_cloudinary_cloud_name";
 
@@ -102,7 +92,7 @@ export const hideLisencePlate = async (media: any) => {
     //   `res.cloudinary.com{cloudName}/image/upload/${blurTransformation}/v1/` +
     //   publicId;
 
-    console.log("API Response:", result);
+    console.log("Box:", result.results[0].box);
 
     return result;
   } catch (error) {

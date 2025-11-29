@@ -1,16 +1,16 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import LocationInput from "@/core/components/ui/input/location-input";
 import SelectInput from "@/core/components/ui/input/select-input";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import { CITIES } from "@/core/constants";
 import { CAR_BRAND_TYPES } from "@/core/constants/ad";
-import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
+import { AdFormStepProps } from "@/core/types";
+import { CommunAdInterface } from "@/core/types/schema/ads/commun";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView, Text, View } from "react-native";
 import { renderLocationOption } from "../../../ui/shared/render-option";
 import VehicleMarkSelector from "../shared/ad-type-selector/vehicle-mark-selector";
 
-export default function PostAd({ control, errors }: VehicleAdFormSteps) {
+export default function PostAd({ control, errors }: AdFormStepProps<CommunAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -25,7 +25,7 @@ export default function PostAd({ control, errors }: VehicleAdFormSteps) {
                 <VehicleMarkSelector
                     data={CAR_BRAND_TYPES}
                     control={control}
-                    name="car.mark"
+                    name="ad_type"
                 />
             </View>
             <View>
@@ -41,10 +41,10 @@ export default function PostAd({ control, errors }: VehicleAdFormSteps) {
                 />
                 <View className="flex-row items-center justify-center gap-x-2 my-4">
                     <View className="flex-1">
-                        <LocationInput
+                        {/* <LocationInput
                             control={control}
                             errors={errors}
-                        />
+                        /> */}
                     </View>
                     <View className="flex-1">
                         <AdTextInput control={control} name="zip_code" error={errors.zip_code?.message} placeholder="Zip code"

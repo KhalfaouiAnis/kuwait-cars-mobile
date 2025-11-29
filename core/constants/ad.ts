@@ -1,15 +1,34 @@
+export const Ad_CATEGORIES = [
+  "cars_for_sale",
+  "home_services",
+  "new_cars",
+  "car_rental_agencies",
+  "motorcycles",
+  "classic_cars",
+  "damaged_cars",
+  "rims_and_tires",
+  "spare_parts",
+  "logistics",
+  "repair_garages",
+  "show",
+  "accessories",
+  "other",
+];
+
 export const CAR_BRAND_TYPES = [
   {
-    id: "cars_for_sale",
+    value: Ad_CATEGORIES[0],
     label: "Cars for sale",
     regions: [
       {
         label: "Asian",
+        value: "Asian",
         brands: [
           {
             label: "Toyota",
+            value: "Toyota",
             marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
+              { label: "Land Cruiser", value: "Land Cruiser" },
               { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
             ],
           },
@@ -17,9 +36,11 @@ export const CAR_BRAND_TYPES = [
       },
       {
         label: "American",
+        value: "American",
         brands: [
           {
             label: "Kawasaki",
+            value: "Kawasaki",
             marks: [{ label: "max", value: "Kawasaki-max" }],
           },
         ],
@@ -27,7 +48,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "home_services",
+    value: Ad_CATEGORIES[1],
     label: "Home services",
     regions: [
       {
@@ -54,7 +75,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "new_cars",
+    value: Ad_CATEGORIES[2],
     label: "New cars",
     regions: [
       {
@@ -81,7 +102,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "car_rental_agencies",
+    value: Ad_CATEGORIES[3],
     label: "Car rental agencies",
     regions: [
       {
@@ -108,7 +129,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "motorcycles",
+    value: Ad_CATEGORIES[4],
     label: "Motorcycles",
     regions: [
       {
@@ -150,7 +171,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "classic_cars",
+    value: Ad_CATEGORIES[5],
     label: "Classic cars",
     regions: [
       {
@@ -177,7 +198,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "damaged_cars",
+    value: Ad_CATEGORIES[6],
     label: "Damaged cars",
     regions: [
       {
@@ -204,7 +225,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "rims_and_tires",
+    value: Ad_CATEGORIES[7],
     label: "Rims and tires",
     regions: [
       {
@@ -231,7 +252,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "spare_parts",
+    value: Ad_CATEGORIES[8],
     label: "Spare parts",
     regions: [
       {
@@ -273,7 +294,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "logistics",
+    value: Ad_CATEGORIES[9],
     label: "Logistics",
     regions: [
       {
@@ -300,7 +321,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "repair_garages",
+    value: Ad_CATEGORIES[10],
     label: "Repair garages",
     regions: [
       {
@@ -327,7 +348,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "show",
+    value: Ad_CATEGORIES[11],
     label: "Show",
     regions: [
       {
@@ -354,7 +375,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "accessories",
+    value: Ad_CATEGORIES[12],
     label: "Accessories",
     regions: [
       {
@@ -381,7 +402,7 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    id: "other",
+    value: Ad_CATEGORIES[13],
     label: "Other",
     regions: [
       {
@@ -407,21 +428,4 @@ export const CAR_BRAND_TYPES = [
       },
     ],
   },
-];
-
-export const Ad_CATEGORIES = [
-  "cars_for_sale",
-  "home_services",
-  "new_cars",
-  "car_rental_agencies",
-  "motorcycles",
-  "classic_cars",
-  "damaged_cars",
-  "rims_and_tires",
-  "spare_parts",
-  "logistics",
-  "repair_garages",
-  "show",
-  "accessories",
-  "other",
 ];

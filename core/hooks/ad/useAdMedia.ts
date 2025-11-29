@@ -1,3 +1,4 @@
+import { hideLisencePlate } from "@/core/lib/api/cloud/upload-to-cloudinary";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { Image, Video, getFileSize } from "react-native-compressor";
@@ -54,6 +55,8 @@ export const useAdMedia = (setValue: any) => {
           ? result.assets[0].duration
           : undefined,
       };
+
+      await hideLisencePlate(fileObj);
 
       if (videoType) {
         setVideo(fileObj);

@@ -5,8 +5,9 @@ import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableO
 interface Mark { label: string; value: string; }
 interface Brand { label: string; marks: Mark[]; }
 interface Region { label: string; brands: Brand[]; }
-interface Category { id: string, label: string; regions: Region[]; }
+interface Category { value: string, label: string; regions: Region[]; }
 type DataItem = Category;
+
 type AdTypeSelectorProps = TextInputProps & {
     onChange: (value: any) => void,
     data: DataItem[];
@@ -30,7 +31,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
     };
 
     const renderItem = (item: any, level: number, path: string[], handleSelect: any) => {
-        const itemPath = [...path, item.label].join('-');
+        const itemPath = [...path, item.value].join(';');
         const isExpanded = expandedPaths.has(itemPath);
 
         const children = item.regions || item.brands || item.marks || [];
@@ -43,7 +44,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                 <TouchableOpacity
                     className={`flex-row items-center my-1 p-3 border border-transparent bg-white ms-${(level) * 4}`}
                     style={{ elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
-                    onPress={() => handleSelect(item.value)}
+                    onPress={() => handleSelect(itemPath)}
                 >
                     <Ionicons
                         name={selectedValue === item.value ? 'checkmark-circle' : 'radio-button-off'}
@@ -74,14 +75,14 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
 
                 {isExpanded && hasChildren && children.map((child: any, idx: number) => (
                     <View style={{ marginStart: level + 6 }} key={idx}>
-                        {renderItem(child, level + 1, [...path, item.label], handleSelect)}
+                        {renderItem(child, level + 1, [...path, item.value], handleSelect)}
                     </View>
                 ))}
             </>
         );
     };
 
-    const handleSelect = (value: string) => {
+    const handleSelect = (value: any) => {
         onChange(value);
         setShowModal(false)
     };

@@ -3,7 +3,8 @@ import TakePhotoButton from "@/core/components/ui/button/take-photo-button";
 import AppModal from "@/core/components/ui/dialog/modal";
 import VideoPlayer from "@/core/components/ui/shared/video-player";
 import { useAdMedia } from "@/core/hooks/ad/useAdMedia";
-import { VehicleAdFormSteps } from "@/core/types/schema/vehicleAd";
+import { AdFormStepProps } from "@/core/types";
+import { CommunAdInterface } from "@/core/types/schema/ads/commun";
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -13,7 +14,7 @@ import { ActivityIndicator, Alert, ScrollView, Text, TouchableOpacity, View } fr
 
 const MAX_IMAGES = 7;
 
-export default function AddMedia({ errors, setValue, getValue }: VehicleAdFormSteps) {
+export default function AddMedia({ errors, setValue, getValue }: AdFormStepProps<CommunAdInterface>) {
     const { images, thumbnail, video, tab, loading, setTab, addMedia, removeMedia, setThumbnail, setImages, setVideo } = useAdMedia(setValue)
     const [showModal, setShowModal] = useState(false)
 

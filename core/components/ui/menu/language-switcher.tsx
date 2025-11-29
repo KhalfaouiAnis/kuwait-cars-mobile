@@ -3,10 +3,10 @@ import { SUPPORTED_LANGUAGES } from '@/core/constants';
 import i18n from '@/core/i18n/i18n';
 import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
 import { Language } from '@/core/types';
-import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Modal, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import Checkbox from '../input/checkbox';
 
 type LanguageSwitcherProps = {
     onLanguageChange?: (code: string) => void;
@@ -14,7 +14,7 @@ type LanguageSwitcherProps = {
 
 export default function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const {lang: selectedLang, setLang} = useUserPreferencesStore();
+    const { lang: selectedLang, setLang } = useUserPreferencesStore();
     const { t } = useTranslation();
 
     const handleSelect = (lang: Language) => {
@@ -23,8 +23,6 @@ export default function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherP
         i18n.changeLanguage(lang.code);
         onLanguageChange?.(lang.code);
     };
-
-    const currentLang = SUPPORTED_LANGUAGES.find(l => l.code === selectedLang) || SUPPORTED_LANGUAGES[0];
 
     const renderItem = ({ item }: { item: Language }) => (
         <TouchableOpacity
@@ -35,7 +33,7 @@ export default function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherP
             <Flag name={item.code} size={36} />
             <Text className="flex-1 text-base text-gray-900 font-medium ml-4">{t(item.name)}</Text>
             {selectedLang === item.code && (
-                <Ionicons name="checkmark-circle" size={20} color="#007AFF" />
+                <Checkbox checked={item.code === selectedLang} />
             )}
         </TouchableOpacity>
     );

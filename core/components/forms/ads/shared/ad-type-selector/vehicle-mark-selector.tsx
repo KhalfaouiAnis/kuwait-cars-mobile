@@ -9,7 +9,7 @@ interface Brand { label: string; marks: Mark[]; }
 
 interface Region { label: string; brands: Brand[]; }
 
-interface Category { id: string, label: string; regions: Region[]; }
+interface Category { value: string, label: string; regions: Region[]; }
 
 type DataItem = Category;
 

@@ -1,13 +1,13 @@
-import AdDetails from "@/core/components/forms/ads/rest-categories/ad-details";
-import AdDetailsStep2 from "@/core/components/forms/ads/rest-categories/ad-details-step-2";
-import AddMedia from "@/core/components/forms/ads/rest-categories/add-media";
-import ChoosePlan from "@/core/components/forms/ads/rest-categories/choose-plan";
-import PostAd from "@/core/components/forms/ads/rest-categories/post-ad";
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
 import AdPublishSuccess from "@/core/components/forms/ads/shared/success";
+import AdDetails from "@/core/components/forms/ads/used-cars/ad-details";
+import AdDetailsStep2 from "@/core/components/forms/ads/used-cars/ad-details-step-2";
+import AddMedia from "@/core/components/forms/ads/used-cars/add-media";
+import ChoosePlan from "@/core/components/forms/ads/used-cars/choose-plan";
+import PostAd from "@/core/components/forms/ads/used-cars/post-ad";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import UploadProgress from "@/core/components/ui/shared/upload-progress";
-import { useAd } from "@/core/hooks/ad/usAd";
+import { useUsedCarAd } from "@/core/hooks/ad/flows/useUsedCarAd";
 import { router } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
@@ -16,12 +16,12 @@ import { toast } from "sonner-native";
 const getStepTitle = (step: number) => {
     switch (step) {
         case 1:
-            return "Post an Ad"
+            return "Ad Details"
         case 2:
             return "Add Media"
         case 3:
         case 4:
-            return "Add Ad Details"
+            return "Post an Ad"
         case 5:
             return "Choose Plans"
         default:
@@ -30,8 +30,9 @@ const getStepTitle = (step: number) => {
 }
 const totalSteps = 5;
 
-export default function NewAdScreen() {
-    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useAd()
+export default function UsedCarAdScreen() {
+    // const { ad_type } = useLocalSearchParams<{ ad_type: string }>();
+    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useUsedCarAd()
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -67,16 +68,18 @@ export default function NewAdScreen() {
     const handleNext = async () => {
         let isValid = false;
         if (currentStep === 1) {
-            isValid = await trigger(['car.mark', 'location', "title", "price"]);
+            isValid = await trigger(['year', 'exterior_color', "mileage"]);
         } else if (currentStep === 2) {
             isValid = await trigger(['video', "thumbnail", "images"]);
         } else if (currentStep === 3) {
-            isValid = await trigger(["car.exterior_color", "car.mileage"])
+            isValid = await trigger(["exterior_color", "mileage"])
         } else if (currentStep === 4) {
             isValid = await trigger(["title", "description", "additional_number"])
         } else if (currentStep === 5) {
             isValid = await trigger(["plan"])
         }
+
+        console.log(errors.video?.duration?.message);
 
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
@@ -111,7 +114,7 @@ export default function NewAdScreen() {
             case 2:
                 return <AddMedia control={control} errors={errors} setValue={setValue} getValue={getValues} />;
             case 3:
-                return <PostAd control={control} errors={errors} />;
+                return <PostAd control={control} errors={errors} setValue={setValue} />;
             case 4:
                 return <AdDetailsStep2 control={control} errors={errors} />;
             case 5:
