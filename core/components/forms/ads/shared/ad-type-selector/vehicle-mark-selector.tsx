@@ -1,17 +1,8 @@
+import { DataItem } from '@/core/types/schema/shared';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
-
-interface Mark { label: string; value: string; }
-
-interface Brand { label: string; marks: Mark[]; }
-
-interface Region { label: string; brands: Brand[]; }
-
-interface Category { value: string, label: string; regions: Region[]; }
-
-type DataItem = Category;
 
 type VehicleMarkSelectorProps<TForm extends FieldValues> = TextInputProps & {
     name: FieldPath<TForm>;

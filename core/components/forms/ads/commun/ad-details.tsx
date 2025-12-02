@@ -5,7 +5,7 @@ import { CommunAdInterface } from "@/core/types/schema/ads/commun";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView, Text, View } from "react-native";
 
-export default function AdDetailsStep2({ control, errors, setValue }: AdFormStepProps<CommunAdInterface>) {
+export default function AdDetails({ control, errors, setValue }: AdFormStepProps<CommunAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}

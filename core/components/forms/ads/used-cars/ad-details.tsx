@@ -1,15 +1,14 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
 import SelectInput from "@/core/components/ui/input/select-input";
-import PickerSelect from "@/core/components/ui/shared/picker-select";
 import { CAR_COLORS, YEARS } from "@/core/constants";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { ScrollView, Text, View } from "react-native";
 import { renderColorOption, renderYearOption } from "../../../ui/shared/render-option";
+import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
 export default function AdDetails({ control, errors }: AdFormStepProps<UsedCarAdInterface>) {
-
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -22,6 +21,17 @@ export default function AdDetails({ control, errors }: AdFormStepProps<UsedCarAd
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View className="gap-y-4 mt-4">
+                <View>
+                    <View className="flex-row items-center justify-between">
+                        <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
+                        <Text className="text-sm text-gray-300">Used Cars</Text>
+                    </View>
+                    {/* <VehicleMarkSelector
+                        data={CAR_BRAND_TYPES}
+                        control={control}
+                        name="ad_type"
+                    /> */}
+                </View>
                 <View>
                     <SelectInput
                         control={control}
@@ -51,7 +61,7 @@ export default function AdDetails({ control, errors }: AdFormStepProps<UsedCarAd
                             error={errors.mileage?.message}
                             placeholder="Mileage (0 - 1000000)" />
                     </View>
-                    <PickerSelect />
+                    <UnitSelector control={control} name="mileage_unit" />
                 </View>
             </View>
             <View className="flex-row items-center justify-center w-full mt-4">

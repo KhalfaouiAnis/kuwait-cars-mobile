@@ -26,6 +26,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<ShowCarAdInt
             <InputWithSpeech
                 control={control}
                 name="title"
+                label="Title"
                 required
                 maxLength={30}
                 error={errors.title?.message}
@@ -33,6 +34,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<ShowCarAdInt
             <InputWithSpeech
                 control={control}
                 name="description"
+                label="Description"
                 maxLength={500}
                 multiline
                 required

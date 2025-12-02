@@ -7,11 +7,15 @@ import { CAR_BRAND_TYPES } from "@/core/constants/ad";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 import { renderLocationOption } from "../../../ui/shared/render-option";
 import VehicleMarkSelector from "../shared/ad-type-selector/vehicle-mark-selector";
 
 export default function PostAd({ control, errors }: AdFormStepProps<UsedCarAdInterface>) {
+    const { model, brand } = useLocalSearchParams()
+    console.log({ model, brand });
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}

@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 
-export default function AdDetailsStep2({ control, setValue }: AdFormStepProps<ShowCarAdInterface>) {
+export default function AdDetails({ control, setValue }: AdFormStepProps<ShowCarAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -22,8 +22,19 @@ export default function AdDetailsStep2({ control, setValue }: AdFormStepProps<Sh
                         fullWidth
                         options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
                     />
+                    <Text className="text-sm mt-1">Hide vehicle license plate for uploaded images</Text>
                 </View>
-                <View className="border border-error gap-y-2 p-3 mt-4">
+                <View className="flex-row items-center justify-between border border-gray-200 p-2 mt-6">
+                    <Ionicons name="call-outline" size={24} color="#00A6DA" />
+                    <Text>Receive Call via XCar</Text>
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} />
+                </View>
+                <View className="flex-row items-center justify-between border border-gray-200 p-2">
+                    <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
+                    <Text>Chat via Xcar</Text>
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} />
+                </View>
+                <View className="border border-error gap-y-2 p-3 mt-6">
                     <View>
                         <Text className="font-inter-semibold">Terms and conditions</Text>
                     </View>

@@ -1,7 +1,8 @@
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
 import AdPublishSuccess from "@/core/components/forms/ads/shared/success";
-import AdDetailsStep2 from "@/core/components/forms/ads/spare-parts/ad-details-step-2";
-import AddMedia from "@/core/components/forms/ads/spare-parts/add-media";
+import AdDetails from "@/core/components/forms/ads/spare-parts/ad-details";
+import AddPhotos from "@/core/components/forms/ads/spare-parts/add-photos";
+import AddVideo from "@/core/components/forms/ads/spare-parts/add-video";
 import ChoosePlan from "@/core/components/forms/ads/spare-parts/choose-plan";
 import PostAd from "@/core/components/forms/ads/spare-parts/post-ad";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
@@ -27,7 +28,7 @@ const getStepTitle = (step: number) => {
             return ""
     }
 }
-const totalSteps = 5;
+const TOTAL_STEPS = 5;
 
 export default function NewAdScreen() {
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useSparePartAd()
@@ -35,8 +36,6 @@ export default function NewAdScreen() {
     const [currentStep, setCurrentStep] = useState(1);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isUploading, setIsUploading] = useState(false);
-
-    const stepTitle = getStepTitle(currentStep)
 
     const handlePrevious = () => {
         if (currentStep === 1) {
@@ -50,7 +49,9 @@ export default function NewAdScreen() {
         return "steps"
     }
 
-    const onError = () => {
+    const onError = (err: any) => {
+        console.log(err);
+
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
                 if (Array.isArray(error) && error.length > 0) {
@@ -66,12 +67,14 @@ export default function NewAdScreen() {
     const handleNext = async () => {
         let isValid = false;
         if (currentStep === 1) {
-            isValid = await trigger(['location', "title", "price"]);
+            isValid = await trigger(['province', "title", "description", "price"]);
         } else if (currentStep === 2) {
-            isValid = await trigger(['video', "thumbnail", "images"]);
+            isValid = await trigger(["thumbnail", "images"]);
         } else if (currentStep === 3) {
-            isValid = await trigger(["title", "description", "additional_number"])
+            isValid = await trigger(["video"])
         } else if (currentStep === 4) {
+            isValid = await trigger(["additional_number"])
+        } else if (currentStep === 5) {
             isValid = await trigger(["plan"])
         }
 
@@ -86,7 +89,7 @@ export default function NewAdScreen() {
             })
         }
 
-        if (isValid && currentStep < totalSteps) {
+        if (isValid && currentStep < TOTAL_STEPS) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
             setIsUploading(true);
@@ -106,10 +109,12 @@ export default function NewAdScreen() {
             case 1:
                 return <PostAd control={control} errors={errors} />;
             case 2:
-                return <AddMedia control={control} errors={errors} setValue={setValue} getValue={getValues} />;
+                return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} />;
             case 3:
-                return <AdDetailsStep2 control={control} errors={errors} />;
+                return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} />;
             case 4:
+                return <AdDetails control={control} errors={errors} />;
+            case 5:
                 return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} />;
             default:
                 return null;
@@ -131,10 +136,10 @@ export default function NewAdScreen() {
         setShowDialog(false)
     }
 
-    if (currentStep > totalSteps) return <AdPublishSuccess />
+    if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
-        <AdFormContainer title={stepTitle} reset={handleReset} previous={handlePrevious}>
+        <AdFormContainer title={getStepTitle(currentStep)} reset={handleReset} previous={handlePrevious}>
             {
                 isUploading && uploadProgress < 100 && (
                     <View className="mb-1">
@@ -150,7 +155,7 @@ export default function NewAdScreen() {
                     disabled={isSubmitting}
                 >
                     <Text className="text-center text-xl font-inter-semibold">
-                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : currentStep === 5 ? "Submit" : "Next"}
+                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : currentStep === TOTAL_STEPS ? "Submit" : "Next"}
                     </Text>
                 </TouchableOpacity>
             </View>

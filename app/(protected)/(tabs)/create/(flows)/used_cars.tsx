@@ -2,7 +2,8 @@ import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-containe
 import AdPublishSuccess from "@/core/components/forms/ads/shared/success";
 import AdDetails from "@/core/components/forms/ads/used-cars/ad-details";
 import AdDetailsStep2 from "@/core/components/forms/ads/used-cars/ad-details-step-2";
-import AddMedia from "@/core/components/forms/ads/used-cars/add-media";
+import AddPhotos from "@/core/components/forms/ads/used-cars/add-photos";
+import AddVideo from "@/core/components/forms/ads/used-cars/add-video";
 import ChoosePlan from "@/core/components/forms/ads/used-cars/choose-plan";
 import PostAd from "@/core/components/forms/ads/used-cars/post-ad";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
@@ -18,8 +19,8 @@ const getStepTitle = (step: number) => {
         case 1:
             return "Ad Details"
         case 2:
-            return "Add Media"
         case 3:
+            return "Add Media"
         case 4:
             return "Post an Ad"
         case 5:
@@ -28,7 +29,7 @@ const getStepTitle = (step: number) => {
             return ""
     }
 }
-const totalSteps = 5;
+const TOTAL_STEPS = 6;
 
 export default function UsedCarAdScreen() {
     // const { ad_type } = useLocalSearchParams<{ ad_type: string }>();
@@ -37,8 +38,6 @@ export default function UsedCarAdScreen() {
     const [currentStep, setCurrentStep] = useState(1);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isUploading, setIsUploading] = useState(false);
-
-    const stepTitle = getStepTitle(currentStep)
 
     const handlePrevious = () => {
         if (currentStep === 1) {
@@ -70,16 +69,16 @@ export default function UsedCarAdScreen() {
         if (currentStep === 1) {
             isValid = await trigger(['year', 'exterior_color', "mileage"]);
         } else if (currentStep === 2) {
-            isValid = await trigger(['video', "thumbnail", "images"]);
+            isValid = await trigger(["thumbnail", "images"]);
         } else if (currentStep === 3) {
-            isValid = await trigger(["exterior_color", "mileage"])
+            isValid = await trigger(["video"])
         } else if (currentStep === 4) {
-            isValid = await trigger(["title", "description", "additional_number"])
+            isValid = await trigger(["title", "description", "price", "province"])
         } else if (currentStep === 5) {
+            isValid = await trigger(["additional_number"])
+        } else if (currentStep === 6) {
             isValid = await trigger(["plan"])
         }
-
-        console.log(errors.video?.duration?.message);
 
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
@@ -92,7 +91,7 @@ export default function UsedCarAdScreen() {
             })
         }
 
-        if (isValid && currentStep < totalSteps) {
+        if (isValid && currentStep < TOTAL_STEPS) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
             setIsUploading(true);
@@ -112,12 +111,14 @@ export default function UsedCarAdScreen() {
             case 1:
                 return <AdDetails control={control} errors={errors} />;
             case 2:
-                return <AddMedia control={control} errors={errors} setValue={setValue} getValue={getValues} />;
+                return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} />;
             case 3:
-                return <PostAd control={control} errors={errors} setValue={setValue} />;
+                return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} />;
             case 4:
-                return <AdDetailsStep2 control={control} errors={errors} />;
+                return <PostAd control={control} errors={errors} setValue={setValue} />;
             case 5:
+                return <AdDetailsStep2 control={control} errors={errors} />;
+            case 6:
                 return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} />;
             default:
                 return null;
@@ -139,10 +140,10 @@ export default function UsedCarAdScreen() {
         setShowDialog(false)
     }
 
-    if (currentStep > totalSteps) return <AdPublishSuccess />
+    if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
-        <AdFormContainer title={stepTitle} reset={handleReset} previous={handlePrevious}>
+        <AdFormContainer title={getStepTitle(currentStep)} reset={handleReset} previous={handlePrevious}>
             {
                 isUploading && uploadProgress < 100 && (
                     <View className="mb-1">
@@ -158,7 +159,7 @@ export default function UsedCarAdScreen() {
                     disabled={isSubmitting}
                 >
                     <Text className="text-center text-xl font-inter-semibold">
-                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : currentStep === 5 ? "Submit" : "Next"}
+                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : currentStep === TOTAL_STEPS ? "Submit" : "Next"}
                     </Text>
                 </TouchableOpacity>
             </View>

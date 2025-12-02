@@ -30,6 +30,7 @@ export default function AdDetailsStep2({ control, errors, setValue }: AdFormStep
                         fullWidth
                         options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
                     />
+                    <Text className="text-sm text-gray-300">Hide vehicle license plate for uploaded images</Text>
                 </View>
 
                 <View className="flex-row items-center justify-between border border-gray-200 p-2 mt-6">
@@ -40,17 +41,17 @@ export default function AdDetailsStep2({ control, errors, setValue }: AdFormStep
                 <View className="flex-row items-center justify-between border border-gray-200 p-2">
                     <Ionicons name="call-outline" size={24} color="#25D366" />
                     <Text>Receive Calls</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("receive_calls", value)} />
                 </View>
                 <View className="flex-row items-center justify-between border border-gray-200 p-2">
                     <Ionicons name="call-outline" size={24} color="#00A6DA" />
                     <Text>Receive Call via XCar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} />
                 </View>
                 <View className="flex-row items-center justify-between border border-gray-200 p-2">
                     <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
                     <Text>Chat via Xcar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} />
                 </View>
             </View>
         </ScrollView>

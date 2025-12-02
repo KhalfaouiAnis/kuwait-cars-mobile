@@ -12,10 +12,11 @@ export const MotorcycleAdSchema = z.object({
   ad_type: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]], {
     required_error: "The Ad type is required",
   }),
+  category: z.string().min(3, "The category field is required"),
   title: z.string().min(3, "The title field is required"),
   description: z.string().min(3, "The description field is required"),
   plan: z.string().min(1, "The plan field is required"),
-  location: LocationSchema,
+  location: LocationSchema.optional(),
   price: z.coerce.number(),
   province: z.string(),
   zip_code: z.string().optional(),

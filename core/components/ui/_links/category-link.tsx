@@ -9,7 +9,7 @@ interface Props {
 
 export default function CategoryLink({ href, image, label }: Props) {
     return (
-        <Link href={href} className="items-center justify-center w-[31%] h-36 p-2 border border-primary-500 rounded-xl">
+        <Link href={href} className="items-center justify-center w-[31%] h-36 p-2 border border-primary-500 rounded-xl bg-white">
             <View className="w-full items-center justify-center">
                 <Image
                     source={image}

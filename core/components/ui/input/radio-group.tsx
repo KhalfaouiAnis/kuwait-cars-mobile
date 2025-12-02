@@ -1,5 +1,5 @@
 import { SelectOption } from '@/core/types';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 import { Text, View } from 'react-native';

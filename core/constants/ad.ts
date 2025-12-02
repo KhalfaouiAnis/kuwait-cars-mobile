@@ -1,24 +1,40 @@
+export const AD_TYPES = {
+  used_cars: "used_cars",
+  motorcycles: "motorcycles",
+  classic_cars: "classic_cars",
+  show: "show",
+  car_rental_agencies: "car_rental_agencies",
+  spare_parts: "spare_parts",
+  home_services: "home_services",
+  damaged_cars: "damaged_cars",
+  accessories: "accessories",
+  logistics: "logistics",
+  rims_and_tires: "rims_and_tires",
+  repair_garages: "repair_garages",
+  other: "other",
+};
+
 export const Ad_CATEGORIES = [
-  "cars_for_sale",
-  "home_services",
-  "new_cars",
-  "car_rental_agencies",
+  "used_cars",
   "motorcycles",
   "classic_cars",
-  "damaged_cars",
-  "rims_and_tires",
-  "spare_parts",
-  "logistics",
-  "repair_garages",
   "show",
+  "car_rental_agencies",
+  "spare_parts",
+  "home_services",
+  "damaged_cars",
   "accessories",
+  "logistics",
+  "rims_and_tires",
+  "repair_garages",
   "other",
 ];
 
 export const CAR_BRAND_TYPES = [
   {
-    value: Ad_CATEGORIES[0],
-    label: "Cars for sale",
+    id: AD_TYPES.used_cars,
+    value: AD_TYPES.used_cars,
+    label: "Used cars",
     regions: [
       {
         label: "Asian",
@@ -27,121 +43,33 @@ export const CAR_BRAND_TYPES = [
           {
             label: "Toyota",
             value: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        value: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            value: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
+            marks: [{ label: "Toyota - Land Cruiser", value: "Toyota / Land Cruiser" }],
           },
         ],
       },
     ],
   },
   {
-    value: Ad_CATEGORIES[1],
-    label: "Home services",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: Ad_CATEGORIES[2],
-    label: "New cars",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: Ad_CATEGORIES[3],
-    label: "Car rental agencies",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: Ad_CATEGORIES[4],
+    id: AD_TYPES.motorcycles,
+    value: AD_TYPES.motorcycles,
     label: "Motorcycles",
     regions: [
       {
+        value: "Sports motorcycles",
         label: "Sports motorcycles",
         brands: [
           {
-            label: "Honda",
-            marks: [{ label: "Honda", value: "Honda" }],
+            label: "Toyota",
+            marks: [{ label: "Toyota", value: "Toyota" }],
+          },
+          {
+            label: "BMW",
+            marks: [{ label: "BMW", value: "BMW" }],
           },
         ],
       },
       {
+        value: "Quad bikes",
         label: "Quad bikes",
         brands: [
           {
@@ -151,6 +79,7 @@ export const CAR_BRAND_TYPES = [
         ],
       },
       {
+        value: "Bicycles",
         label: "Bicycles",
         brands: [
           {
@@ -160,6 +89,7 @@ export const CAR_BRAND_TYPES = [
         ],
       },
       {
+        value: "Scooter",
         label: "Scooter",
         brands: [
           {
@@ -171,261 +101,66 @@ export const CAR_BRAND_TYPES = [
     ],
   },
   {
-    value: Ad_CATEGORIES[5],
+    value: AD_TYPES.classic_cars,
     label: "Classic cars",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
   },
   {
-    value: Ad_CATEGORIES[6],
-    label: "Damaged cars",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
+    value: AD_TYPES.show,
+    label: "Show car",
   },
   {
-    value: Ad_CATEGORIES[7],
-    label: "Rims and tires",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
+    value: AD_TYPES.car_rental_agencies,
+    label: "Car rental agencies",
   },
   {
-    value: Ad_CATEGORIES[8],
-    label: "Spare parts",
+    id: AD_TYPES.spare_parts,
+    value: AD_TYPES.spare_parts,
+    label: "Part car",
     regions: [
       {
+        value: "Asian",
         label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [{ label: "Land Cruiser", value: "Toyota-Land Cruiser" }],
-          },
-        ],
       },
       {
+        value: "American",
         label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
       },
       {
+        value: "European",
         label: "European",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
       },
       {
+        value: "Chinese",
         label: "Chinese",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
       },
     ],
   },
   {
-    value: Ad_CATEGORIES[9],
-    label: "Logistics",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
+    value: AD_TYPES.home_services,
+    label: "Home Services for car",
   },
   {
-    value: Ad_CATEGORIES[10],
-    label: "Repair garages",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
+    value: AD_TYPES.damaged_cars,
+    label: "Damaged cars",
   },
   {
-    value: Ad_CATEGORIES[11],
-    label: "Show",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: Ad_CATEGORIES[12],
+    value: AD_TYPES.accessories,
     label: "Accessories",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
   },
   {
-    value: Ad_CATEGORIES[13],
+    value: AD_TYPES.logistics,
+    label: "Winch + External Charging",
+  },
+  {
+    value: AD_TYPES.rims_and_tires,
+    label: "Rim and tires",
+  },
+  {
+    value: AD_TYPES.repair_garages,
+    label: "Repair garages",
+  },
+  {
+    value: AD_TYPES.other,
     label: "Other",
-    regions: [
-      {
-        label: "Asian",
-        brands: [
-          {
-            label: "Toyota",
-            marks: [
-              { label: "Land Cruiser", value: "Toyota-Land Cruiser" },
-              { label: "Land Cruiser 2", value: "Toyota-Land Cruiser 2" },
-            ],
-          },
-        ],
-      },
-      {
-        label: "American",
-        brands: [
-          {
-            label: "Kawasaki",
-            marks: [{ label: "max", value: "Kawasaki-max" }],
-          },
-        ],
-      },
-    ],
   },
 ];

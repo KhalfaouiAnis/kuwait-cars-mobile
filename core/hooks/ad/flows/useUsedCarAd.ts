@@ -1,7 +1,6 @@
-import { httpClient } from "@/core/lib/api/httpClient";
 import {
-    UsedCarAdInterface,
-    UsedCarAdSchema,
+  UsedCarAdInterface,
+  UsedCarAdSchema,
 } from "@/core/types/schema/ads/usedCar";
 import { AxiosProgressEvent, isAxiosError } from "axios";
 import { useRouter } from "expo-router";
@@ -23,7 +22,8 @@ export function useUsedCarAd() {
       title: "title",
       plan: "pro",
       price: 222,
-      mileage: "125,320 KM",
+      mileage: "125,320",
+      mileage_unit: "KM",
       model: "kawasaki",
       brand: "fff",
       location: {
@@ -34,7 +34,7 @@ export function useUsedCarAd() {
       thumbnail: {},
       images: [],
       video: {},
-      ad_type: "cars_for_sale",
+      ad_type: "used_cars",
     },
   });
 
@@ -44,6 +44,8 @@ export function useUsedCarAd() {
   ) => {
     try {
       const formData = new FormData();
+
+      console.log(data);
 
       Object.entries(data).forEach(([key, value]) => {
         if (["string", "number"].includes(typeof value)) {
@@ -56,13 +58,17 @@ export function useUsedCarAd() {
       formData.append("video", data.video as any);
       data.images?.forEach((image) => formData.append("images", image as any));
 
-      const response = await httpClient.post("/ads/create", formData, {
-        onUploadProgress,
-      });
+      // const response = await httpClient.post(
+      //   "/ads/used_cars/create",
+      //   formData,
+      //   {
+      //     onUploadProgress,
+      //   }
+      // );
 
-      console.log(response.data);
+      // console.log(response.data);
 
-      router.navigate("/my-ads");
+      // router.replace("/my-ads");
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.code === "ERR_NETWORK") {

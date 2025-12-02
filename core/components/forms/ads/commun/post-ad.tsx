@@ -20,7 +20,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<CommunAdInte
             <View>
                 <View className="flex-row items-center justify-between">
                     <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
-                    <Text className="text-sm text-gray-300">Used Cars</Text>
+                    <Text className="text-sm text-gray-300">Commun ads</Text>
                 </View>
                 <VehicleMarkSelector
                     data={CAR_BRAND_TYPES}

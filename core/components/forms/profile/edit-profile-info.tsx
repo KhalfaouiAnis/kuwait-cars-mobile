@@ -8,8 +8,8 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
-import PickFromGalleryGallery from "../../ui/button/open-gallery-button";
-import TakePhotoButton from "../../ui/button/take-photo-button";
+import PickFromGallerySM from "../../ui/button/media/open-gallery-sm";
+import TakePhotoButton from "../../ui/button/media/take-photo";
 import AppModal from "../../ui/dialog/modal";
 import PhoneInput from "../../ui/input/phone-input";
 import SelectInput from "../../ui/input/select-input";
@@ -114,10 +114,10 @@ export default function EditProfileForm() {
                 onClose={() => setShowModal(false)}
                 visible={showModal}
                 renderContent={() => <View className="gap-y-4">
-                    <PickFromGalleryGallery small addMedia={() => {
+                    <PickFromGallerySM addMedia={() => {
                         addAvatar(false)
                         setShowModal(false)
-                    }} />
+                    }} label="Open gallery" />
                     <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => {
                         addAvatar(true)
                         setShowModal(false)

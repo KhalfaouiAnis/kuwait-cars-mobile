@@ -1,5 +1,4 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import LocationInput from "@/core/components/ui/input/location-input";
 import SelectInput from "@/core/components/ui/input/select-input";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import { CITIES } from "@/core/constants";
@@ -43,10 +42,6 @@ export default function PostAd({ control, errors }: AdFormStepProps<MotorcycleAd
                 />
                 <View className="flex-row items-center justify-center gap-x-2 my-4">
                     <View className="flex-1">
-                        <LocationInput
-                            control={control}
-                            errors={errors}
-                        />
                     </View>
                     <View className="flex-1">
                         <AdTextInput control={control} name="zip_code" error={errors.zip_code?.message} placeholder="Zip code"
@@ -59,6 +54,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<MotorcycleAd
             <InputWithSpeech
                 control={control}
                 name="title"
+                label="Title"
                 required
                 maxLength={30}
                 error={errors.title?.message}
@@ -66,6 +62,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<MotorcycleAd
             <InputWithSpeech
                 control={control}
                 name="description"
+                label="Description"
                 maxLength={500}
                 multiline
                 required

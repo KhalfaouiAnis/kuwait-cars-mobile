@@ -17,16 +17,15 @@ type SelectInputProps<TForm extends FieldValues> = TextInputProps & {
     label?: string;
     primary?: boolean
     icon?: ReactNode,
+    extraPadding?: boolean
 }
 
-export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, required, icon, ...props }: SelectInputProps<TForm>) {
+export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, required, icon, extraPadding, ...props }: SelectInputProps<TForm>) {
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
     const renderSelectOption = (option: SelectOption, handleSelect: any) => (
-        <Pressable
-            onPress={() => handleSelect(option.label)}
-        >
+        <Pressable onPress={() => handleSelect(option.label)} >
             {renderOption(option)}
         </Pressable>
     );
@@ -40,10 +39,12 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
         <View className="w-full">
             {label && <Text className="text-base font-semibold pl-6 mb-1">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}>
-                <View className={clsx('flex-row items-center p-3 border bg-white', {
+                <View className={clsx('flex-row items-center border bg-white', {
                     "border-primary-500 rounded-lg": primary,
                     "border-error": error,
                     "border-transparent": !primary && !error,
+                    "px-3": !extraPadding,
+                    "p-3": extraPadding,
                 })}
                     style={primary ? {} : {
                         elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },

@@ -1,4 +1,3 @@
-import { httpClient } from "@/core/lib/api/httpClient";
 import {
   ShowCarAdInterface,
   ShowCarAdSchema,
@@ -27,7 +26,7 @@ export function useShowCarAd() {
       thumbnail: {},
       images: [],
       video: {},
-      ad_type: "cars_for_sale",
+      ad_type: "show",
     },
   });
 
@@ -37,6 +36,8 @@ export function useShowCarAd() {
   ) => {
     try {
       const formData = new FormData();
+
+      console.log(data);
 
       Object.entries(data).forEach(([key, value]) => {
         if (["string", "number"].includes(typeof value)) {
@@ -48,13 +49,13 @@ export function useShowCarAd() {
       formData.append("video", data.video as any);
       data.images?.forEach((image) => formData.append("images", image as any));
 
-      const response = await httpClient.post("/ads/create", formData, {
-        onUploadProgress,
-      });
+      // const response = await httpClient.post("/ads/create", formData, {
+      //   onUploadProgress,
+      // });
 
-      console.log(response.data);
+      // console.log(response.data);
 
-      router.navigate("/my-ads");
+      // router.replace("/my-ads");
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.code === "ERR_NETWORK") {

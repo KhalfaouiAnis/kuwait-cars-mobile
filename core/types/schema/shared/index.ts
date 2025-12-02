@@ -79,3 +79,23 @@ export const createFileSchema = (customMessage?: string) =>
 
 export const MultiFileSchema = (customMessage?: string) =>
   z.array(createFileSchema(customMessage));
+
+interface Mark {
+  label: string;
+  value: string;
+}
+interface Brand {
+  label: string;
+  marks?: Mark[];
+}
+interface Region {
+  label: string;
+  brands?: Brand[];
+}
+interface Category {
+  value: string;
+  label: string;
+  id?: string;
+  regions?: Region[];
+}
+export type DataItem = Category;

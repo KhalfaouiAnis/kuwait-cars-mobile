@@ -11,9 +11,10 @@ type AudioInputProps<TForm extends FieldValues> = TextInputProps & {
     icon?: ReactNode,
     value?: string;
     error?: string;
+    label?: string;
 };
 
-export default function InputWithSpeech<TForm extends FieldValues>({ control, name, error, icon, required, ...props }: AudioInputProps<TForm>) {
+export default function InputWithSpeech<TForm extends FieldValues>({ control, name, error, icon, required, label, ...props }: AudioInputProps<TForm>) {
     const {
         field: { onChange, value },
     } = useController({
@@ -25,6 +26,7 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
 
     return (
         <View>
+            {label && <Text className="text-base font-semibold mb-1">{label}</Text>}
             <View className='flex-row items-center justify-between p-3 border-transparent bg-white border'
                 style={{
                     elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },

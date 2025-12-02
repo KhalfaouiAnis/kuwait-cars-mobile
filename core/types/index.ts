@@ -87,4 +87,5 @@ export interface AdFormStepProps<T extends FieldValues> {
   errors: FieldErrors<T>;
   setValue?: UseFormSetValue<T>;
   getValue?: UseFormGetValues<T>;
+  onSkip?: () => void;
 }

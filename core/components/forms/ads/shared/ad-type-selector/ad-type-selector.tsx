@@ -1,22 +1,17 @@
+import { AD_TYPES } from '@/core/constants/ad';
+import { DataItem } from '@/core/types/schema/shared';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
-
-interface Mark { label: string; value: string; }
-interface Brand { label: string; marks: Mark[]; }
-interface Region { label: string; brands: Brand[]; }
-interface Category { value: string, label: string; regions: Region[]; }
-type DataItem = Category;
 
 type AdTypeSelectorProps = TextInputProps & {
     onChange: (value: any) => void,
     data: DataItem[];
     selectedValue?: string;
     placeholder?: string;
-    required?: boolean;
 }
 
-export default function AdTypeSelector({ data, onChange, placeholder, selectedValue, required, ...props }: AdTypeSelectorProps) {
+export default function AdTypeSelector({ data, onChange, placeholder, selectedValue, ...props }: AdTypeSelectorProps) {
     const [showModal, setShowModal] = useState(false);
     const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
 
@@ -42,17 +37,37 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
         if (isLeaf) {
             return (
                 <TouchableOpacity
-                    className={`flex-row items-center my-1 p-3 border border-transparent bg-white ms-${(level) * 4}`}
+                    className={`flex-row items-center my-1 p-3 py-4 border border-transparent bg-white ms-${(level) * 4}`}
                     style={{ elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
-                    onPress={() => handleSelect(itemPath)}
+                    onPress={() => {
+                        if ([AD_TYPES.used_cars, AD_TYPES.motorcycles].includes(path[0])) {
+                            const [brand, model] = item.value.split("/")
+                            handleSelect({
+                                label: item.label,
+                                path: path[0],
+                                params: { model, brand }
+                            })
+                        } else if (AD_TYPES.spare_parts === path[0]) {
+                            handleSelect({
+                                label: item.label,
+                                path: path[0],
+                                params: { regison: item.value }
+                            })
+                        } else if (!path[0] && item.value === AD_TYPES.show) {
+                            handleSelect({ label: item.label, value: item.value, path: item.value })
+                        } else {
+                            handleSelect({ label: item.label, value: item.value, path: path[0] })
+                        }
+                    }}
                 >
-                    <Ionicons
-                        name={selectedValue === item.value ? 'checkmark-circle' : 'radio-button-off'}
-                        size={18}
-                        color={selectedValue === item.value ? 'blue' : 'gray'}
-                        style={{ marginStart: level * 2 }}
-                    />
-                    <Text className="flex-1 text-sm ms-3">{item.label}</Text>
+                    <Text className="flex-1 text-sm font-semibold ms-3">{item.label}</Text>
+                    <View className='justify-end'>
+                        <Ionicons
+                            name='chevron-forward'
+                            size={16}
+                            color="gray"
+                        />
+                    </View>
                 </TouchableOpacity>
             )
         }
@@ -64,7 +79,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                     style={{ elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
                     onPress={() => hasChildren && toggleExpand(itemPath)}
                 >
-                    <Text className="flex-1 text-sm font-medium ml-3">{item.label}</Text>
+                    <Text className="flex-1 text-sm font-semibold ms-3">{item.label}</Text>
                     <Ionicons
                         name={isExpanded ? 'chevron-down' : 'chevron-forward'}
                         size={16}
@@ -127,7 +142,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                                 </View>
                                 <FlatList
                                     data={data}
-                                    renderItem={({ item }) => renderItem(item, 1, [], handleSelect)}
+                                    renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
                                     keyExtractor={(_, index) => index.toString()}
                                     showsVerticalScrollIndicator={false}
                                     style={{ marginBottom: 20 }}
@@ -138,11 +153,9 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                     </Modal>
                 </View>
                 <View className="ms-auto flex-row items-end">
-                    {required && (
-                        <View>
-                            <Text className="text-error">*</Text>
-                        </View>
-                    )}
+                    <View>
+                        <Text className="text-error">*</Text>
+                    </View>
                     <Ionicons name='chevron-forward' size={20} />
                 </View>
             </View>

@@ -1,6 +1,7 @@
 import { Inter_Bold, Inter_Medium, Inter_Regular, Inter_SemiBold } from "@/assets/fonts";
 import LanguageLoadingSpinner from "@/core/components/ui/spinner/language-loading";
 import useAuthStore from "@/core/lib/stores/auth.store";
+import { ThemeSynchronizer } from "@/core/lib/theme/theme-synchronizer";
 import { Providers } from "@/core/providers";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -22,8 +23,6 @@ export default function RootLayout() {
 
   const { _hasHydrated, bootstrapAsync } = useAuthStore();
 
-  console.log({ _hasHydrated });
-
   useEffect(() => {
     bootstrapAsync()
   }, [bootstrapAsync]);
@@ -43,7 +42,8 @@ export default function RootLayout() {
   return (
     <Providers>
       <Stack screenOptions={{ headerShown: false }} />
-      <StatusBar style="auto" />
+      <StatusBar style={"auto"} />
+      <ThemeSynchronizer />
       <LanguageLoadingSpinner />
     </Providers>
   )

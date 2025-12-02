@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { Text, TextInput, TextInputProps, View } from 'react-native';
@@ -10,15 +11,20 @@ type AdTextInputProps<TForm extends FieldValues> = TextInputProps & {
     icon?: ReactNode,
     value?: string;
     error?: string;
+    extraPadding?: boolean
 };
 
-export default function AdTextInput<TForm extends FieldValues>({ control, name, label, error, icon, required, ...props }: AdTextInputProps<TForm>) {
+export default function AdTextInput<TForm extends FieldValues>({ control, name, label, error, icon, required, extraPadding, ...props }: AdTextInputProps<TForm>) {
     const { field: { onChange, value } } = useController({ control, name });
 
     return (
         <View >
             {label && <Text className="text-base font-semibold mb-1">{label}</Text>}
-            <View className='flex-row items-center justify-between p-3 border-transparent bg-white border'
+            <View
+                className={clsx('flex-row items-center justify-between border-transparent bg-white border', {
+                    "px-3": !extraPadding,
+                    "p-3": extraPadding,
+                })}
                 style={{
                     elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },
                 }}
