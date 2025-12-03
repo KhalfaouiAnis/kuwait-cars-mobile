@@ -27,17 +27,17 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
                 <View className="flex-row items-center justify-between border border-gray-200 p-2">
                     <Ionicons name="call-outline" size={24} color="#25D366" />
                     <Text>Receive Calls</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("receive_calls", value)} />
                 </View>
                 <View className="flex-row items-center justify-between border border-gray-200 p-2">
                     <Ionicons name="call-outline" size={24} color="#00A6DA" />
                     <Text>Receive Call via XCar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} />
                 </View>
                 <View className="flex-row items-center justify-between border border-gray-200 p-2">
                     <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
                     <Text>Chat via Xcar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} />
                 </View>
             </View>
         </ScrollView>

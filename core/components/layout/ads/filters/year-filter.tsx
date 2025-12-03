@@ -1,5 +1,5 @@
+import Checkbox from '@/core/components/ui/input/checkbox';
 import { YEARS as YearsConstant } from '@/core/constants';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useMemo, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import SearchField from './search-field';
@@ -23,16 +23,16 @@ const YearFilterContent: React.FC<YearFilterContentProps> = ({ selectedYears, on
     }, [searchQuery]);
 
     const renderYearOption = ({ item }: { item: typeof YearsConstant[0] }) => {
-        const isSelected = selectedYears.includes(item.value);
+        const isSelected = selectedYears.includes(item.value as string);
         return (
             <TouchableOpacity
-                className={`flex-row items-center p-3 my-1 border-b border-gray-200 ${isSelected ? 'bg-primary-500' : ''}`}
-                onPress={() => onToggleYear(item.value)}
+                className={`flex-row items-center p-3 my-1 border-b border-gray-200`}
+                onPress={() => onToggleYear(item.value as string)}
             >
                 <View className="flex-1">
                     <Text className="font-medium">{item.label}</Text>
                 </View>
-                <MaterialCommunityIcons name={isSelected ? "check-circle-outline" : "checkbox-blank-circle-outline"} size={20} color="gray" />
+                <Checkbox size={20} checked={isSelected} />
             </TouchableOpacity>
         );
     };

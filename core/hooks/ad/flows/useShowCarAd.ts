@@ -20,6 +20,7 @@ export function useShowCarAd() {
   } = useFormHook(ShowCarAdSchema, {
     defaultValues: {
       title: "title",
+      description: "description",
       plan: "pro",
       model: "kawasaki",
       brand: "fff",
@@ -27,6 +28,7 @@ export function useShowCarAd() {
       images: [],
       video: {},
       ad_type: "show",
+      hide_license_plate: false,
     },
   });
 

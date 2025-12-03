@@ -1,13 +1,8 @@
 import Ad from "@/core/components/layout/ads/Ad";
+import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-import { Dimensions, FlatList, Text, View } from 'react-native';
-
-const { height: screenHeight } = Dimensions.get('window');
-
-const FILTERS = [
-    "category", "brand", "Year of manufacture", "price", "hhh", "fgffg"
-]
+import { FlatList, Text, View } from 'react-native';
 
 export const listings = [
     {
@@ -69,16 +64,10 @@ export const listings = [
     },
 ]
 
-const getItemLayout = (data: any, index: number) => ({
-    length: screenHeight * 0.4 + 16, // Item height + margin
-    offset: (screenHeight * 0.4 + 16) * index,
-    index,
-});
-
 export default function FavoritesScreen() {
     return (
-        <Container>
-            <View className="w-full px-2 mt-12">
+        <Container header={<MainHeader drawer back={false} />}>
+            <View className="w-full px-2 mt-6">
                 <View className="flex-row items-center justify-center mb-6">
                     <Text className="font-inter-bold text-center text-3xl">My Favorites</Text>
                 </View>
@@ -86,9 +75,8 @@ export default function FavoritesScreen() {
                     data={listings}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => <View className="mb-2"><Ad data={item} view="vertical" /></View>}
-                    contentContainerStyle={{ paddingBottom: 130 }}
+                    contentContainerStyle={{ paddingBottom: 180 }}
                     showsVerticalScrollIndicator={false}
-                    getItemLayout={getItemLayout}
                     removeClippedSubviews={false}
                 />
             </View>

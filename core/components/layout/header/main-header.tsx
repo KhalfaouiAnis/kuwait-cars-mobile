@@ -1,4 +1,4 @@
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Pressable, TextInput, View } from 'react-native';
 
@@ -42,7 +42,7 @@ const MainHeader = ({ drawer = false, back = true }: { drawer?: boolean, back?: 
                 </View>
             </View>
             <View className='ms-2'>
-                <MaterialIcons name="notifications-active" size={24} color="black" />
+                <MaterialCommunityIcons name="bell-ring-outline" size={24} color="black" />
             </View>
         </View>
     );

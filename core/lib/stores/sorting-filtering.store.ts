@@ -2,12 +2,14 @@ import { create } from "zustand";
 
 interface FiltersState {
   brand: string[];
+  model: string[];
   year: string[];
   price: number[];
 
   sorting: string[];
 
   setBrand: (brand: string[]) => void;
+  setModel: (model: string[]) => void;
   setYear: (year: string[]) => void;
   setPrice: (price: number[]) => void;
 
@@ -16,14 +18,14 @@ interface FiltersState {
   toggleFilter: (
     filterType: keyof Omit<
       FiltersState,
-      "setBrand" | "setYear" | "setPrice" | "setSorting"
+      "setBrand" | "setModel" | "setYear" | "setPrice" | "setSorting"
     >,
     value: string | number
   ) => void;
   clearFilter: (
     filterType: keyof Omit<
       FiltersState,
-      "setBrand" | "setYear" | "setPrice" | "setSorting"
+      "setBrand" | "setModel" | "setYear" | "setPrice" | "setSorting"
     >
   ) => void;
   clearAll: () => void;
@@ -31,6 +33,7 @@ interface FiltersState {
 
 const useSortingAndFilteringStore = create<FiltersState>()((set, get) => ({
   brand: [],
+  model: [],
   year: [],
   price: [0, 0],
 
@@ -39,6 +42,7 @@ const useSortingAndFilteringStore = create<FiltersState>()((set, get) => ({
   setYear: (year) => set({ year }),
   setPrice: (price) => set({ price }),
   setBrand: (brand) => set({ brand }),
+  setModel: (model) => set({ model }),
 
   setSorting: (sorting) => set({ sorting }),
 
@@ -57,6 +61,7 @@ const useSortingAndFilteringStore = create<FiltersState>()((set, get) => ({
       year: [],
       price: [],
       brand: [],
+      model: [],
       sorting: [],
     }),
 }));

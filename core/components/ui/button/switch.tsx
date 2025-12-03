@@ -18,7 +18,7 @@ const Switch = ({ value, onValueChange }: { value: boolean, onValueChange: any }
 
     return (
         <TouchableOpacity
-            className="w-12 h-6 bg-primary-500 rounded-full items-start justify-center p-1 active:opacity-75"
+            className={`w-12 h-6 ${isEnabled ? "bg-primary-500" : "bg-gray-200"} rounded-full items-start justify-center p-1 active:opacity-75`}
             onPress={toggleSwitch}
             activeOpacity={0.8}
         >

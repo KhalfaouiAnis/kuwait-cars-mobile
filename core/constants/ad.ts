@@ -1,5 +1,6 @@
 export const AD_TYPES = {
   used_cars: "used_cars",
+  new_cars: "new_cars",
   motorcycles: "motorcycles",
   classic_cars: "classic_cars",
   show: "show",
@@ -43,7 +44,12 @@ export const CAR_BRAND_TYPES = [
           {
             label: "Toyota",
             value: "Toyota",
-            marks: [{ label: "Toyota - Land Cruiser", value: "Toyota / Land Cruiser" }],
+            marks: [
+              {
+                label: "Toyota - Land Cruiser",
+                value: "Toyota / Land Cruiser",
+              },
+            ],
           },
         ],
       },

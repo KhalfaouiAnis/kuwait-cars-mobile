@@ -20,17 +20,17 @@ export function useUsedCarAd() {
   } = useFormHook(UsedCarAdSchema, {
     defaultValues: {
       title: "title",
+      description: "description",
       plan: "pro",
       price: 222,
       mileage: "125,320",
       mileage_unit: "KM",
       model: "kawasaki",
       brand: "fff",
-      location: {
-        area: "area 1",
-        block: "block 1",
-        district: "district 1",
-      },
+      contact_whatsapp: true,
+      receive_calls: true,
+      xcar_calls: true,
+      xcar_chat: true,
       thumbnail: {},
       images: [],
       video: {},

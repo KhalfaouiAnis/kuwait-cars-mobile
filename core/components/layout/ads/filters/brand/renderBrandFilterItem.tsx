@@ -1,5 +1,6 @@
+import Checkbox from "@/core/components/ui/input/checkbox";
 import { CarBrandType } from "@/core/hooks/ad/filters/useBrand";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
@@ -13,7 +14,7 @@ export const renderBrandOption = ({ item, selectedBrands, onToggleBrand }: Props
 
     return (
         <TouchableOpacity
-            className={`flex-row items-center p-3 my-1 border-b border-gray-200 ${isSelected ? 'bg-primary-500' : ''}`}
+            className={`flex-row items-center p-3 my-1 border-b border-gray-200`}
             onPress={() => onToggleBrand(item.value)}
         >
             <Ionicons name={item.icon as any} size={24} color="gray" className="mr-3" />
@@ -21,7 +22,7 @@ export const renderBrandOption = ({ item, selectedBrands, onToggleBrand }: Props
                 <Text className="font-medium">{item.label}</Text>
                 <Text className="text-sm text-gray-500 capitalize">{item.brand}</Text>
             </View>
-            <MaterialCommunityIcons name={isSelected ? "check-circle-outline" : "checkbox-blank-circle-outline"} size={20} color="gray" />
+            <Checkbox size={20} checked={isSelected} />
         </TouchableOpacity>
     );
 };

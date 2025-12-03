@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 
-export default function CoursesLayout() {
+export default function ChatLayout() {
 
     return (
         <Stack

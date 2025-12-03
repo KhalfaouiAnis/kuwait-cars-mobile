@@ -12,7 +12,7 @@ export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) 
     return (
         <View
             className={`bg-white rounded-2xl shadow-lg p-6 relative overflow-hidden border ${isSelected ? 'border-red-500' : 'border-transparent'}`}
-            style={{ shadowRadius: 16, elevation: 6 }}
+            style={{ shadowRadius: 16, elevation: 4 }}
         >
             <View className="flex-row items-start justify-between">
                 <View className="flex-row gap-3 items-center">

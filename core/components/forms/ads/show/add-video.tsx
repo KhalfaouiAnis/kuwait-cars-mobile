@@ -3,15 +3,33 @@ import { useAdVideo } from "@/core/hooks/ad/useAdVideo";
 import { AdFormStepProps } from "@/core/types";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker';
-import { useEffect } from "react";
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, Modal, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 
 import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
+import AudioPlayer from "@/core/components/ui/shared/audio-player";
+import { SOUND_EFFECTS } from "@/core/constants/audio";
 import { ShowCarAdInterface } from "@/core/types/schema/ads/showCar";
+import { clsx } from "clsx";
+
+type SoundEffectTypes = "muted" | "effect-1" | "effect-2" | "effect-3" | "effect-4" | "effect-5"
+
+function soundSource(sound_effect: SoundEffectTypes) {
+    if (sound_effect === 'muted') return;
+    if (sound_effect === 'effect-1') return SOUND_EFFECTS.NoLuck
+    if (sound_effect === 'effect-2') return SOUND_EFFECTS.YouWin
+    if (sound_effect === 'effect-3') return SOUND_EFFECTS.NoLuck
+    if (sound_effect === 'effect-4') return SOUND_EFFECTS.YouWin
+    if (sound_effect === 'effect-5') return SOUND_EFFECTS.NoLuck
+
+    throw "Sound effect not supported"
+}
 
 export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps<ShowCarAdInterface>) {
+    const [showModal, setShowModal] = useState(false)
+    const [currentSoundEffect, setCurrentSoundEffect] = useState<SoundEffectTypes>("muted")
     const { video, loading, addVideo, removeVideo, setVideo } = useAdVideo(setValue)
 
     useEffect(() => {
@@ -31,7 +49,16 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
     useEffect(() => {
         const video = getValue?.("video")
         video && setVideo(video)
+        const soundEffect = getValue?.("sound_effect")
+        soundEffect && setCurrentSoundEffect(soundEffect as SoundEffectTypes)
     }, [getValue, setVideo])
+
+    function handleSelectSoundEffect(effectId: SoundEffectTypes) {
+        setCurrentSoundEffect(effectId)
+        setValue?.("sound_effect", effectId)
+        if (effectId === "muted") return;
+        setShowModal(true)
+    }
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
@@ -51,7 +78,7 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
                     <View className="gap-y-8">
                         <View className="gap-y-2">
                             <Text className="font-inter-semibold text-3xl text-center">Attract more buyers</Text>
-                            <Text className="text-center" numberOfLines={2}>A 5–15 second clip can help buyers see your car’s true condition</Text>
+                            <Text className="text-center" numberOfLines={2}>A 10-40 second clip can help buyers see your car’s true condition</Text>
                         </View>
                         <View>
                             <Text className="text-xl font-inter-bold mb-1">Add Videos</Text>
@@ -67,20 +94,91 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
                     </View>
                 )
             }
-
             {
                 video && video?.uri && (
-                    <View>
-                        <Text className="text-xl font-inter-bold mb-2">Add Videos</Text>
-                        <View className="relative w-full pr-2">
-                            <VideoPlayer source={video.uri} />
-                            <TouchableOpacity
-                                onPress={removeVideo}
-                                className="absolute -top-4 -right-0 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                    <View className="gap-y-8">
+                        <View>
+                            <Text className="text-xl font-inter-bold mb-2">Add video sound effect</Text>
+                            <View className="relative w-full pr-2">
+                                <VideoPlayer source={video.uri} />
+                                <TouchableOpacity
+                                    onPress={removeVideo}
+                                    className="absolute -top-4 -right-0 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                                >
+                                    <Ionicons name="close" size={20} color="white" />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        <View className="mt-2 gap-3 flex-row-reverse flex-wrap">
+                            <TouchableOpacity className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
+                                "border-primary-500": currentSoundEffect !== "muted",
+                                "border-error": currentSoundEffect === "muted",
+                            })}
+                                onPress={() => {
+                                    setCurrentSoundEffect("muted")
+                                }}
                             >
-                                <Ionicons name="close" size={20} color="white" />
+                                <Text className="text-center font-inter-semibold">Silent</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => handleSelectSoundEffect("effect-1")}
+                                className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
+                                    "border-primary-500": currentSoundEffect !== "effect-1",
+                                    "border-error": currentSoundEffect === "effect-1",
+                                })}
+                            >
+                                <Text className="text-center font-inter-semibold">Effect 1</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => handleSelectSoundEffect("effect-2")}
+                                className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
+                                    "border-primary-500": currentSoundEffect !== "effect-2",
+                                    "border-error": currentSoundEffect === "effect-2",
+                                })}>
+                                <Text className="text-center font-inter-semibold">Effect 2</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => handleSelectSoundEffect("effect-3")}
+                                className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
+                                    "border-primary-500": currentSoundEffect !== "effect-3",
+                                    "border-error": currentSoundEffect === "effect-3",
+                                })}>
+                                <Text className="text-center font-inter-semibold">Effect 3</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => handleSelectSoundEffect("effect-4")}
+                                className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
+                                    "border-primary-500": currentSoundEffect !== "effect-4",
+                                    "border-error": currentSoundEffect === "effect-4",
+                                })}>
+                                <Text className="text-center font-inter-semibold">Effect 4</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => handleSelectSoundEffect("effect-5")}
+                                className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
+                                    "border-primary-500": currentSoundEffect !== "effect-5",
+                                    "border-error": currentSoundEffect === "effect-5",
+                                })}>
+                                <Text className="text-center font-inter-semibold">Effect 5</Text>
                             </TouchableOpacity>
                         </View>
+                        <Modal
+                            visible={showModal}
+                            transparent
+                            animationType="fade"
+                            onRequestClose={() => setShowModal(false)}
+                        >
+                            <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
+                                <View className="flex-1 justify-center items-center bg-black/50">
+                                    <View className="bg-white rounded-lg w-80 h-40 px-4 justify-center items-center overflow-hidden">
+                                        <Text>Playing sound: {currentSoundEffect}</Text>
+                                        <View className="w-full h-14 mt-2">
+                                            <AudioPlayer source={soundSource(currentSoundEffect)} />
+                                        </View>
+                                    </View>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </Modal>
                     </View>
                 )
             }

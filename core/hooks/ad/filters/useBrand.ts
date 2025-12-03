@@ -5,6 +5,7 @@ const carRegions: { label: string; value: string }[] = [
   { label: "Asian", value: "asian" },
   { label: "American", value: "american" },
   { label: "European", value: "european" },
+  { label: "Chinese", value: "chinese" },
 ];
 
 export type CarBrandType = {

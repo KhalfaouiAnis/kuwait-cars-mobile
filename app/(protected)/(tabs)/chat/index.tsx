@@ -8,7 +8,7 @@ import Reanimated, {
 } from 'react-native-reanimated';
 
 import ConfirmDeleteDialog from "@/core/components/ui/dialog/confirm-delete-dialog";
-import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
@@ -165,12 +165,15 @@ export default function ChatScreen() {
             <View className="py-2 px-4">
                 <View className="my-4 mx-2 flex-row items-center justify-between">
                     <MaterialIcons name="sort" size={24} color="black" className="me-2" />
-                    <TextInput
-                        className={"flex-1 h-12 overflow-hidden text-[#333] text-base border rounded-lg border-primary-500 me-1"}
-                        placeholder="Search..."
-                        placeholderTextColor="#A8A8A8"
-                    />
-                    <MaterialIcons name="notifications-active" size={24} color="black" className="me-2" />
+                    <View className="flex-row items-center ps-2 flex-1 h-12 overflow-hidden text-[#333] text-base border rounded-lg border-primary-500 me-1">
+                        <Ionicons name="search-outline" size={24} color="black" />
+                        <TextInput
+                            placeholder="Search..."
+                            className="min-w-28 max-w-52"
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <MaterialCommunityIcons name="bell-ring-outline" size={24} color="black" className="me-2" />
                     <Image
                         source={IMAGES.Mohamed}
                         style={{ width: 36, height: 36, objectFit: "cover", borderRadius: 100 }}
@@ -186,7 +189,7 @@ export default function ChatScreen() {
                     data={listings}
                     keyExtractor={item => item.id}
                     showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ paddingBottom: 130 }}
+                    contentContainerStyle={{ paddingBottom: 200 }}
                     renderItem={renderItem}
                 />
             </View>

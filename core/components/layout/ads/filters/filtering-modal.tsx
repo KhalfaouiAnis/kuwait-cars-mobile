@@ -1,6 +1,6 @@
+import AppModal from '@/core/components/ui/dialog/modal';
 import useFilteringStore from '@/core/lib/stores/sorting-filtering.store';
 import { FilterAdsBy } from '@/core/types';
-import AppModal from '../../../ui/dialog/modal';
 import Reset from '../reset';
 
 interface FilteringModalProps {
@@ -18,9 +18,7 @@ const FilteringModal: React.FC<FilteringModalProps> = ({
 }) => {
     const { [filterType]: selectedValues, toggleFilter, clearFilter } = useFilteringStore();
 
-    const handleToggle = (value: string | number) => {
-        toggleFilter(filterType, value);
-    };
+    const handleToggle = (value: string | number) => toggleFilter(filterType, value);
 
     return (
         <AppModal

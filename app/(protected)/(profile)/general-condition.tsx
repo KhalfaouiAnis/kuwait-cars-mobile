@@ -8,7 +8,7 @@ export default function GeneralConditionScreen() {
             scrollable
             header={<ProfileHeader title="General Condition" />}
         >
-            <View className="items-center m-2">
+            <View className="items-center m-4 mt-10">
                 <View className="border border-primary-500 rounded-lg px-2 py-4">
                     <Text className="font-inter">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe minus officiis consequuntur voluptatem delectus nemo earum impedit alias fugiat a quidem numquam excepturi cumque assumenda suscipit ea consequatur obcaecati, commodi fuga dolore laudantium! Commodi ea dignissimos ut odit quasi autem reiciendis illo voluptatum, veritatis temporibus, doloribus beatae optio officiis illum!

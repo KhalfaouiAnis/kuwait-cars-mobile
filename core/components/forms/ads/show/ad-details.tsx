@@ -15,14 +15,14 @@ export default function AdDetails({ control, setValue }: AdFormStepProps<ShowCar
             <View className="gap-y-2 mt-4">
                 <View className="mt-8">
                     <RadioGroup
+                        control={control}
                         name="hide_license_plate"
                         bordered
-                        control={control}
                         label="Hide vehicle license plate:"
                         fullWidth
-                        options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
+                        options={[{ id: "Yes", label: "Yes", value: true }, { id: "No", label: "No", value: false }]}
                     />
-                    <Text className="text-sm mt-1">Hide vehicle license plate for uploaded images</Text>
+                    <Text className="text-sm text-gray-300">Hide vehicle license plate for uploaded images</Text>
                 </View>
                 <View className="flex-row items-center justify-between border border-gray-200 p-2 mt-6">
                     <Ionicons name="call-outline" size={24} color="#00A6DA" />

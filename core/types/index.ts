@@ -80,7 +80,7 @@ export type SelectOption = {
   value: string | number | boolean;
 };
 
-export type FilterAdsBy = "brand" | "year" | "price";
+export type FilterAdsBy = "brand" | "model" | "year" | "price";
 
 export interface AdFormStepProps<T extends FieldValues> {
   control: Control<T>;

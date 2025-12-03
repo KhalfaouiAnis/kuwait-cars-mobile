@@ -58,6 +58,12 @@ export default function ProfileScreen() {
                     <SettingsLink href={"/my-ads"}
                         icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color="black" />}
                         label="My ads" />
+                    <SettingsLink href={"/my-ads"}
+                        icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color="black" />}
+                        label="Office and showroom services" />
+                    <SettingsLink href={"/my-ads"}
+                        icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color="black" />}
+                        label="Advertising photography services" />
                     <SettingsLink href={"/(profile)/(audio)/index"}
                         icon={<Ionicons name="card" size={24} color="black" />}
                         label="My payments" />
@@ -68,9 +74,14 @@ export default function ProfileScreen() {
                         icon={<AntDesign name="exclamation-circle" size={24} color="black" />}
                         label="General condition" />
                     <SettingsLink href={"/change-language"} icon={<Ionicons name="language-outline" size={24} color="black" />} label="Language" />
-                    <View className="w-full  flex-row items-center">
-                        <MaterialIcons name="notifications-active" size={24} color="black" />
+                    <View className="w-full flex-row items-center">
+                        <MaterialCommunityIcons name="bell-ring-outline" size={24} color="black" />
                         <Text className="ms-2 me-auto">Notification</Text>
+                        <Switch value={true} onValueChange={() => { }} />
+                    </View>
+                    <View className="w-full flex-row items-center">
+                        <MaterialIcons name="dark-mode" size={24} color="black" />
+                        <Text className="ms-2 me-auto">Dark mode</Text>
                         <Switch value={true} onValueChange={() => { }} />
                     </View>
 

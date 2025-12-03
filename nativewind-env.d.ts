@@ -1,11 +1,16 @@
 /// <reference types="nativewind/types" />
 
-declare module "*.png" {
+declare module "*.mp4" {
   const value: any;
   export default value;
 }
 
-declare module "*.mp4" {
+declare module "*.mp3" {
+  const value: any;
+  export default value;
+}
+
+declare module "*.png" {
   const value: any;
   export default value;
 }

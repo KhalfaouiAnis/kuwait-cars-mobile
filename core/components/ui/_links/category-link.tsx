@@ -5,11 +5,12 @@ interface Props {
     href: any,
     image: any,
     label: string
+    fullWidth?: boolean
 }
 
-export default function CategoryLink({ href, image, label }: Props) {
+export default function CategoryLink({ href, image, label, fullWidth = false }: Props) {
     return (
-        <Link href={href} className="items-center justify-center w-[31%] h-36 p-2 border border-primary-500 rounded-xl bg-white">
+        <Link href={href} className={`items-center justify-center ${fullWidth ? "w-full" : "w-[31%]"} h-36 p-2 border border-primary-500 rounded-xl bg-white shadow-lg elevation-xl`}>
             <View className="w-full items-center justify-center">
                 <Image
                     source={image}

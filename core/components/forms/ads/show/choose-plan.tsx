@@ -15,7 +15,7 @@ export default function ChoosePlan({ setValue, getValue }: AdFormStepProps<ShowC
 
     return (
         <View className="flex-1">
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 50 }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
                 <View className="flex-col gap-4">
                     {SUBSCRIPTION_PLANS.map((plan) => (
                         <SubscriptionCard

@@ -15,9 +15,9 @@ export const SparePartAdSchema = z.object({
   title: z.string().min(3, "The title field is required"),
   description: z.string().min(3, "The description field is required"),
   plan: z.string().min(1, "The plan field is required"),
+  price: z.coerce.number().min(0, "The price field is required"),
+  province: z.string().min(1, "The province field is required"),
   location: LocationSchema.optional(),
-  price: z.coerce.number(),
-  province: z.string(),
   zip_code: z.string().optional(),
 
   thumbnail: createFileSchema("Thumbnail is required"),
