@@ -114,7 +114,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
             >
                 <View>
                     <TextInput
-                        className={"text-[#333]"}
+                        className={"text-[#333] dark:text-black"}
                         editable={false}
                         pointerEvents="none"
                         value={selectedValue}

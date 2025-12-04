@@ -2,6 +2,7 @@ import Ad from "@/core/components/layout/ads/Ad";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { FlatList, Text, View } from 'react-native';
 
 export const listings = [
@@ -65,16 +66,18 @@ export const listings = [
 ]
 
 export default function FavoritesScreen() {
+    const { theme } = useUserPreferencesStore()
+
     return (
         <Container header={<MainHeader drawer back={false} />}>
             <View className="w-full px-2 mt-6">
                 <View className="flex-row items-center justify-center mb-6">
-                    <Text className="font-inter-bold text-center text-3xl">My Favorites</Text>
+                    <Text className="font-inter-bold text-center text-3xl text-black dark:text-white">My Favorites</Text>
                 </View>
                 <FlatList
                     data={listings}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2"><Ad data={item} view="vertical" /></View>}
+                    renderItem={({ item }) => <View className="mb-2"><Ad data={item} view="vertical" isDark={theme !== "light"} /></View>}
                     contentContainerStyle={{ paddingBottom: 180 }}
                     showsVerticalScrollIndicator={false}
                     removeClippedSubviews={false}

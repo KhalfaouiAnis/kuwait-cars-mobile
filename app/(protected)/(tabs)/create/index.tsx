@@ -18,9 +18,9 @@ export default function NewAdScreen() {
 
     return (
         <Container header={<ProfileHeader title="Post an Ad" />}>
-            <View className="p-4 flex-1">
+            <View className="p-4 flex-1 dark:bg-darkish">
                 <View>
-                    <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                     <AdTypeSelector
                         data={CAR_BRAND_TYPES}
                         selectedValue={adType?.label}

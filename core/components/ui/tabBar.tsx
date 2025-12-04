@@ -1,15 +1,16 @@
 import { HIDE_TABBAR_ROUTES } from '@/core/constants';
+import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { NavigationRoute, ParamListBase } from '@react-navigation/native';
 import { usePathname } from 'expo-router';
 import React, { useCallback } from 'react';
-import { StyleSheet, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+    const { theme } = useUserPreferencesStore()
     const { bottom } = useSafeAreaInsets();
-    const colorScheme = useColorScheme();
-    const isDark = colorScheme === 'dark';
+    const isDark = theme === 'dark';
 
     const pathname = usePathname()
 
@@ -42,7 +43,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                 styles.container,
                 {
                     bottom: bottom + 12,
-                    backgroundColor: isDark ? '#E6E1E1' : '#E6E1E1',
+                    backgroundColor: isDark ? '#444444A6' : '#E6E1E1',
                 },
             ]}
             pointerEvents="box-none"
@@ -62,7 +63,9 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                         onLongPress={() => onLongPress(route.key)}
                         style={styles.tabButton}
                     >
-                        {options.tabBarIcon?.({ focused: isFocused, color: isFocused ? '#FAED02' : '#000000', size: 30 })}
+                        {
+                            options.tabBarIcon?.({ focused: isFocused, color: getIconColor(isDark, isFocused), size: 30 })
+                        }
                     </TouchableOpacity>
                 );
             })}
@@ -91,3 +94,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 4,
     },
 });
+
+function getIconColor(isDark: boolean, isFocused: boolean) {
+    if ((isDark && isFocused) || (!isDark && isFocused)) return "#FAED02"
+    if (isDark && !isFocused) return "white"
+    if (!isDark && !isFocused) return "black"
+    return "black"
+}

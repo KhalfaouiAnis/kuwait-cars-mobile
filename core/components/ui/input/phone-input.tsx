@@ -51,7 +51,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
         >
             <Text className="mr-3 text-lg">{item.flag}</Text>
             <View className="flex-1">
-                <Text className="text-base font-medium text-gray-900">{item.name}</Text>
+                <Text className="text-base font-medium text-white">{item.name}</Text>
                 <Text className="text-sm text-gray-500">+{item.callingCode[0]}</Text>
             </View>
         </TouchableOpacity>
@@ -59,7 +59,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
 
     return (
         <View className="w-full">
-            {label && <Text className="text-base font-semibold pl-6">{label}</Text>}
+            {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <View className='flex-row items-center border-primary-500 border rounded-lg p-2'>
                 <TouchableOpacity
                     className={`flex-row items-center pl-2 py-3 ${error ? 'border-red-500' : ''}`}
@@ -76,7 +76,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                     control={control}
                     render={({ field: { onChange, value } }) => (
                         <TextInput
-                            className={`w-full pl-0 py-3 ${error ? 'border-red-500' : 'text-[#333]'}`}
+                            className={`w-full pl-0 py-3 ${error ? 'border-red-500' : 'text-[#333] dark:text-white'}`}
                             value={value}
                             onChangeText={(text) => {
                                 handlePhoneChange(text)

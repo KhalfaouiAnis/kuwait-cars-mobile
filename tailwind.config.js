@@ -14,6 +14,7 @@ module.exports = {
         },
         success: "#10b981",
         error: "#FF123D",
+        darkish: "#1F1F1F",
       },
       fontFamily: {
         inter: ["InterRegular", "sans-serif"],

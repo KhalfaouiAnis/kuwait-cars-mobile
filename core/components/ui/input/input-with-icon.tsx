@@ -1,3 +1,4 @@
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { ReactNode, useState } from "react";
@@ -20,18 +21,17 @@ type InputProps<TForm extends FieldValues> = TextInputProps & {
 export default function InputWithIcon<TForm extends FieldValues>({ placeholder, icon, label, endIcon, bordered = true, requiredMark, control, name, error, customIcon, ...props }: InputProps<TForm>) {
     const [showPassword, setShowPassword] = useState(false)
     const { field: { onChange, value } } = useController({ control, name });
+    const { theme } = useUserPreferencesStore()
 
     return (
         <View className="flex-1">
-            {label && <Text className="text-base font-semibold pl-6 mb-1">{label}</Text>}
+            {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <View className={cn("flex-row items-center", {
                 "border-primary-500 border-[1px] p-2 pl-4 rounded-lg": bordered,
             })}>
-                {
-                    customIcon ? customIcon : <Ionicons name={icon} size={24} color={error ? "#D80027" : "#000000"} className="mr-2" />
-                }
+                {customIcon ? customIcon : <Ionicons name={icon} size={24} color={error ? "#D80027" : theme !== "light" ? "white" : "black"} className="mr-2" />}
                 <TextInput
-                    className={cn("flex-1 h-12 overflow-hidden text-[#333] text-base", { "text-error": error })}
+                    className={cn("flex-1 h-12 overflow-hidden text-[#333] dark:text-white text-base", { "text-error": error })}
                     placeholder={placeholder}
                     placeholderTextColor="#A8A8A8"
                     onChangeText={onChange}

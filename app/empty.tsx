@@ -8,9 +8,9 @@ export default function Index() {
     return (
         <Container>
             <Header title="No content" />
-            <View className="flex-1 items-center justify-center">
+            <View className="flex-1 items-center justify-center dark:bg-darkish">
                 <Image source={IMAGES.NoContent} style={{ width: 200, height: 200 }} contentFit="cover" />
-                <Text className="font-inter-semibold">Nothing here at the moment</Text>
+                <Text className="font-inter-semibold dark:text-white">Nothing here at the moment</Text>
             </View>
         </Container>
     );

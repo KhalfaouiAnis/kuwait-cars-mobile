@@ -9,6 +9,7 @@ import SortingModal from "@/core/components/layout/ads/sorting/sorting-modal";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { FilterAdsBy } from "@/core/types";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
@@ -81,6 +82,8 @@ const listings = [
 
 export default function UsedCarsCategoryScreen() {
     const [activeFilter, setActiveFilter] = useState<FilterAdsBy | null>(null);
+    const { theme } = useUserPreferencesStore()
+    const isDark = theme !== "light"
     const [displaySortingModal, setDisplaySortingModal] = useState(false)
     const [view, setView] = useState<"vertical" | "horizontal">('vertical');
 
@@ -98,9 +101,9 @@ export default function UsedCarsCategoryScreen() {
                     {
                         FILTERS.map(filter => (
                             <Pressable key={filter.value} onPress={() => openFilterModal(filter.value)}>
-                                <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center">
-                                    <Text className="mr-2">{filter.label}</Text>
-                                    <Ionicons name="chevron-down" size={16} style={{ fontWeight: "bold" }} />
+                                <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
+                                    <Text className="mr-2 text-black dark:text-white">{filter.label}</Text>
+                                    <Ionicons name="chevron-down" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
                                 </View>
                             </Pressable>
                         ))
@@ -110,21 +113,22 @@ export default function UsedCarsCategoryScreen() {
         }>
             <View className="w-full pl-4 relative flex-1">
                 <View className="flex-row items-center gap-x-2 mb-4">
-                    <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2"
+                    <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2 dark:bg-darkish"
                         onPress={() => setView(prevState => prevState === "horizontal" ? "vertical" : "horizontal")}>
-                        <Fontisto name="nav-icon-list-a" size={16} color="black" />
-                        <Text>change view</Text>
+                        <Fontisto name="nav-icon-list-a" size={16} color={isDark ? "white" : "black"} />
+                        <Text className="text-black dark:text-white">change view</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2"
+                    <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2 dark:bg-darkish"
                         onPress={() => setDisplaySortingModal(true)}>
-                        <MaterialCommunityIcons name="sort" size={18} color="black" />
-                        <Text>sort by</Text>
+                        <MaterialCommunityIcons name="sort" size={18} color={isDark ? "white" : "black"} />
+                        <Text className="text-black dark:text-white">sort by</Text>
                     </TouchableOpacity>
+                    <Text className="text-black dark:text-white ms-auto me-3">Used Cars</Text>
                 </View>
                 <FlatList
                     data={listings}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2 me-1"><Ad data={item} view={view} /></View>}
+                    renderItem={({ item }) => <View className="mb-2 me-1"><Ad data={item} view={view} isDark={isDark} /></View>}
                     contentContainerStyle={{ paddingBottom: 50, position: "relative", zIndex: 2 }}
                     showsVerticalScrollIndicator={false}
                     className="bg-transparent me-2"

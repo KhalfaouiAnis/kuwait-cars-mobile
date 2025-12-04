@@ -3,10 +3,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
 
+import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { useUpdatePassword } from "@/core/hooks/user/use-profile";
 import useAuthStore from "@/core/lib/stores/auth.store";
 import { toast } from "sonner-native";
-import InputWithIcon from "../../ui/input/input-with-icon";
 
 export default function ChangePasswordForm() {
     const { user } = useAuthStore()
@@ -23,10 +23,10 @@ export default function ChangePasswordForm() {
     };
 
     return (
-        <View className="flex-1 mt-2 bg-white px-4 py-2 gap-y-8">
+        <View className="flex-1 mt-2 bg-white dark:bg-darkish px-4 py-2 gap-y-8">
             <View className="flex-1 flex-row border border-primary-500 rounded-lg items-center justify-between w-full px-4 py-1">
                 <View>
-                    <Text className="font-inter-semibold text-xl">{user?.fullname}</Text>
+                    <Text className="font-inter-semibold text-xl dark:text-white">{user?.fullname}</Text>
                 </View>
                 <View className="items-end">
                     <View className="relative">

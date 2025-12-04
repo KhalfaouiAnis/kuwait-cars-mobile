@@ -31,21 +31,21 @@ export default function Index() {
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white">
                 <View className="flex items-center">
                     <Image source={IMAGES.Logo} style={{ width: 175, height: 175, objectFit: 'contain' }} />
-                    <Text className="font-inter-bold text-3xl mt-12">Welcome to Kuwait Car</Text>
-                    <Text className="font-inter-semibold text-lg">Your Trusted Vehicle Sale</Text>
+                    <Text className="font-inter-bold text-3xl mt-12 dark:text-white">Welcome to Kuwait Car</Text>
+                    <Text className="font-inter-semibold text-lg dark:text-white">Your Trusted Vehicle Sale</Text>
                 </View>
                 <View className="flex items-center mt-8 gap-y-4">
                     <AuthLink href="/(auth)/signin" label="Sign In" />
                     <AuthLink href="/(auth)/signup" label="Sign Up" />
                     <TouchableOpacity className="border border-primary-500 py-4 w-[300px] rounded-md"
                         onPress={handleAnonymousSession}>
-                        <Text className="font-bold text-center text-base">
+                        <Text className="font-bold text-center text-base dark:text-white">
                             As a Guest
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="w-[300px]"
                         onPress={handleAnonymousSession}>
-                        <Text className="font-normal text-sm self-end mr-3">
+                        <Text className="font-normal text-sm self-end mr-3 dark:text-white">
                             Skip →
                         </Text>
                     </TouchableOpacity>

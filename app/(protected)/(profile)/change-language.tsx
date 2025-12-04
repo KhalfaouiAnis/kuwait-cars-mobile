@@ -6,7 +6,7 @@ import { SUPPORTED_LANGUAGES } from "@/core/constants";
 import i18n from "@/core/i18n/i18n";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { Language } from "@/core/types";
-import { cn } from "@/core/utils/cn";
+import { clsx } from "clsx";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -25,9 +25,9 @@ export default function ChangeLanguageScreen() {
     const renderItem = (item: Language) => (
         <TouchableOpacity
             key={item.code}
-            className={cn("flex-row items-center justify-between w-64 px-4 py-2 mt-4 rounded-lg bg-[#FFFFFFB2] ", {
+            className={clsx("flex-row items-center justify-between w-64 px-4 py-2 mt-4 rounded-lg bg-white", {
                 "border border-zinc-300": currentLang === item.code,
-                "border-b-4 border-r-2 border-gray-200": currentLang !== item.code,
+                "border-b-2 border-r border-gray-200": currentLang !== item.code
             })}
             onPress={() => handleSelect(item)}
         >
@@ -38,15 +38,10 @@ export default function ChangeLanguageScreen() {
     );
 
     return (
-        <Container
-            header={<ProfileHeader title="Choose Language" />}
-        >
-            <View className="items-center rounded-lg border border-primary-500 m-2">
+        <Container header={<ProfileHeader title="Choose Language" />}>
+            <View className="items-center rounded-lg border border-primary-500 m-2 dark:bg-darkish">
                 <ScrollView showsVerticalScrollIndicator={false} className="my-6">
-                    {
-                        SUPPORTED_LANGUAGES.map(lang => renderItem(lang))
-                    }
-
+                    {SUPPORTED_LANGUAGES.map(lang => renderItem(lang))}
                 </ScrollView>
             </View>
         </Container>

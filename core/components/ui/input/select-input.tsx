@@ -18,9 +18,10 @@ type SelectInputProps<TForm extends FieldValues> = TextInputProps & {
     primary?: boolean
     icon?: ReactNode,
     extraPadding?: boolean
+    isDark?: boolean
 }
 
-export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, required, icon, extraPadding, ...props }: SelectInputProps<TForm>) {
+export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, required, icon, isDark, extraPadding, ...props }: SelectInputProps<TForm>) {
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
@@ -37,9 +38,9 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
 
     return (
         <View className="w-full">
-            {label && <Text className="text-base font-semibold pl-6 mb-1">{label}</Text>}
+            {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}>
-                <View className={clsx('flex-row items-center border bg-white', {
+                <View className={clsx('flex-row items-center border', {
                     "border-primary-500 rounded-lg": primary,
                     "border-error": error,
                     "border-transparent": !primary && !error,
@@ -55,7 +56,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                     </View>
                     <View>
                         <TextInput
-                            className="text-[#333]"
+                            className="text-[#333] dark:text-white"
                             value={value}
                             editable={false}
                             pointerEvents="none"
@@ -96,7 +97,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                                 <Text className="text-error">*</Text>
                             </View>
                         )}
-                        <Ionicons name='chevron-forward' size={20} />
+                        <Ionicons name='chevron-forward' size={20} color={isDark ? "white" : "black"} />
                     </View>
                 </View>
             </Pressable>
