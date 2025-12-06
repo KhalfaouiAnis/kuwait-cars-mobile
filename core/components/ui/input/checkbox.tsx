@@ -1,3 +1,4 @@
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
@@ -17,6 +18,7 @@ export default function Checkbox({
     size = 24,
 }: CustomCheckboxProps) {
     const [isChecked, setIsChecked] = useState(checked);
+    const { theme } = useUserPreferencesStore()
 
     const handlePress = () => {
         const newValue = !isChecked;
@@ -28,7 +30,7 @@ export default function Checkbox({
         <TouchableOpacity onPress={handlePress} activeOpacity={0.7} disabled={disabled}>
             <MaterialCommunityIcons
                 size={size}
-                color={isChecked ? "#FAED02" : "transparent"}
+                color={isChecked ? "#FAED02" : theme !== "light" ? "white" : "black"}
                 name={isChecked ? "checkbox-marked" : "checkbox-blank-outline"}
             />
         </TouchableOpacity>

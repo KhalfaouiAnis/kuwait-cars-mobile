@@ -14,29 +14,29 @@ export default function PostAd({ control, errors }: AdFormStepProps<MotorcycleAd
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
+            className="flex-1"
             contentContainerStyle={{ paddingBottom: 10, rowGap: 8 }}
         >
             <View>
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                     <Text className="text-sm text-gray-300">Used Motors</Text>
                 </View>
                 <VehicleMarkSelector
                     data={CAR_BRAND_TYPES}
                     control={control}
                     name="ad_type"
-                    readOnly
+                    disabled
                 />
             </View>
             <View>
-                <Text className="font-semibold mb-2">WHERE IS YOUR LISTING?</Text>
+                <Text className="font-semibold mb-2 dark:text-white">WHERE IS YOUR LISTING?</Text>
                 <SelectInput
                     control={control}
                     name="province"
                     required
                     options={CITIES}
-                    renderOption={renderLocationOption}
+                    renderOption={(option, selected) => renderLocationOption(option, selected as string)}
                     placeholder="Province"
                     icon={<MaterialCommunityIcons name="town-hall" size={24} color="black" />}
                 />

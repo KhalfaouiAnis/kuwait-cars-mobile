@@ -7,7 +7,6 @@ import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
 
-
 export default function AudioCallScreen() {
     return (
         <Container header={<Header title="" />}>
@@ -31,6 +30,3 @@ export default function AudioCallScreen() {
         </Container>
     )
 }
-
-
-

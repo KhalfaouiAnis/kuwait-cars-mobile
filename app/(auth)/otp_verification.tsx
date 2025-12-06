@@ -11,7 +11,7 @@ export default function OTPVerificationScreen() {
 
     return (
         <FormWrapper title="OTP Verification">
-            <Text className="mt-12 text-base text-center">
+            <Text className="mt-12 text-base text-center dark:text-white">
                 We will send you a one time password on this Mobile Number
             </Text>
             <Text className="mt-6 text-base text-center text-error">
@@ -26,7 +26,7 @@ export default function OTPVerificationScreen() {
                     showLabel={false}
                     className="text-base text-center mt-8"
                 />
-                <Text className="mt-4 text-base text-center">Do not send OTP ? <Text className="text-primary-500">Send OTP</Text></Text>
+                <Text className="mt-4 text-base text-center dark:text-white">Do not send OTP ? <Text className="text-primary-500">Send OTP</Text></Text>
                 <TouchableOpacity className="bg-primary-500 py-3 rounded-lg items-center mt-12">
                     <Text className="text-lg font-semibold text-secondary-900 disabled:text-gray-100">Submit</Text>
                 </TouchableOpacity>

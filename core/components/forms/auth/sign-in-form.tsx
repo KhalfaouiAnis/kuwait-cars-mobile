@@ -29,14 +29,13 @@ export default function SignInForm() {
             <View className="flex-row items-center justify-between mt-4">
                 <View className="flex-row items-center gap-x-1">
                     <Checkbox
-                        initialValue={false}
+                        checked={false}
                         size={28}
-                        color="#4CAF50"
                     />
-                    <Text className="text-base text-secondary-900">Remember me</Text>
+                    <Text className="text-base text-secondary-900 dark:text-white">Remember me</Text>
                 </View>
                 <Link href={"/(auth)/forgot_password"} className="items-center">
-                    <Text className="text-base">Password forgotten?</Text>
+                    <Text className="text-base dark:text-white">Password forgotten?</Text>
                 </Link>
             </View>
             <TouchableOpacity className="bg-primary-500 py-3 rounded-lg items-center mt-20"
@@ -48,7 +47,7 @@ export default function SignInForm() {
                 </Text>
             </TouchableOpacity>
             <Link href={"/(auth)/signup"} className="items-center mt-4">
-                <Text className="text-base text-center">Don&apos;t have an account ? <Text className="text-primary-500 font-bold">Sign Up</Text> </Text>
+                <Text className="text-base text-center dark:text-white">Don&apos;t have an account ? <Text className="text-primary-500 font-bold dark:text-white">Sign Up</Text> </Text>
             </Link>
         </View>
     )

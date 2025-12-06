@@ -10,7 +10,7 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue }: 
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
+            className="flex-1"
             contentContainerStyle={{ paddingBottom: 10 }}>
             <View className="gap-y-2 mt-4">
                 <View>

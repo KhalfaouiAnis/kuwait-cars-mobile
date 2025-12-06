@@ -11,7 +11,7 @@ export default function PickFromGallerySM({ addMedia, video, label, disabled }: 
                 disabled ? <ActivityIndicator className="text-primary-500" size="large" /> : (
                     <View className="items-center flex-row gap-x-2">
                         {video ? <Octicons name="video" size={24} color="#9E9E9E" /> : <EvilIcons name="image" size={24} color="#9E9E9E" />}
-                        <Text className="font-inter-semibold">{label}</Text>
+                        <Text className="font-inter-semibold ">{label}</Text>
                     </View>
                 )
             }

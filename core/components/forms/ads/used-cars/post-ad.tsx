@@ -12,55 +12,60 @@ import { ScrollView, Text, View } from "react-native";
 import { renderLocationOption } from "../../../ui/shared/render-option";
 import VehicleMarkSelector from "../shared/ad-type-selector/vehicle-mark-selector";
 
-export default function PostAd({ control, errors }: AdFormStepProps<UsedCarAdInterface>) {
+export default function PostAd({ control, errors, isDark }: AdFormStepProps<UsedCarAdInterface>) {
     const { model, brand } = useLocalSearchParams()
     console.log({ model, brand });
 
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
-            contentContainerStyle={{ paddingBottom: 10, rowGap: 8 }}
+            className="flex-1"
+            contentContainerStyle={{ paddingBottom: 12, rowGap: 12 }}
         >
-            <View>
+            <View className="mb-2">
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                     <Text className="text-sm text-gray-300">Used Cars</Text>
                 </View>
                 <VehicleMarkSelector
                     data={CAR_BRAND_TYPES}
                     control={control}
+                    disabled
                     name="ad_type"
                 />
             </View>
             <View>
-                <Text className="font-semibold mb-2">WHERE IS YOUR LISTING?</Text>
+                <Text className="font-semibold mb-2 dark:text-white">WHERE IS YOUR LISTING?</Text>
                 <SelectInput
                     control={control}
                     name="province"
                     required
+                    isDark
                     options={CITIES}
-                    renderOption={renderLocationOption}
+                    renderOption={(option, selected) => renderLocationOption(option, selected as string)}
                     placeholder="Province"
-                    icon={<MaterialCommunityIcons name="town-hall" size={24} color="black" />}
+                    icon={<MaterialCommunityIcons name="town-hall" size={24} color={isDark ? "white" : "black"} />}
                 />
                 <View className="flex-row items-center justify-center gap-x-2 my-4">
                     <View className="flex-1">
                         <LocationInput
                             control={control}
                             errors={errors}
+                            isDark
                         />
                     </View>
+                    <Text className="dark:text-white">or</Text>
                     <View className="flex-1">
                         <AdTextInput control={control} name="zip_code" error={errors.zip_code?.message} placeholder="Zip code"
-                            icon={<MaterialCommunityIcons name="email-seal-outline" size={24} color="black" className="mt-2" />} />
+                            icon={<MaterialCommunityIcons name="email-seal-outline" size={24} color={isDark ? "white" : "black"} className="mt-2" />} />
                     </View>
                 </View>
             </View>
             <AdTextInput control={control} name="price" error={errors.price?.message} placeholder="Write Your Price"
-                required label="Price" keyboardType="number-pad" />
+                required label="Price" keyboardType="number-pad" extraPadding />
             <InputWithSpeech
                 control={control}
+                label="Description"
                 name="title"
                 required
                 maxLength={30}
@@ -69,6 +74,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<UsedCarAdInt
             <InputWithSpeech
                 control={control}
                 name="description"
+                label="Description"
                 maxLength={500}
                 multiline
                 required

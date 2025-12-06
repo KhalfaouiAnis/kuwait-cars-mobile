@@ -9,6 +9,7 @@ import PostAd from "@/core/components/forms/ads/used-cars/post-ad";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import UploadProgress from "@/core/components/ui/shared/upload-progress";
 import { useUsedCarAd } from "@/core/hooks/ad/flows/useUsedCarAd";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { router } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
@@ -17,13 +18,14 @@ import { toast } from "sonner-native";
 const getStepTitle = (step: number) => {
     switch (step) {
         case 1:
+        case 5:
             return "Ad Details"
         case 2:
         case 3:
             return "Add Media"
         case 4:
             return "Post an Ad"
-        case 5:
+        case 6:
             return "Choose Plans"
         default:
             return ""
@@ -32,8 +34,8 @@ const getStepTitle = (step: number) => {
 const TOTAL_STEPS = 6;
 
 export default function UsedCarAdScreen() {
-    // const { ad_type } = useLocalSearchParams<{ ad_type: string }>();
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useUsedCarAd()
+    const { theme } = useUserPreferencesStore()
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -109,17 +111,17 @@ export default function UsedCarAdScreen() {
     const renderCurrentStep = () => {
         switch (currentStep) {
             case 1:
-                return <AdDetails control={control} errors={errors} />;
+                return <AdDetails control={control} errors={errors} isDark={theme !== "light"} />;
             case 2:
-                return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} />;
+                return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 3:
-                return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} />;
+                return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} isDark={theme !== "light"} />;
             case 4:
-                return <PostAd control={control} errors={errors} setValue={setValue} />;
+                return <PostAd control={control} errors={errors} setValue={setValue} isDark={theme !== "light"} />;
             case 5:
-                return <AdDetailsStep2 control={control} errors={errors} />;
+                return <AdDetailsStep2 control={control} errors={errors} isDark={theme !== "light"} />;
             case 6:
-                return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} />;
+                return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} isDark={theme !== "light"} />;
             default:
                 return null;
         }
@@ -143,7 +145,7 @@ export default function UsedCarAdScreen() {
     if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
-        <AdFormContainer title={getStepTitle(currentStep)} reset={handleReset} previous={handlePrevious}>
+        <AdFormContainer isDark={theme !== "light"} title={getStepTitle(currentStep)} reset={handleReset} previous={handlePrevious}>
             {
                 isUploading && uploadProgress < 100 && (
                     <View className="mb-1">

@@ -19,15 +19,12 @@ export default function AdTextInput<TForm extends FieldValues>({ control, name, 
 
     return (
         <View >
-            {label && <Text className="text-base font-semibold mb-1">{label}</Text>}
+            {label && <Text className="text-base font-semibold mb-1 dark:text-white">{label}</Text>}
             <View
-                className={clsx('flex-row items-center justify-between border-transparent bg-white border', {
-                    "px-3": !extraPadding,
+                className={clsx('flex-row items-center justify-between elevation-sm border-transparent bg-white border dark:border-primary-500 dark:bg-darkish', {
+                    "px-3 py-1": !extraPadding,
                     "p-3": extraPadding,
                 })}
-                style={{
-                    elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },
-                }}
             >
                 {
                     icon && <View className='ms-2 items-center'>
@@ -36,7 +33,7 @@ export default function AdTextInput<TForm extends FieldValues>({ control, name, 
                 }
                 <View className='me-3 flex-1 flex-row items-center justify-between'>
                     <TextInput
-                        className="text-[#333]"
+                        className="text-[#333] dark:text-white flex-1"
                         value={value}
                         numberOfLines={1}
                         onChangeText={onChange}

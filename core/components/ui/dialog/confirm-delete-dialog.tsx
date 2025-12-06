@@ -21,15 +21,15 @@ export default function ConfirmDeleteDialog({ onDelete, show, setShow }: DeleteD
             onRequestClose={handleCancel}
         >
             <View className="flex-1 justify-center items-center bg-black/50">
-                <View className="bg-white rounded-lg p-6 w-80 mx-4 items-center">
+                <View className="bg-white dark:bg-darkish rounded-lg p-6 w-80 mx-4 items-center">
                     <Image
                         source={IMAGES.DeleteMessage}
                         style={{ width: 80, height: 80, objectFit: "cover" }}
                     />
-                    <Text className="text-lg font-semibold text-center my-4">
+                    <Text className="text-lg font-semibold text-center my-4 dark:text-white">
                         Delete message?
                     </Text>
-                    <Text className="text-base text-gray-600 text-center mb-6">
+                    <Text className="text-base text-gray-600 text-center mb-6 dark:text-white">
                         Do you really want to delete this conversation?
                     </Text>
                     <View className="flex-row justify-between">
@@ -38,7 +38,7 @@ export default function ConfirmDeleteDialog({ onDelete, show, setShow }: DeleteD
                             onPress={handleCancel}
                             activeOpacity={0.7}
                         >
-                            <Text className="text-gray-800 text-center font-semibold">Cancel</Text>
+                            <Text className="text-gray-800 text-center font-semibold dark:text-white">Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             className="flex-1 bg-error rounded-2xl p-3 mr-2"

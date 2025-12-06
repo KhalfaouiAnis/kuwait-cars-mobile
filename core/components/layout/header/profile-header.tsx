@@ -10,7 +10,7 @@ const ProfileHeader = ({ title }: { title: string }) => {
     return (
         <View className='mt-1 flex flex-row items-center justify-center px-4 mb-2 '>
             <Pressable onPress={onBack}>
-                <Ionicons name='chevron-back' size={22} color={theme === "light" ? "black" : "white"} />
+                <Ionicons name='chevron-back' size={22} color={theme !== "light" ? "white" : "black"} />
             </Pressable>
             <View className='w-full items-center justify-center'>
                 <Text className='font-inter-bold text-2xl text-center text-black dark:text-white'>{title}</Text>

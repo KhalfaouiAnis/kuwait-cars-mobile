@@ -14,23 +14,15 @@ export default function RadioButton({ label, selected, onPress, disabled, fullWi
         <TouchableOpacity
             onPress={onPress}
             disabled={disabled}
-            className={clsx("p-3 border", {
+            className={clsx("min-w-[34px] p-3 px-4 dark:bg-darkish elevation border", {
                 "bg-primary-500 border-error": selected,
-                "bg-white border-transparent": !selected,
+                "bg-white border-transparent dark:border-primary-500": !selected,
                 "flex-1": fullWidth
             })}
-            style={{
-                elevation: 3, shadowColor: 'rgba(0, 0, 0, 0.6)',
-                shadowRadius: 1, shadowOpacity: 0.2,
-                shadowOffset: { width: 4, height: 4 },
-                minWidth: 34,
-            }}
         >
-            <Text
-                className='text-center font-semibold'
-                ellipsizeMode="tail"
-                numberOfLines={1}
-            >{label}</Text>
+            <Text className='text-center font-semibold dark:text-white' ellipsizeMode="tail" numberOfLines={1}>
+                {label}
+            </Text>
         </TouchableOpacity>
     );
 }

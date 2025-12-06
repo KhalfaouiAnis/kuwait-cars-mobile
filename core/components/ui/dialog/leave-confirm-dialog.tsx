@@ -17,11 +17,11 @@ export default function LeaveDialog({ show, onLeave, onStay }: LeaveDialogProps)
             onRequestClose={onStay}
         >
             <View className="flex-1 justify-center items-center bg-black/50">
-                <View className="bg-white rounded-lg p-6 w-80 mx-4">
-                    <Text className="text-lg font-semibold text-center mb-4">
+                <View className="bg-white dark:bg-darkish rounded-lg p-6 w-80 mx-4">
+                    <Text className="text-lg font-semibold text-center mb-4 dark:text-white">
                         Confirmation
                     </Text>
-                    <Text className="text-base text-gray-600 text-center mb-6">
+                    <Text className="text-base text-gray-600 text-center mb-6 dark:text-white">
                         You have unsaved changes. Do you want to leave?
                     </Text>
                     <View className="flex-row justify-between gap-x-2">

@@ -1,3 +1,4 @@
+import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
@@ -11,22 +12,23 @@ type Props = {
 };
 
 const Header = ({ title, headerAction }: Props) => {
+    const { theme } = useUserPreferencesStore()
     const onBack = () => {
         router.canGoBack() && router.back()
     }
 
     return (
-        <View className='mb-4 flex flex-row items-center justify-between px-2'>
+        <View className='mb-4 flex flex-row items-center justify-between px-2 '>
             <View className='flex flex-row items-center justify-center'>
                 <Pressable onPress={onBack}>
-                    <Ionicons name='chevron-back' size={24} />
+                    <Ionicons name='chevron-back' size={24} color={theme !== "light" ? "white" : "black"} />
                 </Pressable>
-                <Text className='mx-2 text-center'>{title}</Text>
+                <Text className='mx-2 text-center dark:text-white'>{title}</Text>
             </View>
             {
                 headerAction && (
                     <Pressable onPress={headerAction.onPress} >
-                        <Ionicons name={headerAction.name} size={24} />
+                        <Ionicons name={headerAction.name} size={24} color={theme !== "light" ? "white" : "black"} />
                     </Pressable>
                 )
             }

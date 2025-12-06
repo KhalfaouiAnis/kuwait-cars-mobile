@@ -88,4 +88,5 @@ export interface AdFormStepProps<T extends FieldValues> {
   setValue?: UseFormSetValue<T>;
   getValue?: UseFormGetValues<T>;
   onSkip?: () => void;
+  isDark?: boolean;
 }

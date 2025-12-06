@@ -109,7 +109,7 @@ export const Blocks: SelectOption[] = [
 export const YEARS: SelectOption[] = generateYears().map((year) => ({
   id: year.toString(),
   label: year.toString(),
-  value: year,
+  value: year.toString(),
 }));
 
 export const OVERALL_MIN_PRICE = 0;

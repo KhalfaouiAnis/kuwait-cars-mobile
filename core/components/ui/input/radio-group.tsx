@@ -19,14 +19,14 @@ export default function RadioGroup<TForm extends FieldValues>({ control, name, o
     const { field: { onChange, value } } = useController({ control, name });
     return (
         <View className='flex-1'>
-            {label && <Text className="text-base font-semibold mb-2">{label}</Text>}
-            <View className={clsx('flex-row gap-3 flex-wrap', { "border border-gray-200 p-1": bordered })}>
+            {label && <Text className="text-base font-semibold mb-2 dark:text-white">{label}</Text>}
+            <View className={clsx('flex-row gap-3 flex-wrap', { "border border-gray-200 p-1 dark:border-primary-500": bordered })}>
                 {options.map(option => (
                     <RadioButton
                         key={option.id}
                         label={option.label}
                         selected={value === option.value}
-                        onPress={() => onChange(option.value === true)}
+                        onPress={() => onChange(option.value)}
                         disabled={disabled}
                         fullWidth={fullWidth}
                     />

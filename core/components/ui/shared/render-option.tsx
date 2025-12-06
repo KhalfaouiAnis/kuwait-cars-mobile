@@ -17,32 +17,34 @@ export const renderCategoryOption = (option: SelectOption) => (
     </View>
 )
 
-export const renderLocationOption = (option: SelectOption) => (
-    <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200 shadow-sm">
+export const renderLocationOption = (option: SelectOption, selected?: string) => (
+    <View className={`flex-row items-center py-3 bg-primary-500 mx-2 px-2 border ${option.value === selected ? "border-error border-2" : "border-gray-200"} shadow-sm`}>
         <View className='flex-1 ms-4'>
-            <Text className="text-lg">{option.label}</Text>
+            <Text className="text-lg text-center font-inter-medium">{option.label}</Text>
         </View>
     </View>
 )
 
-export const renderYearOption = (option: SelectOption, selected?: boolean) => (
+export const renderYearOption = (option: SelectOption, selected?: string) => {
+    return (
+        <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200 shadow-sm">
+            <View className='flex-1 ms-2'>
+                <Text className="text-lg">{option.label}</Text>
+            </View>
+            <View className='pe-2'>
+                <Checkbox size={18} checked={option.value === selected} disabled />
+            </View>
+        </View>
+    )
+}
+
+export const renderColorOption = (option: SelectOption, selected?: string) => (
     <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200 shadow-sm">
         <View className='flex-1 ms-2'>
             <Text className="text-lg">{option.label}</Text>
         </View>
         <View className='pe-2'>
-            <Checkbox size={18} checked={selected} disabled />
-        </View>
-    </View>
-)
-
-export const renderColorOption = (option: SelectOption, selected?: boolean) => (
-    <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200 shadow-sm">
-        <View className='flex-1 ms-2'>
-            <Text className="text-lg">{option.label}</Text>
-        </View>
-        <View className='pe-2'>
-            <Checkbox size={18} checked={selected} disabled />
+            <Checkbox size={18} checked={option.value === selected} disabled />
         </View>
     </View>
 )

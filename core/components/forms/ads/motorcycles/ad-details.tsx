@@ -14,7 +14,7 @@ export default function AdDetails({ control, errors }: AdFormStepProps<Motorcycl
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
+            className="flex-1"
             contentContainerStyle={{ paddingBottom: 10 }}
         >
             <View className="flex-row items-center justify-center w-full">
@@ -24,14 +24,14 @@ export default function AdDetails({ control, errors }: AdFormStepProps<Motorcycl
             </View>
             <View>
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                     <Text className="text-sm text-gray-300">Used Motors</Text>
                 </View>
                 <VehicleMarkSelector
                     data={CAR_BRAND_TYPES}
                     control={control}
                     name="ad_type"
-                    readOnly
+                    disabled
                 />
             </View>
             <View className="gap-y-4 mt-4">
@@ -41,7 +41,7 @@ export default function AdDetails({ control, errors }: AdFormStepProps<Motorcycl
                         name="year"
                         options={YEARS}
                         required
-                        renderOption={renderYearOption}
+                        renderOption={(option, selected) => renderYearOption(option, selected as string)}
                         error={errors.year?.message}
                         placeholder="Year" />
                 </View>
@@ -51,7 +51,7 @@ export default function AdDetails({ control, errors }: AdFormStepProps<Motorcycl
                         name="exterior_color"
                         required
                         options={CAR_COLORS}
-                        renderOption={renderColorOption}
+                        renderOption={(option, selected) => renderColorOption(option, selected as string)}
                         error={errors.exterior_color?.message}
                         placeholder="Exterior color" />
                 </View>
@@ -69,7 +69,7 @@ export default function AdDetails({ control, errors }: AdFormStepProps<Motorcycl
             </View>
             <View className="flex-row items-center justify-center w-full mt-4">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 font-inter-medium text-lg">Optional Information</Text>
+                <Text className="px-2 font-inter-medium text-lg dark:text-white">Optional Information</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View className="gap-y-4 py-1 mt-4">

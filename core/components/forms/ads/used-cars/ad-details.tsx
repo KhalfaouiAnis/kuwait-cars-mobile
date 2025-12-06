@@ -2,17 +2,19 @@ import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
 import SelectInput from "@/core/components/ui/input/select-input";
 import { CAR_COLORS, YEARS } from "@/core/constants";
+import { CAR_BRAND_TYPES } from "@/core/constants/ad";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { ScrollView, Text, View } from "react-native";
 import { renderColorOption, renderYearOption } from "../../../ui/shared/render-option";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
+import VehicleMarkSelector from "../shared/ad-type-selector/vehicle-mark-selector";
 
-export default function AdDetails({ control, errors }: AdFormStepProps<UsedCarAdInterface>) {
+export default function AdDetails({ control, errors, isDark }: AdFormStepProps<UsedCarAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
+            className="flex-1"
             contentContainerStyle={{ paddingBottom: 10 }}
         >
             <View className="flex-row items-center justify-center w-full">
@@ -23,14 +25,15 @@ export default function AdDetails({ control, errors }: AdFormStepProps<UsedCarAd
             <View className="gap-y-4 mt-4">
                 <View>
                     <View className="flex-row items-center justify-between">
-                        <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
+                        <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                         <Text className="text-sm text-gray-300">Used Cars</Text>
                     </View>
-                    {/* <VehicleMarkSelector
+                    <VehicleMarkSelector
                         data={CAR_BRAND_TYPES}
                         control={control}
                         name="ad_type"
-                    /> */}
+                        disabled
+                    />
                 </View>
                 <View>
                     <SelectInput
@@ -38,7 +41,8 @@ export default function AdDetails({ control, errors }: AdFormStepProps<UsedCarAd
                         name="year"
                         options={YEARS}
                         required
-                        renderOption={renderYearOption}
+                        isDark
+                        renderOption={(option, selected) => renderYearOption(option, selected as string)}
                         error={errors.year?.message}
                         placeholder="Year" />
                 </View>
@@ -46,9 +50,10 @@ export default function AdDetails({ control, errors }: AdFormStepProps<UsedCarAd
                     <SelectInput
                         control={control}
                         name="exterior_color"
-                        required
                         options={CAR_COLORS}
-                        renderOption={renderColorOption}
+                        required
+                        isDark
+                        renderOption={(option, selected) => renderColorOption(option, selected as string)}
                         error={errors.exterior_color?.message}
                         placeholder="Exterior color" />
                 </View>
@@ -66,7 +71,7 @@ export default function AdDetails({ control, errors }: AdFormStepProps<UsedCarAd
             </View>
             <View className="flex-row items-center justify-center w-full mt-4">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 font-inter-medium text-lg">Optional Information</Text>
+                <Text className="px-2 font-inter-medium text-lg dark:text-white">Optional Information</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View className="gap-y-4 py-1 mt-4">

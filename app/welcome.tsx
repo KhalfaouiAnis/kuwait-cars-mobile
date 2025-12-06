@@ -28,7 +28,7 @@ export default function Index() {
     return (
         <Container>
             <AuthHeader />
-            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white">
+            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white dark:bg-darkish pt-4">
                 <View className="flex items-center">
                     <Image source={IMAGES.Logo} style={{ width: 175, height: 175, objectFit: 'contain' }} />
                     <Text className="font-inter-bold text-3xl mt-12 dark:text-white">Welcome to Kuwait Car</Text>

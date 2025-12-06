@@ -8,10 +8,11 @@ interface FormContainerProps {
     title: string,
     previous: () => string,
     reset: () => void,
-    children: ReactNode
+    children: ReactNode,
+    isDark?: boolean
 }
 
-export default function AdFormContainer({ children, reset, previous, title }: FormContainerProps) {
+export default function AdFormContainer({ children, reset, previous, title, isDark }: FormContainerProps) {
     const handlePrevious = () => {
         const result = previous()
         if (result === "route") {
@@ -23,9 +24,9 @@ export default function AdFormContainer({ children, reset, previous, title }: Fo
         <Container>
             <View className='mt-1 flex flex-row items-center justify-between px-4 mb-2 mx-2'>
                 <Pressable onPress={handlePrevious}>
-                    <Ionicons name='chevron-back' size={22} />
+                    <Ionicons name='chevron-back' size={22} color={isDark ? "white" : "black"} />
                 </Pressable>
-                <Text className='font-inter-semibold text-2xl text-center'>{title}</Text>
+                <Text className='font-inter-semibold text-2xl text-center dark:text-white'>{title}</Text>
                 <Pressable onPress={reset}>
                     <Text className="text-error">Reset</Text>
                 </Pressable>

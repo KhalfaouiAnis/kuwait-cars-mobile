@@ -19,6 +19,7 @@ export function useUsedCarAd() {
     getValues,
   } = useFormHook(UsedCarAdSchema, {
     defaultValues: {
+      year: "2020",
       title: "title",
       description: "description",
       plan: "pro",

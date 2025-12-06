@@ -8,10 +8,10 @@ export default function ResetPasswordScreen() {
 
     return (
         <FormWrapper title="Reset Password">
-            <Text className="mt-6 text-base text-center">
+            <Text className="mt-6 text-base text-center dark:text-white">
                 Create your new password
             </Text>
-            <View className="pt-2 px-4 my-1">
+            <View className="pt-2 px-4 my-4 gap-y-4">
                 <InputWithIcon
                     icon="call-outline"
                     placeholder="Phone Number"
@@ -35,7 +35,7 @@ export default function ResetPasswordScreen() {
                     icon="lock-closed-outline" placeholder="Confirm Password"
                 />
             </View>
-            <View className="px-4">
+            <View className="px-4 pb-4">
                 <TouchableOpacity className="bg-primary-500 py-3 mt-4 rounded-lg items-center"
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}>

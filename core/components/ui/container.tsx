@@ -10,7 +10,7 @@ const Container = ({ children, backgroundColor, header, scrollable }:
         {scrollable ? (
             <>
                 {header && header}
-                <ScrollView showsVerticalScrollIndicator={false} style={{paddingBottom: 100}}>
+                <ScrollView showsVerticalScrollIndicator={false} style={{ paddingBottom: 100 }}>
                     {children}
                 </ScrollView>
             </>

@@ -26,12 +26,8 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
 
     return (
         <View>
-            {label && <Text className="text-base font-semibold mb-1">{label}</Text>}
-            <View className='flex-row items-center justify-between p-3 border-transparent bg-white border'
-                style={{
-                    elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },
-                }}
-            >
+            {label && <Text className="text-base font-semibold mb-1 dark:text-white">{label}</Text>}
+            <View className='flex-row items-center justify-between p-3 elevation-sm border-transparent border bg-white dark:bg-darkish dark:border-primary-500'>
                 {
                     icon && <View className='ms-2 items-center'>
                         {icon}
@@ -39,7 +35,7 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
                 }
                 <View className='flex-1 flex-row items-center justify-between'>
                     <TextInput
-                        className="text-[#333]"
+                        className="text-gray-300 dark:text-grayish flex-1"
                         value={value}
                         numberOfLines={1}
                         onChangeText={onChange}
@@ -51,9 +47,9 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
                         }
                         <TouchableOpacity onPress={isRecordingForThisField ? stopListening : startListening} className='border-none bg-transparent'>
                             {isRecordingForThisField ? (
-                                <Text>🛑</Text>
+                                <Text className='text-lg'>🛑</Text>
                             ) : (
-                                <Ionicons name="mic-outline" size={24} color="black" style={styles.suffixIcon} />
+                                <Ionicons name="mic-outline" size={24} color="gray" style={styles.suffixIcon} />
                             )}
                         </TouchableOpacity>
                     </View>

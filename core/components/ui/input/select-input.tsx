@@ -8,10 +8,10 @@ import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableO
 type SelectInputProps<TForm extends FieldValues> = TextInputProps & {
     name: FieldPath<TForm>;
     control: Control<TForm>;
-    renderOption: (option: SelectOption) => ReactNode
+    renderOption: (option: SelectOption, selected?: string | number | boolean) => ReactNode
     options: SelectOption[]
     onChangeText?: (text: string) => void;
-    value?: string;
+    defaultValue?: string;
     required?: boolean;
     error?: string;
     label?: string;
@@ -26,13 +26,13 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
     const { field: { onChange, value } } = useController({ control, name });
 
     const renderSelectOption = (option: SelectOption, handleSelect: any) => (
-        <Pressable onPress={() => handleSelect(option.label)} >
-            {renderOption(option)}
+        <Pressable onPress={() => handleSelect(option.value)}>
+            {renderOption(option, value)}
         </Pressable>
     );
 
-    const handleSelect = (option: string) => {
-        onChange(option);
+    const handleSelect = (value: string) => {
+        onChange(value);
         setShowModal(false)
     };
 
@@ -40,17 +40,13 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
         <View className="w-full">
             {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}>
-                <View className={clsx('flex-row items-center border', {
+                <View className={clsx('flex-row items-center border dark:border-primary-500', {
                     "border-primary-500 rounded-lg": primary,
                     "border-error": error,
-                    "border-transparent": !primary && !error,
-                    "px-3": !extraPadding,
+                    "border-transparent elevation-sm": !primary && !error,
+                    "px-3 py-1": !extraPadding,
                     "p-3": extraPadding,
-                })}
-                    style={primary ? {} : {
-                        elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 },
-                    }}
-                >
+                })}>
                     <View className='items-center me-2'>
                         {icon}
                     </View>
@@ -75,12 +71,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     onPress={() => { }}
-                                    className="bg-white pt-2 mb-10 rounded-t-2xl p-4 w-full -max-h-screen-safe-or-80 min-h-0">
-                                    <View className="flex-row items-center p-4">
-                                        <TouchableOpacity onPress={() => setShowModal(false)} className="mr-3">
-                                            <Ionicons name="close" size={24} color="#8E8E93" />
-                                        </TouchableOpacity>
-                                    </View>
+                                    className="bg-white pt-6 mb-10 rounded-t-3xl p-4 w-full -max-h-screen-safe-or-80 min-h-0">
                                     <FlatList
                                         data={options}
                                         keyExtractor={(item) => item.id}
@@ -101,7 +92,6 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                     </View>
                 </View>
             </Pressable>
-            {/* {error && <Text className="text-error text-sm mt-1 ml-2">{error}</Text>} */}
         </View>
     );
 }

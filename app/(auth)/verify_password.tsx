@@ -5,10 +5,10 @@ import { Text, TouchableOpacity, View } from "react-native";
 export default function VerifyPasswordResetCodeScreen() {
     return (
         <FormWrapper title="Check Your Email">
-            <Text className="mt-6 text-base text-center">
+            <Text className="mt-6 text-base text-center dark:text-white">
                 We sent a reset link to moha...@gmail.com
             </Text>
-            <Text className="mt-1 text-base text-center">
+            <Text className="mt-1 text-base text-center dark:text-white">
                 enter 5 digit code that mentioned in the email
             </Text>
             <View className="pt-20 px-4">

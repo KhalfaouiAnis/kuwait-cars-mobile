@@ -62,17 +62,17 @@ export default function AddPhotos({ errors, setValue, getValue }: AdFormStepProp
                 <View className="gap-y-8">
                     {
                         thumbnail?.uri ? (<View>
-                            <Text className="text-xl font-inter-bold mb-1">Add photos <Text className="text-error">*</Text></Text>
+                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">Add photos <Text className="text-error">*</Text></Text>
                             {renderPhoto(thumbnail.uri, "thumbnail", thumbnail.name)}
-                            <Text className="justify-end ml-auto mr-4 font-semibold">Picked {images.length + 1} of {MAX_IMAGES}</Text>
+                            <Text className="justify-end ml-auto mr-4 font-semibold dark:text-white">Picked {images.length + 1} of {MAX_IMAGES}</Text>
                         </View>) : (
                             <View>
                                 <View className="gap-y-6">
-                                    <Text className="font-inter-semibold text-3xl">Good pictures sell faster</Text>
-                                    <Text numberOfLines={2} className="text-center">Capture the front, back, and sides — buyers love seeing the full view</Text>
+                                    <Text className="font-inter-semibold text-3xl dark:text-white">Good pictures sell faster</Text>
+                                    <Text numberOfLines={2} className="text-center dark:text-white">Capture the front, back, and sides — buyers love seeing the full view</Text>
                                 </View>
                                 <View className="mt-4">
-                                    <Text className="text-xl font-inter-bold mb-1">Add photos <Text className="text-error">*</Text></Text>
+                                    <Text className="text-xl font-inter-bold mb-1 dark:text-white">Add photos <Text className="text-error">*</Text></Text>
                                     <PickFromGallery label="Select file" addMedia={() => addPhoto(false, true, false)} />
                                 </View>
                             </View>
@@ -84,7 +84,7 @@ export default function AddPhotos({ errors, setValue, getValue }: AdFormStepProp
                     {images?.length < MAX_IMAGES && (
                         <View className="flex-row items-center justify-center">
                             <View className="border border-gray-300 w-2/5" />
-                            <Text className="px-2">Or</Text>
+                            <Text className="px-2 dark:text-white">Or</Text>
                             <View className="border border-gray-300 w-2/5" />
                         </View>
                     )}

@@ -37,8 +37,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
         if (isLeaf) {
             return (
                 <TouchableOpacity
-                    className={`flex-row items-center my-1 p-3 py-4 border border-transparent bg-white ms-${(level) * 4}`}
-                    style={{ elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
+                    className={`flex-row items-center my-1 p-3 py-4 elevation-sm border border-transparent dark:border-primary-500 bg-white dark:bg-darkish ms-${(level) * 4}`}
                     onPress={() => {
                         if ([AD_TYPES.used_cars, AD_TYPES.motorcycles].includes(path[0])) {
                             const [brand, model] = item.value.split("/")
@@ -56,11 +55,11 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                         } else if (!path[0] && item.value === AD_TYPES.show) {
                             handleSelect({ label: item.label, value: item.value, path: item.value })
                         } else {
-                            handleSelect({ label: item.label, value: item.value, path: path[0] })
+                            handleSelect({ label: item.label, value: item.value, path: item.value })
                         }
                     }}
                 >
-                    <Text className="flex-1 text-sm font-semibold ms-3">{item.label}</Text>
+                    <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{item.label}</Text>
                     <View className='justify-end'>
                         <Ionicons
                             name='chevron-forward'
@@ -75,11 +74,10 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
         return (
             <>
                 <TouchableOpacity
-                    className="flex-row items-center my-1 p-3 py-4 border border-transparent bg-white rounded-sm"
-                    style={{ elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
+                    className="flex-row items-center my-1 p-3 py-4 elevation-sm border border-transparent dark:border-primary-500 bg-white dark:bg-darkish rounded-sm"
                     onPress={() => hasChildren && toggleExpand(itemPath)}
                 >
-                    <Text className="flex-1 text-sm font-semibold ms-3">{item.label}</Text>
+                    <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{item.label}</Text>
                     <Ionicons
                         name={isExpanded ? 'chevron-down' : 'chevron-forward'}
                         size={16}
@@ -104,17 +102,10 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
 
     return (
         <Pressable onPress={() => setShowModal(true)}>
-            <View className='flex-row items-center justify-between p-3'
-                style={{
-                    elevation: 2,
-                    backgroundColor: "white", shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: {
-                        width: 4, height: 4
-                    }
-                }}
-            >
+            <View className={'flex-row items-center justify-between border border-transparent bg-white dark:bg-darkish dark:border-primary-500 elevation-sm p-3'}>
                 <View>
                     <TextInput
-                        className={"text-[#333] dark:text-black"}
+                        className={"text-[#333] dark:text-white"}
                         editable={false}
                         pointerEvents="none"
                         value={selectedValue}
@@ -134,12 +125,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                             <TouchableOpacity
                                 activeOpacity={0.8}
                                 onPress={() => { }}
-                                className="bg-white pt-2 mb-10 rounded-t-2xl p-2 w-full h-[86%] min-h-0">
-                                <View className="flex-row items-center p-4">
-                                    <TouchableOpacity onPress={() => setShowModal(false)} className="me-3">
-                                        <Ionicons name="close" size={24} color="#8E8E93" />
-                                    </TouchableOpacity>
-                                </View>
+                                className="bg-white dark:bg-darkish pt-6 mb-10 rounded-t-2xl p-2 w-full h-[86%] min-h-0">
                                 <FlatList
                                     data={data}
                                     renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}

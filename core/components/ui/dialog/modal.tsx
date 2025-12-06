@@ -1,4 +1,3 @@
-import { Ionicons } from '@expo/vector-icons';
 import React, { ReactNode } from 'react';
 import { Modal, TouchableOpacity, View } from 'react-native';
 
@@ -25,12 +24,9 @@ const AppModal: React.FC<AppModalProps> = ({
         >
             <View className="flex-1 justify-end bg-black/20">
                 <TouchableOpacity className="flex-1" onPress={onClose} activeOpacity={1} />
-                <View className="bg-white rounded-t-lg p-4 pb-14 max-h-[90%] h-full">
+                <View className="bg-white dark:bg-darkish rounded-t-lg p-4 pb-14 max-h-[90%] h-full">
                     <View className="flex-row justify-between items-center mb-4">
                         {header}
-                        <TouchableOpacity onPress={onClose}>
-                            <Ionicons name="close" size={24} color="gray" />
-                        </TouchableOpacity>
                     </View>
                     {renderContent()}
                 </View>

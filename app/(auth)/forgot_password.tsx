@@ -18,7 +18,7 @@ export default function ForgotPasswordScreen() {
 
     return (
         <FormWrapper title="Forgot Password">
-            <Text className="mt-6 text-base text-center">
+            <Text className="mt-6 text-base text-center dark:text-white">
                 Please enter your email or phone number to reset the password
             </Text>
             <View className="pt-6 px-4">
@@ -29,7 +29,6 @@ export default function ForgotPasswordScreen() {
                     keyboardType="phone-pad"
                     customIcon={<Ionicons name="logo-whatsapp" size={24} color="#25D366" className="mr-2" />}
                     icon="logo-whatsapp"
-                    
                     placeholder="Enter your Whatsapp number"
                 />
                 <Text className="my-1 text-gray-400 text-base text-center">Or</Text>

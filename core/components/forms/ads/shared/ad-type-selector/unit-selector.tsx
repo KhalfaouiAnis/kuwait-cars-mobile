@@ -34,15 +34,13 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
     );
 
     return (
-        <View className='flex-1 items-center justify-center border-transparent bg-white py-3'
-            style={{ elevation: 2, shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
-        >
+        <View className='flex-1 items-center justify-center border border-transparent bg-white dark:bg-darkish dark:border-primary-500 py-3.5 elevation-sm'>
             <TouchableOpacity
                 className="items-center justify-center overflow-hidden"
                 onPress={() => setIsOpen(true)}
                 activeOpacity={0.7}
             >
-                <Text className="text-base text-gray-900 font-medium">{value || "KM"}</Text>
+                <Text className="text-base text-gray-900 dark:text-white font-medium">{value || "KM"}</Text>
             </TouchableOpacity>
             <Modal
                 visible={isOpen}

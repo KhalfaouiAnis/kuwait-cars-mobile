@@ -4,10 +4,10 @@ import { Text, TouchableOpacity, View } from "react-native";
 export default function PasswordResetConfirmationScreen() {
     return (
         <FormWrapper title="Password Reset">
-            <Text className="mt-6 text-base text-center">
+            <Text className="mt-6 text-base text-center dark:text-white">
                 Your password has been successfully reset. 
             </Text>
-            <Text className="mt-1 text-base text-center">
+            <Text className="mt-1 text-base text-center dark:text-white">
                 click confirm to set a new password
             </Text>
             <View className="mt-32 px-4">

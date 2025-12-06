@@ -9,8 +9,8 @@ export default function AuthenticationSuccessScreen() {
                 <SuccessIcon />
             </View>
             <View className="px-4 mt-8">
-                <Text className="text-2xl text-center font-inter-bold">Success !</Text>
-                <Text className="mt-2 text-base text-center">Congratulations! You have been successfully authenticated</Text>
+                <Text className="text-2xl text-center font-inter-bold dark:text-white">Success !</Text>
+                <Text className="mt-2 text-base text-center dark:text-white">Congratulations! You have been successfully authenticated</Text>
             </View>
             <View className="px-4 mt-52">
                 <TouchableOpacity className="bg-primary-500 py-3 mt-4 rounded-lg items-center">

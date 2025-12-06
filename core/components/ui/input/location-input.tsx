@@ -1,25 +1,18 @@
 import { AdFormStepProps } from '@/core/types';
-import { UsedCarAdInterface } from '@/core/types/schema/ads/usedCar';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-export default function LocationInput({ control, errors, getValue }: AdFormStepProps<UsedCarAdInterface>) {
+export default function LocationInput({ control, errors, getValue, isDark }: AdFormStepProps<any>) {
     const [showModal, setShowModal] = useState(false);
 
     return (
         <View className="w-full">
             <Pressable onPress={() => setShowModal(true)}>
-                <View className='flex-row items-center justify-between p-3'
-                    style={{
-                        elevation: 2,
-                        backgroundColor: "white", shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: {
-                            width: 4, height: 4
-                        }
-                    }}
+                <View className='flex-row items-center justify-between py-1 px-3 border border-transparent dark:border-primary-500'
                 >
                     <View className='flex-row gap-2 items-center'>
-                        <Ionicons name="location-outline" size={24} color="#000000" className="mr-2" />
+                        <Ionicons name="location-outline" size={24} color={isDark ? "white" : "black"} className="mr-2" />
                         <TextInput
                             className={` ${errors.location?.root ? 'border-red-500' : 'text-[#333]'}`}
                             editable={false}

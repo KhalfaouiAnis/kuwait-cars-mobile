@@ -11,7 +11,7 @@ interface Props {
 export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) {
     return (
         <View
-            className={`bg-white rounded-2xl shadow-lg p-6 relative overflow-hidden border ${isSelected ? 'border-red-500' : 'border-transparent'}`}
+            className={`bg-white dark:bg-darkish rounded-2xl shadow-lg p-6 relative overflow-hidden border ${isSelected ? 'border-red-500' : 'border-transparent dark:border-primary-500'}`}
             style={{ shadowRadius: 16, elevation: 4 }}
         >
             <View className="flex-row items-start justify-between">
@@ -21,7 +21,7 @@ export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) 
                     </View>
                     <View>
                         <Text className="text-xl font-inter-medium text-gray-400">{plan.description}</Text>
-                        <Text className="text-xl font-inter-semibold">{plan.title}</Text>
+                        <Text className="text-xl font-inter-semibold dark:text-white">{plan.title}</Text>
                     </View>
                 </View>
             </View>
@@ -36,7 +36,7 @@ export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) 
             <TouchableOpacity className="mt-4 ms-8 bg-primary-500 py-2 items-center justify-center rounded-3xl"
                 onPress={() => onSelect(plan.title)}
             >
-                <Text className="font-inter-semibold text-lg">
+                <Text className="font-inter-semibold text-lg dark:text-white">
                     Choose this plan
                 </Text>
             </TouchableOpacity>

@@ -14,16 +14,14 @@
         "FacebookAppID": "your-facebook-app-id",
         "FacebookClientToken": "your-client-token",
         "FacebookDisplayName": "Your App Name",
-        "LSApplicationQueriesSchemes": [
-          "fbapi",
-          "fb-messenger-api"
-        ],
+        "LSApplicationQueriesSchemes": ["fbapi", "fb-messenger-api"],
         "NSFaceIDUsageDescription": "Your app uses Apple Sign-In for secure login."
       },
       "entitlements": {
-        "com.apple.developer.applesignin": [
-          "Default"
-        ]
+        "com.apple.developer.applesignin": ["Default"]
+      },
+      "config": {
+        "googleMapsApiKey": "YOUR_GOOGLE_MAPS_API_KEY"
       }
     },
     "android": {
@@ -37,11 +35,21 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.aniskhalfaoui.kuwaitcars"
+      "package": "com.aniskhalfaoui.kuwaitcars",
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+        }
+      }
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+        }
+      }
     },
     "plugins": [
       "expo-router",

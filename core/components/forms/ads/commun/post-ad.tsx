@@ -1,4 +1,5 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
+import LocationInput from "@/core/components/ui/input/location-input";
 import SelectInput from "@/core/components/ui/input/select-input";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import { CITIES } from "@/core/constants";
@@ -10,52 +11,56 @@ import { ScrollView, Text, View } from "react-native";
 import { renderLocationOption } from "../../../ui/shared/render-option";
 import VehicleMarkSelector from "../shared/ad-type-selector/vehicle-mark-selector";
 
-export default function PostAd({ control, errors }: AdFormStepProps<CommunAdInterface>) {
+export default function PostAd({ control, errors, isDark }: AdFormStepProps<CommunAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
-            contentContainerStyle={{ paddingBottom: 10, rowGap: 8 }}
+            className="flex-1"
+            contentContainerStyle={{ paddingBottom: 10, rowGap: 12 }}
         >
             <View>
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                     <Text className="text-sm text-gray-300">Commun ads</Text>
                 </View>
                 <VehicleMarkSelector
                     data={CAR_BRAND_TYPES}
                     control={control}
                     name="ad_type"
+                    disabled
                 />
             </View>
             <View>
-                <Text className="font-semibold mb-2">WHERE IS YOUR LISTING?</Text>
+                <Text className="font-semibold mb-2 dark:text-white">WHERE IS YOUR LISTING?</Text>
                 <SelectInput
                     control={control}
                     name="province"
+                    isDark={isDark}
                     required
                     options={CITIES}
-                    renderOption={renderLocationOption}
+                    renderOption={(option, selected) => renderLocationOption(option, selected as string)}
                     placeholder="Province"
-                    icon={<MaterialCommunityIcons name="town-hall" size={24} color="black" />}
+                    icon={<MaterialCommunityIcons name="town-hall" size={24} color={isDark ? "white" : "black"} />}
                 />
                 <View className="flex-row items-center justify-center gap-x-2 my-4">
                     <View className="flex-1">
-                        {/* <LocationInput
+                        <LocationInput
+                            isDark={isDark}
                             control={control}
                             errors={errors}
-                        /> */}
+                        />
                     </View>
                     <View className="flex-1">
                         <AdTextInput control={control} name="zip_code" error={errors.zip_code?.message} placeholder="Zip code"
-                            icon={<MaterialCommunityIcons name="email-seal-outline" size={24} color="black" className="mt-2" />} />
+                            icon={<MaterialCommunityIcons name="email-seal-outline" size={24} color={isDark ? "white" : "black"} className="mt-2" />} />
                     </View>
                 </View>
             </View>
-            <AdTextInput control={control} name="price" error={errors.price?.message} placeholder="Write Your Price"
+            <AdTextInput control={control} name="price" error={errors.price?.message} placeholder="Write Your Price" extraPadding
                 required label="Price" keyboardType="number-pad" />
             <InputWithSpeech
                 control={control}
+                label="Title"
                 name="title"
                 required
                 maxLength={30}
@@ -63,6 +68,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<CommunAdInte
                 placeholder="Write Your Advertisement Title" />
             <InputWithSpeech
                 control={control}
+                label="Description"
                 name="description"
                 maxLength={500}
                 multiline

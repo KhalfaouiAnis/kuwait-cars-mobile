@@ -8,6 +8,7 @@ import PostAd from "@/core/components/forms/ads/spare-parts/post-ad";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import UploadProgress from "@/core/components/ui/shared/upload-progress";
 import { useSparePartAd } from "@/core/hooks/ad/flows/useSparePartAd";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { router } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
@@ -32,6 +33,7 @@ const TOTAL_STEPS = 5;
 
 export default function NewAdScreen() {
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useSparePartAd()
+    const { theme } = useUserPreferencesStore()
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -107,15 +109,15 @@ export default function NewAdScreen() {
     const renderCurrentStep = () => {
         switch (currentStep) {
             case 1:
-                return <PostAd control={control} errors={errors} />;
+                return <PostAd control={control} errors={errors} isDark={theme !== "light"} />;
             case 2:
-                return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} />;
+                return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 3:
-                return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} />;
+                return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} isDark={theme !== "light"} />;
             case 4:
-                return <AdDetails control={control} errors={errors} />;
+                return <AdDetails control={control} errors={errors} isDark={theme !== "light"} />;
             case 5:
-                return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} />;
+                return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} isDark={theme !== "light"} />;
             default:
                 return null;
         }

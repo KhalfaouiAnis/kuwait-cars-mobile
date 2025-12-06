@@ -74,7 +74,7 @@ export default function EditProfileForm({ theme }: { theme: string }) {
                     control={control}
                     name="province"
                     options={CITIES}
-                    renderOption={renderLocationOption}
+                    renderOption={(option, selected) => renderLocationOption(option, selected as string)}
                     placeholder="Province"
                     label="Your Province"
                     icon={<MaterialCommunityIcons name="town-hall" size={24} color={theme !== "light" ? "white" : "black"} />}

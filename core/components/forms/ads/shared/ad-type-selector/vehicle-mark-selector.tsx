@@ -1,5 +1,6 @@
 import { DataItem } from '@/core/types/schema/shared';
 import { Ionicons } from '@expo/vector-icons';
+import { clsx } from 'clsx';
 import React, { useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
@@ -7,12 +8,14 @@ import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableO
 type VehicleMarkSelectorProps<TForm extends FieldValues> = TextInputProps & {
     name: FieldPath<TForm>;
     control: Control<TForm>;
+    data: DataItem[];
+    extraPadding?: boolean
     selectedValue?: string;
     placeholder?: string;
-    data: DataItem[];
+    disabled?: boolean;
 }
 
-export default function VehicleMarkSelector<TForm extends FieldValues>({ control, name, data, placeholder, selectedValue, ...props }: VehicleMarkSelectorProps<TForm>) {
+export default function VehicleMarkSelector<TForm extends FieldValues>({ control, name, data, placeholder, selectedValue, disabled, extraPadding, ...props }: VehicleMarkSelectorProps<TForm>) {
     const [showModal, setShowModal] = useState(false);
     const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
 
@@ -80,14 +83,11 @@ export default function VehicleMarkSelector<TForm extends FieldValues>({ control
 
     return (
         <>
-            <Pressable onPress={() => setShowModal(true)}>
-                <View className='flex-row items-center justify-between p-3'
-                    style={{
-                        elevation: 2,
-                        backgroundColor: "white", shadowColor: 'rgba(0, 0, 0, 0.4)', shadowRadius: 1, shadowOpacity: 0.2, shadowOffset: {
-                            width: 4, height: 4
-                        }
-                    }}
+            <Pressable onPress={() => disabled ? () => { } : setShowModal(true)}>
+                <View className={clsx('flex-row items-center justify-between border border-transparent dark:bg-darkish dark:border-primary-500 elevation-sm', {
+                    "p-3": extraPadding,
+                    "px-3 py-1": !extraPadding,
+                })}
                 >
                     <Controller
                         name={name}
@@ -100,7 +100,7 @@ export default function VehicleMarkSelector<TForm extends FieldValues>({ control
                             return (
                                 <View>
                                     <TextInput
-                                        className={"text-[#333]"}
+                                        className={"text-gray-400 dark:text-gray-100"}
                                         value={value}
                                         editable={false}
                                         pointerEvents="none"
