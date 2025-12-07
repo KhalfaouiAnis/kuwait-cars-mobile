@@ -5,6 +5,7 @@ import { Pressable, Text, View } from 'react-native';
 
 const ChatHeader = ({ username, phone }: { username: string, phone: string }) => {
     const { theme } = useUserPreferencesStore()
+
     const onBack = () => {
         router.canGoBack() && router.back()
     }

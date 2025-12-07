@@ -169,7 +169,7 @@ export default function ChatScreen() {
                         <Ionicons name="search-outline" size={24} color="black" />
                         <TextInput
                             placeholder="Search..."
-                            className="min-w-28 max-w-52"
+                            className="flex-1"
                             autoCapitalize="none"
                         />
                     </View>

@@ -5,15 +5,15 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mobile",
+    "scheme": "xcars",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "FacebookAppID": "your-facebook-app-id",
+        "FacebookAppID": "1277409807481340",
         "FacebookClientToken": "your-client-token",
-        "FacebookDisplayName": "Your App Name",
+        "FacebookDisplayName": "Xcars",
         "LSApplicationQueriesSchemes": ["fbapi", "fb-messenger-api"],
         "NSFaceIDUsageDescription": "Your app uses Apple Sign-In for secure login."
       },
@@ -56,9 +56,9 @@
       [
         "react-native-fbsdk-next",
         {
-          "appID": "your-facebook-app-id",
+          "appID": "1277409807481340",
           "clientToken": "your-client-token",
-          "displayName": "Your App Name",
+          "displayName": "Xcars",
           "scheme": "fb{your-app-id}",
           "advertiserIDCollectionEnabled": false,
           "autoLogAppEventsEnabled": false,

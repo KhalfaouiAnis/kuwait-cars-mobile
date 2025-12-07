@@ -10,6 +10,7 @@ import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
 import { FilterAdsBy } from "@/core/types";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
@@ -104,7 +105,7 @@ export default function ModelsByCategoryScreen() {
                 </ScrollView>
             </View>
         }>
-            <View className="w-full pl-4 relative">
+            <View className="w-full pl-4 relative flex-1">
                 <View className="flex-row items-center gap-x-2 mb-4">
                     <TouchableOpacity className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2"
                         onPress={() => setView(prevState => prevState === "horizontal" ? "vertical" : "horizontal")}>
@@ -122,16 +123,14 @@ export default function ModelsByCategoryScreen() {
                     data={listings}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => <View className="mb-2 me-1"><Ad data={item} view={view} /></View>}
-                    contentContainerStyle={{ paddingBottom: 200, position: "relative", zIndex: 2 }}
+                    contentContainerStyle={{ paddingBottom: 60, position: "relative", zIndex: 2 }}
                     showsVerticalScrollIndicator={false}
                     className="bg-transparent me-2"
                     removeClippedSubviews={false}
                 />
-                <View className="absolute right-4 bottom-4 z-20">
-                    <Pressable className="p-2 rounded-full bg-primary-500">
-                        <Ionicons name="add" size={32} />
-                    </Pressable>
-                </View>
+                <Link href="/create/motorcycles" className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500">
+                    <Ionicons name="add" size={38} />
+                </Link>
             </View>
             {activeFilter && (
                 <FilteringModal

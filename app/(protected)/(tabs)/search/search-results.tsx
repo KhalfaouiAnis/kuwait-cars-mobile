@@ -1,11 +1,11 @@
 import Container from "@/core/components/ui/container";
 import { Text, View } from "react-native";
 
-export default function SearchScreen() {
+export default function SearchResultsScreen() {
     return (
         <Container>
             <View>
-                <Text>Search screen</Text>
+                <Text className="dark:text-white">Search screen</Text>
             </View>
         </Container>
     )

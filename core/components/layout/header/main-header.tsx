@@ -26,11 +26,11 @@ const MainHeader = ({ drawer = false, back = true }: { drawer?: boolean, back?: 
                 )
             }
             <View className='flex-1 flex-row items-center justify-between rounded-xl border border-primary-500 px-2 ms-1 bg-white dark:bg-darkish'>
-                <View className="flex-row items-center gap-x-2">
+                <View className="flex-row items-center gap-x-2 flex-1">
                     <Ionicons name="search-outline" size={18} color={theme !== "light" ? "white" : "black"} />
                     <TextInput
                         placeholder="Search..."
-                        className="min-w-28 max-w-52 text-black dark:text-white"
+                        className="flex-1 text-black dark:text-white"
                         autoCapitalize="none"
                     />
                 </View>

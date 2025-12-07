@@ -102,7 +102,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
 
     return (
         <Pressable onPress={() => setShowModal(true)}>
-            <View className={'flex-row items-center justify-between border border-transparent bg-white dark:bg-darkish dark:border-primary-500 elevation-sm p-3'}>
+            <View className={'flex-row items-center justify-between border border-transparent bg-white dark:bg-darkish dark:border-primary-500 elevation-md p-3'}>
                 <View>
                     <TextInput
                         className={"text-[#333] dark:text-white"}
