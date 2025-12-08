@@ -2,15 +2,18 @@ import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
 import SelectInput from "@/core/components/ui/input/select-input";
 import { CAR_COLORS, YEARS } from "@/core/constants";
-import { CAR_BRAND_TYPES } from "@/core/constants/ad";
 import { AdFormStepProps } from "@/core/types";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
+import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 import { renderColorOption, renderYearOption } from "../../../ui/shared/render-option";
+import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
-import VehicleMarkSelector from "../shared/ad-type-selector/vehicle-mark-selector";
 
 export default function AdDetails({ control, errors }: AdFormStepProps<MotorcycleAdInterface>) {
+    const { brand } = useLocalSearchParams()
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -27,11 +30,9 @@ export default function AdDetails({ control, errors }: AdFormStepProps<Motorcycl
                     <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                     <Text className="text-sm text-gray-300">Used Motors</Text>
                 </View>
-                <VehicleMarkSelector
-                    data={CAR_BRAND_TYPES}
-                    control={control}
-                    name="ad_type"
-                    disabled
+                <SelectedAdType
+                    label={`${brand}`}
+                    icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>
             <View className="gap-y-4 mt-4">

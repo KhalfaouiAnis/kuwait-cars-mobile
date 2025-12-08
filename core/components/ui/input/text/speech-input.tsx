@@ -27,7 +27,7 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
     return (
         <View>
             {label && <Text className="text-base font-semibold mb-1 dark:text-white">{label}</Text>}
-            <View className='flex-row items-center justify-between p-3 elevation-sm border-transparent border bg-white dark:bg-darkish dark:border-primary-500'>
+            <View className='flex-row items-center justify-between p-3 elevation-sm border-transparent border dark:bg-darkish dark:border-primary-500'>
                 {
                     icon && <View className='ms-2 items-center'>
                         {icon}
@@ -35,7 +35,7 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
                 }
                 <View className='flex-1 flex-row items-center justify-between'>
                     <TextInput
-                        className="text-gray-300 dark:text-grayish flex-1"
+                        className="text-gray-300 dark:text-gray-500 flex-1"
                         value={value}
                         numberOfLines={1}
                         onChangeText={onChange}

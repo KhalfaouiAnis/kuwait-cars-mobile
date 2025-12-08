@@ -2,15 +2,18 @@ import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import SelectInput from "@/core/components/ui/input/select-input";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import { CITIES } from "@/core/constants";
-import { CAR_BRAND_TYPES } from "@/core/constants/ad";
 import { AdFormStepProps } from "@/core/types";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
+import LocationPicker from "../../../layout/location/location-picker";
 import { renderLocationOption } from "../../../ui/shared/render-option";
-import VehicleMarkSelector from "../shared/ad-type-selector/vehicle-mark-selector";
+import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 
-export default function PostAd({ control, errors }: AdFormStepProps<MotorcycleAdInterface>) {
+export default function PostAd({ control, errors, isDark }: AdFormStepProps<MotorcycleAdInterface>) {
+    const { model } = useLocalSearchParams()
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -22,11 +25,9 @@ export default function PostAd({ control, errors }: AdFormStepProps<MotorcycleAd
                     <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                     <Text className="text-sm text-gray-300">Used Motors</Text>
                 </View>
-                <VehicleMarkSelector
-                    data={CAR_BRAND_TYPES}
-                    control={control}
-                    name="ad_type"
-                    disabled
+                <SelectedAdType
+                    label={`${model}`}
+                    icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>
             <View>
@@ -42,6 +43,11 @@ export default function PostAd({ control, errors }: AdFormStepProps<MotorcycleAd
                 />
                 <View className="flex-row items-center justify-center gap-x-2 my-4">
                     <View className="flex-1">
+                        <LocationPicker
+                            control={control}
+                            errors={errors}
+                            isDark={isDark}
+                        />
                     </View>
                     <View className="flex-1">
                         <AdTextInput control={control} name="zip_code" error={errors.zip_code?.message} placeholder="Zip code"

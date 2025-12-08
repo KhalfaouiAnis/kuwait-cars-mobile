@@ -4,20 +4,42 @@ import RadioGroup from "@/core/components/ui/input/radio-group";
 import { AdFormStepProps } from "@/core/types";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 import { Ionicons } from "@expo/vector-icons";
-import { ScrollView, Text, View } from "react-native";
+import { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function AdDetailsStep2({ control, errors, setValue, getValue }: AdFormStepProps<MotorcycleAdInterface>) {
+    const [showSecondNumber, setShowSecondNumber] = useState(() => getValue?.("second_additional_number") !== undefined)
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
             className="flex-1"
             contentContainerStyle={{ paddingBottom: 10 }}>
             <View className="gap-y-2 mt-4">
-                <View>
+                <View className="relative">
                     <AdTextInput
                         control={control}
                         name="additional_number"
                         keyboardType="numeric"
+                        extraPadding
+                        error={errors.additional_number?.message} placeholder="Add Additional Number" />
+                    {
+                        !showSecondNumber && (
+                            <TouchableOpacity
+                                className="absolute top-3.5 end-2 rounded-full bg-primary-500 p-2"
+                                onPress={() => setShowSecondNumber(true)}>
+                                <Ionicons name="add" size={24} />
+                            </TouchableOpacity>
+                        )
+                    }
+                </View>
+                <View style={{ opacity: showSecondNumber ? 1 : 0 }}>
+                    <AdTextInput
+                        control={control}
+                        name="second_additional_number"
+                        readOnly={!showSecondNumber}
+                        keyboardType="numeric"
+                        extraPadding
                         error={errors.additional_number?.message} placeholder="Add Additional Number" />
                 </View>
                 <View className="mt-8">

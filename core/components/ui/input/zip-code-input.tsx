@@ -1,21 +1,34 @@
+import { ZIP_CODES } from '@/core/constants';
 import { clsx } from 'clsx';
-import { ReactNode } from 'react';
-import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { ReactNode, useState } from 'react';
+import { Control, FieldPath, FieldValues, useController, UseFormSetError } from 'react-hook-form';
 import { Text, TextInput, TextInputProps, View } from 'react-native';
 
-type AdTextInputProps<TForm extends FieldValues> = TextInputProps & {
+type ZipCodeInputProps<TForm extends FieldValues> = TextInputProps & {
     name: FieldPath<TForm>;
     control: Control<TForm>;
+    setError?: UseFormSetError<TForm>,
     label?: string;
-    required?: boolean;
     icon?: ReactNode,
     value?: string;
     error?: string;
     extraPadding?: boolean
 };
 
-export default function AdTextInput<TForm extends FieldValues>({ control, name, label, error, icon, required, extraPadding, ...props }: AdTextInputProps<TForm>) {
+export default function ZipCodeInput<TForm extends FieldValues>({ control, name, setError, label, error, icon, extraPadding, ...props }: ZipCodeInputProps<TForm>) {
     const { field: { onChange, value } } = useController({ control, name });
+    const [text, setText] = useState("")
+
+    function handleBlur() {
+        const code = ZIP_CODES.find(zip => zip.code === Number(text));
+        console.log(code);
+
+        if (!code) {
+            setError?.(name, { type: "value", message: "Invalid zip code" });
+            return;
+        }
+        onChange(code)
+    }
 
     return (
         <View >
@@ -36,12 +49,10 @@ export default function AdTextInput<TForm extends FieldValues>({ control, name, 
                         className="text-[#333] dark:text-white flex-1"
                         value={value}
                         numberOfLines={1}
-                        onChangeText={onChange}
+                        onChangeText={setText}
+                        onBlur={handleBlur}
                         {...props}
                     />
-                    {
-                        required && <Text className='text-error text-lg'>*</Text>
-                    }
                 </View>
             </View>
         </View>

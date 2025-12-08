@@ -68,12 +68,6 @@ export const SUBSCRIPTION_PLANS = [
 
 export const HIDE_TABBAR_ROUTES: string[] = ["/create"];
 
-export const CATEGORIES: SelectOption[] = [
-  { id: "Cars 1", label: "Cars 1", value: "Cars 1" },
-  { id: "Cars 2", label: "Cars 2", value: "Cars 2" },
-  { id: "Cars 3", label: "Cars 3", value: "Cars 3" },
-];
-
 export const CAR_COLORS: SelectOption[] = [
   { id: "None", label: "None", value: "None" },
   { id: "White", label: "White", value: "White" },
@@ -101,16 +95,17 @@ export const CITIES: SelectOption[] = [
   },
 ];
 
-export const Blocks: SelectOption[] = [
-  { id: "Block_1", label: "Block 1", value: "Block 1" },
-  { id: "Block_2", label: "Block 2", value: "Block 2" },
-];
-
 export const YEARS: SelectOption[] = generateYears().map((year) => ({
   id: year.toString(),
   label: year.toString(),
   value: year.toString(),
 }));
+
+export const ZIP_CODES: {
+  code: number;
+  latitude: number;
+  longitude: number;
+}[] = [{ code: 1100, latitude: 11.254, longitude: 10.2544 }];
 
 export const OVERALL_MIN_PRICE = 0;
 export const OVERALL_MAX_PRICE = 100000;

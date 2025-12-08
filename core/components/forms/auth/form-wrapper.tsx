@@ -1,14 +1,11 @@
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-// import { useKeyboardScroll } from "@/core/hooks/use-keyboard-scroll";
 import { Image } from "expo-image";
 import { PropsWithChildren } from "react";
 import { ScrollView, Text, View } from "react-native";
 import AuthHeader from "./auth-header";
 
 export default function FormWrapper({ children, title }: PropsWithChildren<{ title: string }>) {
-    // const keyboardHeight = useKeyboardScroll()
-
     return (
         <Container>
             <AuthHeader />

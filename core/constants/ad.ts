@@ -36,6 +36,7 @@ export const CAR_BRAND_TYPES = [
     id: AD_TYPES.used_cars,
     value: AD_TYPES.used_cars,
     label: "Used cars",
+    icon: "car-sport",
     regions: [
       {
         label: "Asian",

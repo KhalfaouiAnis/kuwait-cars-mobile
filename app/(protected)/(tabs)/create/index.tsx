@@ -12,7 +12,9 @@ export default function NewAdScreen() {
 
     const handleNavigate = () => {
         if (!adType) return;
+
         const { pathname, params } = getAdMetadata(adType)
+        console.log(params);
         router.push({ pathname: pathname as any, params })
     }
 

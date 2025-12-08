@@ -3,6 +3,7 @@ import {
   FieldErrors,
   FieldValues,
   UseFormGetValues,
+  UseFormSetError,
   UseFormSetValue,
 } from "react-hook-form";
 import { LocationInterface } from "./schema/ad";
@@ -87,6 +88,7 @@ export interface AdFormStepProps<T extends FieldValues> {
   errors: FieldErrors<T>;
   setValue?: UseFormSetValue<T>;
   getValue?: UseFormGetValues<T>;
+  setError?: UseFormSetError<T>;
   onSkip?: () => void;
   isDark?: boolean;
 }

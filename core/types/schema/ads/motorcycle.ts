@@ -39,6 +39,7 @@ export const MotorcycleAdSchema = z.object({
   under_warranty: z.coerce.boolean().optional(),
 
   additional_number: z.string().optional(),
+  second_additional_number: z.string().optional(),
   contact_whatsapp: z.coerce.boolean().optional(),
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),

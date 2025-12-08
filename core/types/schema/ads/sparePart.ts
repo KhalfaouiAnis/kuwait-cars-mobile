@@ -25,6 +25,7 @@ export const SparePartAdSchema = z.object({
   video: VideoSchema,
 
   additional_number: z.string().optional(),
+  second_additional_number: z.string().optional(),
   contact_whatsapp: z.coerce.boolean().optional(),
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),

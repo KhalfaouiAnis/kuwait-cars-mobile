@@ -107,13 +107,13 @@ export default function NewAdScreen() {
     const renderCurrentStep = () => {
         switch (currentStep) {
             case 1:
-                return <PostAd control={control} errors={errors} isDark={theme !== "light"} />;
+                return <PostAd control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 2:
                 return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 3:
                 return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} isDark={theme !== "light"} />;
             case 4:
-                return <AdDetails control={control} errors={errors} isDark={theme !== "light"} />;
+                return <AdDetails control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 5:
                 return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} isDark={theme !== "light"} />;
             default:

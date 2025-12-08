@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { FlatList, Modal, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
@@ -34,13 +35,14 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
     );
 
     return (
-        <View className='flex-1 items-center justify-center border border-transparent bg-white dark:bg-darkish dark:border-primary-500 py-3.5 elevation-sm'>
+        <View className='flex-1 items-center justify-center border border-transparent elevation-sm dark:bg-darkish dark:border-primary-500 py-3.5'>
             <TouchableOpacity
-                className="items-center justify-center overflow-hidden"
+                className="flex-row items-center gap-2 overflow-hidden"
                 onPress={() => setIsOpen(true)}
                 activeOpacity={0.7}
             >
                 <Text className="text-base text-gray-900 dark:text-white font-medium">{value || "KM"}</Text>
+                <Ionicons name='chevron-down' size={20} color="gray" />
             </TouchableOpacity>
             <Modal
                 visible={isOpen}

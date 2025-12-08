@@ -44,18 +44,16 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                             handleSelect({
                                 label: item.label,
                                 path: path[0],
-                                params: { model, brand }
+                                params: { model, brand, path: path[0] }
                             })
                         } else if (AD_TYPES.spare_parts === path[0]) {
                             handleSelect({
                                 label: item.label,
                                 path: path[0],
-                                params: { regison: item.value }
+                                params: { regison: item.value, path: path[0] }
                             })
-                        } else if (!path[0] && item.value === AD_TYPES.show) {
-                            handleSelect({ label: item.label, value: item.value, path: item.value })
                         } else {
-                            handleSelect({ label: item.label, value: item.value, path: item.value })
+                            handleSelect({ label: item.label, path: item.value, params: { path: item.value } })
                         }
                     }}
                 >

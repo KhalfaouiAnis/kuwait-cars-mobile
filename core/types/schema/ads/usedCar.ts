@@ -6,6 +6,7 @@ import {
   LocationSchema,
   MultiFileSchema,
   VideoSchema,
+  ZipCodeSchema,
 } from "../shared";
 
 export const UsedCarAdSchema = z.object({
@@ -18,7 +19,7 @@ export const UsedCarAdSchema = z.object({
   price: z.coerce.number().min(0, "The price field is required"),
   province: z.string().min(1, "The province field is required"),
   location: LocationSchema.optional(),
-  zip_code: z.string().optional(),
+  zip_code: ZipCodeSchema.optional(),
 
   thumbnail: createFileSchema("Thumbnail is required"),
   images: MultiFileSchema("Image must be valid file under 5MB").optional(),
@@ -39,6 +40,7 @@ export const UsedCarAdSchema = z.object({
   roof: z.string().optional(),
 
   additional_number: z.string().optional(),
+  second_additional_number: z.string().optional(),
   contact_whatsapp: z.coerce.boolean().optional(),
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),

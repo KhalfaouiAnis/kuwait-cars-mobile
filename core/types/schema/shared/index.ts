@@ -5,9 +5,14 @@ import { z } from "zod";
 export type AdCategory = (typeof Ad_CATEGORIES)[number];
 
 export const LocationSchema = z.object({
-  district: z.string(),
-  area: z.string(),
-  block: z.string(),
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
+});
+
+export const ZipCodeSchema = z.object({
+  code: z.coerce.number(),
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
 });
 
 export type LocationInterface = z.infer<typeof LocationSchema>;
@@ -97,5 +102,6 @@ interface Category {
   label: string;
   id?: string;
   regions?: Region[];
+  icon?: string;
 }
 export type DataItem = Category;

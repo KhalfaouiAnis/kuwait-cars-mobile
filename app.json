@@ -21,7 +21,7 @@
         "com.apple.developer.applesignin": ["Default"]
       },
       "config": {
-        "googleMapsApiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+        "googleMapsApiKey": "AIzaSyBrYZrom9xF_auXAO9bo4Hhadj-AWu_Gvk"
       }
     },
     "android": {
@@ -38,7 +38,7 @@
       "package": "com.aniskhalfaoui.kuwaitcars",
       "config": {
         "googleMaps": {
-          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+          "apiKey": "AIzaSyBrYZrom9xF_auXAO9bo4Hhadj-AWu_Gvk"
         }
       }
     },
@@ -47,7 +47,7 @@
       "favicon": "./assets/images/favicon.png",
       "config": {
         "googleMaps": {
-          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+          "apiKey": "AIzaSyBrYZrom9xF_auXAO9bo4Hhadj-AWu_Gvk"
         }
       }
     },
