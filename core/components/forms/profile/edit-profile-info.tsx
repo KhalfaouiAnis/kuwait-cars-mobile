@@ -12,12 +12,13 @@ import PickFromGallerySM from "../../ui/button/media/open-gallery-sm";
 import TakePhotoButton from "../../ui/button/media/take-photo";
 import AppModal from "../../ui/dialog/modal";
 import PhoneInput from "../../ui/input/phone-input";
-import SelectInput from "../../ui/input/select-input";
-import { renderLocationOption } from "../../ui/shared/render-option";
+import ProvinceSelector from "../../ui/input/province-selector";
+import { renderProvinceOption } from "../../ui/shared/render-option";
 
 export default function EditProfileForm({ theme }: { theme: string }) {
     const [showModal, setShowModal] = useState(false)
     const { user } = useAuthStore();
+
     const { errors, handleSubmit, onSubmit, isSubmitting, control, setValue } = useProfile(user ? { ...user, avatar: { uri: user.avatar || "", type: "image/jpeg" } } : undefined)
     const { addAvatar, avatar } = useAvatar(setValue)
 
@@ -41,7 +42,7 @@ export default function EditProfileForm({ theme }: { theme: string }) {
                             /> :
                                 <Image
                                     source={user?.avatar
-                                        ? { uri: `${process.env.EXPO_PUBLIC_API_URL}${user?.avatar}` }
+                                        ? { uri: user?.avatar }
                                         : IMAGES.DefaultAvatar}
                                     style={{ width: 75, height: 75, borderRadius: 50 }}
                                     contentFit="cover"
@@ -70,16 +71,16 @@ export default function EditProfileForm({ theme }: { theme: string }) {
                     name="email"
                     label="Your email"
                 />
-                <SelectInput
+                <ProvinceSelector
                     control={control}
                     name="province"
-                    options={CITIES}
-                    renderOption={(option, selected) => renderLocationOption(option, selected as string)}
-                    placeholder="Province"
-                    label="Your Province"
-                    icon={<MaterialCommunityIcons name="town-hall" size={24} color={theme !== "light" ? "white" : "black"} />}
-                    primary
+                    required
                     isDark={theme !== "light"}
+                    options={CITIES}
+                    renderOption={(option, selected) => renderProvinceOption(option, selected as string)}
+                    placeholder="Province"
+                    label="Your province"
+                    primary
                 />
                 <View className="flex-row items-center gap-x-2">
                     <InputWithIcon

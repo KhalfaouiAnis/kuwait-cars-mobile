@@ -1,6 +1,7 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import SelectInput from "@/core/components/ui/input/select-input";
+import ProvinceSelector from "@/core/components/ui/input/province-selector";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
+import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import ZipCodeInput from "@/core/components/ui/input/zip-code-input";
 import { CITIES } from "@/core/constants";
 import { AdFormStepProps } from "@/core/types";
@@ -9,15 +10,12 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 import LocationPicker from "../../../layout/location/location-picker";
-import { renderLocationOption } from "../../../ui/shared/render-option";
+import { renderProvinceOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 
 export default function PostAd({ control, errors, isDark, getValue, setValue, setError }: AdFormStepProps<UsedCarAdInterface>) {
     const { model, brand } = useLocalSearchParams()
     console.log({ model, brand });
-
-    console.log(getValue?.("zip_code"));
-
 
     return (
         <ScrollView
@@ -37,15 +35,14 @@ export default function PostAd({ control, errors, isDark, getValue, setValue, se
             </View>
             <View>
                 <Text className="font-semibold mb-2 dark:text-white">WHERE IS YOUR LISTING?</Text>
-                <SelectInput
+                <ProvinceSelector
                     control={control}
                     name="province"
                     required
-                    isDark
+                    isDark={isDark}
                     options={CITIES}
-                    renderOption={(option, selected) => renderLocationOption(option, selected as string)}
+                    renderOption={(option, selected) => renderProvinceOption(option, selected as string)}
                     placeholder="Province"
-                    icon={<MaterialCommunityIcons name="town-hall" size={24} color={isDark ? "white" : "black"} />}
                 />
                 <View className="flex-row items-center justify-center gap-x-2 my-4">
                     <View className="flex-1">
@@ -82,14 +79,12 @@ export default function PostAd({ control, errors, isDark, getValue, setValue, se
                 maxLength={30}
                 error={errors.title?.message}
                 placeholder="Write Your Advertisement Title" />
-            <InputWithSpeech
+            <TextAreaSpeech
                 control={control}
-                name="description"
                 label="Description"
+                name="description"
                 maxLength={500}
-                multiline
                 required
-                numberOfLines={4}
                 error={errors.description?.message}
                 placeholder="Write Your Advertisement Description"
             />

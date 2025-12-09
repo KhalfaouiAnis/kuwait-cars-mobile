@@ -1,13 +1,14 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import SelectInput from "@/core/components/ui/input/select-input";
+import ProvinceSelector from "@/core/components/ui/input/province-selector";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
+import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { CITIES } from "@/core/constants";
 import { AdFormStepProps } from "@/core/types";
 import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView, Text, View } from "react-native";
 import LocationPicker from "../../../layout/location/location-picker";
-import { renderLocationOption } from "../../../ui/shared/render-option";
+import { renderProvinceOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 
 export default function PostAd({ control, errors, isDark }: AdFormStepProps<SparePartAdInterface>) {
@@ -29,14 +30,14 @@ export default function PostAd({ control, errors, isDark }: AdFormStepProps<Spar
             </View>
             <View>
                 <Text className="font-semibold mb-2">WHERE IS YOUR LISTING?</Text>
-                <SelectInput
+                <ProvinceSelector
                     control={control}
                     name="province"
                     required
+                    isDark={isDark}
                     options={CITIES}
-                    renderOption={(option, selected) => renderLocationOption(option, selected as string)}
+                    renderOption={(option, selected) => renderProvinceOption(option, selected as string)}
                     placeholder="Province"
-                    icon={<MaterialCommunityIcons name="town-hall" size={24} color="black" />}
                 />
                 <View className="flex-row items-center justify-center gap-x-2 my-4">
                     <View className="flex-1">
@@ -62,14 +63,12 @@ export default function PostAd({ control, errors, isDark }: AdFormStepProps<Spar
                 maxLength={30}
                 error={errors.title?.message}
                 placeholder="Write Your Advertisement Title" />
-            <InputWithSpeech
+            <TextAreaSpeech
                 control={control}
-                name="description"
                 label="Description"
+                name="description"
                 maxLength={500}
-                multiline
                 required
-                numberOfLines={4}
                 error={errors.description?.message}
                 placeholder="Write Your Advertisement Description"
             />

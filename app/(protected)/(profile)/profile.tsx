@@ -3,7 +3,7 @@ import { SettingsLink } from "@/core/components/ui/_links/settings-link";
 import Switch from "@/core/components/ui/button/switch";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-import { authStore } from "@/core/lib/stores/auth.store";
+import useAuthStore from "@/core/lib/stores/auth.store";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { AntDesign, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -11,7 +11,7 @@ import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 export default function ProfileScreen() {
-    const { signOut, user } = authStore.getState();
+    const { signOut, user } = useAuthStore();
     const { theme, toggleTheme } = useUserPreferencesStore()
 
     return (
@@ -34,7 +34,7 @@ export default function ProfileScreen() {
                         <View className="relative">
                             <Image
                                 source={user?.avatar
-                                    ? { uri: `${process.env.EXPO_PUBLIC_API_URL}${user?.avatar}` }
+                                    ? { uri: user?.avatar }
                                     : IMAGES.DefaultAvatar}
                                 style={{ width: 75, height: 75, borderRadius: 50 }}
                                 contentFit="cover"

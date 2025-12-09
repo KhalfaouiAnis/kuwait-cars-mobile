@@ -4,6 +4,7 @@ import {
   handleTokenValidation,
   validateAndRefreshToken,
 } from "@/core/utils/authUtils";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -16,6 +17,7 @@ interface AuthState {
   refreshToken: string | null;
   _hasHydrated: boolean;
   isAuthenticated: boolean;
+  authType: "APP" | "GOOGLE" | "FACEBOOK" | "APPLE";
   bootstrapAsync: () => Promise<void>;
   createAnonymousSesssion: (token: string) => void;
   setUser: (user: User | null) => void;
@@ -45,6 +47,7 @@ const useAuthStore = create<AuthState>()(
         },
       ],
       _hasHydrated: false,
+      authType: "APP",
       isAuthenticated: false,
       accessToken: null,
       refreshToken: null,
@@ -86,7 +89,10 @@ const useAuthStore = create<AuthState>()(
         set({ recentlyViewedAds: updated });
       },
       clearRecentlyViewed: () => set({ recentlyViewedAds: [] }),
-      signOut: () => {
+      signOut: async () => {
+        if (get().authType === "GOOGLE") {
+          await GoogleSignin.signOut();
+        }
         set({
           user: null,
           isAuthenticated: false,
@@ -94,8 +100,8 @@ const useAuthStore = create<AuthState>()(
           refreshToken: null,
         });
       },
-      createAnonymousSesssion: (token: string) => {
-        set({ accessToken: token, refreshToken: "", isAuthenticated: true });
+      createAnonymousSesssion: (accessToken: string) => {
+        set({ accessToken, refreshToken: "", isAuthenticated: true });
       },
     }),
     {

@@ -42,8 +42,8 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
             <Pressable onPress={() => setShowModal(true)}>
                 <View className={clsx('flex-row items-center border dark:border-primary-500', {
                     "border-primary-500 rounded-lg": primary,
-                    "border-error": error,
                     "border-transparent elevation-sm": !primary && !error,
+                    "border-error": error,
                     "px-3 py-1": !extraPadding,
                     "p-3": extraPadding,
                 })}>
@@ -71,7 +71,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                                 <TouchableOpacity
                                     activeOpacity={1}
                                     onPress={() => { }}
-                                    className="bg-white pt-6 mb-10 rounded-t-3xl p-4 w-full -max-h-screen-safe-or-80 min-h-0">
+                                    className="bg-white dark:bg-darkish pt-6 mb-10 rounded-t-3xl p-4 w-full -max-h-screen-safe-or-80 min-h-0">
                                     <FlatList
                                         data={options}
                                         keyExtractor={(item) => item.id}

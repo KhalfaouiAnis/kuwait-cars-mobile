@@ -1,4 +1,5 @@
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
+import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { AdFormStepProps } from "@/core/types";
 import { ShowCarAdInterface } from "@/core/types/schema/ads/showCar";
 import { ScrollView } from "react-native";
@@ -18,14 +19,12 @@ export default function PostAd({ control, errors }: AdFormStepProps<ShowCarAdInt
                 maxLength={30}
                 error={errors.title?.message}
                 placeholder="Write Your Advertisement Title" />
-            <InputWithSpeech
+            <TextAreaSpeech
                 control={control}
-                name="description"
                 label="Description"
+                name="description"
                 maxLength={500}
-                multiline
                 required
-                numberOfLines={4}
                 error={errors.description?.message}
                 placeholder="Write Your Advertisement Description"
             />
