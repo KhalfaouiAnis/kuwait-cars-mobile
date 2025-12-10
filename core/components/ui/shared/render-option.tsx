@@ -1,5 +1,5 @@
 import Checkbox from "@/core/components/ui/input/checkbox";
-import { SelectOption } from "@/core/types";
+import { ProvinceArea, SelectOption } from "@/core/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 
@@ -17,7 +17,7 @@ export const renderCategoryOption = (option: SelectOption) => (
     </View>
 )
 
-export const renderProvinceOption = (option: SelectOption, selected?: string) => (
+export const renderProvinceAreaOption = (option: ProvinceArea, selected?: string) => (
     <View className={`items-center justify-center py-4 bg-primary-500 mx-2 px-2 border ${option.value === selected ? "border-error" : "border-gray-300"}`}>
         <Text className="text-lg text-center font-inter-medium">{option.label}</Text>
     </View>

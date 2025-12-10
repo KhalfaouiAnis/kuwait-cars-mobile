@@ -2,10 +2,10 @@ import { AD_TYPES } from '@/core/constants/ad';
 import { DataItem } from '@/core/types/schema/shared';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
+import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-type AdTypeSelectorProps = TextInputProps & {
-    onChange: (value: any) => void,
+type AdTypeSelectorProps = {
+    onChange: (value: { ad_type: string, params: any } | null) => void,
     data: DataItem[];
     selectedValue?: string;
     placeholder?: string;
@@ -29,7 +29,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
         const itemPath = [...path, item.value].join(';');
         const isExpanded = expandedPaths.has(itemPath);
 
-        const children = item.regions || item.brands || item.marks || [];
+        const children = item.regions || item.brands || item.marks || item.categories || [];
         const hasChildren = children.length > 0;
 
         const isLeaf = !hasChildren;
@@ -39,32 +39,36 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                 <TouchableOpacity
                     className={`flex-row items-center my-1 p-3 py-4 elevation-sm border border-transparent dark:border-primary-500 bg-white dark:bg-darkish ms-${(level) * 4}`}
                     onPress={() => {
-                        if ([AD_TYPES.used_cars, AD_TYPES.motorcycles].includes(path[0])) {
+                        if (AD_TYPES.used_cars === path[0]) {
                             const [brand, model] = item.value.split("/")
                             handleSelect({
-                                label: item.label,
-                                path: path[0],
-                                params: { model, brand, path: path[0] }
+                                ad_type: path[0],
+                                params: { model, brand, label: item.label }
+                            })
+                        } else if (AD_TYPES.motorcycles === path[0]) {
+                            const [category, brand] = item.value.split("/")
+                            handleSelect({
+                                ad_type: path[0],
+                                params: { category, brand, label: item.label }
                             })
                         } else if (AD_TYPES.spare_parts === path[0]) {
                             handleSelect({
-                                label: item.label,
-                                path: path[0],
-                                params: { regison: item.value, path: path[0] }
+                                ad_type: path[0],
+                                params: { regison: item.value, label: item.label }
                             })
                         } else {
-                            handleSelect({ label: item.label, path: item.value, params: { path: item.value } })
+                            handleSelect({ ad_type: item.value, params: { label: item.label, } })
                         }
                     }}
                 >
+                    <Ionicons name={item?.icon} size={20} color="gray" />
                     <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{item.label}</Text>
-                    <View className='justify-end'>
-                        <Ionicons
-                            name='chevron-forward'
-                            size={16}
-                            color="gray"
-                        />
-                    </View>
+                    <Ionicons
+                        className='justify-start'
+                        name='chevron-forward'
+                        size={16}
+                        color="gray"
+                    />
                 </TouchableOpacity>
             )
         }
@@ -75,6 +79,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                     className="flex-row items-center my-1 p-3 py-4 elevation-sm border border-transparent dark:border-primary-500 bg-white dark:bg-darkish rounded-sm"
                     onPress={() => hasChildren && toggleExpand(itemPath)}
                 >
+                    <Ionicons name={item?.icon} size={20} color="gray" />
                     <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{item.label}</Text>
                     <Ionicons
                         name={isExpanded ? 'chevron-down' : 'chevron-forward'}

@@ -4,18 +4,22 @@ import Container from "@/core/components/ui/container";
 import { AD_TYPES, CAR_BRAND_TYPES } from "@/core/constants/ad";
 import { useRouter } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function NewAdScreen() {
-    const [adType, setAdType] = useState<any>(null)
+    const {t} = useTranslation("ad_creation")
+    // {t('pickedXOofY', { pickedCount: pickedCount, totalCount: totalCount })}
+    const [adType, setAdType] = useState<{ ad_type: string, params: any } | null>(null)
     const router = useRouter();
 
     const handleNavigate = () => {
         if (!adType) return;
 
-        const { pathname, params } = getAdMetadata(adType)
-        console.log(params);
-        router.push({ pathname: pathname as any, params })
+        const { ad_type, params } = adType
+        const pathname = getPathname(ad_type)
+
+        router.push({ pathname: pathname as any, params: { ...params, ad_type } })
     }
 
     return (
@@ -25,8 +29,8 @@ export default function NewAdScreen() {
                     <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
                     <AdTypeSelector
                         data={CAR_BRAND_TYPES}
-                        selectedValue={adType?.label}
-                        onChange={type => setAdType(type)}
+                        selectedValue={adType?.params.label}
+                        onChange={setAdType}
                         placeholder="Select Your Category"
                     />
                 </View>
@@ -44,13 +48,6 @@ export default function NewAdScreen() {
             </View>
         </Container>
     )
-}
-
-function getAdMetadata(params: { path: string, params: any }) {
-    return {
-        pathname: getPathname(params.path),
-        params: params.params
-    }
 }
 
 function getPathname(ad_type: string) {

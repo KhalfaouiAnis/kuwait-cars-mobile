@@ -2,9 +2,11 @@ import { Ad_CATEGORIES } from "@/core/constants/ad";
 import { z } from "zod";
 import {
   AdCategory,
+  AreaSchema,
   createFileSchema,
   LocationSchema,
   MultiFileSchema,
+  ProvinceSchema,
   VideoSchema,
 } from "../shared";
 
@@ -16,7 +18,8 @@ export const CommunAdSchema = z.object({
   description: z.string().min(3, "The description field is required"),
   plan: z.string().min(1, "The plan field is required"),
   price: z.coerce.number().min(0, "The price field is required"),
-  province: z.string().min(1, "The province field is required"),
+  province: ProvinceSchema,
+  area: AreaSchema.optional(),
   location: LocationSchema.optional(),
   zip_code: z.string().optional(),
 

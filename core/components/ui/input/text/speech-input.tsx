@@ -35,7 +35,7 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
                 }
                 <View className='flex-1 flex-row items-center justify-between'>
                     <TextInput
-                        className="text-gray-300 dark:text-gray-500 flex-1"
+                        className="dark:text-gray-100 flex-1"
                         value={value}
                         numberOfLines={1}
                         onChangeText={onChange}

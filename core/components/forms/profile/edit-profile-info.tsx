@@ -1,5 +1,5 @@
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
-import { CITIES } from "@/core/constants";
+import { PROVINCES } from "@/core/constants";
 import { IMAGES } from "@/core/constants/images";
 import { useAvatar } from "@/core/hooks/user/use-avatar";
 import { useProfile } from "@/core/hooks/user/use-profile";
@@ -13,9 +13,9 @@ import TakePhotoButton from "../../ui/button/media/take-photo";
 import AppModal from "../../ui/dialog/modal";
 import PhoneInput from "../../ui/input/phone-input";
 import ProvinceSelector from "../../ui/input/province-selector";
-import { renderProvinceOption } from "../../ui/shared/render-option";
+import { renderProvinceAreaOption } from "../../ui/shared/render-option";
 
-export default function EditProfileForm({ theme }: { theme: string }) {
+export default function EditProfileForm({ theme, t }: { theme: string, t: (key: string) => string }) {
     const [showModal, setShowModal] = useState(false)
     const { user } = useAuthStore();
 
@@ -57,47 +57,53 @@ export default function EditProfileForm({ theme }: { theme: string }) {
 
             <View className="flex-1 py-2 mt-2 gap-y-6">
                 <InputWithIcon
-                    label="Name"
+                    label={t("name")}
                     icon="person-outline"
                     name="fullname"
-                    placeholder="full name"
+                    placeholder={t("name")}
                     control={control}
                 />
-                <PhoneInput control={control} name="phone" label="Phone number" error={errors.phone?.message} />
-                <InputWithIcon icon="mail-outline"
-                    placeholder="Your email"
+                <PhoneInput
+                    control={control}
+                    name="phone"
+                    label={t("phoneNumber")}
+                    error={errors.phone?.message}
+                />
+                <InputWithIcon
+                    icon="mail-outline"
+                    placeholder={t("yourEmail")}
                     error={errors.email?.message}
                     control={control}
                     name="email"
-                    label="Your email"
+                    label={t("yourEmail")}
                 />
                 <ProvinceSelector
                     control={control}
                     name="province"
                     required
                     isDark={theme !== "light"}
-                    options={CITIES}
-                    renderOption={(option, selected) => renderProvinceOption(option, selected as string)}
-                    placeholder="Province"
-                    label="Your province"
+                    options={PROVINCES}
+                    renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
+                    placeholder={t("yourProvince")}
+                    label={t("yourProvince")}
                     primary
                 />
                 <View className="flex-row items-center gap-x-2">
                     <InputWithIcon
-                        icon="location-outline"
-                        placeholder="City"
-                        label="City"
-                        error={errors.city?.message}
                         control={control}
                         name="city"
+                        icon="location-outline"
+                        placeholder={t("city")}
+                        label={t("city")}
+                        error={errors.city?.message}
                     />
                     <InputWithIcon
-                        customIcon={<MaterialCommunityIcons name="email-seal-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        placeholder="Zip code"
-                        label="Zip code"
-                        error={errors.zip_code?.message}
                         control={control}
                         name="zip_code"
+                        customIcon={<MaterialCommunityIcons name="email-seal-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
+                        placeholder={t("zipCode")}
+                        label={t("zipCode")}
+                        error={errors.zip_code?.message}
                     />
                 </View>
             </View>
@@ -106,24 +112,31 @@ export default function EditProfileForm({ theme }: { theme: string }) {
                 disabled={isSubmitting}
             >
                 <Text className="text-lg font-semibold text-secondary-900">
-                    {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : "Update Information"}
+                    {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("updateInfo")}
                 </Text>
             </TouchableOpacity>
 
             <AppModal
                 onClose={() => setShowModal(false)}
                 visible={showModal}
-                renderContent={() => <View className="gap-y-4">
-                    <PickFromGallerySM addMedia={() => {
-                        addAvatar(false)
-                        setShowModal(false)
-                    }} label="Open gallery" />
-                    <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => {
-                        addAvatar(true)
-                        setShowModal(false)
-                    }
-                    } />
-                </View>}
+                renderContent={() => (
+                    <View className="gap-y-4">
+                        <PickFromGallerySM
+                            label={t("openGallery")}
+                            addMedia={() => {
+                                addAvatar(false)
+                                setShowModal(false)
+                            }}
+                        />
+                        <TakePhotoButton
+                            label={t("OpenCameraTakePhoto")}
+                            addMedia={() => {
+                                addAvatar(true)
+                                setShowModal(false)
+                            }}
+                        />
+                    </View>
+                )}
             />
         </View>
     )

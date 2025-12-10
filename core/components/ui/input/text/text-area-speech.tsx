@@ -35,7 +35,7 @@ export default function TextAreaSpeech<TForm extends FieldValues>({ control, nam
                 }
                 <View className='flex-1 flex-row items-start relative'>
                     <TextInput
-                        className="text-gray-300 dark:text-gray-500 flex-1"
+                        className="dark:text-gray-100 flex-1"
                         value={value}
                         numberOfLines={10}
                         onChangeText={onChange}

@@ -26,6 +26,10 @@ export function useSparePartAd() {
       thumbnail: {},
       images: [],
       video: {},
+      contact_whatsapp: true,
+      receive_calls: true,
+      xcar_calls: true,
+      xcar_chat: true,
       ad_type: "spare_parts",
     },
   });

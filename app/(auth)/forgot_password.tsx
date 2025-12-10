@@ -4,9 +4,12 @@ import { useFormHook } from "@/core/hooks/use-form-hook";
 import { RequestResetPasswordInterface, RequestResetPasswordSchema } from "@/core/types/schema/auth";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 export default function ForgotPasswordScreen() {
+    const { t } = useTranslation("auth");
+
     const { control, formState: { errors, isSubmitting }, handleSubmit } = useFormHook(RequestResetPasswordSchema,
         {
             defaultValues: { email: "", phone: "" }
@@ -19,7 +22,7 @@ export default function ForgotPasswordScreen() {
     return (
         <FormWrapper title="Forgot Password">
             <Text className="mt-6 text-base text-center dark:text-white">
-                Please enter your email or phone number to reset the password
+                {t("emailToResetPassword")}
             </Text>
             <View className="pt-6 px-4">
                 <InputWithIcon
@@ -28,21 +31,23 @@ export default function ForgotPasswordScreen() {
                     error={errors.phone?.message}
                     keyboardType="phone-pad"
                     customIcon={<Ionicons name="logo-whatsapp" size={24} color="#25D366" className="mr-2" />}
-                    icon="logo-whatsapp"
-                    placeholder="Enter your Whatsapp number"
+                    placeholder={t("enterWhatsappNumber")}
                 />
-                <Text className="my-1 text-gray-400 text-base text-center">Or</Text>
+                <Text className="my-1 text-gray-400 text-base text-center">{t("or")}</Text>
                 <InputWithIcon
                     control={control}
                     name="email"
                     error={errors.email?.message}
-                    icon="mail-outline" placeholder="Enter your email" />
+                    icon="mail-outline"
+                    placeholder={t("enterEmail")}
+                />
+
                 <TouchableOpacity className="bg-primary-500 py-3  rounded-lg items-center mt-20"
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
                 >
                     <Text className="text-lg font-semibold text-secondary-900">
-                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : "Reset Password"}
+                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("resetPassword")}
                     </Text>
                 </TouchableOpacity>
                 <Link href={"/verify_password"}>Verify password</Link>

@@ -42,25 +42,25 @@ export default function AdDetails({ control, errors, setValue, getValue }: AdFor
                         error={errors.additional_number?.message} placeholder="Add Additional Number" />
                 </View>
 
-                <View className="flex-row items-center justify-between border border-gray-200 p-2 mt-6">
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2 mt-6">
                     <Ionicons name="logo-whatsapp" size={24} color="#25D366" />
                     <Text className="dark:text-white">Contact via WhatsApp</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} checked={getValue?.("contact_whatsapp")} />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
                     <Ionicons name="call-outline" size={24} color="#25D366" />
                     <Text className="dark:text-white">Receive Calls</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("receive_calls", value)} checked={getValue?.("receive_calls")} />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
                     <Ionicons name="call-outline" size={24} color="#00A6DA" />
                     <Text className="dark:text-white">Receive Call via XCar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} checked={getValue?.("xcar_calls")} />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
                     <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
                     <Text className="dark:text-white">Chat via Xcar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} checked={getValue?.("xcar_chat")} />
                 </View>
             </View>
         </ScrollView>

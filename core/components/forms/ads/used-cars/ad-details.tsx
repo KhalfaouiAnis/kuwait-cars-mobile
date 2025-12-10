@@ -6,13 +6,20 @@ import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { renderColorOption, renderYearOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
-export default function AdDetails({ control, errors, isDark }: AdFormStepProps<UsedCarAdInterface>) {
-    const { model, brand } = useLocalSearchParams()
+export default function AdDetails({ control, errors, setValue }: AdFormStepProps<UsedCarAdInterface>) {
+    const { model, brand, ad_type } = useLocalSearchParams()
+
+    useEffect(() => {
+        setValue?.("ad_type", ad_type as string)
+        setValue?.("model", model as string)
+        setValue?.("brand", brand as string)
+    }, [ad_type, model, brand, setValue])
 
     return (
         <ScrollView

@@ -6,13 +6,20 @@ import { AdFormStepProps } from "@/core/types";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { renderColorOption, renderYearOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
-export default function AdDetails({ control, errors }: AdFormStepProps<MotorcycleAdInterface>) {
-    const { brand } = useLocalSearchParams()
+export default function AdDetails({ control, errors, setValue }: AdFormStepProps<MotorcycleAdInterface>) {
+    const { ad_type, category, brand } = useLocalSearchParams()
+
+    useEffect(() => {
+        setValue?.("ad_type", ad_type as string)
+        setValue?.("category", category as string)
+        setValue?.("brand", brand as string)
+    }, [ad_type, category, brand, setValue])
 
     return (
         <ScrollView
@@ -26,12 +33,11 @@ export default function AdDetails({ control, errors }: AdFormStepProps<Motorcycl
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View>
-                <View className="flex-row items-center justify-between">
-                    <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
+                <View className="flex-row items-center justify-end">
                     <Text className="text-sm text-gray-300">Used Motors</Text>
                 </View>
                 <SelectedAdType
-                    label={`${brand}`}
+                    label={`${category} - ${brand}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>

@@ -26,6 +26,8 @@ export function useShowCarAd() {
       brand: "fff",
       thumbnail: {},
       images: [],
+      xcar_calls: true,
+      xcar_chat: true,
       video: {},
       ad_type: "show",
       hide_license_plate: false,

@@ -1,18 +1,16 @@
 import { AdFormStepProps } from '@/core/types';
 import { Ionicons, Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
+import { useWatch } from 'react-hook-form';
 import { Pressable, Text, View } from 'react-native';
 import MapViewer from './map-viewer';
 
-export default function LocationPicker({ getValue, setValue, isDark }: AdFormStepProps<any>) {
+export default function LocationPicker({ setValue, isDark, control }: AdFormStepProps<any>) {
+    const location = useWatch({ control, name: "location" })
     const [showModal, setShowModal] = useState(false);
-    const [currentLocation, setCurrentLocation] = useState(getValue?.("location"))
 
     function showMap() { setShowModal(true) }
     function hideMap() { setShowModal(false) }
-
-    console.log(currentLocation);
-    
 
     return (
         <View className="w-full">
@@ -23,7 +21,7 @@ export default function LocationPicker({ getValue, setValue, isDark }: AdFormSte
                         className="text-[#333] overflow-hidden"
                         pointerEvents="none"
                     >
-                        {currentLocation?.latitude ? Number(currentLocation.latitude).toFixed(5) : "Location"}
+                        {location?.latitude ? Number(location.latitude).toFixed(5) : "Location"}
                     </Text>
                 </View>
                 <View>
@@ -34,11 +32,10 @@ export default function LocationPicker({ getValue, setValue, isDark }: AdFormSte
                 visible={showModal}
                 onClose={hideMap}
                 handleMapPress={(event) => {
-                    console.log(event.nativeEvent.coordinate);
-                    setCurrentLocation(event.nativeEvent.coordinate)
                     setValue?.("location", event.nativeEvent.coordinate)
+                    console.log(event.nativeEvent.coordinate);
                 }}
-                currentLocation={currentLocation}
+                currentLocation={location}
             />
         </View>
     );

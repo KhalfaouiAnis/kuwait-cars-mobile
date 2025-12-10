@@ -81,14 +81,34 @@ export type SelectOption = {
   value: string | number | boolean;
 };
 
+export type ProvinceOption = {
+  province: string;
+  label: string;
+  latitude: number;
+  longitude: number;
+  areas: AreaOption[];
+};
+
+export type AreaOption = {
+  area: string;
+  label: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type ProvinceArea = {
+  value: string;
+  label: string;
+};
+
 export type FilterAdsBy = "brand" | "model" | "year" | "price";
 
 export interface AdFormStepProps<T extends FieldValues> {
   control: Control<T>;
   errors: FieldErrors<T>;
+  isDark?: boolean;
   setValue?: UseFormSetValue<T>;
   getValue?: UseFormGetValues<T>;
   setError?: UseFormSetError<T>;
   onSkip?: () => void;
-  isDark?: boolean;
 }

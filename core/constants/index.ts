@@ -1,4 +1,4 @@
-import { Language, SelectOption } from "../types";
+import { Language, ProvinceOption, SelectOption } from "../types";
 import { generateYears } from "../utils/date";
 
 export const ADS_PAGE_SIZE = "12";
@@ -15,12 +15,12 @@ export const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/webm", "video/ogg"];
 export const ACCEPTED_IMAGE_TYPES = ["image/jpg", "image/png", "image/jpeg"];
 
 export const SUPPORTED_LANGUAGES: Language[] = [
-  { code: "ar", name: "Arabic", flag: "🇰🇼" },
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "es", name: "Español", flag: "🇪🇸" },
-  { code: "fr", name: "Français", flag: "🇫🇷" },
-  { code: "jo", name: "أردو", flag: "JO" },
-  { code: "in", name: "भारतीय", flag: "🇮🇳" },
+  { code: "ar", name: "arabic", flag: "🇰🇼" },
+  { code: "en", name: "english", flag: "🇺🇸" },
+  { code: "es", name: "spanish", flag: "🇪🇸" },
+  { code: "fr", name: "frensh", flag: "🇫🇷" },
+  { code: "jo", name: "urdu", flag: "JO" },
+  { code: "in", name: "hindi", flag: "🇮🇳" },
 ];
 
 export const COUNTRIES = [
@@ -82,19 +82,6 @@ export const CAR_COLORS: SelectOption[] = [
   { id: "Purple", label: "Purple", value: "Purple" },
 ];
 
-export const CITIES: SelectOption[] = [
-  { id: "Kuwait City", label: "Kuwait City", value: "Kuwait City" },
-  { id: "Hawalli", label: "Hawalli", value: "Hawalli" },
-  { id: "Farwaniyah", label: "Farwaniyah", value: "Farwaniyah" },
-  { id: "Ahmadi", label: "Ahmadi", value: "Ahmadi" },
-  { id: "Jahra", label: "Jahra", value: "Jahra" },
-  {
-    id: "Mubarek Al-Kabeer",
-    label: "Mubarek Al-Kabeer",
-    value: "Mubarek Al-Kabeer",
-  },
-];
-
 export const YEARS: SelectOption[] = generateYears().map((year) => ({
   id: year.toString(),
   label: year.toString(),
@@ -106,6 +93,129 @@ export const ZIP_CODES: {
   latitude: number;
   longitude: number;
 }[] = [{ code: 1100, latitude: 11.254, longitude: 10.2544 }];
+
+export const PROVINCES: ProvinceOption[] = [
+  {
+    province: "Kuwait City",
+    label: "Kuwait City",
+    latitude: 11.254,
+    longitude: 10.2544,
+    areas: [
+      {
+        area: "Area Kuwait City 1",
+        label: "Area Kuwait City 1",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+      {
+        area: "Area Kuwait City 2",
+        label: "Area Kuwait City 2",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+    ],
+  },
+  {
+    province: "Hawalli",
+    label: "Hawalli",
+    latitude: 11.254,
+    longitude: 10.2544,
+    areas: [
+      {
+        area: "Area Hawalli 1",
+        label: "Area Hawalli 1",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+      {
+        area: "Area Hawalli 2",
+        label: "Area Hawalli 2",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+    ],
+  },
+  {
+    province: "Farwaniyah",
+    label: "Farwaniyah",
+    latitude: 11.254,
+    longitude: 10.2544,
+    areas: [
+      {
+        area: "Area Farwaniyah 1",
+        label: "Area Farwaniyah 1",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+      {
+        area: "Area Farwaniyah 2",
+        label: "Area Farwaniyah 2",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+    ],
+  },
+  {
+    province: "Al Ahmadi",
+    label: "Al Ahmadi",
+    latitude: 11.254,
+    longitude: 10.2544,
+    areas: [
+      {
+        area: "Area Al Ahmadi 1",
+        label: "Area Al Ahmadi 1",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+      {
+        area: "Area Al Ahmadi 2",
+        label: "Area Al Ahmadi 2",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+    ],
+  },
+  {
+    province: "Al Jahra",
+    label: "Al Jahra",
+    latitude: 11.254,
+    longitude: 10.2544,
+    areas: [
+      {
+        area: "Area Al Jahra 1",
+        label: "Area Al Jahra 1",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+      {
+        area: "Area Al Jahra 2",
+        label: "Area Al Jahra 2",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+    ],
+  },
+  {
+    province: "Mubarek Al-kabeer",
+    label: "Mubarek Al-kabeer",
+    latitude: 11.254,
+    longitude: 10.2544,
+    areas: [
+      {
+        area: "Area Mubarek Al-kabeer 1",
+        label: "Area Mubarek Al-kabeer 1",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+      {
+        area: "Area Mubarek Al-kabeer 2",
+        label: "Area Mubarek Al-kabeer 2",
+        latitude: 11.254,
+        longitude: 10.2544,
+      },
+    ],
+  },
+];
 
 export const OVERALL_MIN_PRICE = 0;
 export const OVERALL_MAX_PRICE = 100000;

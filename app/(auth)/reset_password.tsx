@@ -1,38 +1,44 @@
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { useResetPassword } from "@/core/hooks/auth/useAuth";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 export default function ResetPasswordScreen() {
     const { control, errors, isSubmitting, handleSubmit, onSubmit } = useResetPassword()
+    const { t } = useTranslation("auth");
 
     return (
         <FormWrapper title="Reset Password">
             <Text className="mt-6 text-base text-center dark:text-white">
-                Create your new password
+                {t("createYourNewPassword")}
             </Text>
             <View className="pt-2 px-4 my-4 gap-y-4">
                 <InputWithIcon
-                    icon="call-outline"
-                    placeholder="Phone Number"
                     name="phone"
-                    error={errors.phone?.message}
                     control={control}
-                    label="Your Phone"
+                    icon="call-outline"
+                    placeholder={t("phoneNumber")}
+                    error={errors.phone?.message}
+                    label={t("yourPhone")}
                 />
                 <InputWithIcon
                     name="password"
                     control={control}
                     error={errors.password?.message}
-                    label="New Password" endIcon="eye-outline"
-                    icon="lock-closed-outline" placeholder="Create New Password"
+                    label={t("newPassword")}
+                    endIcon="eye-outline"
+                    icon="lock-closed-outline"
+                    placeholder={t("createNewPassword")}
                 />
                 <InputWithIcon
                     control={control}
                     name="confirmPassword"
                     error={errors.confirmPassword?.message}
-                    label="Confirm Password" endIcon="eye-outline"
-                    icon="lock-closed-outline" placeholder="Confirm Password"
+                    label={t("confirmPassword")}
+                    endIcon="eye-outline"
+                    icon="lock-closed-outline"
+                    placeholder={t("confirmNewPassword")}
                 />
             </View>
             <View className="px-4 pb-4">
@@ -40,7 +46,7 @@ export default function ResetPasswordScreen() {
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}>
                     <Text className="text-lg font-semibold text-secondary-900">
-                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : "Reset password"}
+                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("resetPassword")}
                     </Text>
                 </TouchableOpacity>
             </View>

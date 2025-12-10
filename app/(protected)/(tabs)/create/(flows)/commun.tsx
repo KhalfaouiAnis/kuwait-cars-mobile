@@ -32,7 +32,7 @@ const getStepTitle = (step: number) => {
 const TOTAL_STEPS = 5;
 
 export default function NewAdScreen() {
-    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useCommunAd()
+    const { control, errors, dirtyFields, isSubmitting, trigger, reset, setValue, getValues, handleSubmit, onSubmit } = useCommunAd()
     const { theme } = useUserPreferencesStore()
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);

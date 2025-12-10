@@ -17,7 +17,7 @@ export default function Index() {
   const router = useRouter();
   const { isAuthenticated } = authStore()
   const { setLang, lang: currentLang } = useUserPreferencesStore();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const handleSelect = async (lang: Language) => {
     setLang(lang.code);
@@ -34,7 +34,7 @@ export default function Index() {
       onPress={() => handleSelect(item)}
     >
       <Flag name={item.code} />
-      <Text className="text-base text-gray-900 font-medium">{t(item.name)}</Text>
+      <Text className="text-base text-gray-900 font-medium">{t(`languages.${item.name}`)}</Text>
       <Ionicons name="chevron-forward" size={20} />
     </TouchableOpacity>
   );

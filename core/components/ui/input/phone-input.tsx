@@ -76,7 +76,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                     control={control}
                     render={({ field: { onChange, value } }) => (
                         <TextInput
-                            className={`w-full pl-0 py-3 ${error ? 'border-red-500' : 'text-[#333] dark:text-white'}`}
+                            className={`flex-1 pl-0 py-3 ${error ? 'border-red-500' : 'text-[#333] dark:text-white'}`}
                             value={value}
                             onChangeText={(text) => {
                                 handlePhoneChange(text)
@@ -88,6 +88,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                         />
                     )}
                 />
+                <Text className='me-auto text-error'>*</Text>
             </View>
             {error && <Text className="text-error text-sm mt-1 ml-2">{error}</Text>}
             <Modal
@@ -114,7 +115,6 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                     />
                 </View>
             </Modal>
-
         </View>
     );
 }

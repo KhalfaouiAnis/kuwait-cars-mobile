@@ -11,8 +11,8 @@ export function useCommunAd() {
 
   const {
     control,
-    handleSubmit,
     formState: { errors, isSubmitting, isDirty, dirtyFields },
+    handleSubmit,
     trigger,
     reset,
     setValue,
@@ -21,12 +21,14 @@ export function useCommunAd() {
     defaultValues: {
       title: "title",
       description: "description",
-      price: 2555,
       plan: "pro",
       thumbnail: {},
       images: [],
       video: {},
-      ad_type: "home_services",
+      contact_whatsapp: true,
+      receive_calls: true,
+      xcar_calls: true,
+      xcar_chat: true,
     },
   });
 
@@ -68,14 +70,14 @@ export function useCommunAd() {
 
   return {
     control,
-    setValue,
-    getValues,
-    handleSubmit,
-    onSubmit,
     errors,
     isSubmitting,
     dirtyFields,
     isDirty,
+    setValue,
+    getValues,
+    handleSubmit,
+    onSubmit,
     trigger,
     reset,
   };

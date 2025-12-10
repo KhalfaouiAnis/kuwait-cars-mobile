@@ -25,8 +25,6 @@ export const SignupSchema = z.object({
     .min(6, "Please enter a valid phone number")
     .max(15, "Please enter a valid phone number"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  // .regex(/[A-Z]/, 'Password must contain an uppercase letter')
-  // .regex(/[!@#$%^&*]/, 'Password must contain a special character'),
   role: z.optional(z.nativeEnum(UserRole)),
   city: z.optional(z.string().min(3, "City must be at least 3 characters")),
   zip_code: z.string().optional(),
@@ -40,8 +38,8 @@ export const RequestResetPasswordSchema = z.object({
 export const ResetPasswordSchema = z
   .object({
     phone: z.string().optional(),
-    password: z.string({message: "Password is required"}).min(6),
-    confirmPassword: z.string({message: "Password is required"}).min(6),
+    password: z.string({ message: "Password is required" }).min(6),
+    confirmPassword: z.string({ message: "Password is required" }).min(6),
   })
   .refine((formData) => formData.confirmPassword === formData.password, {
     message: "Passwords don't match",

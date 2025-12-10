@@ -30,6 +30,10 @@ export function useMotorcycleAd() {
       thumbnail: {},
       images: [],
       video: {},
+      contact_whatsapp: true,
+      receive_calls: true,
+      xcar_calls: true,
+      xcar_chat: true,
       ad_type: "motorcycles",
     },
   });

@@ -1,10 +1,13 @@
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function GeneralConditionScreen() {
+    const { t } = useTranslation("profile");
+
     return (
-        <Container scrollable header={<ProfileHeader title="General Condition" />}>
+        <Container scrollable header={<ProfileHeader title={t("generalCondition")} />}>
             <View className="items-center m-4 mt-10 border border-primary-500 rounded-lg px-2 py-4 bg-white dark:bg-darkish">
                 <Text className="font-inter text-black dark:text-white">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe minus officiis consequuntur voluptatem delectus nemo earum impedit alias fugiat a quidem numquam excepturi cumque assumenda suscipit ea consequatur obcaecati, commodi fuga dolore laudantium! Commodi ea dignissimos ut odit quasi autem reiciendis illo voluptatum, veritatis temporibus, doloribus beatae optio officiis illum!

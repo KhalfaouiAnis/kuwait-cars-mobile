@@ -1,5 +1,7 @@
 import MoneySign from "@/assets/svg/plan-money-sign";
+import { IMAGES } from "@/core/constants/images";
 import { AntDesign } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
@@ -11,12 +13,19 @@ interface Props {
 export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) {
     return (
         <View
-            className={`bg-white dark:bg-darkish rounded-2xl shadow-lg p-6 relative overflow-hidden border ${isSelected ? 'border-red-500' : 'border-transparent dark:border-primary-500'}`}
-            style={{ shadowRadius: 16, elevation: 4 }}
-        >
+            className={`bg-white dark:bg-darkish rounded-2xl elevation p-6 relative mt-6 border ${isSelected ? 'border-red-500' : 'border-gray-100 dark:border-primary-500'}`}>
+            <View className="absolute -top-5 right-3 z-10">
+                <Image
+                    source={IMAGES.PlanBadge} style={{ width: 60, height: 80 }} contentFit="cover"
+                />
+            </View>
+            <View className="absolute -top-2 right-7 z-20 items-center justify-center">
+                <Text className="text-white text-xs">$10</Text>
+                <Text className="text-white text-xs">/month</Text>
+            </View>
             <View className="flex-row items-start justify-between">
                 <View className="flex-row gap-3 items-center">
-                    <View className="items-center justify-center p-4 bg-[#F3F4F8] rounded-[50px]">
+                    <View className="items-center justify-center p-4 bg-gray-100 rounded-[50px]">
                         <MoneySign />
                     </View>
                     <View>

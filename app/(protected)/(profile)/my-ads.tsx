@@ -5,6 +5,7 @@ import { IMAGES } from "@/core/constants/images";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Reanimated, {
@@ -77,6 +78,7 @@ const listings = [
 ]
 
 export default function MyAdsScreen() {
+    const { t } = useTranslation("profile");
     const swipeableRef = useRef<any>(null);
     const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
     const [activeTab, setActiveTab] = useState<"completed" | "active">("completed")
@@ -117,12 +119,12 @@ export default function MyAdsScreen() {
                         <View className="flex-1 justify-evenly">
                             <TouchableOpacity className="bg-primary-500 py-1 px-3 mb-1 rounded-lg">
                                 <Text className="text-sm">
-                                    Repost
+                                    {t("repost")}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity className="bg-success py-1 px-3 mb-1 rounded-lg">
                                 <Text className="text-sm">
-                                    Edit Ad
+                                    {t("editAd")}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -137,10 +139,10 @@ export default function MyAdsScreen() {
             <View className="flex-1 mx-2">
                 <View className="flex-row items-center justify-center gap-6">
                     <TouchableOpacity onPress={() => setActiveTab("completed")}>
-                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b border-${activeTab === "completed" ? "primary-500" : "gray-300"}`}>Completed</Text>
+                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b border-${activeTab === "completed" ? "primary-500" : "gray-300"}`}>{t("completed")}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setActiveTab("active")}>
-                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b border-${activeTab === "active" ? "primary-500" : "gray-300"}`}>Active</Text>
+                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b border-${activeTab === "active" ? "primary-500" : "gray-300"}`}>{t("active")}</Text>
                     </TouchableOpacity>
                 </View>
                 <View className="flex-1 mt-4">

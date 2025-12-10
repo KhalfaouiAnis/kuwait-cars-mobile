@@ -15,6 +15,19 @@ export const ZipCodeSchema = z.object({
   longitude: z.coerce.number(),
 });
 
+export const AreaSchema = z.object({
+  area: z.string(),
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
+});
+
+export const ProvinceSchema = z.object({
+  province: z.string(),
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
+  areas: z.array(AreaSchema),
+});
+
 export type LocationInterface = z.infer<typeof LocationSchema>;
 
 export const VideoSchema = z

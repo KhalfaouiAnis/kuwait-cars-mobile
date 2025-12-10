@@ -3,16 +3,19 @@ import VerificationCode from "@/core/components/ui/input/verification-code";
 import Timer from "@/core/components/ui/shared/timer";
 import { useOTP } from "@/core/hooks/auth/useAuth";
 import { useLocalSearchParams } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function OTPVerificationScreen() {
+    const { t } = useTranslation("auth");
+
     const { phone } = useLocalSearchParams()
     const { verifyOtp } = useOTP()
 
     return (
         <FormWrapper title="OTP Verification">
             <Text className="mt-12 text-base text-center dark:text-white">
-                We will send you a one time password on this Mobile Number
+                {t("sendOTPPhone")}
             </Text>
             <Text className="mt-6 text-base text-center text-error">
                 {phone}
@@ -26,9 +29,9 @@ export default function OTPVerificationScreen() {
                     showLabel={false}
                     className="text-base text-center mt-8"
                 />
-                <Text className="mt-4 text-base text-center dark:text-white">Do not send OTP ? <Text className="text-primary-500">Send OTP</Text></Text>
+                <Text className="mt-4 text-base text-center dark:text-white">{t("doNotSendOTP")} <Text className="text-primary-500">{t("sendOTP")}</Text></Text>
                 <TouchableOpacity className="bg-primary-500 py-3 rounded-lg items-center mt-12">
-                    <Text className="text-lg font-semibold text-secondary-900 disabled:text-gray-100">Submit</Text>
+                    <Text className="text-lg font-semibold text-secondary-900 disabled:text-gray-100">{t("submit")}</Text>
                 </TouchableOpacity>
             </View>
         </FormWrapper>

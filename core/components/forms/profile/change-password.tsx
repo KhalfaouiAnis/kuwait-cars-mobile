@@ -8,7 +8,7 @@ import { useUpdatePassword } from "@/core/hooks/user/use-profile";
 import useAuthStore from "@/core/lib/stores/auth.store";
 import { toast } from "sonner-native";
 
-export default function ChangePasswordForm() {
+export default function ChangePasswordForm({ t }: { t: (key: string) => string }) {
     const { user } = useAuthStore()
     const { control, handleSubmit, onSubmit, isSubmitting, errors } = useUpdatePassword(user?.phone)
 
@@ -46,23 +46,36 @@ export default function ChangePasswordForm() {
 
             <View className="flex-1 py-2 mt-2 gap-y-12">
                 <InputWithIcon
-                    control={control} name="password" secureTextEntry label="New password"
-                    icon="lock-closed-outline" placeholder="New password" requiredMark endIcon="eye-outline"
+                    control={control}
+                    name="password"
+                    secureTextEntry
+                    label={t("newPassword")}
+                    icon="lock-closed-outline"
+                    placeholder={t("newPassword")}
+                    requiredMark
+                    endIcon="eye-outline"
                     error={errors.password?.message}
                 />
                 <InputWithIcon
-                    control={control} name="confirmPassword" secureTextEntry label="Confirm password"
-                    icon="lock-closed-outline" placeholder="Cofirm new password" requiredMark endIcon="eye-outline"
+                    control={control}
+                    name="confirmPassword"
+                    secureTextEntry
+                    label={t("confirmPassword")}
+                    icon="lock-closed-outline"
+                    placeholder={t("confirmNewPassword")}
+                    requiredMark
+                    endIcon="eye-outline"
                     error={errors.password?.message}
                 />
             </View>
             <View className="flex-1 pt-12">
-                <TouchableOpacity className="bg-primary-500 py-3 rounded-lg items-center"
+                <TouchableOpacity
+                    className="bg-primary-500 py-3 rounded-lg items-center"
                     onPress={handleSubmit(onSubmit, onError)}
                     disabled={isSubmitting}
                 >
                     <Text className="text-lg font-semibold text-secondary-900">
-                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : "Update Password"}
+                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("updatePass")}
                     </Text>
                 </TouchableOpacity>
             </View>

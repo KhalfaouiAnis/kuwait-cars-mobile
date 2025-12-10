@@ -1,7 +1,8 @@
 import * as Localization from "expo-localization";
-import i18n from "i18next";
+import i18n, { changeLanguage } from "i18next";
 import HttpBackend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
+import { SUPPORTED_LANGUAGES } from "../constants";
 
 const API_BASE = process.env.EXPO_PUBLIC_API_URL + "/api";
 
@@ -11,7 +12,7 @@ i18n
   .init({
     lng: "en",
     fallbackLng: "en",
-    supportedLngs: ["en", "ar", "fr"],
+    supportedLngs: SUPPORTED_LANGUAGES.map((lang) => lang.code),
     ns: ["common", "auth"],
     defaultNS: "common",
     interpolation: { escapeValue: false },
@@ -27,7 +28,7 @@ i18n
 
 // Detect initial locale
 const deviceLang = Localization.getLocales()["0"].languageCode || "en";
-i18n.changeLanguage(deviceLang);
+changeLanguage(deviceLang);
 
 i18n.services.formatter?.add("direction", (value) =>
   value === "ar" ? "rtl" : "ltr"

@@ -11,8 +11,6 @@ interface MapViewerProps {
 }
 
 export default function MapViewer({ visible, currentLocation, onClose, handleMapPress }: MapViewerProps) {
-    console.log(currentLocation);
-    
     return <AppModal
         onClose={onClose}
         visible={visible}

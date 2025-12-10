@@ -1,19 +1,27 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
+import AreaSelector from "@/core/components/ui/input/area-selector";
 import ProvinceSelector from "@/core/components/ui/input/province-selector";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
-import { CITIES } from "@/core/constants";
+import { PROVINCES } from "@/core/constants";
 import { AdFormStepProps } from "@/core/types";
 import { CommunAdInterface } from "@/core/types/schema/ads/commun";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
+import { useWatch } from "react-hook-form";
 import { ScrollView, Text, View } from "react-native";
 import LocationPicker from "../../../layout/location/location-picker";
-import { renderProvinceOption } from "../../../ui/shared/render-option";
+import { renderProvinceAreaOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 
-export default function PostAd({ control, errors, isDark }: AdFormStepProps<CommunAdInterface>) {
-    const { params } = useLocalSearchParams()
+export default function PostAd({ control, errors, isDark, setValue }: AdFormStepProps<CommunAdInterface>) {
+    const { label, ad_type } = useLocalSearchParams()
+
+    const province = useWatch({ control, name: "province" })
+    const Areas = province?.areas.map(area => ({ ...area, label: area.area })) || []
+
+    useEffect(() => { setValue?.("ad_type", ad_type as string) }, [ad_type, setValue])
 
     return (
         <ScrollView
@@ -27,37 +35,49 @@ export default function PostAd({ control, errors, isDark }: AdFormStepProps<Comm
                     <Text className="text-sm text-gray-300">Commun ads</Text>
                 </View>
                 <SelectedAdType
-                    label={`${params}`}
+                    label={`${label}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>
             <View>
-                <Text className="font-semibold mb-2 dark:text-white">WHERE IS YOUR LISTING?</Text>
+                <Text className="font-semibold dark:text-white mb-1">WHERE IS YOUR LISTING?</Text>
                 <ProvinceSelector
                     control={control}
                     name="province"
                     required
                     isDark={isDark}
-                    options={CITIES}
-                    renderOption={(option, selected) => renderProvinceOption(option, selected as string)}
+                    options={PROVINCES}
+                    renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
                     placeholder="Province"
                 />
-                <View className="flex-row items-center justify-center gap-x-2 my-4">
-                    <View className="flex-1">
-                        <LocationPicker
-                            control={control}
-                            errors={errors}
-                            isDark={isDark}
-                        />
-                    </View>
-                    <View className="flex-1">
-                        <AdTextInput control={control} name="zip_code" error={errors.zip_code?.message} placeholder="Zip code"
-                            icon={<MaterialCommunityIcons name="email-seal-outline" size={24} color={isDark ? "white" : "black"} className="mt-2" />} />
-                    </View>
-                </View>
             </View>
-            <AdTextInput control={control} name="price" error={errors.price?.message} placeholder="Write Your Price" extraPadding
-                required label="Price" keyboardType="number-pad" />
+            <View className="mt-4">
+                <AreaSelector
+                    control={control}
+                    name="area"
+                    isDark={isDark}
+                    options={Areas}
+                    renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
+                    placeholder="Area"
+                />
+                <View><Text className="text-center text-grayish my-1">Or</Text></View>
+                <LocationPicker
+                    control={control}
+                    errors={errors}
+                    isDark={isDark}
+                    setValue={setValue}
+                />
+            </View>
+            <AdTextInput
+                control={control}
+                name="price"
+                error={errors.price?.message}
+                placeholder="Write Your Price"
+                extraPadding
+                required
+                label="Price"
+                keyboardType="number-pad"
+            />
             <InputWithSpeech
                 control={control}
                 label="Title"
