@@ -15,7 +15,7 @@ import LocationPicker from "../../../layout/location/location-picker";
 import { renderProvinceAreaOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 
-export default function PostAd({ control, setValue, errors, isDark }: AdFormStepProps<SparePartAdInterface>) {
+export default function PostAd({ control, setValue, errors, isDark, t }: AdFormStepProps<SparePartAdInterface>) {
     const { ad_type } = useLocalSearchParams()
 
     const province = useWatch({ control, name: "province" })
@@ -67,6 +67,7 @@ export default function PostAd({ control, setValue, errors, isDark }: AdFormStep
                     errors={errors}
                     isDark={isDark}
                     setValue={setValue}
+                    t={t}
                 />
             </View>
             <AdTextInput control={control} name="price" error={errors.price?.message} placeholder="Write Your Price"

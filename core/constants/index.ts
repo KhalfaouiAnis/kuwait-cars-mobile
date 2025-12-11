@@ -30,9 +30,9 @@ export const COUNTRIES = [
 export const SUBSCRIPTION_PLANS = [
   {
     id: "1",
-    description: "FREE PLAN",
+    description: "Free plan",
     title: "Basic",
-    price: "$99",
+    price: "$0",
     features: [
       "3 user request",
       "10 downloads per day",
@@ -42,9 +42,9 @@ export const SUBSCRIPTION_PLANS = [
   },
   {
     id: "2",
-    description: "FREE PLAN",
-    title: "Pro",
-    price: "$199",
+    description: "Premium plan",
+    title: "Premium",
+    price: "$4",
     features: [
       "3 user request",
       "10 downloads per day",
@@ -54,9 +54,9 @@ export const SUBSCRIPTION_PLANS = [
   },
   {
     id: "3",
-    description: "FREE PLAN",
-    title: "Enterprise",
-    price: "Custom",
+    description: "Premium plus plan",
+    title: "Premium Plus",
+    price: "$10",
     features: [
       "3 user request",
       "10 downloads per day",

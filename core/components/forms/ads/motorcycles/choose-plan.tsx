@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import SubscriptionCard from "../shared/subscription-card";
 
-export default function ChoosePlan({ setValue, getValue }: AdFormStepProps<MotorcycleAdInterface>) {
+export default function ChoosePlan({ setValue, getValue, t }: AdFormStepProps<MotorcycleAdInterface>) {
     const [selectedPlan, setSelectedPlan] = useState(getValue?.("plan"))
 
     const handleSelectPlan = (plan: string) => {
@@ -23,6 +23,7 @@ export default function ChoosePlan({ setValue, getValue }: AdFormStepProps<Motor
                             plan={plan}
                             isSelected={plan.title === selectedPlan}
                             onSelect={handleSelectPlan}
+                            t={t}
                         />
                     ))}
                 </View>

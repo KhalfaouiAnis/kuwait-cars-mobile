@@ -14,7 +14,7 @@ import LocationPicker from "../../../layout/location/location-picker";
 import { renderProvinceAreaOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 
-export default function PostAd({ control, errors, isDark, setValue }: AdFormStepProps<MotorcycleAdInterface>) {
+export default function PostAd({ control, errors, isDark, setValue, t }: AdFormStepProps<MotorcycleAdInterface>) {
     const { brand, ad_type } = useLocalSearchParams()
     const province = useWatch({ control, name: "province" })
     const Areas = province?.areas.map(area => ({ ...area, label: area.area })) || []
@@ -27,8 +27,8 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
         >
             <View>
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
-                    <Text className="text-sm text-gray-300">Used Motors</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
+                    <Text className="text-sm text-gray-300">{t("adCategories.motorcycles")}</Text>
                 </View>
                 <SelectedAdType
                     label={`${ad_type} - ${brand}`}
@@ -36,7 +36,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                 />
             </View>
             <View>
-                <Text className="font-semibold dark:text-white mb-1">WHERE IS YOUR LISTING?</Text>
+                <Text className="font-semibold dark:text-white mb-1">{t("WhereIsYourListing")}</Text>
                 <ProvinceSelector
                     control={control}
                     name="province"
@@ -44,7 +44,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                     isDark={isDark}
                     options={PROVINCES}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder="Province"
+                    placeholder={t("YourProvince")}
                 />
             </View>
             <View className="mt-4">
@@ -54,34 +54,44 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                     isDark={isDark}
                     options={Areas}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder="Area"
+                    placeholder={t("Area")}
                 />
-                <View><Text className="text-center text-grayish my-1">Or</Text></View>
+                <View><Text className="text-center text-grayish my-1">{t("Or")}</Text></View>
                 <LocationPicker
                     control={control}
                     errors={errors}
                     isDark={isDark}
                     setValue={setValue}
+                    t={t}
                 />
             </View>
-            <AdTextInput control={control} name="price" error={errors.price?.message} placeholder="Write Your Price"
-                required label="Price" keyboardType="number-pad" />
+            <AdTextInput
+                control={control}
+                name="price"
+                error={errors.price?.message}
+                placeholder={t("WriteYourPrice")}
+                required
+                label={t("Price")}
+                keyboardType="number-pad"
+                extraPadding
+            />
             <InputWithSpeech
                 control={control}
+                label={t("Title")}
                 name="title"
-                label="Title"
                 required
                 maxLength={30}
                 error={errors.title?.message}
-                placeholder="Write Your Advertisement Title" />
+                placeholder={t("WriteYourAdvertisementTitle")}
+            />
             <TextAreaSpeech
                 control={control}
-                label="Description"
+                label={t("Description")}
                 name="description"
                 maxLength={500}
                 required
                 error={errors.description?.message}
-                placeholder="Write Your Advertisement Description"
+                placeholder={t("WriteYourAdvertisementDescription")}
             />
         </ScrollView>
     )

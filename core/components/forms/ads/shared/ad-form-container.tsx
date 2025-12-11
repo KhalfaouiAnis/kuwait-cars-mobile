@@ -6,13 +6,14 @@ import { Pressable, Text, View } from "react-native";
 
 interface FormContainerProps {
     title: string,
+    resetLabel: string;
     previous: () => string,
     reset: () => void,
     children: ReactNode,
     isDark?: boolean
 }
 
-export default function AdFormContainer({ children, reset, previous, title, isDark }: FormContainerProps) {
+export default function AdFormContainer({ children, reset, resetLabel, previous, title, isDark }: FormContainerProps) {
     const handlePrevious = () => {
         const result = previous()
         if (result === "route") {
@@ -28,7 +29,7 @@ export default function AdFormContainer({ children, reset, previous, title, isDa
                 </Pressable>
                 <Text className='font-inter-semibold text-2xl text-center dark:text-white'>{title}</Text>
                 <Pressable onPress={reset}>
-                    <Text className="text-error">Reset</Text>
+                    <Text className="text-error">{resetLabel}</Text>
                 </Pressable>
             </View>
             <View className="mt-4 px-4 mx-2 flex-1">

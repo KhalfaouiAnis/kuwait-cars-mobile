@@ -1,27 +1,21 @@
 import MoneySign from "@/assets/svg/plan-money-sign";
-import { IMAGES } from "@/core/constants/images";
+import SubscriptionPlan from "@/assets/svg/subscription-plan";
 import { AntDesign } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import { Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
     plan: any,
     isSelected: boolean,
     onSelect: (plan: string) => void
+    t: (key: string) => string
 }
 
-export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) {
+export default function SubscriptionCard({ plan, isSelected, onSelect, t }: Props) {
     return (
         <View
-            className={`bg-white dark:bg-darkish rounded-2xl elevation p-6 relative mt-6 border ${isSelected ? 'border-red-500' : 'border-gray-100 dark:border-primary-500'}`}>
-            <View className="absolute -top-5 right-3 z-10">
-                <Image
-                    source={IMAGES.PlanBadge} style={{ width: 60, height: 80 }} contentFit="cover"
-                />
-            </View>
-            <View className="absolute -top-2 right-7 z-20 items-center justify-center">
-                <Text className="text-white text-xs">$10</Text>
-                <Text className="text-white text-xs">/month</Text>
+            className={`bg-white dark:bg-darkish rounded-2xl elevation p-6 relative mt-10 border ${isSelected ? 'border-error' : 'border-gray-100 dark:border-primary-500'}`}>
+            <View className="absolute -top-[26px] -right-4 z-10">
+                <SubscriptionPlan price={plan.price} recColor={plan.id === "1" ? "#FF123D" : "#FAED02"} textColor={plan.id === "1" ? "white" : "black"} />
             </View>
             <View className="flex-row items-start justify-between">
                 <View className="flex-row gap-3 items-center">
@@ -46,7 +40,7 @@ export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) 
                 onPress={() => onSelect(plan.title)}
             >
                 <Text className="font-inter-semibold text-lg dark:text-white">
-                    Choose this plan
+                    {t("ChooseThisPlan")}
                 </Text>
             </TouchableOpacity>
         </View>

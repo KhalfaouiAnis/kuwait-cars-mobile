@@ -24,10 +24,8 @@ import Toyota_5 from "@/assets/images/toyota_5.jpg";
 import AvatarVideoBoy from "@/assets/images/video-call-boy.png";
 import AvatarVideoGirl from "@/assets/images/video-call-girl.png";
 import ZerexG05PhosphateCategory from "@/assets/images/Zerex_G05_Phosphate_Free_Antifreeze_Coolant_Concentrate_1_GA.png";
-import PlanBadge from "@/assets/svg/plan-badge.png";
 
 export const IMAGES = {
-  PlanBadge,
   AvatarVideoBoy,
   AvatarVideoGirl,
   Nature,

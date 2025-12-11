@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-export default function AdDetailsStep2({ control, errors, setValue, getValue }: AdFormStepProps<MotorcycleAdInterface>) {
+export default function AdDetailsStep2({ control, errors, setValue, getValue, t }: AdFormStepProps<MotorcycleAdInterface>) {
     const [showSecondNumber, setShowSecondNumber] = useState(() => getValue?.("second_additional_number") !== undefined)
 
     return (
@@ -22,9 +22,11 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue }: 
                         name="additional_number"
                         keyboardType="numeric"
                         extraPadding
-                        error={errors.additional_number?.message} placeholder="Add Additional Number" />
+                        error={errors.additional_number?.message}
+                        placeholder={t("AddAdditionalNumber")}
+                    />
                     {
-                        !showSecondNumber && (
+                        (!showSecondNumber) && (
                             <TouchableOpacity
                                 className="absolute top-3.5 end-2 rounded-full bg-primary-500 p-2"
                                 onPress={() => setShowSecondNumber(true)}>
@@ -37,40 +39,44 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue }: 
                     <AdTextInput
                         control={control}
                         name="second_additional_number"
-                        readOnly={!showSecondNumber}
+                        readOnly={(!showSecondNumber)}
                         keyboardType="numeric"
                         extraPadding
-                        error={errors.additional_number?.message} placeholder="Add Additional Number" />
+                        error={errors.additional_number?.message}
+                        placeholder={t("AddAdditionalNumber")}
+                    />
                 </View>
-                <View className="mt-8">
+
+                <View className="mt-4">
                     <RadioGroup
                         name="hide_license_plate"
                         bordered
                         control={control}
-                        label="Hide vehicle license plate:"
+                        label={t("Hidevehiclelicenseplate")}
                         fullWidth
-                        options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
+                        options={[{ id: "Yes", label: t("Yes"), value: "Yes" }, { id: "No", label: t("No"), value: "No" }]}
                     />
-                    <Text className="text-sm mt-1">Hide vehicle license plate for uploaded images</Text>
+                    <Text className="text-sm text-gray-300">{t("hideVehicleLicensePlateForUploadedImages")}</Text>
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2 mt-6">
+
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2 mt-6">
                     <Ionicons name="logo-whatsapp" size={24} color="#25D366" />
-                    <Text>Contact via WhatsApp</Text>
+                    <Text className="dark:text-white">{t("ContactViaWhatsApp")}</Text>
                     <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} checked={getValue?.("contact_whatsapp")} />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
                     <Ionicons name="call-outline" size={24} color="#25D366" />
-                    <Text>Receive Calls</Text>
+                    <Text className="dark:text-white">{t("ReceiveCalls")}</Text>
                     <Checkbox onValueChange={(value) => setValue?.("receive_calls", value)} checked={getValue?.("receive_calls")} />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
                     <Ionicons name="call-outline" size={24} color="#00A6DA" />
-                    <Text>Receive Call via XCar</Text>
+                    <Text className="dark:text-white">{t("ReceiveCallViaXCar")}</Text>
                     <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} checked={getValue?.("xcar_calls")} />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
                     <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
-                    <Text>Chat via Xcar</Text>
+                    <Text className="dark:text-white">{t("ChatViaXcar")}</Text>
                     <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} checked={getValue?.("xcar_chat")} />
                 </View>
             </View>

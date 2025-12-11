@@ -5,7 +5,7 @@ import { useWatch } from 'react-hook-form';
 import { Pressable, Text, View } from 'react-native';
 import MapViewer from './map-viewer';
 
-export default function LocationPicker({ setValue, isDark, control }: AdFormStepProps<any>) {
+export default function LocationPicker({ setValue, isDark, control, t }: AdFormStepProps<any>) {
     const location = useWatch({ control, name: "location" })
     const [showModal, setShowModal] = useState(false);
 
@@ -21,7 +21,7 @@ export default function LocationPicker({ setValue, isDark, control }: AdFormStep
                         className="text-[#333] overflow-hidden"
                         pointerEvents="none"
                     >
-                        {location?.latitude ? Number(location.latitude).toFixed(5) : "Location"}
+                        {location?.latitude ? Number(location.latitude).toFixed(5) : t("Location")}
                     </Text>
                 </View>
                 <View>

@@ -13,7 +13,7 @@ import { FlatList } from "react-native-gesture-handler";
 
 const MAX_IMAGES = 6;
 
-export default function AddPhotos({ errors, setValue, getValue }: AdFormStepProps<UsedCarAdInterface>) {
+export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<UsedCarAdInterface>) {
     const { images, thumbnail, addPhoto, removePhoto, setThumbnail, setImages } = useAdPhotos(setValue)
 
     useEffect(() => {
@@ -62,17 +62,17 @@ export default function AddPhotos({ errors, setValue, getValue }: AdFormStepProp
                 <View className="gap-y-8">
                     {
                         thumbnail?.uri ? (<View>
-                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">Add photos <Text className="text-error">*</Text></Text>
+                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("addPhotos")} <Text className="text-error">*</Text></Text>
                             {renderPhoto(thumbnail.uri, "thumbnail", thumbnail.name)}
-                            <Text className="justify-end ml-auto mr-4 font-semibold dark:text-white">Picked {images.length + 1} of {MAX_IMAGES}</Text>
+                            <Text className="justify-end ml-auto mr-4 font-semibold dark:text-white"> {t("pickedXOofY", { pickedCount: images.length + 1, totalCount: MAX_IMAGES })}</Text>
                         </View>) : (
                             <View>
                                 <View className="gap-y-6">
-                                    <Text className="font-inter-semibold text-3xl dark:text-white">Good pictures sell faster</Text>
-                                    <Text numberOfLines={2} className="text-center dark:text-white">Capture the front, back, and sides — buyers love seeing the full view</Text>
+                                    <Text className="font-inter-semibold text-3xl dark:text-white">{t("goodPicturesSellFaster")}</Text>
+                                    <Text numberOfLines={2} className="text-center dark:text-white">{t("capturePhoto")}</Text>
                                 </View>
                                 <View className="mt-4">
-                                    <Text className="text-xl font-inter-bold mb-1 dark:text-white">Add photos <Text className="text-error">*</Text></Text>
+                                    <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("addPhotos")} <Text className="text-error">*</Text></Text>
                                     <PickFromGallery label="Select file" addMedia={() => addPhoto(false, true, false)} />
                                 </View>
                             </View>
@@ -89,7 +89,6 @@ export default function AddPhotos({ errors, setValue, getValue }: AdFormStepProp
                         </View>
                     )}
                     {images?.length < MAX_IMAGES && <PickFromGallerySM label="Open Gallery" addMedia={() => addPhoto(false, false, true)} />}
-
                 </View>
 
                 <View className="flex-row flex-wrap gap-3 mt-8 pb-8">

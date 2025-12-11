@@ -11,7 +11,7 @@ import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 
-export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps<MotorcycleAdInterface>) {
+export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepProps<MotorcycleAdInterface>) {
     const { video, loading, addVideo, removeVideo, setVideo } = useAdVideo(setValue)
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
                         <View className="rounded-full bg-[#EEEEEE] w-1/2 h-3" />
                     </View>
                     <TouchableOpacity className="flex-row items-center ms-6" onPress={onSkip}>
-                        <Text className="text-lg">Skip</Text>
+                        <Text className="text-lg dark:text-white">{t("Skip")}</Text>
                         <Ionicons name="chevron-forward" size={18} />
                     </TouchableOpacity>
                 </View>
@@ -50,28 +50,29 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
                 !video?.uri && (
                     <View className="gap-y-8">
                         <View className="gap-y-2">
-                            <Text className="font-inter-semibold text-3xl text-center">Attract more buyers</Text>
-                            <Text className="text-center" numberOfLines={2}>A 5–15 second clip can help buyers see your car’s true condition</Text>
+                            <Text className="font-inter-semibold text-3xl text-center dark:text-white">{t("AttractMoreBuyers")}</Text>
+                            <Text className="text-center dark:text-white" numberOfLines={2}>
+                                {t("VideoClip", { minDuration: 5, maxDuration: 15 })}
+                            </Text>
                         </View>
                         <View>
-                            <Text className="text-xl font-inter-bold mb-1">Add Videos</Text>
+                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("AddVideos")}</Text>
                             <PickFromGallery disabled={loading} label="Select file" video addMedia={() => addVideo(false)} />
                         </View>
                         <TakePhotoButton disabled={loading} label="Open Camera & Take Video" addMedia={() => addVideo(true)} />
                         <View className="flex-row items-center justify-center">
                             <View className="border border-gray-300 w-2/5" />
-                            <Text className="px-2">Or</Text>
+                            <Text className="px-2 dark:text-white">{t("Or")}</Text>
                             <View className="border border-gray-300 w-2/5" />
                         </View>
                         <PickFromGallerySM label="Open Gallery" addMedia={() => addVideo(false)} />
                     </View>
                 )
             }
-
             {
                 video && video?.uri && (
                     <View>
-                        <Text className="text-xl font-inter-bold mb-2">Add Videos</Text>
+                        <Text className="text-xl font-inter-bold mb-2">{t("AddVideos")}</Text>
                         <View className="relative w-full pr-2">
                             <VideoPlayer source={video.uri} />
                             <TouchableOpacity

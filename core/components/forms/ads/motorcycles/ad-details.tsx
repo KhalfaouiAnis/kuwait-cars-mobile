@@ -12,7 +12,7 @@ import { renderColorOption, renderYearOption } from "../../../ui/shared/render-o
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
-export default function AdDetails({ control, errors, setValue }: AdFormStepProps<MotorcycleAdInterface>) {
+export default function AdDetails({ control, errors, setValue, t }: AdFormStepProps<MotorcycleAdInterface>) {
     const { ad_type, category, brand } = useLocalSearchParams()
 
     useEffect(() => {
@@ -29,12 +29,13 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
         >
             <View className="flex-row items-center justify-center w-full">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 text-error font-inter-medium text-lg">Required Information</Text>
+                <Text className="px-2 text-error font-inter-medium text-lg">{t("requiredInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View>
                 <View className="flex-row items-center justify-end">
-                    <Text className="text-sm text-gray-300">Used Motors</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
+                    <Text className="text-sm text-gray-300">{t("adCategories.motorcycles")}</Text>
                 </View>
                 <SelectedAdType
                     label={`${category} - ${brand}`}
@@ -48,19 +49,23 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
                         name="year"
                         options={YEARS}
                         required
+                        isDark
                         renderOption={(option, selected) => renderYearOption(option, selected as string)}
                         error={errors.year?.message}
-                        placeholder="Year" />
+                        placeholder={t("Year")}
+                    />
                 </View>
                 <View>
                     <SelectInput
                         control={control}
                         name="exterior_color"
-                        required
                         options={CAR_COLORS}
+                        required
+                        isDark
                         renderOption={(option, selected) => renderColorOption(option, selected as string)}
                         error={errors.exterior_color?.message}
-                        placeholder="Exterior color" />
+                        placeholder={t("exteriorColor")}
+                    />
                 </View>
                 <View className="flex-row gap-1 items-center">
                     <View className="w-[74%]">
@@ -69,33 +74,34 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
                             name="mileage"
                             required
                             error={errors.mileage?.message}
-                            placeholder="Mileage (0 - 1000000)" />
+                            placeholder={t("Mileage")}
+                        />
                     </View>
                     <UnitSelector control={control} name="mileage_unit" />
                 </View>
             </View>
             <View className="flex-row items-center justify-center w-full mt-4">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 font-inter-medium text-lg dark:text-white">Optional Information</Text>
+                <Text className="px-2 font-inter-medium text-lg dark:text-white">{t("optionalInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View className="gap-y-4 py-1 mt-4">
                 <RadioGroup
                     name="fuel_type"
                     control={control}
-                    label="Fuel Type"
+                    label={t("fuelType")}
                     fullWidth
                     options={[
-                        { id: "Petrol", label: "Petrol", value: "Petrol" },
-                        { id: "Diesel", label: "Diesel", value: "Diesel" },
-                        { id: "Electric", label: "Electric", value: "Electric" },
-                        { id: "Hybrid", label: "Hybrid", value: "Hybrid" },
+                        { id: "Petrol", label: t("Petrol"), value: "Petrol" },
+                        { id: "Diesel", label: t("Diesel"), value: "Diesel" },
+                        { id: "Electric", label: t("Electric"), value: "Electric" },
+                        { id: "Hybrid", label: t("Hybrid"), value: "Hybrid" },
                     ]}
                 />
                 <RadioGroup
                     name="cylinders"
                     control={control}
-                    label="Cylinders"
+                    label={t("Cylinders")}
                     options={[
                         { id: "1", label: "1", value: "1" },
                         { id: "2", label: "2", value: "2" },
@@ -107,18 +113,18 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
                 <RadioGroup
                     name="transmission"
                     control={control}
-                    label="Transmission"
+                    label={t("Transmission")}
                     bordered
                     fullWidth
-                    options={[{ id: "auto", label: "Auto", value: "Auto" }, { id: "manual", label: "Manual", value: "Manual" }]}
+                    options={[{ id: "auto", label: t("Auto"), value: "Auto" }, { id: "manual", label: t("Manual"), value: "Manual" }]}
                 />
                 <RadioGroup
                     name="under_warranty"
                     control={control}
-                    label="Under warranty"
+                    label={t("underWarranty")}
                     fullWidth
                     bordered
-                    options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
+                    options={[{ id: "Yes", label: t("Yes"), value: "Yes" }, { id: "No", label: t("No"), value: "No" }]}
                 />
             </View>
         </ScrollView>

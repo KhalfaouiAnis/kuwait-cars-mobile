@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function NewAdScreen() {
-    const {t} = useTranslation("ad_creation")
+    const { t } = useTranslation("ad_creation")
     // {t('pickedXOofY', { pickedCount: pickedCount, totalCount: totalCount })}
     const [adType, setAdType] = useState<{ ad_type: string, params: any } | null>(null)
     const router = useRouter();
@@ -26,12 +26,12 @@ export default function NewAdScreen() {
         <Container header={<ProfileHeader title="Post an Ad" />}>
             <View className="p-4 flex-1 dark:bg-darkish">
                 <View>
-                    <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
                     <AdTypeSelector
                         data={CAR_BRAND_TYPES}
                         selectedValue={adType?.params.label}
                         onChange={setAdType}
-                        placeholder="Select Your Category"
+                        placeholder={t("selectYourCategory")}
                     />
                 </View>
                 <View className="mt-auto mb-4">
@@ -41,7 +41,7 @@ export default function NewAdScreen() {
                         disabled={!adType}
                     >
                         <Text className="text-center text-xl font-inter-semibold">
-                            Next
+                            {t("next")}
                         </Text>
                     </TouchableOpacity>
                 </View>

@@ -11,29 +11,32 @@ import { useShowCarAd } from "@/core/hooks/ad/flows/useShowCarAd";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { router } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { toast } from "sonner-native";
 
-const getStepTitle = (step: number) => {
+const getStepTitle = (step: number, t: (key: string) => string) => {
     switch (step) {
         case 1:
-            return "Post an Ad"
+            return t("steps.postAd")
         case 2:
-            return "Add Media"
+            return t("steps.addMedia")
         case 3:
         case 4:
-            return "Add Ad Details"
+            return t("steps.addedDetails")
         case 5:
-            return "Choose Plans"
+            return t("steps.ChoosePlans")
         default:
             return ""
     }
 }
+
 const TOTAL_STEPS = 5;
 
 export default function NewAdScreen() {
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useShowCarAd()
     const { theme } = useUserPreferencesStore()
+    const { t } = useTranslation("ad_creation")
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -107,15 +110,15 @@ export default function NewAdScreen() {
     const renderCurrentStep = () => {
         switch (currentStep) {
             case 1:
-                return <PostAd control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
+                return <PostAd t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 2:
-                return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
+                return <AddPhotos t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 3:
-                return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} isDark={theme !== "light"} />;
+                return <AddVideo t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} isDark={theme !== "light"} />;
             case 4:
-                return <AdDetails control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
+                return <AdDetails t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 5:
-                return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} isDark={theme !== "light"} />;
+                return <ChoosePlan t={t} setValue={setValue} getValue={getValues} control={control} errors={errors} isDark={theme !== "light"} />;
             default:
                 return null;
         }
@@ -139,7 +142,7 @@ export default function NewAdScreen() {
     if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
-        <AdFormContainer title={getStepTitle(currentStep)} reset={handleReset} previous={handlePrevious}>
+        <AdFormContainer title={getStepTitle(currentStep, t)} reset={handleReset} resetLabel={t("Reset")} previous={handlePrevious}>
             {
                 isUploading && uploadProgress < 100 && (
                     <View className="mb-1">
@@ -163,6 +166,7 @@ export default function NewAdScreen() {
                 onLeave={handleLeave}
                 onStay={handleStay}
                 show={showDialog}
+                t={t}
             />
         </AdFormContainer>
     )

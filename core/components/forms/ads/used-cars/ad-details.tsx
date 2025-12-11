@@ -12,7 +12,7 @@ import { renderColorOption, renderYearOption } from "../../../ui/shared/render-o
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
-export default function AdDetails({ control, errors, setValue }: AdFormStepProps<UsedCarAdInterface>) {
+export default function AdDetails({ control, errors, setValue, t }: AdFormStepProps<UsedCarAdInterface>) {
     const { model, brand, ad_type } = useLocalSearchParams()
 
     useEffect(() => {
@@ -29,14 +29,14 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
         >
             <View className="flex-row items-center justify-center w-full">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 text-error font-inter-medium text-lg">Required Information</Text>
+                <Text className="px-2 text-error font-inter-medium text-lg">{t("requiredInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View className="gap-y-4 mt-4">
                 <View>
                     <View className="flex-row items-center justify-between">
-                        <Text className="font-semibold mb-2 dark:text-white">WHAT ARE YOU SELLING?</Text>
-                        <Text className="text-sm text-gray-300">Used Cars</Text>
+                        <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
+                        <Text className="text-sm text-gray-300">{t("adCategories.used_cars")}</Text>
                     </View>
                     <SelectedAdType
                         label={`${brand}-${model}`}
@@ -52,7 +52,8 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
                         isDark
                         renderOption={(option, selected) => renderYearOption(option, selected as string)}
                         error={errors.year?.message}
-                        placeholder="Year" />
+                        placeholder={t("Year")}
+                    />
                 </View>
                 <View>
                     <SelectInput
@@ -63,7 +64,8 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
                         isDark
                         renderOption={(option, selected) => renderColorOption(option, selected as string)}
                         error={errors.exterior_color?.message}
-                        placeholder="Exterior color" />
+                        placeholder={t("exteriorColor")}
+                    />
                 </View>
                 <View className="flex-row gap-1 items-center">
                     <View className="w-[74%]">
@@ -72,33 +74,34 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
                             name="mileage"
                             required
                             error={errors.mileage?.message}
-                            placeholder="Mileage (0 - 1000000)" />
+                            placeholder={t("Mileage")}
+                        />
                     </View>
                     <UnitSelector control={control} name="mileage_unit" />
                 </View>
             </View>
             <View className="flex-row items-center justify-center w-full mt-4">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 font-inter-medium text-lg dark:text-white">Optional Information</Text>
+                <Text className="px-2 font-inter-medium text-lg dark:text-white">{t("optionalInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View className="gap-y-4 py-1 mt-4">
                 <RadioGroup
                     name="fuel_type"
                     control={control}
-                    label="Fuel Type"
+                    label={t("fuelType")}
                     fullWidth
                     options={[
-                        { id: "Petrol", label: "Petrol", value: "Petrol" },
-                        { id: "Diesel", label: "Diesel", value: "Diesel" },
-                        { id: "Electric", label: "Electric", value: "Electric" },
-                        { id: "Hybrid", label: "Hybrid", value: "Hybrid" },
+                        { id: "Petrol", label: t("Petrol"), value: "Petrol" },
+                        { id: "Diesel", label: t("Diesel"), value: "Diesel" },
+                        { id: "Electric", label: t("Electric"), value: "Electric" },
+                        { id: "Hybrid", label: t("Hybrid"), value: "Hybrid" },
                     ]}
                 />
                 <RadioGroup
                     name="cylinders"
                     control={control}
-                    label="Cylinders"
+                    label={t("Cylinders")}
                     options={[
                         { id: "2", label: "2", value: "2" },
                         { id: "4", label: "4", value: "4" },
@@ -112,26 +115,26 @@ export default function AdDetails({ control, errors, setValue }: AdFormStepProps
                 <RadioGroup
                     name="transmission"
                     control={control}
-                    label="Transmission"
+                    label={t("Transmission")}
                     bordered
                     fullWidth
-                    options={[{ id: "auto", label: "Auto", value: "Auto" }, { id: "manual", label: "Manual", value: "Manual" }]}
+                    options={[{ id: "auto", label: t("Auto"), value: "Auto" }, { id: "manual", label: t("Manual"), value: "Manual" }]}
                 />
                 <RadioGroup
                     name="under_warranty"
                     control={control}
-                    label="Under warranty"
+                    label={t("underWarranty")}
                     fullWidth
                     bordered
-                    options={[{ id: "Yes", label: "Yes", value: "Yes" }, { id: "No", label: "No", value: "No" }]}
+                    options={[{ id: "Yes", label: t("Yes"), value: "Yes" }, { id: "No", label: t("No"), value: "No" }]}
                 />
                 <View className="flex-row flex-wrap">
                     <RadioGroup
                         name="roof"
                         control={control}
-                        label="Roof"
-                        options={[{ id: "Sunroof", label: "Sunroof", value: "Sunroof" }, { id: "Panoramic", label: "Panoramic", value: "Panoramic" },
-                        { id: "Convertible Roof", label: "Convertible Roof", value: "Convertible Roof" }
+                        label={t("Roof")}
+                        options={[{ id: "Sunroof", label: t("Sunroof"), value: "Sunroof" }, { id: "Panoramic", label: t("Panoramic"), value: "Panoramic" },
+                        { id: "Convertible Roof", label: t("ConvertibleRoof"), value: "Convertible Roof" }
                         ]}
                     />
                 </View>

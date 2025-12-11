@@ -8,11 +8,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect } from "react";
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Text, TouchableOpacity, View } from "react-native";
 
 const MAX_IMAGES = 5;
 
-export default function AddPhotos({ errors, setValue, getValue }: AdFormStepProps<MotorcycleAdInterface>) {
+export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<MotorcycleAdInterface>) {
     const { images, thumbnail, addPhoto, removePhoto, setThumbnail, setImages } = useAdPhotos(setValue)
 
     useEffect(() => {
@@ -49,47 +49,58 @@ export default function AddPhotos({ errors, setValue, getValue }: AdFormStepProp
     );
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
-            <View className="w-full items-center">
-                <View className="rounded-full mb-6 h-3 w-[60%] bg-[#EEEEEE]">
-                    <View className="rounded-full bg-primary-500 w-1/2 h-3" />
-                </View>
-            </View>
-            <View className="gap-y-8">
-                {
-                    thumbnail?.uri ? (<View>
-                        <Text className="text-xl font-inter-bold mb-1">Add photos <Text className="text-error">*</Text></Text>
-                        {renderPhoto(thumbnail.uri, "thumbnail", thumbnail.name)}
-                        <Text className="justify-end ml-auto mr-4 font-semibold">Picked {images.length + 1} of {MAX_IMAGES}</Text>
-                    </View>) : (
-                        <View>
-                            <View className="gap-y-6">
-                                <Text className="font-inter-semibold text-3xl">Good pictures sell faster</Text>
-                                <Text numberOfLines={2} className="text-center">Capture the front, back, and sides — buyers love seeing the full view</Text>
-                            </View>
-                            <View className="mt-4">
-                                <Text className="text-xl font-inter-bold mb-1">Add photos <Text className="text-error">*</Text></Text>
-                                <PickFromGallery label="Select file" addMedia={() => addPhoto(false, true, false)} />
-                            </View>
-                        </View>
-                    )
-                }
-                <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => addPhoto(true, true, false)} />
-                <View className="flex-row items-center justify-center">
-                    <View className="border border-gray-300 w-2/5" />
-                    <Text className="px-2">Or</Text>
-                    <View className="border border-gray-300 w-2/5" />
-                </View>
-                <PickFromGallerySM label="Open Gallery" addMedia={() => addPhoto(false, false, true)} />
-            </View>
-
-            <View className="flex-row flex-wrap gap-3 mt-8 pb-8">
-                {images?.map(image => (
-                    <View className="w-[31%]" key={image.name}>
-                        {renderPhoto(image.uri, "images", image.name)}
+        <FlatList showsVerticalScrollIndicator={false}
+            data={[]}
+            renderItem={() => <></>}
+            ListHeaderComponent={<View>
+                <View className="w-full items-center">
+                    <View className="rounded-full mb-6 h-3 w-[60%] bg-[#EEEEEE]">
+                        <View className="rounded-full bg-primary-500 w-1/2 h-3" />
                     </View>
-                ))}
-            </View>
-        </ScrollView>
+                </View>
+                <View className="gap-y-8">
+                    {
+                        thumbnail?.uri ? (<View>
+                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("addPhotos")} <Text className="text-error">*</Text></Text>
+                            {renderPhoto(thumbnail.uri, "thumbnail", thumbnail.name)}
+                            <Text className="justify-end ml-auto mr-4 font-semibold dark:text-white"> {t("pickedXOofY", { pickedCount: images.length + 1, totalCount: MAX_IMAGES })}</Text>
+                        </View>) : (
+                            <View>
+                                <View className="gap-y-6">
+                                    <Text className="font-inter-semibold text-3xl dark:text-white">{t("goodPicturesSellFaster")}</Text>
+                                    <Text numberOfLines={2} className="text-center dark:text-white">{t("capturePhoto")}</Text>
+                                </View>
+                                <View className="mt-4">
+                                    <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("addPhotos")} <Text className="text-error">*</Text></Text>
+                                    <PickFromGallery label="Select file" addMedia={() => addPhoto(false, true, false)} />
+                                </View>
+                            </View>
+                        )
+                    }
+                    {
+                        images?.length < MAX_IMAGES && <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => addPhoto(true, true, false)} />
+                    }
+                    {images?.length < MAX_IMAGES && (
+                        <View className="flex-row items-center justify-center">
+                            <View className="border border-gray-300 w-2/5" />
+                            <Text className="px-2 dark:text-white">Or</Text>
+                            <View className="border border-gray-300 w-2/5" />
+                        </View>
+                    )}
+                    {images?.length < MAX_IMAGES && <PickFromGallerySM label="Open Gallery" addMedia={() => addPhoto(false, false, true)} />}
+                </View>
+
+                <View className="flex-row flex-wrap gap-3 mt-8 pb-8">
+                    {/* {
+                                images && images.length > 0 && <ImageGrid images={images} />
+                            } */}
+                    {images?.map(image => (
+                        <View className="w-[31%]" key={image.name}>
+                            {renderPhoto(image.uri, "images", image.name)}
+                        </View>
+                    ))}
+                </View>
+            </View>}
+        />
     )
 }
