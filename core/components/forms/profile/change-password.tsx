@@ -1,11 +1,10 @@
+import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { IMAGES } from "@/core/constants/images";
+import { useUpdatePassword } from "@/core/hooks/user/use-profile";
+import useAuthStore from "@/core/lib/stores/auth.store";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
-
-import InputWithIcon from "@/core/components/ui/input/input-with-icon";
-import { useUpdatePassword } from "@/core/hooks/user/use-profile";
-import useAuthStore from "@/core/lib/stores/auth.store";
 import { toast } from "sonner-native";
 
 export default function ChangePasswordForm({ t }: { t: (key: string) => string }) {
@@ -32,7 +31,7 @@ export default function ChangePasswordForm({ t }: { t: (key: string) => string }
                     <View className="relative">
                         <Image
                             source={user?.avatar
-                                ? { uri: `${process.env.EXPO_PUBLIC_API_URL}${user?.avatar}` }
+                                ? { uri: user?.avatar }
                                 : IMAGES.DefaultAvatar}
                             style={{ width: 75, height: 75, borderRadius: 50 }}
                             contentFit="cover"

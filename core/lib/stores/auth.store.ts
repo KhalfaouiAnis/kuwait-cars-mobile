@@ -36,7 +36,7 @@ const useAuthStore = create<AuthState>()(
           category_id: "vehicles",
           created_at: "now",
           description: "ad description",
-          location: { area: "aa", block: "bb", district: "dd" },
+          location: { latitude: 0, longitude: 0 },
           plan: "pro",
           price: 123,
           subcategory_id: "mercedes",

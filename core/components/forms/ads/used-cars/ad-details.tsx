@@ -75,6 +75,7 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                             required
                             error={errors.mileage?.message}
                             placeholder={t("Mileage")}
+                            keyboardType="number-pad"
                         />
                     </View>
                     <UnitSelector control={control} name="mileage_unit" />
@@ -128,16 +129,14 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                     bordered
                     options={[{ id: "Yes", label: t("Yes"), value: "Yes" }, { id: "No", label: t("No"), value: "No" }]}
                 />
-                <View className="flex-row flex-wrap">
-                    <RadioGroup
-                        name="roof"
-                        control={control}
-                        label={t("Roof")}
-                        options={[{ id: "Sunroof", label: t("Sunroof"), value: "Sunroof" }, { id: "Panoramic", label: t("Panoramic"), value: "Panoramic" },
-                        { id: "Convertible Roof", label: t("ConvertibleRoof"), value: "Convertible Roof" }
-                        ]}
-                    />
-                </View>
+                <RadioGroup
+                    name="roof"
+                    control={control}
+                    label={t("Roof")}
+                    options={[{ id: "Sunroof", label: t("Sunroof"), value: "Sunroof" }, { id: "Panoramic", label: t("Panoramic"), value: "Panoramic" },
+                    { id: "Convertible Roof", label: t("ConvertibleRoof"), value: "Convertible Roof" }
+                    ]}
+                />
             </View>
         </ScrollView>
     )

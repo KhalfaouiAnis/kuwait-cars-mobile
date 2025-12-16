@@ -8,13 +8,17 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { useWatch } from "react-hook-form";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import DraggableImageGrid from "../shared/graddable-image-grid";
 
 const MAX_IMAGES = 6;
 
-export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<UsedCarAdInterface>) {
-    const { images, thumbnail, addPhoto, removePhoto, setThumbnail, setImages } = useAdPhotos(setValue)
+// TODOOOOO: remove thumbnail and put it inside images with type
+
+export default function AddPhotos({ t, setValue, getValue, control }: AdFormStepProps<UsedCarAdInterface>) {
+    const { images, thumbnail, addPhoto, removePhoto, setThumbnail, setImages } = useAdPhotos(setValue, MAX_IMAGES)
+    const imagesGalley = useWatch({ control, name: 'images' })?.map(image => ({ ...image, id: image?.id?.toString() }));
 
     useEffect(() => {
         (async () => {
@@ -41,7 +45,7 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Use
         <View key={key} className="relative mr-2 mb-2">
             <Image source={{ uri: photoUri }} style={{ width: "auto", height: type === "thumbnail" ? 200 : 80, borderRadius: 8 }} contentFit="fill" />
             <TouchableOpacity
-                className="absolute -top-4 -right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                className="absolute z-50 top-4 right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
                 onPress={() => removePhoto(photoUri, type === "thumbnail")}
             >
                 <Ionicons name="close" size={20} color="white" />
@@ -49,11 +53,16 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Use
         </View>
     );
 
+    const handleImagesReorder = (newOrder: string[]) => {
+        if (newOrder.length < 1) return;
+        const galleyMap = new Map(imagesGalley?.map(item => [item.id, item]));
+        const reorderedGallery = newOrder.map(id => galleyMap.get(id));
+        setValue?.('images', reorderedGallery as any, { shouldDirty: true });
+    };
+
     return (
-        <FlatList showsVerticalScrollIndicator={false}
-            data={[]}
-            renderItem={() => <></>}
-            ListHeaderComponent={<View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+            <View>
                 <View className="w-full items-center">
                     <View className="rounded-full mb-6 h-3 w-[60%] bg-[#EEEEEE]">
                         <View className="rounded-full bg-primary-500 w-1/2 h-3" />
@@ -92,16 +101,15 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Use
                 </View>
 
                 <View className="flex-row flex-wrap gap-3 mt-8 pb-8">
-                    {/* {
-                        images && images.length > 0 && <ImageGrid images={images} />
-                    } */}
-                    {images?.map(image => (
-                        <View className="w-[31%]" key={image.name}>
-                            {renderPhoto(image.uri, "images", image.name)}
-                        </View>
-                    ))}
+                    {
+                        imagesGalley && <DraggableImageGrid
+                            data={[...imagesGalley]}
+                            removePhoto={removePhoto}
+                            handleImagesReorder={handleImagesReorder}
+                        />
+                    }
                 </View>
-            </View>}
-        />
+            </View>
+        </ScrollView>
     )
 }

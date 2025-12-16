@@ -1,9 +1,8 @@
-// import { hideLisencePlate } from "@/core/lib/api/cloud/upload-to-cloudinary";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { Image, getFileSize } from "react-native-compressor";
 
-export const useAdPhotos = (setValue: any) => {
+export const useAdPhotos = (setValue: any, MAX_IMAGES?: number) => {
   const [images, setImages] = useState<any[]>([]);
   const [thumbnail, setThumbnail] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -17,10 +16,11 @@ export const useAdPhotos = (setValue: any) => {
       const options: ImagePicker.ImagePickerOptions | undefined = {
         mediaTypes: ["images"],
         aspect: [4, 3],
-        allowsEditing: true,
+        allowsEditing: !multiple,
         quality: 0.8,
         allowsMultipleSelection: multiple,
-        orderedSelection: true,
+        orderedSelection: multiple,
+        selectionLimit: (MAX_IMAGES || 6) - images.length,
       };
 
       const result = await (fromCamera
@@ -38,9 +38,9 @@ export const useAdPhotos = (setValue: any) => {
           const compressedSize = await getFileSize(compressedUri);
 
           return {
-            key: asset.uri,
+            id: asset.assetId || Math.random() * 1000 + "",
             uri: compressedUri,
-            type: asset.mimeType,
+            type: "IMAGE",
             name: asset.fileName,
             size: compressedSize,
           };
@@ -48,7 +48,7 @@ export const useAdPhotos = (setValue: any) => {
         const newPhotos: any[] = await Promise.all(processingPromises);
 
         setImages((prevState) => {
-          setValue?.("images", [...prevState, ...newPhotos]);
+          setValue("images", [thumbnail,...prevState, ...newPhotos]);
           return [...prevState, ...newPhotos];
         });
         return;
@@ -64,17 +64,20 @@ export const useAdPhotos = (setValue: any) => {
       const compressedSize = await getFileSize(compressedUri);
 
       const fileObj: any = {
+        id: result.assets[0].assetId || Math.random() * 10000 + "",
         uri: compressedUri,
-        type: result.assets[0].mimeType,
+        type: forThumbnail ? "THUMBNAIL" : "IMAGE",
         name: result.assets[0].fileName,
         size: compressedSize,
       };
 
-      // await hideLisencePlate(fileObj);
-
       if (forThumbnail) {
         setThumbnail(fileObj);
-        setValue?.("thumbnail", fileObj);
+        setValue("thumbnail", fileObj);
+        setImages((prevState) => {
+          setValue("images", [fileObj, ...prevState]);
+          return [fileObj, ...prevState];
+        });
       }
     } finally {
       setLoading(false);

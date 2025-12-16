@@ -8,7 +8,7 @@ import { Alert, Platform, TouchableOpacity } from 'react-native';
 export default function AppleButton({ onSuccess }: { onSuccess?: (user: any) => void }) {
     const router = useRouter();
 
-    if (Platform.OS !== 'ios') return null; // iOS only
+    if (Platform.OS !== 'ios') return null;
 
     const handlePress = async () => {
         try {
@@ -17,11 +17,11 @@ export default function AppleButton({ onSuccess }: { onSuccess?: (user: any) => 
                 requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
             });
 
-            const { identityToken, fullName } = appleAuthRequestResponse;
+            const { identityToken } = appleAuthRequestResponse;
 
             if (!identityToken) throw new Error('No identity token');
 
-            const res = await httpClient.post('/auth/facebook', { identityToken, fullName });
+            const res = await httpClient.post('/auth/apple', { idToken: identityToken });
 
             const { accessToken, refreshToken, user } = res.data
             authStore.setState({ accessToken, refreshToken, user })

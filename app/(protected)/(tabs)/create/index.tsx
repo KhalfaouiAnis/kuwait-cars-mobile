@@ -9,7 +9,6 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 export default function NewAdScreen() {
     const { t } = useTranslation("ad_creation")
-    // {t('pickedXOofY', { pickedCount: pickedCount, totalCount: totalCount })}
     const [adType, setAdType] = useState<{ ad_type: string, params: any } | null>(null)
     const router = useRouter();
 

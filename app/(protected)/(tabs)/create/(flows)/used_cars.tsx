@@ -78,7 +78,7 @@ export default function UsedCarAdScreen() {
         } else if (currentStep === 3) {
             isValid = await trigger(["video"])
         } else if (currentStep === 4) {
-            isValid = await trigger(["title", "description", "price", "province", "zip_code"])
+            isValid = await trigger(["title", "description", "price", "province"])
         } else if (currentStep === 5) {
             isValid = await trigger(["additional_number"])
         } else if (currentStep === 6) {

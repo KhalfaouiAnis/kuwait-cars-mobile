@@ -1,16 +1,10 @@
-import { MAX_IMAGE_SIZE, MAX_VIDEO_SIZE } from "@/core/constants";
+import { MAX_VIDEO_SIZE } from "@/core/constants";
 import { Ad_CATEGORIES } from "@/core/constants/ad";
 import { z } from "zod";
 
 export type AdCategory = (typeof Ad_CATEGORIES)[number];
 
 export const LocationSchema = z.object({
-  latitude: z.coerce.number(),
-  longitude: z.coerce.number(),
-});
-
-export const ZipCodeSchema = z.object({
-  code: z.coerce.number(),
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
 });
@@ -27,9 +21,6 @@ export const ProvinceSchema = z.object({
   longitude: z.coerce.number(),
   areas: z.array(AreaSchema),
 });
-
-export type LocationInterface = z.infer<typeof LocationSchema>;
-
 export const VideoSchema = z
   .object({
     uri: z.string().url().or(z.string().startsWith("file://")).optional(),
@@ -65,35 +56,17 @@ export const VideoSchema = z
   );
 
 export const createFileSchema = (customMessage?: string) =>
-  z
-    .object({
-      uri: z.string().url().or(z.string().startsWith("file://")).optional(),
-      type: z.string().optional(),
-      name: z.string().optional(),
+  z.object(
+    {
+      uri: z.string().url().or(z.string().startsWith("file://")),
+      type: z.string(),
+      id: z.string(),
+      name: z.string(),
       duration: z.coerce.number().optional(),
       size: z.coerce.number().optional(),
-    })
-    .refine(
-      (file) => {
-        if (!file.uri) return false;
-        try {
-          if (
-            !file.type?.startsWith("image/") ||
-            (file.type.startsWith("image/") &&
-              file.size &&
-              file.size > MAX_IMAGE_SIZE)
-          ) {
-            return false;
-          }
-
-          return true;
-        } catch (error) {
-          console.log(error);
-          throw new Error(customMessage || `Invalid file`);
-        }
-      },
-      { message: customMessage || "File validation failed" }
-    );
+    },
+    { message: customMessage || "File validation failed" }
+  );
 
 export const MultiFileSchema = (customMessage?: string) =>
   z.array(createFileSchema(customMessage));
@@ -117,4 +90,9 @@ interface Category {
   regions?: Region[];
   icon?: string;
 }
+
 export type DataItem = Category;
+
+export type LocationInterface = z.infer<typeof LocationSchema>;
+export type ProvinceInterface = z.infer<typeof ProvinceSchema>;
+export type AreaInterface = z.infer<typeof AreaSchema>;

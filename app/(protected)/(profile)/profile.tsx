@@ -29,7 +29,7 @@ export default function ProfileScreen() {
                         <Text className="my-2 font-inter text-black dark:text-white">{t("viewEditProfile")}</Text>
                         <View className="flex-row items-start">
                             <Ionicons name="location-outline" size={20} color="#FAED02" />
-                            <Text className="ms-2 text-black dark:text-white">{user?.city}</Text>
+                            <Text className="ms-2 text-black dark:text-white">{user?.province?.province}</Text>
                         </View>
                     </View>
                     <View className="items-end">

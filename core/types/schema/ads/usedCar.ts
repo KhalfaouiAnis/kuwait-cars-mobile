@@ -8,7 +8,6 @@ import {
   MultiFileSchema,
   ProvinceSchema,
   VideoSchema,
-  ZipCodeSchema,
 } from "../shared";
 
 export const UsedCarAdSchema = z.object({
@@ -22,7 +21,6 @@ export const UsedCarAdSchema = z.object({
   province: ProvinceSchema,
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
-  zip_code: ZipCodeSchema.optional(),
 
   thumbnail: createFileSchema("Thumbnail is required"),
   images: MultiFileSchema("Image must be valid file under 5MB").optional(),
@@ -31,9 +29,12 @@ export const UsedCarAdSchema = z.object({
   brand: z.string().min(1, "Brand is required"),
   model: z.string().min(1, "Model is required"),
 
-  year: z.string().min(1, "Year is required"),
+  year: z.coerce
+    .number()
+    .min(0, "Year is required")
+    .max(new Date().getFullYear()),
   exterior_color: z.string().min(1, "Color is required"),
-  mileage: z.string().min(1, "Mileage is required"),
+  mileage: z.coerce.number().min(1, "Mileage is required"),
   mileage_unit: z.string().optional(),
 
   fuel_type: z.string().optional(),
@@ -44,11 +45,12 @@ export const UsedCarAdSchema = z.object({
 
   additional_number: z.string().optional(),
   second_additional_number: z.string().optional(),
+  hide_license_plate: z.coerce.boolean().optional(),
+
   contact_whatsapp: z.coerce.boolean().optional(),
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),
   xcar_chat: z.coerce.boolean().optional(),
-  hide_license_plate: z.coerce.boolean().optional(),
 });
 
 export type UsedCarAdInterface = z.infer<typeof UsedCarAdSchema>;

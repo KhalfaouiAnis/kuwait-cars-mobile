@@ -32,16 +32,14 @@ export const useAdVideo = (setValue: any, maxRecordingDuration?: number) => {
 
       const fileObj: any = {
         uri: compressedUri,
-        type: result.assets[0].mimeType,
+        type: "VIDEO",
         name: result.assets[0].fileName,
         size: compressedSize,
         duration: result.assets[0].duration,
       };
 
-      // await hideLisencePlate(fileObj);
-
       setVideo(fileObj);
-      setValue?.("video", fileObj);
+      setValue("video", fileObj);
     } finally {
       setLoading(false);
     }

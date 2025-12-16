@@ -14,7 +14,7 @@ export const MotorcycleAdSchema = z.object({
   ad_type: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]], {
     required_error: "The Ad type is required",
   }),
-  category: z.string().min(3, "The category field is required"),
+  ad_category: z.string().min(3, "The category field is required"),
   title: z.string().min(3, "The title field is required"),
   description: z.string().min(3, "The description field is required"),
   plan: z.string().min(1, "The plan field is required"),
@@ -22,18 +22,16 @@ export const MotorcycleAdSchema = z.object({
   province: ProvinceSchema,
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
-  zip_code: z.string().optional(),
 
   thumbnail: createFileSchema("Thumbnail is required"),
   images: MultiFileSchema("Image must be valid file under 5MB").optional(),
   video: VideoSchema,
 
   brand: z.string().min(1, "Brand is required"),
-  model: z.string().min(1, "Model is required"),
 
   year: z.string().min(1, "Year is required"),
   exterior_color: z.string().min(1, "Color is required"),
-  mileage: z.string().min(1, "Mileage is required"),
+  mileage: z.coerce.number().min(1, "Mileage is required"),
   mileage_unit: z.string().optional(),
 
   fuel_type: z.string().optional(),
@@ -43,11 +41,12 @@ export const MotorcycleAdSchema = z.object({
 
   additional_number: z.string().optional(),
   second_additional_number: z.string().optional(),
+  hide_license_plate: z.coerce.boolean().optional(),
+
   contact_whatsapp: z.coerce.boolean().optional(),
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),
   xcar_chat: z.coerce.boolean().optional(),
-  hide_license_plate: z.coerce.boolean().optional(),
 });
 
 export type MotorcycleAdInterface = z.infer<typeof MotorcycleAdSchema>;

@@ -17,6 +17,7 @@ type RadioGroupProps<TForm extends FieldValues> = {
 
 export default function RadioGroup<TForm extends FieldValues>({ control, name, options, label, disabled, fullWidth, bordered }: RadioGroupProps<TForm>) {
     const { field: { onChange, value } } = useController({ control, name });
+
     return (
         <View className='flex-1'>
             {label && <Text className="text-base font-semibold mb-2 dark:text-white">{label}</Text>}

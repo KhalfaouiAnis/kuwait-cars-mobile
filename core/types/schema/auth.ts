@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { UserRole } from "..";
+import { AreaSchema, ProvinceSchema } from "./shared";
 
 export const EmailSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -26,8 +27,8 @@ export const SignupSchema = z.object({
     .max(15, "Please enter a valid phone number"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   role: z.optional(z.nativeEnum(UserRole)),
-  city: z.optional(z.string().min(3, "City must be at least 3 characters")),
-  zip_code: z.string().optional(),
+  province: ProvinceSchema.optional(),
+  area: AreaSchema.optional(),
 });
 
 export const RequestResetPasswordSchema = z.object({

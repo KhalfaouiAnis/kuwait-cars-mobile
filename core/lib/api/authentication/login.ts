@@ -13,9 +13,7 @@ export const attemptLogin = async (phone: string, password: string) => {
 };
 
 export const createAccount = async (data: any) => {
-  return httpClient.post("/auth/register", data, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  return httpClient.post<{ user: User }>("/auth/register", data);
 };
 
 export const requestOTP = async (phone: string) => {

@@ -3,12 +3,6 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { httpClient } from "../httpClient";
 
 GoogleSignin.configure({
-  //   scopes: [
-  //     "email",
-  //     "profile",
-  //     "https://www.googleapis.com/auth/user.phonenumbers.read",
-  //     "https://www.googleapis.com/auth/user.addresses.read",
-  //   ],
   webClientId: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID,
   offlineAccess: true,
 });

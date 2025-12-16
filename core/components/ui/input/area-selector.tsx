@@ -3,6 +3,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { FlatList, Modal, Pressable, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 type AreaSelectorProps<TForm extends FieldValues> = {
@@ -18,12 +19,13 @@ type AreaSelectorProps<TForm extends FieldValues> = {
 }
 
 export default function AreaSelector<TForm extends FieldValues>({ control, name, error, options, renderOption, label, isDark, placeholder, primary }: AreaSelectorProps<TForm>) {
+    const { t } = useTranslation("common")
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
     const renderSelectOption = (option: AreaOption, handleSelect: any) => (
         <Pressable onPress={() => handleSelect(option)}>
-            {renderOption({ label: option.label, value: option?.area }, value?.area)}
+            {renderOption({ label: t("areas." + option.area), value: option?.area }, value?.area)}
         </Pressable>
     );
 
@@ -45,7 +47,7 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
                 <View className='flex-row items-center gap-2'>
                     <MaterialIcons name="location-city" size={24} color={isDark ? "white" : "black"} />
                     <Text className="dark:text-white">
-                        {value?.label || placeholder}
+                        {t("areas." + value?.area) || placeholder}
                     </Text>
                 </View>
                 <View className='flex-row'>
@@ -60,7 +62,7 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
             >
                 <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
                     <View className="flex-1 justify-center items-center bg-black/50">
-                        <View className="dark:bg-darkish dark:border-primary-500 border bg-transparent border-transparent w-80 overflow-hidden">
+                        <View className="dark:bg-darkish dark:border-primary-500 border bg-transparent border-transparent -max-h-screen-safe-offset-8 w-80 overflow-hidden">
                             <FlatList
                                 data={options}
                                 keyExtractor={(item) => item?.area}

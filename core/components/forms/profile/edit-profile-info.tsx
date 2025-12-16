@@ -4,13 +4,16 @@ import { IMAGES } from "@/core/constants/images";
 import { useAvatar } from "@/core/hooks/user/use-avatar";
 import { useProfile } from "@/core/hooks/user/use-profile";
 import useAuthStore from "@/core/lib/stores/auth.store";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useState } from "react";
+import { useWatch } from "react-hook-form";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
+import LocationPicker from "../../layout/location/location-picker";
 import PickFromGallerySM from "../../ui/button/media/open-gallery-sm";
 import TakePhotoButton from "../../ui/button/media/take-photo";
 import AppModal from "../../ui/dialog/modal";
+import AreaSelector from "../../ui/input/area-selector";
 import PhoneInput from "../../ui/input/phone-input";
 import ProvinceSelector from "../../ui/input/province-selector";
 import { renderProvinceAreaOption } from "../../ui/shared/render-option";
@@ -21,6 +24,9 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: (key: 
 
     const { errors, handleSubmit, onSubmit, isSubmitting, control, setValue } = useProfile(user ? { ...user, avatar: { uri: user.avatar || "", type: "image/jpeg" } } : undefined)
     const { addAvatar, avatar } = useAvatar(setValue)
+
+    const province = useWatch({ control, name: "province" })
+    const Areas = province?.areas.map(area => ({ ...area, label: area.area })) || []
 
     const onError = (errors: any) => {
         console.log('Validation failed:', errors);
@@ -62,6 +68,7 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: (key: 
                     name="fullname"
                     placeholder={t("name")}
                     control={control}
+                    requiredMark
                 />
                 <PhoneInput
                     control={control}
@@ -80,32 +87,31 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: (key: 
                 <ProvinceSelector
                     control={control}
                     name="province"
-                    required
-                    isDark={theme !== "light"}
                     options={PROVINCES}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
                     placeholder={t("yourProvince")}
                     label={t("yourProvince")}
+                    isDark={theme !== "light"}
                     primary
                 />
-                <View className="flex-row items-center gap-x-2">
-                    <InputWithIcon
-                        control={control}
-                        name="city"
-                        icon="location-outline"
-                        placeholder={t("city")}
-                        label={t("city")}
-                        error={errors.city?.message}
-                    />
-                    <InputWithIcon
-                        control={control}
-                        name="zip_code"
-                        customIcon={<MaterialCommunityIcons name="email-seal-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        placeholder={t("zipCode")}
-                        label={t("zipCode")}
-                        error={errors.zip_code?.message}
-                    />
-                </View>
+                <AreaSelector
+                    control={control}
+                    name="area"
+                    options={Areas}
+                    renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
+                    placeholder={t("Area")}
+                    label={t("yourArea")}
+                    isDark={theme !== "light"}
+                    primary
+                />
+                <LocationPicker
+                    control={control}
+                    errors={errors}
+                    isDark={theme !== "light"}
+                    setValue={setValue}
+                    primary
+                    t={t}
+                />
             </View>
             <TouchableOpacity className="bg-primary-500 py-3 rounded-lg items-center mt-6"
                 onPress={handleSubmit(onSubmit, onError)}

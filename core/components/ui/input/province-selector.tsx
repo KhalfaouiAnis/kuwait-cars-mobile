@@ -3,6 +3,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { FlatList, Modal, Pressable, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 type ProvinceSelectorProps<TForm extends FieldValues> = {
@@ -20,12 +21,13 @@ type ProvinceSelectorProps<TForm extends FieldValues> = {
 }
 
 export default function ProvinceSelector<TForm extends FieldValues>({ control, name, error, options, renderOption, label, required, isDark, placeholder, primary }: ProvinceSelectorProps<TForm>) {
+    const { t } = useTranslation("common")
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
     const renderSelectOption = (option: ProvinceOption, handleSelect: any) => (
         <Pressable onPress={() => handleSelect(option)}>
-            {renderOption({ label: option.label, value: option?.province }, value?.province)}
+            {renderOption({ label: t("provinces." + option.province) || "", value: option?.province }, value?.province)}
         </Pressable>
     );
 
@@ -47,7 +49,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
                 <View className='flex-row items-center gap-2'>
                     <MaterialCommunityIcons name="town-hall" size={24} color={isDark ? "white" : "black"} />
                     <Text className="text-[#333] dark:text-white">
-                        {value?.label || placeholder}
+                        {t("provinces." + value?.province) || placeholder}
                     </Text>
                 </View>
                 <View className='flex-row'>

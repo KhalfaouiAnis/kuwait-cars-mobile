@@ -21,7 +21,6 @@ export const CommunAdSchema = z.object({
   province: ProvinceSchema,
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
-  zip_code: z.string().optional(),
 
   thumbnail: createFileSchema("Thumbnail is required"),
   images: MultiFileSchema("Image must be valid file under 5MB").optional(),
@@ -29,6 +28,8 @@ export const CommunAdSchema = z.object({
 
   additional_number: z.string().optional(),
   second_additional_number: z.string().optional(),
+  hide_license_plate: z.coerce.boolean().optional(),
+
   contact_whatsapp: z.coerce.boolean().optional(),
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),

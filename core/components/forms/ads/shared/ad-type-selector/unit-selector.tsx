@@ -30,7 +30,7 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
             onPress={() => handleSelect(value)}
             activeOpacity={0.7}
         >
-            <Text className="flex-1 text-base text-gray-900 font-medium">{label}</Text>
+            <Text className="flex-1 text-base text-gray-700 font-medium">{label}</Text>
         </TouchableOpacity>
     );
 
@@ -41,7 +41,7 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
                 onPress={() => setIsOpen(true)}
                 activeOpacity={0.7}
             >
-                <Text className="text-base text-gray-900 dark:text-white font-medium">{value || "KM"}</Text>
+                <Text className="text-base text-gray-600 dark:text-white font-medium">{value || "KM"}</Text>
                 <Ionicons name='chevron-down' size={20} color="gray" />
             </TouchableOpacity>
             <Modal

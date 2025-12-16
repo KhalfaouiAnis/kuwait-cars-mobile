@@ -1,6 +1,8 @@
 import AppModal from "@/core/components/ui/dialog/modal";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getCurrentPositionAsync, LocationObjectCoords, requestForegroundPermissionsAsync } from "expo-location";
+import { useEffect, useRef, useState } from "react";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MapView, { MapPressEvent, Marker } from 'react-native-maps';
 
 interface MapViewerProps {
@@ -11,6 +13,36 @@ interface MapViewerProps {
 }
 
 export default function MapViewer({ visible, currentLocation, onClose, handleMapPress }: MapViewerProps) {
+    const [userLocation, setUserLocation] = useState<LocationObjectCoords | null>(null);
+    const mapRef = useRef<null | any>(null);
+
+    useEffect(() => {
+        (async () => {
+            const { status } = await requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                console.warn('Permission to access location was denied');
+                Alert.alert("Location permission is required!")
+                return;
+            }
+
+            const current = await getCurrentPositionAsync({});
+            setUserLocation(current.coords);
+        })();
+    }, []);
+
+    useEffect(() => {
+        if (userLocation && mapRef.current) {
+            const newRegion = {
+                latitude: userLocation.latitude,
+                longitude: userLocation.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+            };
+
+            mapRef.current.animateToRegion(newRegion, 2000);
+        }
+    }, [userLocation]);
+
     return <AppModal
         onClose={onClose}
         visible={visible}
@@ -23,18 +55,15 @@ export default function MapViewer({ visible, currentLocation, onClose, handleMap
         </View>}
         renderContent={() => (
             <MapView
+                ref={mapRef}
                 onPress={handleMapPress}
-                style={{ ...StyleSheet.absoluteFillObject, marginTop: 70 }}
+                style={{ ...StyleSheet.absoluteFillObject, marginTop: 70, marginBottom: 50 }}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
             >
                 {
                     currentLocation && (
-                        <Marker
-                            coordinate={currentLocation}
-                        // title="Your Selected Location"
-                        // description="This is where you picked"
-                        />
+                        <Marker coordinate={currentLocation} />
                     )
                 }
             </MapView>

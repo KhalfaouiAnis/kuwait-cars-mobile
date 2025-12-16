@@ -14,6 +14,7 @@ export const SparePartAdSchema = z.object({
   ad_type: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]], {
     required_error: "The Ad type is required",
   }),
+
   title: z.string().min(3, "The title field is required"),
   description: z.string().min(3, "The description field is required"),
   plan: z.string().min(1, "The plan field is required"),
@@ -21,7 +22,6 @@ export const SparePartAdSchema = z.object({
   province: ProvinceSchema,
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
-  zip_code: z.string().optional(),
 
   thumbnail: createFileSchema("Thumbnail is required"),
   images: MultiFileSchema("Image must be valid file under 5MB").optional(),
@@ -29,6 +29,7 @@ export const SparePartAdSchema = z.object({
 
   additional_number: z.string().optional(),
   second_additional_number: z.string().optional(),
+
   contact_whatsapp: z.coerce.boolean().optional(),
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),

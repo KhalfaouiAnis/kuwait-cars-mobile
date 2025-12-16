@@ -1,14 +1,21 @@
 import Checkbox from "@/core/components/ui/input/checkbox";
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import PhoneInput from "@/core/components/ui/input/phone-input";
+import { PROVINCES } from "@/core/constants";
 import { useSignUp } from "@/core/hooks/auth/useAuth";
 import { Link } from "expo-router";
+import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import AreaSelector from "../../ui/input/area-selector";
+import ProvinceSelector from "../../ui/input/province-selector";
+import { renderProvinceAreaOption } from "../../ui/shared/render-option";
 
 export default function SignUpForm() {
     const { t } = useTranslation("auth");
     const { control, handleSubmit, onSubmit, isSubmitting, errors } = useSignUp()
+    const province = useWatch({ control, name: "province" })
+    const Areas = province?.areas.map(area => ({ ...area, label: area.area })) || []
 
     return (
         <View className="pt-8 px-4 pb-10">
@@ -44,24 +51,21 @@ export default function SignUpForm() {
                     placeholder={t("yourEmail")}
                     error={errors.email?.message}
                 />
-                <View className="w-full flex-row items-center justify-center gap-1">
-                    <InputWithIcon
-                        control={control}
-                        name="city"
-                        icon="location-outline"
-                        placeholder={t("yourCity")}
-                        error={errors.city?.message}
-                    />
-                    <View className="mx-2">
-                        <Text className="dark:text-white">{t("or")}</Text>
-                    </View>
-                    <InputWithIcon
-                        control={control}
-                        name="zip_code"
-                        placeholder={t("zipCode")}
-                        error={errors.zip_code?.message}
-                    />
-                </View>
+                <ProvinceSelector
+                    control={control}
+                    name="province"
+                    required
+                    options={PROVINCES}
+                    renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
+                    placeholder={t("YourProvince")}
+                />
+                <AreaSelector
+                    control={control}
+                    name="area"
+                    options={Areas}
+                    renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
+                    placeholder={t("Area")}
+                />
             </View>
             <View className="flex-row items-center justify-between mt-2">
                 <View className="flex-row items-center gap-x-1">

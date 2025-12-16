@@ -28,8 +28,8 @@ export default function CarsAd({ data, view = "horizontal" }: Props) {
                     <View className="flex-1 flex-row items-center justify-between mt-2">
                         <View className="flex-row items-center">
                             <Ionicons name="location-outline" size={22} />
-                            <Text className="font-inter-medium text-base">{data.location.area}</Text>
-                            <Text className="font-inter text-gray-400 ms-1">{data.location.block}</Text>
+                            <Text className="font-inter-medium text-base">{data.location.latitude}</Text>
+                            <Text className="font-inter text-gray-400 ms-1">{data.location.longitude}</Text>
                         </View>
                         <View className="flex-row items-center gap-x-1">
                             <MaterialCommunityIcons name="gas-station-outline" size={20} color="black" />
@@ -71,8 +71,8 @@ export default function CarsAd({ data, view = "horizontal" }: Props) {
                 <View className="flex-row items-center justify-between">
                     <View className="flex-row items-center">
                         <Ionicons name="location-outline" size={14} />
-                        <Text className="font-inter-medium text-sm">{data.location.area}</Text>
-                        <Text className="font-inter text-gray-400 ms-1 text-sm">{data.location.block}</Text>
+                        <Text className="font-inter-medium text-sm">{data.location.latitude}</Text>
+                        <Text className="font-inter text-gray-400 ms-1 text-sm">{data.location.longitude}</Text>
                     </View>
                     <View>
                         <Text className="font-inter-medium text-sm">{data.price}</Text>

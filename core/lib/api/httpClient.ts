@@ -4,12 +4,7 @@ import { router } from "expo-router";
 import { authStore } from "../stores/auth.store";
 
 export const httpClient = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL + "/api",
-});
-
-export const publicHttpClient = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL,
-  timeout: 120000,
+  baseURL: process.env.EXPO_PUBLIC_API_URL + "/api/v1",
 });
 
 let isRefreshing = false;

@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_PLANS } from "@/core/constants";
+import { SUBSCRIPTION_PLANS } from "@/core/constants/ad";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { useState } from "react";
@@ -17,7 +17,7 @@ export default function ChoosePlan({ setValue, getValue, t }: AdFormStepProps<Us
         <View className="flex-1">
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 50 }}>
                 <View className="flex-col gap-8">
-                    {SUBSCRIPTION_PLANS.map((plan) => (
+                    {SUBSCRIPTION_PLANS.filter(ad => ad.adTypes.some(type => type === getValue?.("ad_type"))).map((plan) => (
                         <SubscriptionCard
                             key={plan.id}
                             plan={plan}

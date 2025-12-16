@@ -4,7 +4,7 @@ import HttpBackend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
 import { SUPPORTED_LANGUAGES } from "../constants";
 
-const API_BASE = process.env.EXPO_PUBLIC_API_URL + "/api";
+const API_BASE = process.env.EXPO_PUBLIC_API_URL + "/api/v1";
 
 i18n
   .use(HttpBackend)

@@ -1,9 +1,3 @@
-import {
-  ACCEPTED_IMAGE_TYPES,
-  ACCEPTED_VIDEO_TYPES,
-  MAX_IMAGE_SIZE,
-  MAX_VIDEO_SIZE,
-} from "@/core/constants";
 import { Ad_CATEGORIES } from "@/core/constants/ad";
 import { z } from "zod";
 
@@ -15,169 +9,46 @@ export const LocationSchema = z.object({
   block: z.string(),
 });
 
-export const FileSchema = z
-  .object({
+export const FileSchema = z.object(
+  {
     uri: z.string().url().or(z.string().startsWith("file://")),
     type: z.string(),
     name: z.string().optional(),
     duration: z.coerce.number().optional(),
     size: z.coerce.number().optional(),
-  })
-  .refine(
-    (file) => {
-      if (!file.uri) return false;
-      try {
-        if (
-          !file.type.startsWith("image/") &&
-          !file.type.startsWith("video/")
-        ) {
-          throw new Error(
-            `File must be a supported format (${[
-              ...ACCEPTED_IMAGE_TYPES,
-              ...ACCEPTED_VIDEO_TYPES,
-            ].join(",")})`
-          );
-        }
+  },
+  { message: "File validation failed" }
+);
 
-        if (
-          file.type.startsWith("image/") &&
-          file.size &&
-          file.size > MAX_IMAGE_SIZE
-        ) {
-          throw new Error(
-            `Image size must be ${MAX_IMAGE_SIZE / (1024 * 1024)}MB or less.`
-          );
-        }
-
-        if (
-          file.type.startsWith("video/") &&
-          file.size &&
-          file.size > MAX_VIDEO_SIZE
-        ) {
-          throw new Error(
-            `Video size must be ${MAX_VIDEO_SIZE / (1024 * 1024)}MB or less.`
-          );
-        }
-
-        if (file.duration && file.type?.startsWith("video/")) {
-          console.log({ duration: file.duration });
-
-          const durationMs = file.duration;
-          if (durationMs < 10000 || durationMs > 30000) {
-            throw new Error("Video duration must be 10-30s");
-          }
-        }
-
-        return true;
-      } catch (error) {
-        console.log(error);
-        throw new Error(`Invalid file`);
-      }
-    },
-    { message: "File validation failed" }
-  );
-
-export const VideoSchema = z
-  .object({
-    uri: z.string().url().or(z.string().startsWith("file://")).optional(),
-    type: z.string().optional(),
-    duration: z.coerce.number().optional(),
-    name: z.string().optional(),
-    size: z.coerce.number().optional(),
-  })
-  .refine(
-    (file) => {
-      if (!file.uri) return true;
-
-      try {
-        if (!file.type?.startsWith("video/")) {
-          return false;
-        }
-        if (file.size && file.size > MAX_VIDEO_SIZE) {
-          return false;
-        }
-
-        const durationMs = file?.duration;
-        if (durationMs && (durationMs < 10000 || durationMs > 30000)) {
-          return false;
-        }
-
-        return true;
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-    },
-    { message: "File validation failed" }
-  );
+export const VideoSchema = z.object({
+  uri: z.string().url().or(z.string().startsWith("file://")).optional(),
+  type: z.string().optional(),
+  duration: z.coerce.number().optional(),
+  name: z.string().optional(),
+  size: z.coerce.number().optional(),
+});
 
 export const createFileSchema = (customMessage?: string) =>
-  z
-    .object({
+  z.object(
+    {
       uri: z.string().url().or(z.string().startsWith("file://")).optional(),
       type: z.string().optional(),
       name: z.string().optional(),
       duration: z.coerce.number().optional(),
       size: z.coerce.number().optional(),
-    })
-    .refine(
-      (file) => {
-        if (!file.uri) return false;
-        try {
-          if (
-            !file.type?.startsWith("image/") &&
-            !file.type?.startsWith("video/")
-          ) {
-            throw new Error(
-              `File must be a supported format (${[
-                ...ACCEPTED_IMAGE_TYPES,
-                ...ACCEPTED_VIDEO_TYPES,
-              ].join(",")})`
-            );
-          }
-
-          if (
-            file.type.startsWith("image/") &&
-            file.size &&
-            file.size > MAX_IMAGE_SIZE
-          ) {
-            throw new Error(
-              `Image size must be ${MAX_IMAGE_SIZE / (1024 * 1024)}MB or less.`
-            );
-          }
-
-          if (
-            file.type.startsWith("video/") &&
-            file.size &&
-            file.size > MAX_VIDEO_SIZE
-          ) {
-            throw new Error(
-              `Video size must be ${MAX_VIDEO_SIZE / (1024 * 1024)}MB or less.`
-            );
-          }
-
-          if (file.duration && file.type?.startsWith("video/")) {
-            const durationMs = file.duration;
-            if (durationMs < 10000 || durationMs > 30000) {
-              throw new Error("Video duration must be 10-30s");
-            }
-          }
-
-          return true;
-        } catch (error) {
-          console.log(error);
-          throw new Error(customMessage || `Invalid file`);
-        }
-      },
-      { message: customMessage || "File validation failed" }
-    );
+    },
+    { message: customMessage || "File validation failed" }
+  );
 
 export const MultiFileSchema = (customMessage?: string) =>
   z.array(createFileSchema(customMessage));
 
 export const BaseAdSchema = z.object({
   title: z.string().min(3, "The title field is required").optional(),
-  description: z.string().min(3, "The description field is required").optional(),
+  description: z
+    .string()
+    .min(3, "The description field is required")
+    .optional(),
   location: LocationSchema,
 
   price: z.coerce.number().optional(),

@@ -20,7 +20,7 @@ export default function RadioButton({ label, selected, onPress, disabled, fullWi
                 "flex-1": fullWidth
             })}
         >
-            <Text className='text-center font-semibold dark:text-white' ellipsizeMode="tail" numberOfLines={1}>
+            <Text className='text-center font-semibold dark:text-white' numberOfLines={1}>
                 {label}
             </Text>
         </TouchableOpacity>

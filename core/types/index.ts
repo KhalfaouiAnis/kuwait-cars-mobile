@@ -6,7 +6,12 @@ import {
   UseFormSetError,
   UseFormSetValue,
 } from "react-hook-form";
-import { LocationInterface } from "./schema/ad";
+import { SUBSCRIPTION_TYPES } from "../constants/ad";
+import {
+  AreaInterface,
+  LocationInterface,
+  ProvinceInterface,
+} from "./schema/shared";
 
 export interface User {
   id: string;
@@ -14,9 +19,10 @@ export interface User {
   phone: string;
   email: string;
   role: UserRole;
-  city?: string;
-  province?: string;
-  zip_code?: string;
+  province?: ProvinceInterface;
+  // province?: Omit<ProvinceInterface, "areas">;
+  area?: AreaInterface;
+  location?: LocationInterface;
   avatar?: string;
 }
 
@@ -83,7 +89,7 @@ export type SelectOption = {
 
 export type ProvinceOption = {
   province: string;
-  label: string;
+  label?: string;
   latitude: number;
   longitude: number;
   areas: AreaOption[];
@@ -91,7 +97,7 @@ export type ProvinceOption = {
 
 export type AreaOption = {
   area: string;
-  label: string;
+  label?: string;
   latitude: number;
   longitude: number;
 };
@@ -102,6 +108,7 @@ export type ProvinceArea = {
 };
 
 export type FilterAdsBy = "brand" | "model" | "year" | "price";
+export type MediaType = "THUMBNAIL" | "IMAGE" | "VIDEO";
 
 export interface AdFormStepProps<T extends FieldValues> {
   control: Control<T>;
@@ -112,4 +119,55 @@ export interface AdFormStepProps<T extends FieldValues> {
   setError?: UseFormSetError<T>;
   onSkip?: () => void;
   t: (key: string, options?: any) => string;
+}
+
+export interface CloudinarySignRequestInterface {
+  mediaType: "image" | "video" | "prodile_pic";
+  audioFlag?: string;
+}
+
+export interface AdvertisementInterface {
+  ad_type: string;
+  ad_category?: string;
+  title: string;
+  description: string;
+  plan: {
+    type: SUBSCRIPTION_TYPES;
+    title: string;
+    price: number;
+    durationInDays: number;
+    features: string[];
+  };
+  province: Omit<ProvinceInterface, "areas">;
+  media: {
+    public_id: string;
+    media_type: MediaType;
+    original_url: string;
+    transformed_url: string;
+  }[];
+  area?: AreaInterface;
+  location?: LocationInterface;
+
+  price?: number;
+  year?: number;
+  brand?: string;
+  model?: string;
+  exterior_color?: string;
+  mileage?: number;
+  mileage_unit?: string;
+
+  fuel_type?: string;
+  cylinders?: string;
+  transmission?: string;
+  under_warranty?: boolean;
+  roof?: string;
+
+  additional_number?: string;
+  second_additional_number?: string;
+
+  hide_license_plate?: boolean;
+  contact_whatsapp?: boolean;
+  receive_calls?: boolean;
+  xcar_calls?: boolean;
+  xcar_chat?: boolean;
 }

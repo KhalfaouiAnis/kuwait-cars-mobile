@@ -1,4 +1,8 @@
 import {
+  hideLisencePlate,
+  uploadFileToCloudinary,
+} from "@/core/lib/api/cloud/upload-to-cloudinary";
+import {
   UsedCarAdInterface,
   UsedCarAdSchema,
 } from "@/core/types/schema/ads/usedCar";
@@ -19,12 +23,12 @@ export function useUsedCarAd() {
     getValues,
   } = useFormHook(UsedCarAdSchema, {
     defaultValues: {
-      year: "2020",
+      year: 2020,
       title: "title",
       description: "description",
       plan: "pro",
       price: 222,
-      mileage: "125,320",
+      mileage: 125,
       mileage_unit: "KM",
       model: "kawasaki",
       brand: "fff",
@@ -32,9 +36,9 @@ export function useUsedCarAd() {
       receive_calls: true,
       xcar_calls: true,
       xcar_chat: true,
-      thumbnail: {},
+      thumbnail: undefined,
       images: [],
-      video: {},
+      video: undefined,
       ad_type: "used_cars",
     },
   });
@@ -44,20 +48,31 @@ export function useUsedCarAd() {
     onUploadProgress?: (progressEvent: AxiosProgressEvent) => void
   ) => {
     try {
-      const formData = new FormData();
+      // const formData = new FormData();
 
-      console.log(data);
+      const { originalUrl, publicId, transformedUrl } =
+        await uploadFileToCloudinary(
+          data.thumbnail.uri!,
+          data.thumbnail.type,
+          data.thumbnail.name,
+          { mediaType: "image" }
+        );
 
-      Object.entries(data).forEach(([key, value]) => {
-        if (["string", "number"].includes(typeof value)) {
-          formData.append(key, value as string);
-        }
-      });
+      console.log(originalUrl, publicId, transformedUrl);
 
-      formData.append("location", JSON.stringify(data.location));
-      formData.append("thumbnail", data.thumbnail as any);
-      formData.append("video", data.video as any);
-      data.images?.forEach((image) => formData.append("images", image as any));
+      const finalUrl = await hideLisencePlate(transformedUrl);
+      console.log(finalUrl);
+
+      // Object.entries(data).forEach(([key, value]) => {
+      //   if (["string", "number"].includes(typeof value)) {
+      //     formData.append(key, value as string);
+      //   }
+      // });
+
+      // formData.append("location", JSON.stringify(data.location));
+      // formData.append("thumbnail", data.thumbnail as any);
+      // formData.append("video", data.video as any);
+      // data.images?.forEach((image) => formData.append("images", image as any));
 
       // const response = await httpClient.post(
       //   "/ads/used_cars/create",

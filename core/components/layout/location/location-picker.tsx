@@ -1,11 +1,16 @@
 import { AdFormStepProps } from '@/core/types';
 import { Ionicons, Octicons } from '@expo/vector-icons';
+import { clsx } from 'clsx';
 import React, { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { Pressable, Text, View } from 'react-native';
 import MapViewer from './map-viewer';
 
-export default function LocationPicker({ setValue, isDark, control, t }: AdFormStepProps<any>) {
+type LocationPickerProps = AdFormStepProps<any> & {
+    primary?: boolean
+}
+
+export default function LocationPicker({ setValue, isDark, control, t, primary }: LocationPickerProps) {
     const location = useWatch({ control, name: "location" })
     const [showModal, setShowModal] = useState(false);
 
@@ -14,9 +19,14 @@ export default function LocationPicker({ setValue, isDark, control, t }: AdFormS
 
     return (
         <View className="w-full">
-            <Pressable onPress={showMap} className='flex-row p-4 items-center justify-between elevation-sm border-transparent border dark:border-primary-500 dark:bg-darkish'>
+            <Pressable
+                onPress={showMap}
+                className={clsx('flex-row items-center p-4 justify-between border dark:border-primary-500 dark:bg-darkish', {
+                    "border-primary-500 rounded-lg border": primary,
+                    "border-transparent elevation-sm": !primary,
+                })}>
                 <View className='flex-row gap-2 items-center'>
-                    <Octicons className='ms-2' name="location" size={20} color={isDark ? "white" : "black"} />
+                    <Octicons name="location" size={20} color={isDark ? "white" : "black"} />
                     <Text
                         className="text-[#333] overflow-hidden"
                         pointerEvents="none"

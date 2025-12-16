@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 
-export default function AdDetails({ control, setValue }: AdFormStepProps<ShowCarAdInterface>) {
+export default function AdDetails({ control, setValue, getValue, t }: AdFormStepProps<ShowCarAdInterface>) {
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -18,21 +18,21 @@ export default function AdDetails({ control, setValue }: AdFormStepProps<ShowCar
                         control={control}
                         name="hide_license_plate"
                         bordered
-                        label="Hide vehicle license plate:"
+                        label={t("Hidevehiclelicenseplate")}
                         fullWidth
                         options={[{ id: "Yes", label: "Yes", value: true }, { id: "No", label: "No", value: false }]}
                     />
-                    <Text className="text-sm text-gray-300">Hide vehicle license plate for uploaded images</Text>
+                    <Text className="text-sm text-gray-300">{t("hideVehicleLicensePlateForUploadedImages")}</Text>
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2 mt-6">
+                <View className="mt-8 flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
                     <Ionicons name="call-outline" size={24} color="#00A6DA" />
-                    <Text>Receive Call via XCar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} />
+                    <Text className="dark:text-white">{t("ReceiveCallViaXCar")}</Text>
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} checked={getValue?.("xcar_calls")} />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
+                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
                     <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
-                    <Text>Chat via Xcar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} />
+                    <Text className="dark:text-white">{t("ChatViaXcar")}</Text>
+                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} checked={getValue?.("xcar_chat")} />
                 </View>
                 <View className="border border-error gap-y-2 p-3 mt-6">
                     <View>

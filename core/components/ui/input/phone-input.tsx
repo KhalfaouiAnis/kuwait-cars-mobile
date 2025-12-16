@@ -62,21 +62,21 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
             {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <View className='flex-row items-center border-primary-500 border rounded-lg p-2'>
                 <TouchableOpacity
-                    className={`flex-row items-center pl-2 py-3 ${error ? 'border-red-500' : ''}`}
+                    className={`flex-row items-center pl-2 py-1 border-e border-e-primary-500 ${error ? 'border-red-500' : ''}`}
                     onPress={() => setShowModal(true)}
                     activeOpacity={0.7}
                     disabled
                 >
                     <Text className="mr-1 text-2xl">{selectedCountry.flag}</Text>
                     {showCode && (<Text className="mr-1 text-base">+{selectedCountry.callingCode}</Text>)}
-                    <Ionicons name="chevron-down" size={20} color="#8E8E93" className='pt-1' />
+                    <Ionicons name="chevron-down" size={20} color="#8E8E93" />
                 </TouchableOpacity>
                 <Controller
                     name={name}
                     control={control}
                     render={({ field: { onChange, value } }) => (
                         <TextInput
-                            className={`flex-1 pl-0 py-3 ${error ? 'border-red-500' : 'text-[#333] dark:text-white'}`}
+                            className={`flex-1 ps-1 h-full ${error ? 'border-red-500' : 'text-[#333] dark:text-white'}`}
                             value={value}
                             onChangeText={(text) => {
                                 handlePhoneChange(text)
@@ -90,7 +90,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                 />
                 <Text className='me-auto text-error'>*</Text>
             </View>
-            {error && <Text className="text-error text-sm mt-1 ml-2">{error}</Text>}
+            {error && <Text className="text-error text-sm ms-2">{error}</Text>}
             <Modal
                 visible={showModal}
                 animationType="slide"
