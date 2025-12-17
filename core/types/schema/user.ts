@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FileSchema } from "./ad";
+import { AvatarSchema } from "./media";
 import { AreaSchema, LocationSchema, ProvinceSchema } from "./shared";
 
 export const UpdateProfileSchema = z.object({
@@ -12,7 +12,7 @@ export const UpdateProfileSchema = z.object({
   province: ProvinceSchema.optional(),
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
-  avatar: FileSchema,
+  avatar: AvatarSchema.optional(),
 });
 
 export type UpdateProfileInterface = z.infer<typeof UpdateProfileSchema>;

@@ -126,28 +126,35 @@ export interface CloudinarySignRequestInterface {
   audioFlag?: string;
 }
 
+export interface AdvertisementMedia {
+  id: string;
+  public_id: string;
+  media_type: MediaType;
+  original_url: string;
+  transformed_url: string;
+}
+
+export interface AdvertisementPlan {
+  type: SUBSCRIPTION_TYPES;
+  title: string;
+  price: number;
+  durationInDays: number;
+  features: string[];
+}
+
 export interface AdvertisementInterface {
+  id: string;
   ad_type: string;
   ad_category?: string;
   title: string;
   description: string;
-  plan: {
-    type: SUBSCRIPTION_TYPES;
-    title: string;
-    price: number;
-    durationInDays: number;
-    features: string[];
-  };
+  plan: AdvertisementPlan;
   province: Omit<ProvinceInterface, "areas">;
-  media: {
-    public_id: string;
-    media_type: MediaType;
-    original_url: string;
-    transformed_url: string;
-  }[];
+  media: AdvertisementMedia[];
   area?: AreaInterface;
   location?: LocationInterface;
 
+  created_at: string;
   price?: number;
   year?: number;
   brand?: string;

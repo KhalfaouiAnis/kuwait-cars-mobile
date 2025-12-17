@@ -1,4 +1,3 @@
-import { MAX_VIDEO_SIZE } from "@/core/constants";
 import { z } from "zod";
 
 export const AvatarSchema = z.object({
@@ -13,9 +12,4 @@ export const AvatarSchema = z.object({
       (val.size as number) <= 5 * 1024 * 1024 // 5MB
     );
   }, "Avatar must be a valid image file under 5MB"),
-});
-
-export const VideoSchema = z.object({
-  video: z.custom<File>(() => {},
-  `Video must be a valid video file under ${MAX_VIDEO_SIZE}MB`),
 });

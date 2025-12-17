@@ -1,4 +1,4 @@
-import Ad from "@/core/components/layout/ads/Ad";
+import Advertisement from "@/core/components/layout/ads/advertisement";
 import renderBrandFilters from "@/core/components/layout/ads/filters/brand/brand-filter";
 import FilteringModal from "@/core/components/layout/ads/filters/filtering-modal";
 import renderModelFilters from "@/core/components/layout/ads/filters/model-filter";
@@ -8,9 +8,10 @@ import renderSortingContent from "@/core/components/layout/ads/sorting/sorting";
 import SortingModal from "@/core/components/layout/ads/sorting/sorting-modal";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
+import { SUBSCRIPTION_TYPES } from "@/core/constants/ad";
 import { IMAGES } from "@/core/constants/images";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
-import { FilterAdsBy } from "@/core/types";
+import { AdvertisementInterface, FilterAdsBy } from "@/core/types";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
@@ -20,63 +21,31 @@ const FILTERS: { label: string, value: FilterAdsBy }[] = [
     { label: "Brand", value: "brand" }, { label: "Model", value: "model" }, { label: "Year", value: "year" }, { label: "Price", value: "price" }
 ]
 
-const listings = [
+const listings: AdvertisementInterface[] = [
     {
         id: "listing-1",
-        images: [
-            { url: IMAGES.CarChevrolet },
-            { url: IMAGES.CarHyunday },
-            { url: IMAGES.CarMercedes },
-            { url: IMAGES.CarToyota },
+        ad_type: "used_cars",
+        media: [
+            { id: "", transformed_url: IMAGES.CarChevrolet, media_type: "IMAGE", public_id: "1", original_url: "" },
+            { id: "", transformed_url: IMAGES.CarHyunday, media_type: "IMAGE", public_id: "2", original_url: "" },
+            { id: "", transformed_url: IMAGES.CarMercedes, media_type: "IMAGE", public_id: "3", original_url: "" },
+            { id: "", transformed_url: IMAGES.CarToyota, media_type: "IMAGE", public_id: "4", original_url: "" },
         ],
-        badge: "Super DEAL",
-        name: "Chevrolet corvette",
-        datePosted: "2015",
-        price: "$525000",
-        description: "Great deal on my car",
-        mielage: "km 192.354",
-        location: "kuwait",
-        distanceFromMyLocation: "3km",
-        engine: "Petrol- 10",
-        gearType: "Manual"
-    },
-    {
-        id: "listing-2",
-        images: [
-            { url: IMAGES.CarHyunday },
-            { url: IMAGES.CarChevrolet },
-            { url: IMAGES.CarMercedes },
-            { url: IMAGES.CarToyota },
-        ],
-        badge: "Super DEAL 2",
-        name: "Hundai",
-        datePosted: "2018",
-        price: "$625000",
-        description: "Great deal on my hundai car",
-        mielage: "km 82.354",
-        location: "kuwait",
-        distanceFromMyLocation: "1km",
-        engine: "Petrol- 1.2",
-        gearType: "Automatic"
-    },
-    {
-        id: "listing-3",
-        images: [
-            { url: IMAGES.CarMercedes },
-            { url: IMAGES.CarHyunday },
-            { url: IMAGES.CarChevrolet },
-            { url: IMAGES.CarToyota },
-        ],
-        badge: "Super DEAL 3",
-        name: "Mercedes",
-        datePosted: "2018",
-        price: "$1625000",
-        description: "Great deal on my Mercedes car",
-        mielage: "km 80.054",
-        location: "kuwait",
-        distanceFromMyLocation: "12km",
-        engine: "Petrol- 1.8",
-        gearType: "Automatic"
+        created_at: "",
+        description: "",
+        title: "",
+        plan: {
+            durationInDays: 50,
+            features: [],
+            price: 2,
+            title: "Gold",
+            type: SUBSCRIPTION_TYPES.GOLDEN
+        },
+        province: {
+            province: "",
+            latitude: 20,
+            longitude: 10,
+        },
     },
 ]
 
@@ -127,8 +96,12 @@ export default function UsedCarsCategoryScreen() {
                 </View>
                 <FlatList
                     data={listings}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2 me-1"><Ad data={item} view={view} isDark={isDark} /></View>}
+                    keyExtractor={item => item?.id}
+                    renderItem={({ item }) => (
+                        <View className="mb-2 me-1">
+                            <Advertisement data={item} view={view} isDark={isDark} />
+                        </View>
+                    )}
                     contentContainerStyle={{ paddingBottom: 50, position: "relative", zIndex: 2 }}
                     showsVerticalScrollIndicator={false}
                     className="bg-transparent me-2"

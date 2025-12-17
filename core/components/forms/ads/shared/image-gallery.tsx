@@ -1,0 +1,63 @@
+import { Ionicons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { LinearTransition } from 'react-native-reanimated';
+
+const IMAGE_WIDTH = 94;
+const IMAGE_HEIGHT = 94;
+
+interface ImageGalleryProps {
+    data: any[];
+    removePhoto: (id: string) => void
+    setAsThumbnail: (id: string) => void
+}
+
+export default function ImageGallery({ data, removePhoto, setAsThumbnail }: ImageGalleryProps) {
+    return (
+        <View className='flex-row flex-wrap gap-3.5'>
+            {
+                data.map((item, index) => (
+                    <Animated.View key={item.id} layout={LinearTransition.springify().damping(70).stiffness(500)}>
+                        <TouchableOpacity
+                            className="items-center justify-center relative rounded-lg my-1"
+                            activeOpacity={0.8}
+                            onPress={() => setAsThumbnail(item.id)}
+                        >
+                            <Image
+                                source={{ uri: item.uri }}
+                                style={{ width: IMAGE_WIDTH, height: IMAGE_HEIGHT, borderRadius: 8 }}
+                                contentFit='fill'
+                            />
+                            {
+                                index === 0 && (
+                                    <View className='absolute -top-4 me-2 z-30'>
+                                        <Text className='text-xs text-grayish font-inter-semibold'>Main photo</Text>
+                                    </View>
+                                )
+                            }
+                            {
+                                index === 0 && (
+                                    <View
+                                        style={{
+                                            ...StyleSheet.absoluteFillObject,
+                                            borderWidth: 1.5,
+                                            borderColor: 'red',
+                                            borderRadius: 8,
+                                        }}
+                                    />
+                                )
+                            }
+                            <TouchableOpacity
+                                className="absolute -top-4 -right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                                onPress={() => removePhoto(item.id)}
+                            >
+                                <Ionicons name="close" size={20} color="white" className='border rounded-full border-white' />
+                            </TouchableOpacity>
+                        </TouchableOpacity>
+                    </Animated.View>
+                ))
+            }
+        </View>
+
+    )
+};

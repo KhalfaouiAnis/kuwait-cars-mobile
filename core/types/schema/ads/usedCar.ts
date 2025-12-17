@@ -23,8 +23,8 @@ export const UsedCarAdSchema = z.object({
   location: LocationSchema.optional(),
 
   thumbnail: createFileSchema("Thumbnail is required"),
-  images: MultiFileSchema("Image must be valid file under 5MB").optional(),
-  video: VideoSchema,
+  images: MultiFileSchema("Image validation failed").default([]),
+  video: VideoSchema.optional(),
 
   brand: z.string().min(1, "Brand is required"),
   model: z.string().min(1, "Model is required"),

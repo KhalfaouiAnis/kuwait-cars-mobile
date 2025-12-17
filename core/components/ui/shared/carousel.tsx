@@ -1,25 +1,22 @@
+import { AdvertisementMedia } from '@/core/types';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from "expo-image";
 import { ReactNode, useRef, useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import VideoPlayer from './video-player';
 
 const screenWidth = Dimensions.get('window').width;
 
 const containerWidth = 320;
 const containerHeight = 240;
 
-type CarouselItem = {
-    url: string;
-};
-
 type CarouselProps = {
-    items: CarouselItem[];
-    onItemPress?: (item: CarouselItem, index: number) => void;
+    items: AdvertisementMedia[];
+    onItemPress?: (item: AdvertisementMedia, index: number) => void;
     badge?: ReactNode;
     showIndicators?: boolean;
     className?: string;
 };
-
 
 export default function Carousel({ items, onItemPress, badge, showIndicators = true, className = '' }: CarouselProps) {
     const scrollViewRef = useRef<ScrollView>(null);
@@ -49,21 +46,27 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
                     >
                         <View className="overflow-hidden relative bg-transparent">
                             <View style={[styles.container, { width: containerWidth, height: containerHeight }]}>
-                                <Image
-                                    style={styles.image}
-                                    source={item.url}
-                                    placeholder={{ blurhash: "LFDQn%_4?IWC~qj[?H%L00ay?aof" }}
-                                    contentFit='fill'
-                                    transition={200}
-                                />
+                                {
+                                    item.media_type === "VIDEO" ? (<VideoPlayer source={item.transformed_url} />) : (
+                                        <Image
+                                            style={styles.image}
+                                            source={item.transformed_url}
+                                            placeholder={{ blurhash: "LFDQn%_4?IWC~qj[?H%L00ay?aof" }}
+                                            contentFit='fill'
+                                            transition={200}
+                                        />
+                                    )
+                                }
                             </View>
-                            <View className="absolute top-2 start-2">
-                                {badge}
-                            </View>
+                            {badge && (
+                                <View className="absolute top-2 start-2">
+                                    {badge}
+                                </View>
+                            )}
                             {showIndicators && (
                                 <View className="absolute bottom-4 end-4 bg-gray-500 rounded-lg px-3 py-1 flex-row items-center">
                                     <Text className="text-white text-xs mr-1">{currentIndex + 1}/{items.length}</Text>
-                                    <Ionicons name="images-outline" size={14} color="white" />
+                                    <Ionicons name={item.media_type === "VIDEO" ? "videocam-outline" : "images-outline"} size={14} color="white" />
                                 </View>
                             )}
                         </View>

@@ -1,4 +1,5 @@
 // import { hideLisencePlate } from "@/core/lib/api/cloud/upload-to-cloudinary";
+import { generateId } from "@/core/utils";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { Video, getFileSize } from "react-native-compressor";
@@ -31,6 +32,7 @@ export const useAdVideo = (setValue: any, maxRecordingDuration?: number) => {
       const compressedSize = await getFileSize(compressedUri);
 
       const fileObj: any = {
+        id: result.assets[0].assetId || generateId(),
         uri: compressedUri,
         type: "VIDEO",
         name: result.assets[0].fileName,

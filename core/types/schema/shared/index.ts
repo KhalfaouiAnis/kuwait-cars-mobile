@@ -1,4 +1,3 @@
-import { MAX_VIDEO_SIZE } from "@/core/constants";
 import { Ad_CATEGORIES } from "@/core/constants/ad";
 import { z } from "zod";
 
@@ -21,51 +20,29 @@ export const ProvinceSchema = z.object({
   longitude: z.coerce.number(),
   areas: z.array(AreaSchema),
 });
-export const VideoSchema = z
-  .object({
-    uri: z.string().url().or(z.string().startsWith("file://")).optional(),
+
+export const VideoSchema = z.object(
+  {
+    uri: z.string().url().or(z.string().startsWith("file://")),
     type: z.string().optional(),
-    duration: z.coerce.number().optional(),
     name: z.string().optional(),
+    id: z.string().optional(),
+    duration: z.coerce.number().optional(),
     size: z.coerce.number().optional(),
-  })
-  .refine(
-    (file) => {
-      if (!file.uri) return true;
-
-      try {
-        if (!file.type?.startsWith("video/")) {
-          return false;
-        }
-        if (file.size && file.size > MAX_VIDEO_SIZE) {
-          return false;
-        }
-
-        const durationMs = file?.duration;
-        if (durationMs && (durationMs < 10000 || durationMs > 30000)) {
-          return false;
-        }
-
-        return true;
-      } catch (error) {
-        console.log(error);
-        return false;
-      }
-    },
-    { message: "File validation failed" }
-  );
+  },
+  { message: "Video File validation failed" }
+);
 
 export const createFileSchema = (customMessage?: string) =>
   z.object(
     {
       uri: z.string().url().or(z.string().startsWith("file://")),
       type: z.string(),
-      id: z.string(),
-      name: z.string(),
-      duration: z.coerce.number().optional(),
+      name: z.string().optional(),
+      id: z.string().optional(),
       size: z.coerce.number().optional(),
     },
-    { message: customMessage || "File validation failed" }
+    { message: customMessage || "Image File validation failed" }
   );
 
 export const MultiFileSchema = (customMessage?: string) =>
