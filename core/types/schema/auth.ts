@@ -20,14 +20,14 @@ export const LoginSchema = z.object({
 
 export const SignupSchema = z.object({
   fullname: z.string().min(3, "Name must be at least 3 characters"),
-  email: z.string().email("Please enter a valid email"),
   phone: z
-    .string()
-    .min(6, "Please enter a valid phone number")
-    .max(15, "Please enter a valid phone number"),
+  .string()
+  .min(6, "Please enter a valid phone number")
+  .max(15, "Please enter a valid phone number"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  email: z.string().email("Please enter a valid email").optional(),
   role: z.optional(z.nativeEnum(UserRole)),
-  province: ProvinceSchema.optional(),
+  province: ProvinceSchema,
   area: AreaSchema.optional(),
 });
 

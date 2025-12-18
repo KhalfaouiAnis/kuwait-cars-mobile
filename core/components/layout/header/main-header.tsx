@@ -4,17 +4,17 @@ import { router } from 'expo-router';
 import { Pressable, TextInput, View } from 'react-native';
 
 const MainHeader = ({ drawer = false, back = true }: { drawer?: boolean, back?: boolean }) => {
-    const { theme } = useUserPreferencesStore()
+    const { theme, isRTL } = useUserPreferencesStore()
 
     const onBack = () => router.canGoBack() && router.back()
     const openProfile = () => router.push("/profile")
 
     return (
-        <View className='mt-1 h-16 flex-row items-center justify-center mx-2'>
+        <View style={{direction: isRTL ? 'rtl' : 'ltr'}} className={`mt-1 h-16 flex-row items-center justify-center mx-2`}>
             {
                 back && (
                     <Pressable onPress={onBack}>
-                        <Ionicons name='chevron-back' size={22} color={theme !== "light" ? "white" : "black"} />
+                        <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={theme !== "light" ? "white" : "black"} />
                     </Pressable>
                 )
             }

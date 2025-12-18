@@ -2,6 +2,7 @@ import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
 import SelectInput from "@/core/components/ui/input/select-input";
 import { CAR_COLORS, YEARS } from "@/core/constants";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,8 +13,9 @@ import { renderColorOption, renderYearOption } from "../../../ui/shared/render-o
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
-export default function AdDetails({ control, errors, setValue, t }: AdFormStepProps<UsedCarAdInterface>) {
+export default function AdDetails({ control, errors, setValue, t, isDark }: AdFormStepProps<UsedCarAdInterface>) {
     const { model, brand, ad_type } = useLocalSearchParams()
+    const { isRTL } = useUserPreferencesStore()
 
     useEffect(() => {
         setValue?.("ad_type", ad_type as string)
@@ -32,7 +34,7 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                 <Text className="px-2 text-error font-inter-medium text-lg">{t("requiredInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
-            <View className="gap-y-4 mt-4">
+            <View className="gap-y-4 mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <View>
                     <View className="flex-row items-center justify-between">
                         <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
@@ -49,7 +51,8 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                         name="year"
                         options={YEARS}
                         required
-                        isDark
+                        isRTL={isRTL}
+                        isDark={isDark}
                         renderOption={(option, selected) => renderYearOption(option, selected as string)}
                         error={errors.year?.message}
                         placeholder={t("Year")}
@@ -61,7 +64,8 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                         name="exterior_color"
                         options={CAR_COLORS}
                         required
-                        isDark
+                        isDark={isDark}
+                        isRTL={isRTL}
                         renderOption={(option, selected) => renderColorOption(option, selected as string)}
                         error={errors.exterior_color?.message}
                         placeholder={t("exteriorColor")}
@@ -86,7 +90,7 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                 <Text className="px-2 font-inter-medium text-lg dark:text-white">{t("optionalInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
-            <View className="gap-y-4 py-1 mt-4">
+            <View className="gap-y-4 py-1 mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <RadioGroup
                     name="fuel_type"
                     control={control}
@@ -94,7 +98,7 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                     fullWidth
                     options={[
                         { id: "Petrol", label: t("Petrol"), value: "Petrol" },
-                        { id: "Diesel", label: t("Diesel"), value: "Diesel" },
+                        { id: "Diesel", label: t("diesel"), value: "Diesel" },
                         { id: "Electric", label: t("Electric"), value: "Electric" },
                         { id: "Hybrid", label: t("Hybrid"), value: "Hybrid" },
                     ]}
@@ -127,14 +131,16 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                     label={t("underWarranty")}
                     fullWidth
                     bordered
-                    options={[{ id: "Yes", label: t("Yes"), value: "Yes" }, { id: "No", label: t("No"), value: "No" }]}
+                    options={[{ id: "Yes", label: t("yes"), value: "Yes" }, { id: "No", label: t("no"), value: "No" }]}
                 />
                 <RadioGroup
                     name="roof"
                     control={control}
                     label={t("Roof")}
-                    options={[{ id: "Sunroof", label: t("Sunroof"), value: "Sunroof" }, { id: "Panoramic", label: t("Panoramic"), value: "Panoramic" },
-                    { id: "Convertible Roof", label: t("ConvertibleRoof"), value: "Convertible Roof" }
+                    options={[
+                        { id: "Sunroof", label: t("Sunroof"), value: "Sunroof" },
+                        { id: "panoramic", label: t("Panoramic"), value: "Panoramic" },
+                        { id: "Convertible Roof", label: t("ConvertibleRoof"), value: "Convertible Roof" }
                     ]}
                 />
             </View>

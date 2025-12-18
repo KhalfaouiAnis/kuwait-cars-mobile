@@ -1,3 +1,4 @@
+import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
 import { AdFormStepProps } from '@/core/types';
 import { Ionicons, Octicons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
@@ -11,6 +12,7 @@ type LocationPickerProps = AdFormStepProps<any> & {
 }
 
 export default function LocationPicker({ setValue, isDark, control, t, primary }: LocationPickerProps) {
+    const { isRTL } = useUserPreferencesStore()
     const location = useWatch({ control, name: "location" })
     const [showModal, setShowModal] = useState(false);
 
@@ -35,7 +37,7 @@ export default function LocationPicker({ setValue, isDark, control, t, primary }
                     </Text>
                 </View>
                 <View>
-                    <Ionicons name='chevron-forward' size={20} />
+                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} />
                 </View>
             </Pressable>
             <MapViewer

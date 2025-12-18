@@ -1,6 +1,7 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import Checkbox from "@/core/components/ui/input/checkbox";
 import RadioGroup from "@/core/components/ui/input/radio-group";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,13 +10,14 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function AdDetailsStep2({ control, errors, setValue, getValue, t }: AdFormStepProps<UsedCarAdInterface>) {
     const [showSecondNumber, setShowSecondNumber] = useState(() => getValue?.("second_additional_number") !== undefined)
+    const { isRTL } = useUserPreferencesStore()
 
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
             className="flex-1"
             contentContainerStyle={{ paddingBottom: 10 }}>
-            <View className="gap-y-2 mt-4">
+            <View className="gap-y-2 mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <View className="relative">
                     <AdTextInput
                         control={control}

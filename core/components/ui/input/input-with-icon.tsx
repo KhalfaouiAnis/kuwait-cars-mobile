@@ -31,7 +31,7 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
             })}>
                 {customIcon ? customIcon : <Ionicons name={icon} size={24} color={error ? "#D80027" : theme !== "light" ? "white" : "black"} className="mr-2" />}
                 <TextInput
-                    className={cn("flex-1 overflow-hidden text-[#333] dark:text-white text-base", { "text-error": error })}
+                    className={cn("flex-1 text-start overflow-hidden text-[#333] dark:text-white text-base", { "text-error": error })}
                     placeholder={placeholder}
                     placeholderTextColor="#A8A8A8"
                     onChangeText={onChange}
@@ -40,7 +40,7 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
                     secureTextEntry={props.secureTextEntry && !showPassword}
                 />
                 {endIcon && (
-                    <Pressable onPress={() => setShowPassword(prevState => !prevState)}>
+                    <Pressable className="me-1" onPress={() => setShowPassword(prevState => !prevState)}>
                         <Ionicons name={showPassword ? "eye-off-outline" : endIcon} size={20} color={error ? "#D80027" : "#677185"} />
                     </Pressable>
                 )}

@@ -1,7 +1,10 @@
 import useAuthStore from "@/core/lib/stores/auth.store";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+
 import { Redirect, Stack } from "expo-router";
 
 export default function ProtectedLayout() {
+    const { isRTL } = useUserPreferencesStore()
     const { isAuthenticated } = useAuthStore();
 
     if (!isAuthenticated) {
@@ -13,7 +16,7 @@ export default function ProtectedLayout() {
             <Stack.Screen
                 name="(profile)"
                 options={{
-                    animation: 'slide_from_left',
+                    animation: isRTL ? 'slide_from_right' : 'slide_from_left',
                     animationDuration: 200,
                     gestureEnabled: false,
                 }}

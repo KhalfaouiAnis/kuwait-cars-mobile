@@ -1,4 +1,8 @@
-import { attemptLogin, verifyOTP } from "@/core/lib/api/authentication/login";
+import {
+  attemptLogin,
+  createAccount,
+  verifyOTP,
+} from "@/core/lib/api/authentication/login";
 import { authStore } from "@/core/lib/stores/auth.store";
 import {
   LoginInterface,
@@ -49,19 +53,19 @@ export function useSignUp() {
     formState: { errors, isSubmitting },
   } = useFormHook(SignupSchema, {
     defaultValues: {
-      email: "",
+      email: undefined,
       password: "",
       fullname: "",
       phone: "",
-      city: "",
     },
   });
 
   const onSubmit = async (data: SignupInterface) => {
     try {
-      // await createAccount(data);
+      await createAccount(data);
       // await requestOTP(data.phone);
-      router.navigate(`/otp_verification?phone=${data.phone}`);
+      // router.navigate(`/otp_verification?phone=${data.phone}`);
+      router.replace("/signin");
     } catch (error) {
       console.log({ error });
     }

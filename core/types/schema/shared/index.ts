@@ -37,7 +37,7 @@ export const createFileSchema = (customMessage?: string) =>
   z.object(
     {
       uri: z.string().url().or(z.string().startsWith("file://")),
-      type: z.string(),
+      type: z.string().optional(),
       name: z.string().optional(),
       id: z.string().optional(),
       size: z.coerce.number().optional(),

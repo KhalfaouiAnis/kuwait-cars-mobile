@@ -10,10 +10,11 @@ interface FormContainerProps {
     previous: () => string,
     reset: () => void,
     children: ReactNode,
+    isRTL?: boolean
     isDark?: boolean
 }
 
-export default function AdFormContainer({ children, reset, resetLabel, previous, title, isDark }: FormContainerProps) {
+export default function AdFormContainer({ children, reset, resetLabel, previous, title, isRTL, isDark }: FormContainerProps) {
     const handlePrevious = () => {
         const result = previous()
         if (result === "route") {
@@ -23,9 +24,9 @@ export default function AdFormContainer({ children, reset, resetLabel, previous,
 
     return (
         <Container>
-            <View className='mt-1 flex flex-row items-center justify-between px-4 mb-2 mx-2'>
+            <View style={{direction: isRTL ? "rtl" : "ltr"}} className='mt-1 flex flex-row items-center justify-between px-4 mb-2 mx-2'>
                 <Pressable onPress={handlePrevious}>
-                    <Ionicons name='chevron-back' size={22} color={isDark ? "white" : "black"} />
+                    <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={isDark ? "white" : "black"} />
                 </Pressable>
                 <Text className='font-inter-semibold text-2xl text-center dark:text-white'>{title}</Text>
                 <Pressable onPress={reset}>

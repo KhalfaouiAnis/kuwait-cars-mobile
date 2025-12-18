@@ -18,6 +18,7 @@ interface AuthState {
   _hasHydrated: boolean;
   isAuthenticated: boolean;
   authType: "APP" | "GOOGLE" | "FACEBOOK" | "APPLE";
+
   bootstrapAsync: () => Promise<void>;
   createAnonymousSesssion: (token: string) => void;
   setUser: (user: User | null) => void;

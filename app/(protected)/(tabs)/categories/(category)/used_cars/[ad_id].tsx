@@ -1,15 +1,18 @@
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Pressable, ScrollView, Text, View } from 'react-native';
 
 export default function UsedCarDetailsScreen() {
+    const { isRTL } = useUserPreferencesStore()
+
     return (
         <Container scrollable header={
             <View className="flex-row items-center justify-between mb-2 mt-4 px-4">
-                <Pressable onPress={() => router.back()}><Ionicons name="chevron-back" size={22} /></Pressable>
+                <Pressable onPress={() => router.back()}><Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} /></Pressable>
                 <View className="flex-row items-center gap-x-3">
                     <Pressable><Ionicons name="flag" size={22} color={"red"} /></Pressable>
                     <Feather name="share-2" size={22} color="black" />

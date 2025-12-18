@@ -1,4 +1,4 @@
-import { USER_PREFERENCES_STORAGE_KEY } from "@/core/constants";
+import { RTL_LANGUAGES, USER_PREFERENCES_STORAGE_KEY } from "@/core/constants";
 import i18n from "@/core/i18n/i18n";
 import { LanguageCode } from "@/core/types";
 import { create } from "zustand";
@@ -9,6 +9,7 @@ interface UserPreferencesState {
   lang: LanguageCode;
   isI18NLoading: boolean;
   theme: "light" | "dark" | "system";
+  isRTL: boolean;
   toggleTheme: () => void;
   setTheme: (theme: "light" | "dark" | "system") => void;
   setLang: (newLang: LanguageCode) => void;
@@ -17,10 +18,11 @@ interface UserPreferencesState {
 
 const useUserPreferencesStore = create<UserPreferencesState>()(
   persist(
-    (set, get) => ({
-      lang: "en",
+    (set) => ({
+      lang: i18n.language as LanguageCode,
       theme: "system",
       isI18NLoading: false,
+      isRTL: false,
       toggleTheme: () => {
         set((state) => ({
           theme: state.theme === "light" ? "dark" : "light",
@@ -28,7 +30,7 @@ const useUserPreferencesStore = create<UserPreferencesState>()(
       },
       setTheme: (newTheme) => set({ theme: newTheme }),
       setLang: (newLang) => {
-        set({ lang: newLang });
+        set({ lang: newLang, isRTL: RTL_LANGUAGES.includes(newLang) });
         i18n.changeLanguage(newLang);
       },
       setI18NLoading: (loading) => set({ isI18NLoading: loading }),
@@ -36,7 +38,11 @@ const useUserPreferencesStore = create<UserPreferencesState>()(
     {
       name: USER_PREFERENCES_STORAGE_KEY,
       storage: createJSONStorage(() => zustandStorage),
-      partialize: (state) => ({ lang: state.lang, theme: state.theme }),
+      partialize: (state) => ({
+        lang: state.lang,
+        isRTL: state.isRTL,
+        theme: state.theme,
+      }),
     }
   )
 );

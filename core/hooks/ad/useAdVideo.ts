@@ -1,11 +1,14 @@
-// import { hideLisencePlate } from "@/core/lib/api/cloud/upload-to-cloudinary";
 import { generateId } from "@/core/utils";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { Video, getFileSize } from "react-native-compressor";
 
-export const useAdVideo = (setValue: any, maxRecordingDuration?: number) => {
-  const [video, setVideo] = useState<any>(null);
+export const useAdVideo = (
+  setValue: any,
+  getValue: any,
+  maxRecordingDuration?: number
+) => {
+  const [video, setVideo] = useState<any>(() => getValue("video"));
   const [loading, setLoading] = useState(false);
 
   const addVideo = async (fromCamera: boolean) => {
@@ -57,6 +60,5 @@ export const useAdVideo = (setValue: any, maxRecordingDuration?: number) => {
     video,
     addVideo,
     removeVideo,
-    setVideo,
   };
 };

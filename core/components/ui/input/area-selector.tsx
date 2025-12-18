@@ -1,3 +1,4 @@
+import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
 import { AreaOption, ProvinceArea } from '@/core/types';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
@@ -20,6 +21,8 @@ type AreaSelectorProps<TForm extends FieldValues> = {
 
 export default function AreaSelector<TForm extends FieldValues>({ control, name, error, options, renderOption, label, isDark, placeholder, primary }: AreaSelectorProps<TForm>) {
     const { t } = useTranslation("common")
+    const { isRTL } = useUserPreferencesStore()
+
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
@@ -47,11 +50,11 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
                 <View className='flex-row items-center gap-2'>
                     <MaterialIcons name="location-city" size={24} color={isDark ? "white" : "black"} />
                     <Text className="dark:text-white">
-                        {t("areas." + value?.area) || placeholder}
+                        {value?.area ? t("areas." + value?.area) : placeholder}
                     </Text>
                 </View>
                 <View className='flex-row'>
-                    <Ionicons name='chevron-forward' size={20} color={isDark ? "white" : "black"} />
+                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} />
                 </View>
             </Pressable>
             <Modal

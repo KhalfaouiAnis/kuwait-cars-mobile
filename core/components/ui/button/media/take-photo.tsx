@@ -4,7 +4,7 @@ import { Text, TouchableOpacity } from "react-native";
 export default function TakePhotoButton({ addMedia, label, disabled }: { addMedia: () => void, label: string, disabled?: boolean }) {
     return (
         <TouchableOpacity
-            className="rounded-full gap-x-2 py-4 ps-10 bg-primary-500 flex-row items-center"
+            className="rounded-full gap-x-2 py-4 bg-primary-500 flex-row items-center justify-center"
             onPress={addMedia}
             disabled={disabled}
         >

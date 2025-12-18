@@ -48,7 +48,7 @@ export default function TextAreaSpeech<TForm extends FieldValues>({ control, nam
                     />
                     <View className='flex-row items-center'>
                         {
-                            required && <Text className='text-error text-lg me-2'>*</Text>
+                            required && <Text className='text-error text-lg me-2 mt-2'>*</Text>
                         }
                     </View>
                     <TouchableOpacity onPress={isRecordingForThisField ? stopListening : startListening} className='border-none bg-transparent absolute end-0 bottom-0'>

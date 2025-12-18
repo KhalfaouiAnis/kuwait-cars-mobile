@@ -37,7 +37,7 @@ const TOTAL_STEPS = 6;
 
 export default function UsedCarAdScreen() {
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useUsedCarAd()
-    const { theme } = useUserPreferencesStore()
+    const { theme, isRTL } = useUserPreferencesStore()
     const { t } = useTranslation("ad_creation")
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
@@ -57,6 +57,8 @@ export default function UsedCarAdScreen() {
     }
 
     const onError = (err: any) => {
+        console.log(err);
+
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
                 if (Array.isArray(error) && error.length > 0) {
@@ -148,7 +150,7 @@ export default function UsedCarAdScreen() {
     if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
-        <AdFormContainer isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>
+        <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>
             {
                 isUploading && uploadProgress < 100 && (
                     <View className="mb-1">

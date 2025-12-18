@@ -54,6 +54,7 @@ export default function SignUpForm() {
                 <ProvinceSelector
                     control={control}
                     name="province"
+                    primary
                     required
                     options={PROVINCES}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
@@ -63,8 +64,9 @@ export default function SignUpForm() {
                     control={control}
                     name="area"
                     options={Areas}
+                    primary
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder={t("Area")}
+                    placeholder={t("yourArea")}
                 />
             </View>
             <View className="flex-row items-center justify-between mt-2">

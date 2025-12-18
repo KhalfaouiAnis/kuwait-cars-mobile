@@ -44,6 +44,7 @@ httpClient.interceptors.response.use(
     const { accessToken, signOut } = authStore.getState();
 
     const originalRequest = error.config;
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -64,11 +65,11 @@ httpClient.interceptors.response.use(
 
         if (authenticated) {
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          processQueue(null, accessToken);
+  
+          return httpClient(originalRequest);
         }
 
-        processQueue(null, accessToken);
-
-        return httpClient(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
         signOut();

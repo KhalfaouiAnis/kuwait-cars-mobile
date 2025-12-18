@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Header = ({ title, headerAction }: Props) => {
-    const { theme } = useUserPreferencesStore()
+    const { theme, isRTL } = useUserPreferencesStore()
     const onBack = () => {
         router.canGoBack() && router.back()
     }
@@ -21,7 +21,7 @@ const Header = ({ title, headerAction }: Props) => {
         <View className='mb-4 flex flex-row items-center justify-between px-2 '>
             <View className='flex flex-row items-center justify-center'>
                 <Pressable onPress={onBack}>
-                    <Ionicons name='chevron-back' size={24} color={theme !== "light" ? "white" : "black"} />
+                    <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={24} color={theme !== "light" ? "white" : "black"} />
                 </Pressable>
                 <Text className='mx-2 text-center dark:text-white'>{title}</Text>
             </View>

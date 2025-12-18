@@ -9,9 +9,10 @@ type AdTypeSelectorProps = {
     data: DataItem[];
     selectedValue?: string;
     placeholder?: string;
+    isRTL: boolean;
 }
 
-export default function AdTypeSelector({ data, onChange, placeholder, selectedValue, ...props }: AdTypeSelectorProps) {
+export default function AdTypeSelector({ data, onChange, placeholder, selectedValue, isRTL, ...props }: AdTypeSelectorProps) {
     const [showModal, setShowModal] = useState(false);
     const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
 
@@ -37,7 +38,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
         if (isLeaf) {
             return (
                 <TouchableOpacity
-                    className={`flex-row items-center my-1 p-3 py-4 elevation-sm border border-transparent dark:border-primary-500 bg-white dark:bg-darkish ms-${(level) * 4}`}
+                    className={`flex-row items-center my-1 p-3 py-4 elevation-sm border border-transparent dark:border-primary-500 bg-white dark:bg-darkish ms-${(level) * 6}`}
                     onPress={() => {
                         if (AD_TYPES.used_cars === path[0]) {
                             const [brand, model] = item.value.split("/")
@@ -65,7 +66,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                     <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{item.label}</Text>
                     <Ionicons
                         className='justify-start'
-                        name='chevron-forward'
+                        name={isRTL ? 'chevron-back' : 'chevron-forward'}
                         size={16}
                         color="gray"
                     />
@@ -82,7 +83,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                     <Ionicons name={item?.icon} size={20} color="gray" />
                     <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{item.label}</Text>
                     <Ionicons
-                        name={isExpanded ? 'chevron-down' : 'chevron-forward'}
+                        name={isExpanded ? 'chevron-down' : isRTL ? 'chevron-back' : 'chevron-forward'}
                         size={16}
                         color="gray"
                         style={{ marginStart: level + 6 }}
@@ -90,7 +91,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                 </TouchableOpacity>
 
                 {isExpanded && hasChildren && children.map((child: any, idx: number) => (
-                    <View style={{ marginStart: level + 6 }} key={idx}>
+                    <View style={{ marginStart: level + 10 }} key={idx}>
                         {renderItem(child, level + 1, [...path, item.value], handleSelect)}
                     </View>
                 ))}
@@ -145,7 +146,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                     <View>
                         <Text className="text-error">*</Text>
                     </View>
-                    <Ionicons name='chevron-forward' size={20} />
+                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} />
                 </View>
             </View>
         </Pressable>

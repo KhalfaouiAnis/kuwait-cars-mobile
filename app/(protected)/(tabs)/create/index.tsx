@@ -2,6 +2,7 @@ import AdTypeSelector from "@/core/components/forms/ads/shared/ad-type-selector/
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
 import { AD_TYPES, CAR_BRAND_TYPES } from "@/core/constants/ad";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,6 +10,8 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 export default function NewAdScreen() {
     const { t } = useTranslation("ad_creation")
+    const { isRTL } = useUserPreferencesStore()
+
     const [adType, setAdType] = useState<{ ad_type: string, params: any } | null>(null)
     const router = useRouter();
 
@@ -22,15 +25,16 @@ export default function NewAdScreen() {
     }
 
     return (
-        <Container header={<ProfileHeader title="Post an Ad" />}>
+        <Container header={<ProfileHeader title={t("steps.postAd")} />}>
             <View className="p-4 flex-1 dark:bg-darkish">
-                <View>
+                <View style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
                     <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
                     <AdTypeSelector
                         data={CAR_BRAND_TYPES}
                         selectedValue={adType?.params.label}
                         onChange={setAdType}
                         placeholder={t("selectYourCategory")}
+                        isRTL={isRTL}
                     />
                 </View>
                 <View className="mt-auto mb-4">
@@ -40,7 +44,7 @@ export default function NewAdScreen() {
                         disabled={!adType}
                     >
                         <Text className="text-center text-xl font-inter-semibold">
-                            {t("next")}
+                            {t("Next")}
                         </Text>
                     </TouchableOpacity>
                 </View>

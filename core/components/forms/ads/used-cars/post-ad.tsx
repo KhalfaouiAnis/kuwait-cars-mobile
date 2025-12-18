@@ -4,6 +4,7 @@ import ProvinceSelector from "@/core/components/ui/input/province-selector";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { PROVINCES } from "@/core/constants";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,6 +17,7 @@ import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 
 export default function PostAd({ control, errors, isDark, setValue, t }: AdFormStepProps<UsedCarAdInterface>) {
     const { model, brand } = useLocalSearchParams()
+    const { isRTL } = useUserPreferencesStore()
     const province = useWatch({ control, name: "province" })
     const Areas = province?.areas.map(area => ({ ...area, label: area.area })) || []
 
@@ -24,6 +26,7 @@ export default function PostAd({ control, errors, isDark, setValue, t }: AdFormS
             showsVerticalScrollIndicator={false}
             className="flex-1"
             contentContainerStyle={{ paddingBottom: 12, rowGap: 12 }}
+            style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
             <View className="mb-2">
                 <View className="flex-row items-center justify-between">

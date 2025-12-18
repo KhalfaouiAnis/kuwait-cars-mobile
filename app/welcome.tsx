@@ -7,6 +7,8 @@ import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
 import { getAnonymousAccessToken } from "@/core/lib/api/authentication/login";
 import { authStore } from "@/core/lib/stores/auth.store";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import Fontisto from '@expo/vector-icons/Fontisto';
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -15,6 +17,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 export default function Index() {
     const { t } = useTranslation("common");
+    const { isRTL } = useUserPreferencesStore()
     const router = useRouter();
 
     const handleAnonymousSession = async () => {
@@ -33,8 +36,8 @@ export default function Index() {
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerClassName="items-center bg-white dark:bg-darkish pt-4">
                 <View className="flex items-center">
                     <Image source={IMAGES.Logo} style={{ width: 175, height: 175, objectFit: 'contain' }} />
-                    <Text className="font-inter-bold text-3xl mt-12 dark:text-white">{t("welcome")}</Text>
-                    <Text className="font-inter-semibold text-lg dark:text-white">{t("subWelcome")}</Text>
+                    <Text className="font-inter-bold text-center text-2xl mt-8 dark:text-white">{t("welcome")}</Text>
+                    <Text className="font-inter-semibold text-lg text-center dark:text-white">{t("subWelcome")}</Text>
                 </View>
                 <View className="flex items-center mt-8 gap-y-4">
                     <AuthLink href="/(auth)/signin" label={t("signIn")} />
@@ -45,10 +48,9 @@ export default function Index() {
                             {t("asAGuest")}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="w-[300px]"
-                        onPress={handleAnonymousSession}>
+                    <TouchableOpacity className="w-[300px]" onPress={handleAnonymousSession}>
                         <Text className="font-normal text-sm self-end mr-3 dark:text-white">
-                            {t("skip")} →
+                            {t("skip")} <Fontisto name={isRTL ? "arrow-left-l" : "arrow-right-l"} size={10} color="gray" />
                         </Text>
                     </TouchableOpacity>
                 </View>

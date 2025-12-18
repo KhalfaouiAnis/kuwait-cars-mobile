@@ -10,9 +10,11 @@ import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
+import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 
 export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepProps<UsedCarAdInterface>) {
-    const { video, loading, addVideo, removeVideo, setVideo } = useAdVideo(setValue)
+    const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue)
+    const { isRTL } = useUserPreferencesStore()
 
     useEffect(() => {
         (async () => {
@@ -27,11 +29,6 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
             }
         })();
     }, []);
-
-    useEffect(() => {
-        const video = getValue?.("video")
-        video && setVideo(video)
-    }, [getValue, setVideo])
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
@@ -55,7 +52,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                                 {t("VideoClip", { minDuration: 5, maxDuration: 15 })}
                             </Text>
                         </View>
-                        <View>
+                        <View style={{direction: isRTL ? "rtl" : "ltr"}}>
                             <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("AddVideos")}</Text>
                             <PickFromGallery disabled={loading} label="Select file" video addMedia={() => addVideo(false)} />
                         </View>
@@ -73,14 +70,13 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
             {
                 video && video?.uri && (
                     <View>
-                        <Text className="text-xl font-inter-bold mb-2">{t("AddVideos")}</Text>
                         <View className="relative w-full pr-2">
                             <VideoPlayer source={video.uri} />
                             <TouchableOpacity
                                 onPress={removeVideo}
-                                className="absolute -top-4 -right-0 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                                className="absolute -top-3 -right-0 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
                             >
-                                <Ionicons name="close" size={20} color="white" />
+                                <Ionicons name="close" size={26} color="white" />
                             </TouchableOpacity>
                         </View>
                     </View>

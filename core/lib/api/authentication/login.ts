@@ -1,4 +1,5 @@
 import { User, UserRole } from "@/core/types";
+import { SignupInterface } from "@/core/types/schema/auth";
 import { httpClient } from "../httpClient";
 
 export const attemptLogin = async (phone: string, password: string) => {
@@ -12,7 +13,7 @@ export const attemptLogin = async (phone: string, password: string) => {
   });
 };
 
-export const createAccount = async (data: any) => {
+export const createAccount = async (data: SignupInterface) => {
   return httpClient.post<{ user: User }>("/auth/register", data);
 };
 

@@ -1,3 +1,4 @@
+import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
 import { ProvinceArea, ProvinceOption } from '@/core/types';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
@@ -22,6 +23,8 @@ type ProvinceSelectorProps<TForm extends FieldValues> = {
 
 export default function ProvinceSelector<TForm extends FieldValues>({ control, name, error, options, renderOption, label, required, isDark, placeholder, primary }: ProvinceSelectorProps<TForm>) {
     const { t } = useTranslation("common")
+    const { isRTL } = useUserPreferencesStore()
+
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
@@ -49,7 +52,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
                 <View className='flex-row items-center gap-2'>
                     <MaterialCommunityIcons name="town-hall" size={24} color={isDark ? "white" : "black"} />
                     <Text className="text-[#333] dark:text-white">
-                        {t("provinces." + value?.province) || placeholder}
+                        {value?.province ? t("provinces." + value?.province) : placeholder}
                     </Text>
                 </View>
                 <View className='flex-row'>
@@ -58,7 +61,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
                             <Text className="text-error">*</Text>
                         </View>
                     )}
-                    <Ionicons name='chevron-forward' size={20} color={isDark ? "white" : "black"} />
+                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} />
                 </View>
             </Pressable>
             <Modal

@@ -5,13 +5,13 @@ import { router } from 'expo-router';
 import { Pressable, View } from 'react-native';
 
 const AuthHeader = () => {
-    const { theme } = useUserPreferencesStore()
+    const { theme, isRTL } = useUserPreferencesStore()
     const onBack = () => router.canGoBack() && router.back()
 
     return (
-        <View className='mt-1 flex flex-row items-center justify-between px-4'>
+        <View className={`'mt-1 flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} items-center justify-between px-4'`}>
             <Pressable onPress={onBack}>
-                <Ionicons name='chevron-back' size={24} color={theme !== "light" ? "white" : "black"} />
+                <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={24} color={theme !== "light" ? "white" : "black"} />
             </Pressable>
             <LanguageSwitcher />
         </View>

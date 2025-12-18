@@ -19,9 +19,10 @@ type SelectInputProps<TForm extends FieldValues> = TextInputProps & {
     icon?: ReactNode,
     extraPadding?: boolean
     isDark?: boolean
+    isRTL?: boolean
 }
 
-export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, required, icon, isDark, extraPadding, ...props }: SelectInputProps<TForm>) {
+export default function SelectInput<TForm extends FieldValues>({ onChangeText, control, name, error, options, renderOption, primary, label, required, icon, isDark, isRTL, extraPadding, ...props }: SelectInputProps<TForm>) {
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
@@ -88,7 +89,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                                 <Text className="text-error">*</Text>
                             </View>
                         )}
-                        <Ionicons name='chevron-forward' size={20} color={isDark ? "white" : "black"} />
+                        <Ionicons name={isRTL ? "chevron-forward" : 'chevron-back'} size={20} color={isDark ? "white" : "black"} />
                     </View>
                 </View>
             </Pressable>
