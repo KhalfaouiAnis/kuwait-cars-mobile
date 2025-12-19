@@ -49,6 +49,7 @@ export const useAdPhotos = (
 
           return {
             id: asset.assetId || generateId(),
+            type: asset.mimeType,
             uri: compressedUri,
             name: asset.fileName,
             size: compressedSize,
@@ -69,6 +70,7 @@ export const useAdPhotos = (
         const fileObj: any = {
           id: result.assets[0].assetId || generateId(),
           uri: compressedUri,
+          type: result.assets[0].mimeType,
           name: result.assets[0].fileName,
           size: compressedSize,
         };

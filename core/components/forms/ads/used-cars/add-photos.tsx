@@ -68,7 +68,7 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Use
                                     <Text className="text-xl font-inter-bold mb-1 dark:text-white">
                                         {t("addPhotos")}<Text className="text-error">*</Text>
                                     </Text>
-                                    <PickFromGallery label="Select file" addMedia={() => addPhoto(false, true, false)} />
+                                    <PickFromGallery label={t("selectFile")} addMedia={() => addPhoto(false, true, false)} />
                                 </View>
                             </View>
                         )

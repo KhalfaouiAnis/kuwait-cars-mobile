@@ -1,6 +1,6 @@
 import VideoPlayer from "@/core/components/ui/shared/video-player";
 import { useAdVideo } from "@/core/hooks/ad/useAdVideo";
-import { AdFormStepProps } from "@/core/types";
+import { AdFormStepProps, SoundEffectTypes } from "@/core/types";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from "react";
@@ -14,23 +14,21 @@ import { SOUND_EFFECTS } from "@/core/constants/audio";
 import { ShowCarAdInterface } from "@/core/types/schema/ads/showCar";
 import { clsx } from "clsx";
 
-type SoundEffectTypes = "muted" | "effect-1" | "effect-2" | "effect-3" | "effect-4" | "effect-5"
-
 function soundSource(sound_effect: SoundEffectTypes) {
-    if (sound_effect === 'muted') return;
-    if (sound_effect === 'effect-1') return SOUND_EFFECTS.NoLuck
-    if (sound_effect === 'effect-2') return SOUND_EFFECTS.YouWin
-    if (sound_effect === 'effect-3') return SOUND_EFFECTS.NoLuck
-    if (sound_effect === 'effect-4') return SOUND_EFFECTS.YouWin
-    if (sound_effect === 'effect-5') return SOUND_EFFECTS.NoLuck
+    if (sound_effect === 'mute') return;
+    if (sound_effect === 'effect_1') return SOUND_EFFECTS.NoLuck
+    if (sound_effect === 'effect_2') return SOUND_EFFECTS.YouWin
+    if (sound_effect === 'effect_3') return SOUND_EFFECTS.NoLuck
+    if (sound_effect === 'effect_4') return SOUND_EFFECTS.YouWin
+    if (sound_effect === 'effect_5') return SOUND_EFFECTS.NoLuck
 
     throw "Sound effect not supported"
 }
 
 export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps<ShowCarAdInterface>) {
     const [showModal, setShowModal] = useState(false)
-    const [currentSoundEffect, setCurrentSoundEffect] = useState<SoundEffectTypes>("muted")
-    const { video, loading, addVideo, removeVideo, setVideo } = useAdVideo(setValue)
+    const [currentSoundEffect, setCurrentSoundEffect] = useState<SoundEffectTypes>("mute")
+    const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue)
 
     useEffect(() => {
         (async () => {
@@ -47,16 +45,14 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
     }, []);
 
     useEffect(() => {
-        const video = getValue?.("video")
-        video && setVideo(video)
         const soundEffect = getValue?.("sound_effect")
         soundEffect && setCurrentSoundEffect(soundEffect as SoundEffectTypes)
-    }, [getValue, setVideo])
+    }, [getValue])
 
     function handleSelectSoundEffect(effectId: SoundEffectTypes) {
         setCurrentSoundEffect(effectId)
         setValue?.("sound_effect", effectId)
-        if (effectId === "muted") return;
+        if (effectId === "mute") return;
         setShowModal(true)
     }
 
@@ -111,53 +107,53 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
                         </View>
                         <View className="mt-2 gap-3 flex-row-reverse flex-wrap">
                             <TouchableOpacity className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
-                                "border-primary-500": currentSoundEffect !== "muted",
-                                "border-error": currentSoundEffect === "muted",
+                                "border-primary-500": currentSoundEffect !== "mute",
+                                "border-error": currentSoundEffect === "mute",
                             })}
                                 onPress={() => {
-                                    setCurrentSoundEffect("muted")
+                                    setCurrentSoundEffect("mute")
                                 }}
                             >
                                 <Text className="text-center font-inter-semibold">Silent</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => handleSelectSoundEffect("effect-1")}
+                                onPress={() => handleSelectSoundEffect("effect_1")}
                                 className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
-                                    "border-primary-500": currentSoundEffect !== "effect-1",
-                                    "border-error": currentSoundEffect === "effect-1",
+                                    "border-primary-500": currentSoundEffect !== "effect_1",
+                                    "border-error": currentSoundEffect === "effect_1",
                                 })}
                             >
                                 <Text className="text-center font-inter-semibold">Effect 1</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => handleSelectSoundEffect("effect-2")}
+                                onPress={() => handleSelectSoundEffect("effect_2")}
                                 className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
-                                    "border-primary-500": currentSoundEffect !== "effect-2",
-                                    "border-error": currentSoundEffect === "effect-2",
+                                    "border-primary-500": currentSoundEffect !== "effect_2",
+                                    "border-error": currentSoundEffect === "effect_2",
                                 })}>
                                 <Text className="text-center font-inter-semibold">Effect 2</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => handleSelectSoundEffect("effect-3")}
+                                onPress={() => handleSelectSoundEffect("effect_3")}
                                 className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
-                                    "border-primary-500": currentSoundEffect !== "effect-3",
-                                    "border-error": currentSoundEffect === "effect-3",
+                                    "border-primary-500": currentSoundEffect !== "effect_3",
+                                    "border-error": currentSoundEffect === "effect_3",
                                 })}>
                                 <Text className="text-center font-inter-semibold">Effect 3</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => handleSelectSoundEffect("effect-4")}
+                                onPress={() => handleSelectSoundEffect("effect_4")}
                                 className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
-                                    "border-primary-500": currentSoundEffect !== "effect-4",
-                                    "border-error": currentSoundEffect === "effect-4",
+                                    "border-primary-500": currentSoundEffect !== "effect_4",
+                                    "border-error": currentSoundEffect === "effect_4",
                                 })}>
                                 <Text className="text-center font-inter-semibold">Effect 4</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={() => handleSelectSoundEffect("effect-5")}
+                                onPress={() => handleSelectSoundEffect("effect_5")}
                                 className={clsx("w-[31%] border-2 py-6 px-1 rounded-lg", {
-                                    "border-primary-500": currentSoundEffect !== "effect-5",
-                                    "border-error": currentSoundEffect === "effect-5",
+                                    "border-primary-500": currentSoundEffect !== "effect_5",
+                                    "border-error": currentSoundEffect === "effect_5",
                                 })}>
                                 <Text className="text-center font-inter-semibold">Effect 5</Text>
                             </TouchableOpacity>

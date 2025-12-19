@@ -1,23 +1,13 @@
 import MoneySign from "@/assets/svg/plan-money-sign";
 import SubscriptionPlan from "@/assets/svg/subscription-plan";
-import { SUBSCRIPTION_TYPES } from "@/core/constants/ad";
+import { SubscriptionDetail } from "@/core/constants/ad";
 import { AntDesign } from "@expo/vector-icons";
 import { Text, TouchableOpacity, View } from "react-native";
-
-type SubscriptionDetail = {
-    id: string;
-    adTypes: string[];
-    type: SUBSCRIPTION_TYPES;
-    durationInDays: number;
-    title: string;
-    price: number;
-    features: string[];
-}
 
 interface Props {
     plan: SubscriptionDetail,
     isSelected: boolean,
-    onSelect: (plan: string) => void
+    onSelect: (plan: SubscriptionDetail) => void
     t: (key: string) => string
 }
 
@@ -47,7 +37,7 @@ export default function SubscriptionCard({ plan, isSelected, onSelect, t }: Prop
                 ))}
             </View>
             <TouchableOpacity className="mt-4 ms-8 bg-primary-500 py-2 items-center justify-center rounded-3xl"
-                onPress={() => onSelect(plan.title)}
+                onPress={() => onSelect(plan)}
             >
                 <Text className="font-inter-semibold text-lg dark:text-white">
                     {t("ChooseThisPlan")}

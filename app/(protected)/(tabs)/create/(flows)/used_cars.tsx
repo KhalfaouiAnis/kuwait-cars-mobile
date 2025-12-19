@@ -110,6 +110,7 @@ export default function UsedCarAdScreen() {
                 }
             }), onError)();
             setUploadProgress(100);
+            setCurrentStep(TOTAL_STEPS);
         }
     }
 

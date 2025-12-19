@@ -109,6 +109,8 @@ export type ProvinceArea = {
 
 export type FilterAdsBy = "brand" | "model" | "year" | "price";
 export type MediaType = "THUMBNAIL" | "IMAGE" | "VIDEO";
+export type SoundEffectTypes = "mute" | "effect_1" | "effect_2" | "effect_3" | "effect_4" | "effect_5"
+
 
 export interface AdFormStepProps<T extends FieldValues> {
   control: Control<T>;
@@ -122,8 +124,8 @@ export interface AdFormStepProps<T extends FieldValues> {
 }
 
 export interface CloudinarySignRequestInterface {
-  mediaType: "image" | "video" | "prodile_pic";
-  audioFlag?: string;
+  mediaType: "image" | "video" | "profile_pic";
+  audioFlag?: SoundEffectTypes;
 }
 
 export interface AdvertisementMedia {

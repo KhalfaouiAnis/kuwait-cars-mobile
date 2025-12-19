@@ -30,7 +30,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (fontsLoaded && _hasHydrated) {
       SplashScreen.hideAsync().then(() => {
-        console.log("Splash hidden now");
+        console.log("SplashScreen hidden now");
       });
     }
   }, [fontsLoaded, _hasHydrated]);

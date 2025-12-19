@@ -1,18 +1,14 @@
-import {
-  hideLisencePlate,
-  uploadFileToCloudinary,
-} from "@/core/lib/api/cloud/upload-to-cloudinary";
+import { uploadStructuredMedia } from "@/core/lib/api/cloud/cloudinary";
+import { hideLisencePlate } from "@/core/lib/api/cloud/lisence-plate";
+import { httpClient } from "@/core/lib/api/httpClient";
 import {
   UsedCarAdInterface,
   UsedCarAdSchema,
 } from "@/core/types/schema/ads/usedCar";
 import { AxiosProgressEvent, isAxiosError } from "axios";
-import { useRouter } from "expo-router";
 import { useFormHook } from "../../use-form-hook";
 
 export function useUsedCarAd() {
-  const router = useRouter();
-
   const {
     control,
     handleSubmit,
@@ -23,15 +19,9 @@ export function useUsedCarAd() {
     getValues,
   } = useFormHook(UsedCarAdSchema, {
     defaultValues: {
-      year: 2020,
-      title: "title",
-      description: "description",
-      plan: "pro",
-      price: 222,
-      mileage: 125,
+      title: "",
+      description: "",
       mileage_unit: "KM",
-      model: "kawasaki",
-      brand: "fff",
       contact_whatsapp: true,
       receive_calls: true,
       xcar_calls: true,
@@ -40,6 +30,7 @@ export function useUsedCarAd() {
       images: [],
       video: undefined,
       ad_type: "used_cars",
+      hide_license_plate: false,
     },
   });
 
@@ -48,48 +39,50 @@ export function useUsedCarAd() {
     onUploadProgress?: (progressEvent: AxiosProgressEvent) => void
   ) => {
     try {
-      // const formData = new FormData();
+      const { thumbnail, video, images, province, ...adData } = data;
 
-      const { originalUrl, publicId, transformedUrl } =
-        await uploadFileToCloudinary(
-          data.thumbnail.uri!,
-          data.thumbnail.type,
-          data.thumbnail.name,
-          { mediaType: "image" }
-        );
+      const { thumbnailData, imagesData, videoData } =
+        await uploadStructuredMedia(thumbnail, images, video);
 
-      console.log(originalUrl, publicId, transformedUrl);
+      let finalUrl = thumbnailData.transformed_url;
+      console.log("data.hide_license_plate: ", data.hide_license_plate);
 
-      const finalUrl = await hideLisencePlate(transformedUrl);
-      console.log(finalUrl);
+      if (data.hide_license_plate) {
+        finalUrl = await hideLisencePlate(thumbnailData.transformed_url);
+      }
 
-      // Object.entries(data).forEach(([key, value]) => {
-      //   if (["string", "number"].includes(typeof value)) {
-      //     formData.append(key, value as string);
-      //   }
-      // });
+      const media = [
+        { ...thumbnailData, transformedUrl: finalUrl, media_type: "THUMBNAIL" },
+        ...imagesData.map((image) => ({ ...image, media_type: "IMAGE" })),
+      ];
 
-      // formData.append("location", JSON.stringify(data.location));
-      // formData.append("thumbnail", data.thumbnail as any);
-      // formData.append("video", data.video as any);
-      // data.images?.forEach((image) => formData.append("images", image as any));
+      if (videoData) {
+        media.push({ ...videoData, media_type: "VIDEO" });
+      }
 
-      // const response = await httpClient.post(
-      //   "/ads/used_cars/create",
-      //   formData,
-      //   {
-      //     onUploadProgress,
-      //   }
-      // );
+      const response = await httpClient.post(
+        "/ads/create",
+        {
+          ...adData,
+          media,
+          province: {
+            province: province.province,
+            latitude: province.latitude,
+            longitude: province.longitude,
+          },
+        },
+        {
+          onUploadProgress,
+        }
+      );
 
-      // console.log(response.data);
-
-      // router.replace("/my-ads");
+      return response.data;
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.code === "ERR_NETWORK") {
           console.log("Network error - Check baseURL, IP, or CORS");
         }
+        console.log(error.response?.data);
       }
       console.error("Submit error:", error);
     }

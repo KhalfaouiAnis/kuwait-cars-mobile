@@ -56,7 +56,7 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue, t 
                         control={control}
                         label={t("Hidevehiclelicenseplate")}
                         fullWidth
-                        options={[{ id: "Yes", label: t("Yes"), value: "Yes" }, { id: "No", label: t("No"), value: "No" }]}
+                        options={[{ id: "Yes", label: t("Yes"), value: true }, { id: "No", label: t("No"), value: false }]}
                     />
                     <Text className="text-sm text-gray-300">{t("hideVehicleLicensePlateForUploadedImages")}</Text>
                 </View>

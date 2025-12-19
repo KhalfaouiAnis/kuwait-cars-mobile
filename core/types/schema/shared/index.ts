@@ -3,6 +3,14 @@ import { z } from "zod";
 
 export type AdCategory = (typeof Ad_CATEGORIES)[number];
 
+export const SubscriptionPlanSchema = z.object({
+  type: z.string(),
+  title: z.string(),
+  price: z.coerce.number(),
+  expires_in: z.coerce.number(),
+  features: z.array(z.string()),
+});
+
 export const LocationSchema = z.object({
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
@@ -70,6 +78,7 @@ interface Category {
 
 export type DataItem = Category;
 
+export type SubscriptionPlanType = z.infer<typeof SubscriptionPlanSchema>;
 export type LocationInterface = z.infer<typeof LocationSchema>;
 export type ProvinceInterface = z.infer<typeof ProvinceSchema>;
 export type AreaInterface = z.infer<typeof AreaSchema>;

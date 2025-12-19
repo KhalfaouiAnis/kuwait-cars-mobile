@@ -1,6 +1,7 @@
 import { handleTokenValidation } from "@/core/utils/authUtils";
 import axios from "axios";
 import { router } from "expo-router";
+import { toast } from "sonner-native";
 import { authStore } from "../stores/auth.store";
 
 export const httpClient = axios.create({
@@ -42,6 +43,7 @@ httpClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const { accessToken, signOut } = authStore.getState();
+    const data = error.response?.data;
 
     const originalRequest = error.config;
 
@@ -66,10 +68,9 @@ httpClient.interceptors.response.use(
         if (authenticated) {
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
           processQueue(null, accessToken);
-  
+
           return httpClient(originalRequest);
         }
-
       } catch (refreshError) {
         processQueue(refreshError, null);
         signOut();
@@ -78,6 +79,15 @@ httpClient.interceptors.response.use(
       } finally {
         isRefreshing = false;
       }
+    } else if (error.response?.status === 400 && data?.errors) {
+      toast.error(data.message || "Please check your input");
+      data.errors.forEach(
+        ({ path, message }: { path: string; message: string }) => {
+          toast.error(path, { description: message });
+        }
+      );
+    } else {
+      toast.error(data?.message || "An unexpected error occurred");
     }
     return Promise.reject(error);
   }

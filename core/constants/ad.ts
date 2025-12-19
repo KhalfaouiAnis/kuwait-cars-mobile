@@ -228,6 +228,16 @@ export const CAR_BRAND_TYPES = [
   },
 ];
 
+export type SubscriptionDetail = {
+  id: string;
+  adTypes: string[];
+  type: SUBSCRIPTION_TYPES | string;
+  expires_in: number;
+  title: string;
+  price: number;
+  features: string[];
+};
+
 export const SUBSCRIPTION_PLANS = [
   {
     id: "1",

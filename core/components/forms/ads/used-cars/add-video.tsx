@@ -54,15 +54,15 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                         </View>
                         <View style={{direction: isRTL ? "rtl" : "ltr"}}>
                             <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("AddVideos")}</Text>
-                            <PickFromGallery disabled={loading} label="Select file" video addMedia={() => addVideo(false)} />
+                            <PickFromGallery disabled={loading} label={t("selectFile")} video addMedia={() => addVideo(false)} />
                         </View>
-                        <TakePhotoButton disabled={loading} label="Open Camera & Take Video" addMedia={() => addVideo(true)} />
+                        <TakePhotoButton disabled={loading} label={t("openCameraTakeVideo")} addMedia={() => addVideo(true)} />
                         <View className="flex-row items-center justify-center">
                             <View className="border border-gray-300 w-2/5" />
                             <Text className="px-2 dark:text-white">{t("Or")}</Text>
                             <View className="border border-gray-300 w-2/5" />
                         </View>
-                        <PickFromGallerySM label="Open Gallery" addMedia={() => addVideo(false)} />
+                        <PickFromGallerySM label={t("openGallery")} addMedia={() => addVideo(false)} />
                     </View>
                 )
             }

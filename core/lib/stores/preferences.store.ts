@@ -7,21 +7,21 @@ import { zustandStorage } from "./storage";
 
 interface UserPreferencesState {
   lang: LanguageCode;
-  isI18NLoading: boolean;
+  isI18nReady: boolean;
   theme: "light" | "dark" | "system";
   isRTL: boolean;
   toggleTheme: () => void;
   setTheme: (theme: "light" | "dark" | "system") => void;
   setLang: (newLang: LanguageCode) => void;
-  setI18NLoading: (loading: boolean) => void;
+  setI18NReady: (ready: boolean) => void;
 }
 
 const useUserPreferencesStore = create<UserPreferencesState>()(
   persist(
     (set) => ({
-      lang: i18n.language as LanguageCode,
+      lang: "ar",
       theme: "system",
-      isI18NLoading: false,
+      isI18nReady: false,
       isRTL: false,
       toggleTheme: () => {
         set((state) => ({
@@ -33,7 +33,7 @@ const useUserPreferencesStore = create<UserPreferencesState>()(
         set({ lang: newLang, isRTL: RTL_LANGUAGES.includes(newLang) });
         i18n.changeLanguage(newLang);
       },
-      setI18NLoading: (loading) => set({ isI18NLoading: loading }),
+      setI18NReady: (ready) => set({ isI18nReady: ready }),
     }),
     {
       name: USER_PREFERENCES_STORAGE_KEY,
@@ -50,11 +50,3 @@ const useUserPreferencesStore = create<UserPreferencesState>()(
 export default useUserPreferencesStore;
 
 export const currentLang = () => useUserPreferencesStore.getState().lang;
-
-i18n.on("loading", () => {
-  useUserPreferencesStore.getState().setI18NLoading(true);
-});
-
-i18n.on("loaded", () => {
-  useUserPreferencesStore.getState().setI18NLoading(false);
-});

@@ -89,7 +89,7 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                                 <Text className="text-error">*</Text>
                             </View>
                         )}
-                        <Ionicons name={isRTL ? "chevron-forward" : 'chevron-back'} size={20} color={isDark ? "white" : "black"} />
+                        <Ionicons name={isRTL ? "chevron-back" : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} />
                     </View>
                 </View>
             </Pressable>
