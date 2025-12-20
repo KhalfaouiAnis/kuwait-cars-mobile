@@ -32,12 +32,12 @@ export const verifyOTP = async (phone: string, otp: string) => {
   });
 };
 
-export const getAnonymousAccessToken = async () => {
+export const getGuestAccessToken = async () => {
   try {
     const { data } = await httpClient.post<{
-      role: UserRole.ANONYMOUS;
+      role: UserRole.GUEST;
       token: string;
-    }>("/auth/anonymous");
+    }>("/auth/guest");
     return data.token;
   } catch (error) {
     console.log(error);

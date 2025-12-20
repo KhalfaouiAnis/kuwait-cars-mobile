@@ -8,6 +8,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { queryClient } from "../react-query";
 import { zustandStorage } from "./storage";
 
 interface AuthState {
@@ -17,10 +18,11 @@ interface AuthState {
   refreshToken: string | null;
   _hasHydrated: boolean;
   isAuthenticated: boolean;
+  isGuest: boolean;
   authType: "APP" | "GOOGLE" | "FACEBOOK" | "APPLE";
 
   bootstrapAsync: () => Promise<void>;
-  createAnonymousSesssion: (token: string) => void;
+  createGuestSesssion: (token: string) => void;
   setUser: (user: User | null) => void;
   addToRecentlyViewed: (ad: BaseAd) => void;
   clearRecentlyViewed: () => void;
@@ -50,6 +52,7 @@ const useAuthStore = create<AuthState>()(
       _hasHydrated: false,
       authType: "APP",
       isAuthenticated: false,
+      isGuest: false,
       accessToken: null,
       refreshToken: null,
       bootstrapAsync: async () => {
@@ -97,12 +100,19 @@ const useAuthStore = create<AuthState>()(
         set({
           user: null,
           isAuthenticated: false,
+          isGuest: false,
           accessToken: null,
           refreshToken: null,
         });
+        queryClient.clear();
       },
-      createAnonymousSesssion: (accessToken: string) => {
-        set({ accessToken, refreshToken: "", isAuthenticated: true });
+      createGuestSesssion: (accessToken: string) => {
+        set({
+          accessToken,
+          refreshToken: "",
+          isAuthenticated: true,
+          isGuest: true,
+        });
       },
     }),
     {

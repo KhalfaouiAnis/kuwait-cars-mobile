@@ -72,7 +72,7 @@ export interface AdType {
 
 export enum UserRole {
   ADMIN = "ADMIN",
-  ANONYMOUS = "ANONYMOUS",
+  GUEST = "GUEST",
   USER = "USER",
 }
 
@@ -109,8 +109,13 @@ export type ProvinceArea = {
 
 export type FilterAdsBy = "brand" | "model" | "year" | "price";
 export type MediaType = "THUMBNAIL" | "IMAGE" | "VIDEO";
-export type SoundEffectTypes = "mute" | "effect_1" | "effect_2" | "effect_3" | "effect_4" | "effect_5"
-
+export type SoundEffectTypes =
+  | "mute"
+  | "effect_1"
+  | "effect_2"
+  | "effect_3"
+  | "effect_4"
+  | "effect_5";
 
 export interface AdFormStepProps<T extends FieldValues> {
   control: Control<T>;
@@ -179,4 +184,25 @@ export interface AdvertisementInterface {
   receive_calls?: boolean;
   xcar_calls?: boolean;
   xcar_chat?: boolean;
+
+  is_favorited?: boolean;
+  is_flagged?: boolean;
+}
+
+export interface AdSearchParams {
+  filters?: Record<string, any>;
+  sorting?: { field: string; direction: "asc" | "desc" };
+  cursor?: string | null;
+  limit?: number;
+  direction?: "forward" | "backward";
+}
+
+export interface PaginatedResponse<T> {
+  status?: "success";
+  data: T[];
+  meta: {
+    nextCursor: string | undefined;
+    hasNextPage: boolean;
+    totalCount: number;
+  };
 }

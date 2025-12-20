@@ -5,7 +5,7 @@ import FacebookButton from "@/core/components/ui/button/FacebookButton";
 import GoogleButton from "@/core/components/ui/button/GoogleButton";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-import { getAnonymousAccessToken } from "@/core/lib/api/authentication/login";
+import { getGuestAccessToken } from "@/core/lib/api/authentication/login";
 import { authStore } from "@/core/lib/stores/auth.store";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import Fontisto from '@expo/vector-icons/Fontisto';
@@ -20,13 +20,13 @@ export default function Index() {
     const { isRTL } = useUserPreferencesStore()
     const router = useRouter();
 
-    const handleAnonymousSession = async () => {
-        const token = await getAnonymousAccessToken();
+    const handleGuestSession = async () => {
+        const token = await getGuestAccessToken();
 
         if (!token) {
             return
         }
-        authStore.getState().createAnonymousSesssion(token)
+        authStore.getState().createGuestSesssion(token)
         router.push("/categories")
     }
 
@@ -43,12 +43,12 @@ export default function Index() {
                     <AuthLink href="/(auth)/signin" label={t("signIn")} />
                     <AuthLink href="/(auth)/signup" label={t("signUp")} />
                     <TouchableOpacity className="border border-primary-500 py-4 w-[300px] rounded-md"
-                        onPress={handleAnonymousSession}>
+                        onPress={handleGuestSession}>
                         <Text className="font-bold text-center text-base dark:text-white">
                             {t("asAGuest")}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className="w-[300px]" onPress={handleAnonymousSession}>
+                    <TouchableOpacity className="w-[300px]" onPress={handleGuestSession}>
                         <Text className="font-normal text-sm self-end mr-3 dark:text-white">
                             {t("skip")} <Fontisto name={isRTL ? "arrow-left-l" : "arrow-right-l"} size={10} color="gray" />
                         </Text>

@@ -1,8 +1,10 @@
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
+import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
 import { AdvertisementInterface } from "@/core/types";
 import { AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 import Carousel from "../../ui/shared/carousel";
 
 interface Props {
@@ -12,6 +14,9 @@ interface Props {
 }
 
 export default function Advertisement({ data, view = "horizontal", isDark }: Props) {
+    const { protectAction } = useAuthGuard();
+    const { mutate } = useToggleFavorite();
+
     if (view === "vertical") {
         return (
             <Pressable
@@ -44,9 +49,14 @@ export default function Advertisement({ data, view = "horizontal", isDark }: Pro
                             <AntDesign name="control" size={20} color={isDark ? "white" : "black"} />
                             <Text className="font-inter text-sm text-black dark:text-white">{data.transmission}</Text>
                         </View>
-                        <View>
-                            <Ionicons name="star-outline" size={22} color={isDark ? "white" : "black"} />
-                        </View>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() => protectAction(() => mutate(data.id))}
+                        >
+                            <Ionicons
+                                name={data.is_favorited ? "star" : "star-outline"}
+                                size={22} color={data.is_favorited ? "#FAED02" : "black"} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Pressable>

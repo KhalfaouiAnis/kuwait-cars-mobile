@@ -1,13 +1,23 @@
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useRecentlyViewedStore from "@/core/store/recently-viewed-ad.store";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 import { Pressable, ScrollView, Text, View } from 'react-native';
 
 export default function UsedCarDetailsScreen() {
     const { isRTL } = useUserPreferencesStore()
+    const { ad_id } = useLocalSearchParams();
+    const addView = useRecentlyViewedStore((state) => state.addView);
+
+    useEffect(() => {
+        if (ad_id) {
+            addView(ad_id as string);
+        }
+    }, [ad_id, addView]);
 
     return (
         <Container scrollable header={
