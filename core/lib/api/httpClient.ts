@@ -1,8 +1,8 @@
+import { authStore } from "@/core/store/auth.store";
 import { handleTokenValidation } from "@/core/utils/authUtils";
 import axios from "axios";
 import { router } from "expo-router";
 import { toast } from "sonner-native";
-import { authStore } from "../stores/auth.store";
 
 export const httpClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL + "/api/v1",

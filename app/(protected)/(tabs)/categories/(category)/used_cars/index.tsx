@@ -1,4 +1,4 @@
-import Advertisement from "@/core/components/layout/ads/advertisement";
+import { AdsListing } from "@/core/components/layout/ads/ad-listing";
 import renderBrandFilters from "@/core/components/layout/ads/filters/brand/brand-filter";
 import FilteringModal from "@/core/components/layout/ads/filters/filtering-modal";
 import renderModelFilters from "@/core/components/layout/ads/filters/model-filter";
@@ -8,45 +8,15 @@ import renderSortingContent from "@/core/components/layout/ads/sorting/sorting";
 import SortingModal from "@/core/components/layout/ads/sorting/sorting-modal";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
-import { SUBSCRIPTION_TYPES } from "@/core/constants/ad";
-import { IMAGES } from "@/core/constants/images";
 import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
-import { AdvertisementInterface, FilterAdsBy } from "@/core/types";
+import { FilterAdsBy } from "@/core/types";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { FlatList, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 const FILTERS: { label: string, value: FilterAdsBy }[] = [
     { label: "Brand", value: "brand" }, { label: "Model", value: "model" }, { label: "Year", value: "year" }, { label: "Price", value: "price" }
-]
-
-const listings: AdvertisementInterface[] = [
-    {
-        id: "listing-1",
-        ad_type: "used_cars",
-        media: [
-            { id: "", transformed_url: IMAGES.CarChevrolet, media_type: "IMAGE", public_id: "1", original_url: "" },
-            { id: "", transformed_url: IMAGES.CarHyunday, media_type: "IMAGE", public_id: "2", original_url: "" },
-            { id: "", transformed_url: IMAGES.CarMercedes, media_type: "IMAGE", public_id: "3", original_url: "" },
-            { id: "", transformed_url: IMAGES.CarToyota, media_type: "IMAGE", public_id: "4", original_url: "" },
-        ],
-        created_at: "",
-        description: "",
-        title: "",
-        plan: {
-            durationInDays: 50,
-            features: [],
-            price: 2,
-            title: "Gold",
-            type: SUBSCRIPTION_TYPES.GOLDEN
-        },
-        province: {
-            province: "",
-            latitude: 20,
-            longitude: 10,
-        },
-    },
 ]
 
 export default function UsedCarsCategoryScreen() {
@@ -64,7 +34,7 @@ export default function UsedCarsCategoryScreen() {
 
     return (
         <Container header={
-            <View className="flex mb-4 mt-4 pl-2">
+            <View className="flex mb-2 mt-4 pl-2">
                 <MainHeader back={true} />
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {
@@ -94,18 +64,9 @@ export default function UsedCarsCategoryScreen() {
                     </TouchableOpacity>
                     <Text className="text-black dark:text-white ms-auto me-3">Used Cars</Text>
                 </View>
-                <FlatList
-                    data={listings}
-                    keyExtractor={item => item?.id}
-                    renderItem={({ item }) => (
-                        <View className="mb-2 me-1">
-                            <Advertisement data={item} view={view} isDark={isDark} />
-                        </View>
-                    )}
-                    contentContainerStyle={{ paddingBottom: 50, position: "relative", zIndex: 2 }}
-                    showsVerticalScrollIndicator={false}
-                    className="bg-transparent me-2"
-                    removeClippedSubviews={false}
+                <AdsListing
+                    view={view}
+                    isDark={isDark}
                 />
                 <Link href="/create/used_cars" className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500">
                     <Ionicons name="add" size={38} />

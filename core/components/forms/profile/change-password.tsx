@@ -1,7 +1,7 @@
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { IMAGES } from "@/core/constants/images";
 import { useUpdatePassword } from "@/core/hooks/user/use-profile";
-import useAuthStore from "@/core/lib/stores/auth.store";
+import useAuthStore from "@/core/store/auth.store";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";

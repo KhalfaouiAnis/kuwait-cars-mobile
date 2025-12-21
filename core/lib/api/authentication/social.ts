@@ -1,4 +1,4 @@
-import useAuthStore from "@/core/lib/stores/auth.store";
+import useAuthStore from "@/core/store/auth.store";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { httpClient } from "../httpClient";
 

@@ -3,7 +3,7 @@ import { PROVINCES } from "@/core/constants";
 import { IMAGES } from "@/core/constants/images";
 import { useAvatar } from "@/core/hooks/user/use-avatar";
 import { useProfile } from "@/core/hooks/user/use-profile";
-import useAuthStore from "@/core/lib/stores/auth.store";
+import useAuthStore from "@/core/store/auth.store";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: (key: 
     const [showModal, setShowModal] = useState(false)
     const { user } = useAuthStore();
 
-    const { errors, handleSubmit, onSubmit, isSubmitting, control, setValue } = useProfile(user ? { ...user, avatar: { uri: user.avatar || "", type: "image/jpeg" } } : undefined)
+    const { errors, handleSubmit, onSubmit, isSubmitting, control, setValue } = useProfile(user ? { ...user, avatar: user.avatar } : undefined)
     const { addAvatar, avatar } = useAvatar(setValue)
 
     const province = useWatch({ control, name: "province" })

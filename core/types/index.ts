@@ -134,10 +134,10 @@ export interface CloudinarySignRequestInterface {
 }
 
 export interface AdvertisementMedia {
-  id: string;
+  id?: string;
   public_id: string;
   media_type: MediaType;
-  original_url: string;
+  original_url?: string;
   transformed_url: string;
 }
 
@@ -145,7 +145,7 @@ export interface AdvertisementPlan {
   type: SUBSCRIPTION_TYPES;
   title: string;
   price: number;
-  durationInDays: number;
+  expires_in: number;
   features: string[];
 }
 

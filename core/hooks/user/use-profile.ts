@@ -1,5 +1,5 @@
 import { httpClient } from "@/core/lib/api/httpClient";
-import { authStore } from "@/core/lib/stores/auth.store";
+import { authStore } from "@/core/store/auth.store";
 import {
   ResetPasswordInterface,
   ResetPasswordSchema,

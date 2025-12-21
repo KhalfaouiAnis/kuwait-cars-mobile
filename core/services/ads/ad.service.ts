@@ -24,6 +24,12 @@ export const fetchAds = async ({
   return data;
 };
 
+export const getAdById = async (id: string) => {
+  const { data } = await httpClient.get<AdvertisementInterface>(`/ads/${id}`);
+
+  return data;
+};
+
 export const fetchMyAds = async ({
   cursor,
 }: AdSearchParams): Promise<PaginatedResponse<AdvertisementInterface>> => {

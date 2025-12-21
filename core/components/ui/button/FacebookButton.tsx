@@ -1,6 +1,6 @@
 import FacebookIcon from '@/assets/svg/facebook';
 import { httpClient } from '@/core/lib/api/httpClient';
-import { authStore } from '@/core/lib/stores/auth.store';
+import { authStore } from '@/core/store/auth.store';
 import { useRouter } from 'expo-router';
 import { Alert, TouchableOpacity } from 'react-native';
 import { AccessToken, LoginManager } from 'react-native-fbsdk-next';

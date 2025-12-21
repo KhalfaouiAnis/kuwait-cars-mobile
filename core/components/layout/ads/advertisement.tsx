@@ -1,6 +1,7 @@
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
 import { AdvertisementInterface } from "@/core/types";
+import { formatSmartDate } from "@/core/utils/date";
 import { AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
@@ -27,8 +28,8 @@ export default function Advertisement({ data, view = "horizontal", isDark }: Pro
                 />
                 <View className="mt-3 px-2 pb-2">
                     <View className="flex-1 flex-row items-center justify-between">
-                        <Text className="font-inter-semibold text-lg text-black dark:text-white">{data.title} {data.created_at}</Text>
-                        <Text className="font-inter-semibold text-black dark:text-white">{data.price}</Text>
+                        <Text className="font-inter-semibold text-lg text-black dark:text-white">{data.title} {data.year}</Text>
+                        <Text className="font-inter-semibold text-black dark:text-white">${data.price}</Text>
                     </View>
                     <View className="flex-1 flex-row items-center justify-between">
                         <Text className="font-inter text-sm text-gray-400">{data.description}</Text>
@@ -75,13 +76,13 @@ export default function Advertisement({ data, view = "horizontal", isDark }: Pro
             <View className="flex-1 w-full rounded-r-lg p-2 gap-y-2">
                 <View className="flex-row items-center justify-between">
                     <Text className="font-inter-semibold text-lg text-black dark:text-white">{data.title}</Text>
-                    <Text className="font-inter-semibold text-black dark:text-white">{data.created_at}</Text>
+                    <Text className="font-inter-semibold text-black dark:text-white">{data.year}</Text>
                 </View>
                 <View>
                     <Text className="font-inter text-sm text-gray-400" numberOfLines={1}>{data.description}</Text>
                 </View>
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-inter text-xs text-gray-400">{data.created_at}</Text>
+                    <Text className="font-inter text-xs text-gray-400">{formatSmartDate(data.created_at)}</Text>
                     <Text className="font-inter text-xs text-gray-400">{`${data.mileage_unit} ${data.mileage}`}</Text>
                 </View>
                 <View className="flex-row items-center justify-between">
@@ -92,7 +93,7 @@ export default function Advertisement({ data, view = "horizontal", isDark }: Pro
                         <Text className="font-inter text-gray-400 ms-1 text-sm">3km</Text>
                     </View>
                     <View>
-                        <Text className="font-inter-medium text-sm text-black dark:text-white">{data.price}</Text>
+                        <Text className="font-inter-medium text-sm text-black dark:text-white">${data.price}</Text>
                     </View>
                 </View>
             </View>

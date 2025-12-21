@@ -1,8 +1,13 @@
-import { formatDistanceToNow } from "date-fns";
+import {
+  differenceInCalendarMonths,
+  format,
+  formatDistanceToNow,
+  lastDayOfYear,
+} from "date-fns";
 import { ar, enUS } from "date-fns/locale";
 
 export const generateYears = (
-  startYear: number = 1980,
+  startYear: number = 1985,
   endYear: number = new Date().getFullYear()
 ) => {
   const years = [];
@@ -23,3 +28,11 @@ export function formatPassedTime(
     // locale: locales[targetLocale],
   });
 }
+
+export const formatSmartDate = (date: Date | string | number): string => {
+  const now = new Date();
+  const monthsUntilYearEnd = differenceInCalendarMonths(lastDayOfYear(now), now);
+  const pattern = monthsUntilYearEnd > 4 ? "MMMM d" : "MMMM d, yyyy";
+
+  return format(new Date(date), pattern);
+};

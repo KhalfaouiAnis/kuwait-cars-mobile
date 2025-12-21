@@ -3,7 +3,7 @@ import {
   createAccount,
   verifyOTP,
 } from "@/core/lib/api/authentication/login";
-import { authStore } from "@/core/lib/stores/auth.store";
+import { authStore } from "@/core/store/auth.store";
 import {
   LoginInterface,
   LoginSchema,

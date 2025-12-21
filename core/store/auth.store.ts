@@ -8,7 +8,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { queryClient } from "../react-query";
+import { queryClient } from "../lib/react-query";
 import { zustandStorage } from "./storage";
 
 interface AuthState {
@@ -20,7 +20,9 @@ interface AuthState {
   isAuthenticated: boolean;
   isGuest: boolean;
   authType: "APP" | "GOOGLE" | "FACEBOOK" | "APPLE";
+  otpTargetTime: number | null;
 
+  setOtpTargetTime: (durationInSeconds: number | null) => void;
   bootstrapAsync: () => Promise<void>;
   createGuestSesssion: (token: string) => void;
   setUser: (user: User | null) => void;
@@ -33,6 +35,7 @@ const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       user: null,
+      otpTargetTime: null,
       recentlyViewedAds: [
         {
           id: "ad1",
@@ -113,6 +116,10 @@ const useAuthStore = create<AuthState>()(
           isAuthenticated: true,
           isGuest: true,
         });
+      },
+      setOtpTargetTime: (seconds) => {
+        const targetTime = seconds ? Date.now() + seconds * 1000 : null;
+        set({ otpTargetTime: targetTime });
       },
     }),
     {

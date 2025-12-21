@@ -9,7 +9,7 @@ interface SearchState {
     year?: string[];
     price?: number[];
     mileage?: string;
-    color?: string[];
+    exterior_color?: string[];
   };
   sorting: {
     field: "price" | "created_at";

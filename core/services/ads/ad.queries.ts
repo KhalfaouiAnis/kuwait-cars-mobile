@@ -1,9 +1,17 @@
 import { httpClient } from "@/core/lib/api/httpClient";
-import { fetchAds, fetchMyAds } from "@/core/services/ads/ad.service";
+import {
+  fetchAds,
+  fetchMyAds,
+  getAdById,
+} from "@/core/services/ads/ad.service";
 import useRecentlyViewedStore from "@/core/store/recently-viewed-ad.store";
 import useSearchStore from "@/core/store/search.store";
 import { AdvertisementInterface } from "@/core/types";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 export const useAdsQuery = () => {
   const { filters, sorting } = useSearchStore();
@@ -14,10 +22,10 @@ export const useAdsQuery = () => {
       fetchAds({
         filters,
         sorting,
-        cursor: pageParam as string | null,
+        cursor: pageParam as string | null as string,
         limit: 10,
       }),
-    initialPageParam: null as string | null,
+    initialPageParam: null as string | null as string,
     getNextPageParam: (lastPage) =>
       lastPage.meta.hasNextPage ? lastPage.meta.nextCursor : null,
   });
@@ -36,7 +44,7 @@ export const useMyAdsQuery = () => {
   });
 };
 
-export const useRecentlyViewed = () => {
+export const useRecentlyViewedQuery = () => {
   const viewedIds = useRecentlyViewedStore((state) => state.viewedIds);
 
   return useQuery({
@@ -51,5 +59,25 @@ export const useRecentlyViewed = () => {
         ),
     enabled: viewedIds.length > 0,
     staleTime: 1000 * 60 * 10,
+  });
+};
+
+export const useAdQuery = (adId: string) => {
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    queryKey: ["ads", "detail", adId],
+    queryFn: () => getAdById(adId),
+    // 1. PERFORMANCE: Seed the cache from the existing search results
+    initialData: () => {
+      // Look through all pages of the infinite query cache
+      const searchCache = queryClient.getQueryData<any>(["ads"]);
+      const foundad = searchCache?.pages
+        .flatMap((page: any) => page.data)
+        .find((p: any) => p.id === adId);
+
+      return foundad;
+    },
+    staleTime: 1000 * 60 * 2,
   });
 };

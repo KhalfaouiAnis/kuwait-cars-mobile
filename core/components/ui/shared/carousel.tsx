@@ -8,7 +8,7 @@ import VideoPlayer from './video-player';
 const screenWidth = Dimensions.get('window').width;
 
 const containerWidth = 320;
-const containerHeight = 240;
+const containerHeight = 190;
 
 type CarouselProps = {
     items: AdvertisementMedia[];
@@ -50,7 +50,7 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
                                     item.media_type === "VIDEO" ? (<VideoPlayer source={item.transformed_url} />) : (
                                         <Image
                                             style={styles.image}
-                                            source={item.transformed_url}
+                                            source={{ uri: item.transformed_url }}
                                             placeholder={{ blurhash: "LFDQn%_4?IWC~qj[?H%L00ay?aof" }}
                                             contentFit='fill'
                                             transition={200}

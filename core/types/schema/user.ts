@@ -12,7 +12,7 @@ export const UpdateProfileSchema = z.object({
   province: ProvinceSchema.optional(),
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
-  avatar: AvatarSchema.optional(),
+  avatar: AvatarSchema.optional().or(z.string().optional()),
 });
 
 export type UpdateProfileInterface = z.infer<typeof UpdateProfileSchema>;

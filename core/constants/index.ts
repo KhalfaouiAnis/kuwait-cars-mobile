@@ -18,7 +18,7 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: "en", name: "english", flag: "🇺🇸" },
   { code: "es", name: "spanish", flag: "🇪🇸" },
   { code: "fr", name: "frensh", flag: "🇫🇷" },
-  { code: "jo", name: "urdu", flag: "JO" },
+  { code: "ur", name: "urdu", flag: "JO" },
   { code: "in", name: "hindi", flag: "🇮🇳" },
 ];
 
@@ -74,14 +74,23 @@ export const CAR_COLORS: SelectOption[] = [
   { id: "None", label: "None", value: "None" },
   { id: "White", label: "White", value: "White" },
   { id: "Black", label: "Black", value: "Black" },
-  { id: "Red", label: "Red", value: "Red" },
   { id: "Silver", label: "Silver", value: "Silver" },
-  { id: "Maroon", label: "Maroon", value: "Maroon" },
   { id: "Gray", label: "Gray", value: "Gray" },
+  { id: "Red", label: "Red", value: "Red" },
   { id: "Blue", label: "Blue", value: "Blue" },
+  { id: "Green", label: "Green", value: "Green" },
+  { id: "Brown", label: "Brown", value: "Brown" },
+  { id: "Beige", label: "Beige", value: "Beige" },
   { id: "Yellow", label: "Yellow", value: "Yellow" },
-  { id: "Golden", label: "Golden", value: "Golden" },
+  { id: "Orange", label: "Orange", value: "Orange" },
+  { id: "Gold", label: "Gold", value: "Gold" },
   { id: "Purple", label: "Purple", value: "Purple" },
+  { id: "Light Blue / Cyan", label: "Light Blue / Cyan", value: "Light Blue / Cyan" },
+  { id: "Navy Blue", label: "Navy Blue", value: "Navy Blue" },
+  { id: "Burgundy", label: "Burgundy", value: "Burgundy" },
+  { id: "Olive", label: "Olive", value: "Olive" },
+  { id: "Copper", label: "Copper", value: "Copper" },
+  { id: "Bronze", label: "Bronze", value: "Bronze" },
 ];
 
 export const YEARS: SelectOption[] = generateYears().map((year) => ({
@@ -751,4 +760,4 @@ export const PROVINCES: ProvinceOption[] = [
 ];
 
 export const OVERALL_MIN_PRICE = 0;
-export const OVERALL_MAX_PRICE = 100000;
+export const OVERALL_MAX_PRICE = 99000;

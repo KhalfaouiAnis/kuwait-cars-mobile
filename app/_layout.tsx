@@ -1,8 +1,8 @@
 import { Inter_Bold, Inter_Medium, Inter_Regular, Inter_SemiBold } from "@/assets/fonts";
 import LanguageLoadingSpinner from "@/core/components/ui/spinner/language-loading";
-import useAuthStore from "@/core/lib/stores/auth.store";
 import { ThemeSynchronizer } from "@/core/lib/theme/theme-synchronizer";
 import { Providers } from "@/core/providers";
+import useAuthStore from "@/core/store/auth.store";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
