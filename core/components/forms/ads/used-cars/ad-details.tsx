@@ -2,7 +2,7 @@ import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
 import SelectInput from "@/core/components/ui/input/select-input";
 import { CAR_COLORS, YEARS } from "@/core/constants";
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";

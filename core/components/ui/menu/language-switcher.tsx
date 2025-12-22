@@ -1,7 +1,7 @@
 import Flag from '@/assets/svg/flag';
 import { SUPPORTED_LANGUAGES } from '@/core/constants';
 import i18n from '@/core/i18n/i18n';
-import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Language } from '@/core/types';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';

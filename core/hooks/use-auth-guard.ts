@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { toast } from "sonner-native";
-import useAuthStore from "../lib/stores/auth.store";
+import useAuthStore from "../store/auth.store";
 
 export const useAuthGuard = () => {
   const { isGuest } = useAuthStore();

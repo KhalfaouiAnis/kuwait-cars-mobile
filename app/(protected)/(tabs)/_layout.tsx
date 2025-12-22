@@ -1,5 +1,5 @@
 import TabBar from '@/core/components/ui/tabBar';
-import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { View } from 'react-native';

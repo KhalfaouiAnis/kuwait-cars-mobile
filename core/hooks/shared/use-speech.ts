@@ -1,7 +1,7 @@
-import { currentLang } from "@/core/lib/stores/preferences.store";
+import { currentLang } from "@/core/store/preferences.store";
 import {
-    ExpoSpeechRecognitionModule,
-    ExpoSpeechRecognitionResultEvent,
+  ExpoSpeechRecognitionModule,
+  ExpoSpeechRecognitionResultEvent,
 } from "expo-speech-recognition";
 import { useCallback, useEffect, useState } from "react";
 

@@ -91,6 +91,7 @@ export const CAR_COLORS: SelectOption[] = [
   { id: "Olive", label: "Olive", value: "Olive" },
   { id: "Copper", label: "Copper", value: "Copper" },
   { id: "Bronze", label: "Bronze", value: "Bronze" },
+  { id: "Other", label: "Other", value: "Other" },
 ];
 
 export const YEARS: SelectOption[] = generateYears().map((year) => ({
@@ -761,3 +762,6 @@ export const PROVINCES: ProvinceOption[] = [
 
 export const OVERALL_MIN_PRICE = 0;
 export const OVERALL_MAX_PRICE = 99000;
+
+export const OVERALL_MIN_MILEAGE = 0;
+export const OVERALL_MAX_MILEAGE = 99000;

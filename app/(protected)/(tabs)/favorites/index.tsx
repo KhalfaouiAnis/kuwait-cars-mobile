@@ -1,8 +1,7 @@
-import Ad from "@/core/components/layout/ads/Ad";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { FlatList, Text, View } from 'react-native';
 
 export const listings = [
@@ -77,7 +76,9 @@ export default function FavoritesScreen() {
                 <FlatList
                     data={listings}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2"><Ad data={item} view="vertical" isDark={theme !== "light"} /></View>}
+                    renderItem={({ item }) => <View className="mb-2">
+                        {/* <Ad data={item} view="vertical" isDark={theme !== "light"} /> */}
+                    </View>}
                     contentContainerStyle={{ paddingBottom: 180 }}
                     showsVerticalScrollIndicator={false}
                     removeClippedSubviews={false}

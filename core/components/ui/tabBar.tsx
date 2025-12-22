@@ -1,5 +1,5 @@
 import { HIDE_TABBAR_ROUTES } from '@/core/constants';
-import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { NavigationRoute, ParamListBase } from '@react-navigation/native';
 import { usePathname } from 'expo-router';

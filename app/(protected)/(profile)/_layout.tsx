@@ -1,4 +1,4 @@
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Stack } from "expo-router";
 
 export default function ProfileLayout() {

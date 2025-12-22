@@ -5,8 +5,9 @@ import { formatSmartDate } from "@/core/utils/date";
 import { AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import { Pressable, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import Carousel from "../../ui/shared/carousel";
+import { FavoriteButton } from "../../ui/shared/favorite-button";
 
 interface Props {
     data: AdvertisementInterface,
@@ -50,14 +51,10 @@ export default function Advertisement({ data, view = "horizontal", isDark }: Pro
                             <AntDesign name="control" size={20} color={isDark ? "white" : "black"} />
                             <Text className="font-inter text-sm text-black dark:text-white">{data.transmission}</Text>
                         </View>
-                        <TouchableOpacity
-                            activeOpacity={0.8}
+                        <FavoriteButton
+                            isFavorite={data.is_favorited || false}
                             onPress={() => protectAction(() => mutate(data.id))}
-                        >
-                            <Ionicons
-                                name={data.is_favorited ? "star" : "star-outline"}
-                                size={22} color={data.is_favorited ? "#FAED02" : "black"} />
-                        </TouchableOpacity>
+                        />
                     </View>
                 </View>
             </Pressable>

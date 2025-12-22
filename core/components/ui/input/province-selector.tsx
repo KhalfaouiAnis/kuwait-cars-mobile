@@ -1,4 +1,4 @@
-import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { ProvinceArea, ProvinceOption } from '@/core/types';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { clsx } from 'clsx';

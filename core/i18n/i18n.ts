@@ -1,8 +1,8 @@
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import i18n from "i18next";
 import HttpBackend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
 import { RTL_LANGUAGES, SUPPORTED_LANGUAGES } from "../constants";
-import useUserPreferencesStore from "../lib/stores/preferences.store";
 
 const API_BASE = process.env.EXPO_PUBLIC_API_URL + "/api/v1";
 
@@ -26,17 +26,13 @@ i18n
         caches: [],
       },
       react: {
-        useSuspense: false
-      }
+        useSuspense: false,
+      },
     },
     (err) => {
       useUserPreferencesStore.getState().setI18NReady(true);
     }
   );
-
-// Detect initial locale
-// const deviceLang = Localization.getLocales()["0"].languageCode || "ar";
-// changeLanguage(deviceLang);
 
 i18n.services.formatter?.add("direction", (value) =>
   RTL_LANGUAGES.includes(value) ? "rtl" : "ltr"

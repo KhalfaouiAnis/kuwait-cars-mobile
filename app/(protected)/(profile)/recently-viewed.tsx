@@ -1,7 +1,7 @@
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
-import useUserPreferencesStore, { currentLang } from "@/core/lib/stores/preferences.store";
 import useAuthStore from "@/core/store/auth.store";
+import useUserPreferencesStore, { currentLang } from "@/core/store/preferences.store";
 import { formatPassedTime } from "@/core/utils/date";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";

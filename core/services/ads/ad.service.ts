@@ -1,4 +1,4 @@
-import { httpClient } from "@/core/lib/api/httpClient";
+import { httpClient } from "@/core/api/httpClient";
 import {
   AdSearchParams,
   AdvertisementInterface,
@@ -12,6 +12,7 @@ export const fetchAds = async ({
   direction,
   limit = 10,
 }: AdSearchParams): Promise<PaginatedResponse<AdvertisementInterface>> => {
+
   const { data } = await httpClient.post<
     PaginatedResponse<AdvertisementInterface>
   >("/ads", {

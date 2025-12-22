@@ -1,6 +1,6 @@
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import useRecentlyViewedStore from "@/core/store/recently-viewed-ad.store";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";

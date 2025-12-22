@@ -4,7 +4,7 @@ import ProvinceSelector from "@/core/components/ui/input/province-selector";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { PROVINCES } from "@/core/constants";
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";

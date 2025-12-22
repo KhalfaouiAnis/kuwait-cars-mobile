@@ -9,7 +9,7 @@ import PostAd from "@/core/components/forms/ads/used-cars/post-ad";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import UploadProgress from "@/core/components/ui/shared/upload-progress";
 import { useUsedCarAd } from "@/core/hooks/ad/flows/useUsedCarAd";
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";

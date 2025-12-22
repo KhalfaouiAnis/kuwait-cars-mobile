@@ -10,7 +10,7 @@ import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 
 export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepProps<UsedCarAdInterface>) {
     const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue)

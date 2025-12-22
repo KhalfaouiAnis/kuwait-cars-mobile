@@ -1,7 +1,7 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import Checkbox from "@/core/components/ui/input/checkbox";
 import RadioGroup from "@/core/components/ui/input/radio-group";
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";

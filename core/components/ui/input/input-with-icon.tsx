@@ -1,4 +1,4 @@
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { ReactNode, useState } from "react";

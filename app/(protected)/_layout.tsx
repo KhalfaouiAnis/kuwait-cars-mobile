@@ -1,5 +1,5 @@
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
 import useAuthStore from "@/core/store/auth.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 
 import { Redirect, Stack } from "expo-router";
 

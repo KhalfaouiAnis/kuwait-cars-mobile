@@ -74,13 +74,81 @@ export const CAR_BRAND_TYPES = [
         label: "Sports motorcycles",
         brands: [
           {
-            label: "Toyota",
-            value: "Toyota",
-            marks: [{ label: "Toyota", value: "Sports motorcycles/Toyota" }],
+            label: "Honda",
+            value: "Honda",
+            marks: [{ label: "Honda", value: "Sports motorcycles/Honda" }],
+          },
+          {
+            label: "Yamaha",
+            marks: [{ label: "Yamaha", value: "Sports motorcycles/Yamaha" }],
+          },
+          {
+            label: "Kawasaki",
+            marks: [{ label: "Kawasaki", value: "Sports motorcycles/Kawasaki" }],
+          },
+          {
+            label: "Suzuki",
+            marks: [{ label: "Suzuki", value: "Sports motorcycles/Suzuki" }],
           },
           {
             label: "BMW",
             marks: [{ label: "BMW", value: "Sports motorcycles/BMW" }],
+          },
+          {
+            label: "Ducati",
+            marks: [{ label: "Ducati", value: "Sports motorcycles/Ducati" }],
+          },
+          {
+            label: "KTM",
+            marks: [{ label: "KTM", value: "Sports motorcycles/KTM" }],
+          },
+          {
+            label: "Harley-Davidson",
+            marks: [{ label: "Harley-Davidson", value: "Sports motorcycles/Harley-Davidson" }],
+          },
+          {
+            label: "Triumph Motorcycles",
+            marks: [{ label: "Triumph Motorcycles", value: "Sports motorcycles/Triumph Motorcycles" }],
+          },
+          {
+            label: "Royal Enfield",
+            marks: [{ label: "Royal Enfield", value: "Sports motorcycles/Royal Enfield" }],
+          },
+          {
+            label: "Aprilia",
+            marks: [{ label: "Aprilia", value: "Sports motorcycles/Aprilia" }],
+          },
+          {
+            label: "Indian Motorcycle",
+            marks: [{ label: "Indian Motorcycle", value: "Sports motorcycles/Indian Motorcycle" }],
+          },
+          {
+            label: "Benelli",
+            marks: [{ label: "Benelli", value: "Sports motorcycles/Benelli" }],
+          },
+          {
+            label: "Can-Am",
+            marks: [{ label: "Can-Am", value: "Sports motorcycles/Can-Am" }],
+          },
+          {
+            label: "MV Agusta",
+            marks: [{ label: "MV Agusta", value: "Sports motorcycles/MV Agusta" }],
+          },
+          {
+            label: "Husqvarna",
+            marks: [{ label: "Husqvarna", value: "Sports motorcycles/Husqvarna" }],
+          },
+          {
+            label: "Moto Guzzi",
+            marks: [{ label: "Moto Guzzi", value: "Sports motorcycles/Moto Guzzi" }],
+          },
+          {
+            label: "Bajaj",
+            marks: [{ label: "Bajaj", value: "Sports motorcycles/Bajaj" }],
+          },
+          {
+            label: "TVS Motor",
+            marks: [{ label: "TVS Motor", value: "Sports motorcycles/TVS Motor" }],
           },
         ],
       },

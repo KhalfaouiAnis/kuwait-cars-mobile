@@ -2,7 +2,7 @@ import AdTypeSelector from "@/core/components/forms/ads/shared/ad-type-selector/
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
 import { AD_TYPES, CAR_BRAND_TYPES } from "@/core/constants/ad";
-import useUserPreferencesStore from "@/core/lib/stores/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";

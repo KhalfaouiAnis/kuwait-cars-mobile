@@ -1,4 +1,4 @@
-import { httpClient } from "@/core/lib/api/httpClient";
+import { httpClient } from "@/core/api/httpClient";
 import {
   fetchAds,
   fetchMyAds,
@@ -7,6 +7,7 @@ import {
 import useRecentlyViewedStore from "@/core/store/recently-viewed-ad.store";
 import useSearchStore from "@/core/store/search.store";
 import { AdvertisementInterface } from "@/core/types";
+import { sanitizeFiltersForApi } from "@/core/utils/filter-sanitizer";
 import {
   useInfiniteQuery,
   useQuery,
@@ -14,20 +15,23 @@ import {
 } from "@tanstack/react-query";
 
 export const useAdsQuery = () => {
-  const { filters, sorting } = useSearchStore();
+  const { appliedFilters } = useSearchStore();
 
   return useInfiniteQuery({
-    queryKey: ["ads", filters, sorting],
-    queryFn: ({ pageParam }) =>
-      fetchAds({
-        filters,
+    queryKey: ["ads", appliedFilters],
+    queryFn: async ({ pageParam }) => {
+      const { sorting, ...sanitizedFilters } =
+        sanitizeFiltersForApi(appliedFilters);
+      return fetchAds({
+        filters: sanitizedFilters,
         sorting,
         cursor: pageParam as string | null as string,
         limit: 10,
-      }),
+      });
+    },
     initialPageParam: null as string | null as string,
-    getNextPageParam: (lastPage) =>
-      lastPage.meta.hasNextPage ? lastPage.meta.nextCursor : null,
+    getNextPageParam: (lastPage) => lastPage.meta.nextCursor ?? null,
+    staleTime: 1000 * 60 * 5,
   });
 };
 

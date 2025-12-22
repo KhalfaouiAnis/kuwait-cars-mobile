@@ -1,6 +1,6 @@
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { useColorScheme } from 'nativewind';
 import { useEffect } from 'react';
-import useUserPreferencesStore from '../stores/preferences.store';
 
 export const ThemeSynchronizer = () => {
     const storeTheme = useUserPreferencesStore((state) => state.theme);

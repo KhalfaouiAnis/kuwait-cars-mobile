@@ -1,7 +1,7 @@
 import { AUTH_STORAGE_KEY } from "@/core/constants";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { zustandStorage } from "../lib/stores/storage";
+import { zustandStorage } from "./storage";
 
 const MAX_RECENT = 5;
 

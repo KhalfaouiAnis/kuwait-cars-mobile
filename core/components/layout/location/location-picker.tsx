@@ -1,4 +1,4 @@
-import useUserPreferencesStore from '@/core/lib/stores/preferences.store';
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { AdFormStepProps } from '@/core/types';
 import { Ionicons, Octicons } from '@expo/vector-icons';
 import { clsx } from 'clsx';

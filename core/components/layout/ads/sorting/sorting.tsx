@@ -1,49 +1,39 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import useSearchStore, { SortingItem } from "@/core/store/search.store";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
-interface SortingContentProps {
-    selectedOptions: string[];
-    onToggleOption: (value: string) => void;
-}
-
-const sortOptions = [
-    { id: 'best-match', label: 'Best match' },
-    { id: 'price-asc', label: 'Lowest price' },
-    { id: 'price-desc', label: 'Highest price' },
-    { id: 'date-desc', label: 'Newest' },
-    { id: 'date-asc', label: 'Oldest' },
+const sortOptions: SortingItem[] = [
+    { field: 'price', direction: "asc" },
+    { field: 'price', direction: "desc" },
+    { field: 'created_at', direction: "desc" },
+    { field: 'created_at', direction: "asc" },
 ];
 
-const SortingContent: React.FC<SortingContentProps> = ({ selectedOptions, onToggleOption }) => {
+export const SortingContent = () => {
+    const { draftFilters: { sorting }, setExternalFilter } = useSearchStore((state) => state);
 
     const renderItem = ({ item }: { item: typeof sortOptions[0] }) => {
-        const isSelected = selectedOptions.includes(item.id);
+        const isSelected = sorting.field === item.field && sorting.direction === item.direction
+
         return (
             <TouchableOpacity
                 className={`flex-row items-center p-3 my-1 border-b border-gray-200 ${isSelected ? 'bg-primary-500' : ''}`}
-                onPress={() => onToggleOption(item.id)}
+                onPress={() => setExternalFilter("sorting", item)}
             >
                 <View className="flex-1">
-                    <Text className="font-medium">{item.label}</Text>
+                    <Text className="font-medium">{item.field} {item.direction}</Text>
                 </View>
-                <MaterialCommunityIcons name={isSelected ? "check-circle-outline" : "checkbox-blank-circle-outline"} size={20} color="gray" />
             </TouchableOpacity>
-
-        );
+        )
     }
 
     return (
         <View className="flex-1">
             <FlatList
                 data={sortOptions}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => `${item.field}__${item.direction}`}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
             />
         </View>
     );
 };
-
-export default function renderSortingContent(selectedOptions: (string)[], onToggleOption: (value: string) => void) {
-    return <SortingContent selectedOptions={selectedOptions as string[]} onToggleOption={onToggleOption} />
-}
