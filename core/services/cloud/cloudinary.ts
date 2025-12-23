@@ -1,11 +1,13 @@
 import { httpClient } from "@/core/api/httpClient";
 import { CloudinarySignRequestInterface, SoundEffectTypes } from "@/core/types";
 
-const signRequest = async (params: CloudinarySignRequestInterface) => {
+export const signCloudinaryUpload = async (
+  params: CloudinarySignRequestInterface
+) => {
   return httpClient.post("/cloudinary/gen-signature", params);
 };
 
-const uploadFileToCloudinary = async (
+export const uploadFileToCloudinary = async (
   compressedUri: string,
   signingParams: CloudinarySignRequestInterface,
   type?: string,
@@ -19,7 +21,7 @@ const uploadFileToCloudinary = async (
     name,
   } as any);
 
-  const { data: response } = await signRequest(signingParams);
+  const { data: response } = await signCloudinaryUpload(signingParams);
 
   formData.append("api_key", response.apiKey);
   formData.append("signature", response.signature);
@@ -28,6 +30,11 @@ const uploadFileToCloudinary = async (
 
   if (response.params.eager) {
     formData.append("eager", response.params.eager);
+  }
+
+  if (response.params.upload_preset === "x_cars_avatars") {
+    formData.append("overwrite", true as any);
+    formData.append("invalidate", true as any);
   }
 
   try {

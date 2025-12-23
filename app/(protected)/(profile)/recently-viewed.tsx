@@ -1,16 +1,19 @@
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
-import useAuthStore from "@/core/store/auth.store";
-import useUserPreferencesStore, { currentLang } from "@/core/store/preferences.store";
+import { FavoriteButton } from "@/core/components/ui/shared/favorite-button";
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
+import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
+import { useRecentlyViewedQuery } from "@/core/services/ads/ad.queries";
+import { currentLang } from "@/core/store/preferences.store";
 import { formatPassedTime } from "@/core/utils/date";
-import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { LinearGradient } from 'expo-linear-gradient';
 import { FlatList, Text, View } from "react-native";
 
 export default function RecentlyViewedAdsScreen() {
-    const { theme } = useUserPreferencesStore()
-    const { recentlyViewedAds } = useAuthStore();
+    const { protectAction } = useAuthGuard();
+    const { mutate } = useToggleFavorite();
+    const { data } = useRecentlyViewedQuery()
     const locale = currentLang()
 
     return (
@@ -18,7 +21,7 @@ export default function RecentlyViewedAdsScreen() {
             header={<ProfileHeader title="Recently Viewed" />}>
             <View className="w-full px-2 mt-12">
                 <FlatList
-                    data={recentlyViewedAds}
+                    data={data}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => (
                         <View className="mb-2 border border-primary-500 rounded-lg p-1 flex-row dark:bg-darkish">
@@ -30,8 +33,8 @@ export default function RecentlyViewedAdsScreen() {
                                     end={{ x: 0.5, y: 0 }}
                                 >
                                     <Image
-                                        source={{ uri: item.thumbnail }}
-                                        contentFit="contain"
+                                        source={{ uri: item.media[0].transformed_url }}
+                                        contentFit="fill"
                                         style={{ width: 140, height: 100, borderRadius: 8 }} />
                                 </LinearGradient>
                             </View>
@@ -45,7 +48,7 @@ export default function RecentlyViewedAdsScreen() {
                                 </View>
                                 <View className="flex-1 flex-row items-center justify-between px-1 mt-4">
                                     <Text className="text-gray-500 text-xs">{formatPassedTime(new Date().toDateString(), locale) || "viewed 12 minutes ago"}</Text>
-                                    <Ionicons name="star-outline" size={22} color={theme !== "light" ? "white" : "black"} />
+                                    <FavoriteButton isFavorite={item?.is_favorited || false} onPress={() => protectAction(() => mutate(item.id))} />
                                 </View>
                             </View>
                         </View>

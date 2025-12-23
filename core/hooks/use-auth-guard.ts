@@ -8,11 +8,12 @@ export const useAuthGuard = () => {
 
   const protectAction = (action: () => void) => {
     if (isGuest) {
-      toast.error("Account Required", {
+      toast.warning("Account Required", {
         description: "Please create an account to use this feature.",
+        duration: 6000,
         action: {
           label: "Sign Up",
-          onClick: () => navigation.push("/signup"),
+          onClick: () => navigation.push("/require-signin"),
         },
       });
       return;

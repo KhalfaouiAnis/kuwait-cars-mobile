@@ -1,5 +1,5 @@
 import GoogleIcon from '@/assets/svg/google';
-import { handleGoogleLoginRequest } from '@/core/lib/api/authentication/social';
+import { handleGoogleLoginRequest } from '@/core/services/authentication/oauth';
 import { useRouter } from 'expo-router';
 import { Alert, TouchableOpacity } from 'react-native';
 

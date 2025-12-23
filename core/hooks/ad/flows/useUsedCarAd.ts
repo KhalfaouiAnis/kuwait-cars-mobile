@@ -1,6 +1,6 @@
-import { uploadStructuredMedia } from "@/core/lib/api/cloud/cloudinary";
-import { hideLisencePlate } from "@/core/lib/api/cloud/lisence-plate";
-import { httpClient } from "@/core/lib/api/httpClient";
+import { httpClient } from "@/core/api/httpClient";
+import { uploadStructuredMedia } from "@/core/services/cloud/cloudinary";
+import { hideLisencePlate } from "@/core/services/cloud/lisence-plate";
 import {
   UsedCarAdInterface,
   UsedCarAdSchema,

@@ -13,13 +13,13 @@ import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
 export default function AdDetails({ control, errors, setValue, t }: AdFormStepProps<MotorcycleAdInterface>) {
-    const { ad_type, category, brand } = useLocalSearchParams()
+    const { ad_type, ad_category, brand } = useLocalSearchParams()
 
     useEffect(() => {
         setValue?.("ad_type", ad_type as string)
-        setValue?.("category", category as string)
+        setValue?.("ad_category", ad_category as string)
         setValue?.("brand", brand as string)
-    }, [ad_type, category, brand, setValue])
+    }, [ad_type, ad_category, brand, setValue])
 
     return (
         <ScrollView
@@ -38,7 +38,7 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                     <Text className="text-sm text-gray-300">{t("adCategories.motorcycles")}</Text>
                 </View>
                 <SelectedAdType
-                    label={`${category} - ${brand}`}
+                    label={`${ad_category} - ${brand}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>

@@ -13,14 +13,14 @@ const MainHeader = ({ drawer = false, back = true }: { drawer?: boolean, back?: 
         <View style={{direction: isRTL ? 'rtl' : 'ltr'}} className={`mt-1 h-16 flex-row items-center justify-center mx-2`}>
             {
                 back && (
-                    <Pressable onPress={onBack}>
+                    <Pressable onPress={onBack} hitSlop={4}>
                         <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={theme !== "light" ? "white" : "black"} />
                     </Pressable>
                 )
             }
             {
                 drawer && (
-                    <Pressable onPress={openProfile}>
+                    <Pressable onPress={openProfile} hitSlop={4}>
                         <MaterialIcons name="sort" size={28} color={theme !== "light" ? "white" : "black"} />
                     </Pressable>
                 )

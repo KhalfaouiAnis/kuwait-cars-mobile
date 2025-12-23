@@ -1,5 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
+import { getFileSize, Image } from "react-native-compressor";
 
 export const useAvatar = (setValue: any) => {
   const [avatar, setAvatar] = useState<any>(null);
@@ -16,11 +17,20 @@ export const useAvatar = (setValue: any) => {
 
     if (result.canceled || !result.assets) return;
 
+    const { uri } = result.assets[0];
+
+    const compressedUri = await Image.compress(uri, {
+      output: "jpg",
+      disablePngTransparency: true,
+    });
+
+    const compressedSize = await getFileSize(compressedUri);
+
     const fileObj: any = {
-      uri: result.assets[0].uri,
+      uri: compressedUri,
       type: result.assets[0].mimeType,
       name: result.assets[0].fileName,
-      size: result.assets[0].fileSize,
+      size: compressedSize,
     };
 
     setAvatar(fileObj);

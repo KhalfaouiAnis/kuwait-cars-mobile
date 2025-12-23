@@ -1,11 +1,11 @@
 import AppleIcon from "@/assets/svg/apple";
-import AuthHeader from "@/core/components/forms/auth/auth-header";
+import AuthHeader from "@/core/components/layout/header/auth-header";
 import { AuthLink } from "@/core/components/ui/_links/auth-link";
 import FacebookButton from "@/core/components/ui/button/FacebookButton";
 import GoogleButton from "@/core/components/ui/button/GoogleButton";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-import { getGuestAccessToken } from "@/core/lib/api/authentication/login";
+import { getGuestAccessToken } from "@/core/services/authentication/standard";
 import { authStore } from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import Fontisto from '@expo/vector-icons/Fontisto';

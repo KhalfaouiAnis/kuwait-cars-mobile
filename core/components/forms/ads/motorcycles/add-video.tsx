@@ -12,7 +12,7 @@ import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 
 export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepProps<MotorcycleAdInterface>) {
-    const { video, loading, addVideo, removeVideo, setVideo } = useAdVideo(setValue)
+    const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue)
 
     useEffect(() => {
         (async () => {
@@ -27,11 +27,6 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
             }
         })();
     }, []);
-
-    useEffect(() => {
-        const video = getValue?.("video")
-        video && setVideo(video)
-    }, [getValue, setVideo])
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">

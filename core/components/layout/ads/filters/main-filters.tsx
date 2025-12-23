@@ -1,24 +1,25 @@
 import AppModal from "@/core/components/ui/dialog/modal";
+import { FilterConfigItem } from "@/core/constants/ad";
 import useSearchStore, { CombinedFilterKeys, MultiFilterKeys } from "@/core/store/search.store";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import Reset from "../reset";
 import { SortingContent } from "../sorting/sorting";
-import { FILTER_CONFIG } from "./data";
 import { SmartFilterContent } from "./filter-content";
 import { PriceFilterContent } from "./price-filter";
 
 interface Props {
     isDark: boolean,
     setView: Dispatch<SetStateAction<"horizontal" | "vertical">>
+    filterConfig: Record<string, FilterConfigItem>
 }
 
-export const MainFilters = ({ isDark, setView }: Props) => {
-    const [activeKey, setActiveKey] = useState<keyof typeof FILTER_CONFIG | null>(null);
+export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
+    const [activeKey, setActiveKey] = useState<keyof typeof filterConfig | null>(null);
     const { syncDraftToApplied, applyFilters, draftFilters, resetDraftFilter } = useSearchStore();
 
-    const handleOpen = (key: keyof typeof FILTER_CONFIG) => {
+    const handleOpen = (key: keyof typeof filterConfig) => {
         syncDraftToApplied();
         setActiveKey(key);
     };
@@ -32,7 +33,7 @@ export const MainFilters = ({ isDark, setView }: Props) => {
                         <Ionicons name="filter" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
                     </View>
                 </Pressable>
-                {Object.entries(FILTER_CONFIG).map(([key, config]) => (
+                {Object.entries(filterConfig).map(([key, config]) => (
                     <Pressable
                         key={key}
                         onPress={() => handleOpen(key as any)}
@@ -80,7 +81,7 @@ export const MainFilters = ({ isDark, setView }: Props) => {
                         return <SortingContent />
                     }
                     if (activeKey) return (
-                        <SmartFilterContent activeKey={activeKey} />
+                        <SmartFilterContent activeKey={activeKey} filterConfig={filterConfig} />
                     )
                 }}
             />

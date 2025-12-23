@@ -1,6 +1,6 @@
+import { httpClient } from "@/core/api/httpClient";
 import { authStore } from "@/core/store/auth.store";
 import { jwtDecode } from "jwt-decode";
-import { httpClient } from "../lib/api/httpClient";
 
 type JwtPayload = { userId: string; role: string; exp: number; iat: number };
 

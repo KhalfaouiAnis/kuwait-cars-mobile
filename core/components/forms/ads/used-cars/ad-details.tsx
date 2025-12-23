@@ -25,8 +25,8 @@ export default function AdDetails({ control, errors, setValue, t, isDark }: AdFo
 
     return (
         <ScrollView
-            showsVerticalScrollIndicator={false}
             className="flex-1"
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 10 }}
         >
             <View className="flex-row items-center justify-center w-full">

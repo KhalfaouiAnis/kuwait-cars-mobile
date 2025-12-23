@@ -12,7 +12,7 @@ const ChatHeader = ({ username, phone }: { username: string, phone: string }) =>
 
     return (
         <View className='mt-1 flex flex-row items-center justify-center px-4 mb-2 border-b border-primary-500'>
-            <Pressable onPress={onBack}>
+            <Pressable onPress={onBack} hitSlop={6}>
                 <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={theme !== "light" ? "white" : "black"} />
             </Pressable>
             <View className='w-full items-center justify-center'>

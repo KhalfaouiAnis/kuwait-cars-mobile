@@ -26,7 +26,6 @@ export const ProvinceSchema = z.object({
   province: z.string(),
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
-  areas: z.array(AreaSchema),
 });
 
 export const VideoSchema = z.object(

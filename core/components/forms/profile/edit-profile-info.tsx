@@ -3,15 +3,20 @@ import { PROVINCES } from "@/core/constants";
 import { IMAGES } from "@/core/constants/images";
 import { useAvatar } from "@/core/hooks/user/use-avatar";
 import { useProfile } from "@/core/hooks/user/use-profile";
+import { useUpdateProfile } from "@/core/services/user/user.mutations";
 import useAuthStore from "@/core/store/auth.store";
+import { UpdateProfileInterface } from "@/core/types/schema/user";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import { useState } from "react";
 import { useWatch } from "react-hook-form";
-import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import { toast } from "sonner-native";
 import LocationPicker from "../../layout/location/location-picker";
 import PickFromGallerySM from "../../ui/button/media/open-gallery-sm";
 import TakePhotoButton from "../../ui/button/media/take-photo";
+import { ProgressButton } from "../../ui/button/progress-button";
 import AppModal from "../../ui/dialog/modal";
 import AreaSelector from "../../ui/input/area-selector";
 import PhoneInput from "../../ui/input/phone-input";
@@ -20,16 +25,30 @@ import { renderProvinceAreaOption } from "../../ui/shared/render-option";
 
 export default function EditProfileForm({ theme, t }: { theme: string, t: (key: string) => string }) {
     const [showModal, setShowModal] = useState(false)
-    const { user } = useAuthStore();
+    const { user } = useAuthStore(state => state);
 
-    const { errors, handleSubmit, onSubmit, isSubmitting, control, setValue } = useProfile(user ? { ...user, avatar: user.avatar } : undefined)
+    const { errors, handleSubmit, control, setValue } = useProfile(user)
+    const { mutate, isPending, uploadProgress } = useUpdateProfile();
     const { addAvatar, avatar } = useAvatar(setValue)
 
     const province = useWatch({ control, name: "province" })
-    const Areas = province?.areas.map(area => ({ ...area, label: area.area })) || []
+    const Areas = PROVINCES.find(prov => prov.province === province?.province)?.areas || []
 
     const onError = (errors: any) => {
         console.log('Validation failed:', errors);
+    };
+
+    const onSubmit = (data: UpdateProfileInterface) => {
+        mutate(data, {
+            onSuccess: () => {
+                toast.success("Profile updated successfully")
+                router.replace("/profile")
+            },
+            onError: (err) => {
+                console.log(err.message);
+                toast.error(err.message)
+            }
+        });
     };
 
     return (
@@ -39,7 +58,10 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: (key: 
                     <Text className="font-inter-semibold text-xl dark:text-white">{user?.fullname}</Text>
                 </View>
                 <View className="items-end">
-                    <View className="relative">
+                    <Pressable
+                        className="relative"
+                        onPress={() => setShowModal(true)}
+                    >
                         {
                             avatar ? <Image
                                 source={{ uri: avatar.uri }}
@@ -48,16 +70,16 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: (key: 
                             /> :
                                 <Image
                                     source={user?.avatar
-                                        ? { uri: user?.avatar }
+                                        ? { uri: user?.avatar.original_url }
                                         : IMAGES.DefaultAvatar}
                                     style={{ width: 75, height: 75, borderRadius: 50 }}
                                     contentFit="cover"
                                 />
                         }
-                        <Pressable className="absolute -left-7 bottom-1 z-10 bg-white rounded-full p-2" onPress={() => setShowModal(true)}>
+                        <View className="absolute -left-7 bottom-1 z-10 bg-white rounded-full p-2">
                             <Ionicons name="camera-outline" size={24} />
-                        </Pressable>
-                    </View>
+                        </View>
+                    </Pressable>
                 </View>
             </View>
 
@@ -113,15 +135,12 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: (key: 
                     t={t}
                 />
             </View>
-            <TouchableOpacity className="bg-primary-500 py-3 rounded-lg items-center mt-6"
+            <ProgressButton
                 onPress={handleSubmit(onSubmit, onError)}
-                disabled={isSubmitting}
-            >
-                <Text className="text-lg font-semibold text-secondary-900">
-                    {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("updateInfo")}
-                </Text>
-            </TouchableOpacity>
-
+                isPending={isPending}
+                title={t("updateInfo")}
+                progress={uploadProgress}
+            />
             <AppModal
                 onClose={() => setShowModal(false)}
                 visible={showModal}

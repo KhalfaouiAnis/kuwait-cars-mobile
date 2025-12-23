@@ -1,4 +1,5 @@
 import Container from "@/core/components/ui/container";
+import BackArrow from "@/core/components/ui/shared/back-arrow";
 import { IMAGES } from "@/core/constants/images";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -8,7 +9,7 @@ export default function ModelDetailsScreen() {
     return (
         <Container scrollable header={
             <View className="flex-row items-center justify-between mb-2 mt-4 px-4">
-                <Pressable><Ionicons name="chevron-back" size={22} /></Pressable>
+                <BackArrow />
                 <View className="flex-row items-center gap-x-3">
                     <Pressable><Ionicons name="flag" size={22} color={"red"} /></Pressable>
                     <Feather name="share-2" size={22} color="black" />

@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_PLANS } from "@/core/constants/ad";
+import { SUBSCRIPTION_PLANS, SubscriptionDetail } from "@/core/constants/ad";
 import { AdFormStepProps } from "@/core/types";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import SubscriptionCard from "../shared/subscription-card";
 export default function ChoosePlan({ setValue, getValue, t }: AdFormStepProps<MotorcycleAdInterface>) {
     const [selectedPlan, setSelectedPlan] = useState(getValue?.("plan"))
 
-    const handleSelectPlan = (plan: string) => {
+    const handleSelectPlan = (plan: SubscriptionDetail) => {
         setSelectedPlan(plan)
         setValue?.("plan", plan)
     };
@@ -21,7 +21,7 @@ export default function ChoosePlan({ setValue, getValue, t }: AdFormStepProps<Mo
                         <SubscriptionCard
                             key={plan.id}
                             plan={plan}
-                            isSelected={plan.title === selectedPlan}
+                            isSelected={plan.title === selectedPlan?.title}
                             onSelect={handleSelectPlan}
                             t={t}
                         />

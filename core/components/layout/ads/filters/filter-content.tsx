@@ -1,12 +1,12 @@
+import { FilterConfigItem, FilterConfigKey } from '@/core/constants/ad';
 import useSearchStore, { FilterState, MultiFilterKeys } from '@/core/store/search.store';
 import { useMemo, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { FILTER_CONFIG, FilterConfigKey } from './data';
 import { MultiSelectContent } from './multi-select-content';
 import SearchField from './search-field';
 
-export const SmartFilterContent = ({ activeKey }: { activeKey: FilterConfigKey }) => {
-    const config = FILTER_CONFIG[activeKey];
+export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: FilterConfigKey, filterConfig: Record<string, FilterConfigItem> }) => {
+    const config = filterConfig[activeKey];
     const { draftFilters, toggleDraftMultiFilter } = useSearchStore((state) => state);
     const [localSearch, setLocalSearch] = useState('');
 
@@ -30,7 +30,7 @@ export const SmartFilterContent = ({ activeKey }: { activeKey: FilterConfigKey }
         }
 
         if (config.showRegionHelper && draftFilters.region && draftFilters?.region?.length > 0) {
-            if(draftFilters.region?.includes("All")) return list;
+            if (draftFilters.region?.includes("All")) return list;
             list = list.filter(opt => opt.regionId && draftFilters?.region?.includes(opt.regionId));
         }
 
@@ -47,7 +47,7 @@ export const SmartFilterContent = ({ activeKey }: { activeKey: FilterConfigKey }
             {config.showRegionHelper && (
                 <View className="mb-1">
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} className="pb-2">
-                        {["All","Asian","Chinese","European","American"].map((region) => {
+                        {["All", "Asian", "Chinese", "European", "American"].map((region) => {
                             const isSelected = selectedValues.includes(region);
                             return (
                                 <TouchableOpacity

@@ -14,12 +14,13 @@ import { ScrollView, Text, View } from "react-native";
 import LocationPicker from "../../../layout/location/location-picker";
 import { renderProvinceAreaOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
+import { StaticMapPreview } from "../shared/static-map-preview";
 
 export default function PostAd({ control, errors, isDark, setValue, t }: AdFormStepProps<UsedCarAdInterface>) {
     const { model, brand } = useLocalSearchParams()
     const { isRTL } = useUserPreferencesStore()
     const province = useWatch({ control, name: "province" })
-    const Areas = province?.areas.map(area => ({ ...area, label: area.area })) || []
+    const Areas = PROVINCES.find(prov => prov.province === province?.province)?.areas || []
 
     return (
         <ScrollView
@@ -68,6 +69,11 @@ export default function PostAd({ control, errors, isDark, setValue, t }: AdFormS
                     t={t}
                 />
             </View>
+            {province?.latitude &&
+                (<View className="my-2 w-full h-32 rounded-lg" pointerEvents="none">
+                    <StaticMapPreview latitude={province.latitude} longitude={province.longitude} />
+                </View>)
+            }
             <AdTextInput
                 control={control}
                 name="price"

@@ -2,7 +2,7 @@ import {
   attemptLogin,
   createAccount,
   verifyOTP,
-} from "@/core/lib/api/authentication/login";
+} from "@/core/services/authentication/standard";
 import { authStore } from "@/core/store/auth.store";
 import {
   LoginInterface,

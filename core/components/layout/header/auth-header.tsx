@@ -9,8 +9,8 @@ const AuthHeader = () => {
     const onBack = () => router.canGoBack() && router.back()
 
     return (
-        <View className={`'mt-1 flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} items-center justify-between px-4'`}>
-            <Pressable onPress={onBack}>
+        <View className={`mt-1 flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} items-center justify-between px-4`}>
+            <Pressable onPress={onBack} hitSlop={10}>
                 <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={24} color={theme !== "light" ? "white" : "black"} />
             </Pressable>
             <LanguageSwitcher />

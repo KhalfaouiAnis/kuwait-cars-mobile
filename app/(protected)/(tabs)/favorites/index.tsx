@@ -77,7 +77,7 @@ export default function FavoritesScreen() {
                     data={listings}
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => <View className="mb-2">
-                        {/* <Ad data={item} view="vertical" isDark={theme !== "light"} /> */}
+                        {/* <Advertisement data={[]} view="vertical" isDark={theme !== "light"} /> */}
                     </View>}
                     contentContainerStyle={{ paddingBottom: 180 }}
                     showsVerticalScrollIndicator={false}

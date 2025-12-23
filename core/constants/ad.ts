@@ -1,3 +1,5 @@
+import { FilterState } from "@/core/store/search.store";
+
 export enum SUBSCRIPTION_TYPES {
   GOLDEN = "GOLDEN",
   DIAMOND = "DIAMOND",
@@ -84,7 +86,9 @@ export const CAR_BRAND_TYPES = [
           },
           {
             label: "Kawasaki",
-            marks: [{ label: "Kawasaki", value: "Sports motorcycles/Kawasaki" }],
+            marks: [
+              { label: "Kawasaki", value: "Sports motorcycles/Kawasaki" },
+            ],
           },
           {
             label: "Suzuki",
@@ -104,15 +108,30 @@ export const CAR_BRAND_TYPES = [
           },
           {
             label: "Harley-Davidson",
-            marks: [{ label: "Harley-Davidson", value: "Sports motorcycles/Harley-Davidson" }],
+            marks: [
+              {
+                label: "Harley-Davidson",
+                value: "Sports motorcycles/Harley-Davidson",
+              },
+            ],
           },
           {
             label: "Triumph Motorcycles",
-            marks: [{ label: "Triumph Motorcycles", value: "Sports motorcycles/Triumph Motorcycles" }],
+            marks: [
+              {
+                label: "Triumph Motorcycles",
+                value: "Sports motorcycles/Triumph Motorcycles",
+              },
+            ],
           },
           {
             label: "Royal Enfield",
-            marks: [{ label: "Royal Enfield", value: "Sports motorcycles/Royal Enfield" }],
+            marks: [
+              {
+                label: "Royal Enfield",
+                value: "Sports motorcycles/Royal Enfield",
+              },
+            ],
           },
           {
             label: "Aprilia",
@@ -120,7 +139,12 @@ export const CAR_BRAND_TYPES = [
           },
           {
             label: "Indian Motorcycle",
-            marks: [{ label: "Indian Motorcycle", value: "Sports motorcycles/Indian Motorcycle" }],
+            marks: [
+              {
+                label: "Indian Motorcycle",
+                value: "Sports motorcycles/Indian Motorcycle",
+              },
+            ],
           },
           {
             label: "Benelli",
@@ -132,15 +156,21 @@ export const CAR_BRAND_TYPES = [
           },
           {
             label: "MV Agusta",
-            marks: [{ label: "MV Agusta", value: "Sports motorcycles/MV Agusta" }],
+            marks: [
+              { label: "MV Agusta", value: "Sports motorcycles/MV Agusta" },
+            ],
           },
           {
             label: "Husqvarna",
-            marks: [{ label: "Husqvarna", value: "Sports motorcycles/Husqvarna" }],
+            marks: [
+              { label: "Husqvarna", value: "Sports motorcycles/Husqvarna" },
+            ],
           },
           {
             label: "Moto Guzzi",
-            marks: [{ label: "Moto Guzzi", value: "Sports motorcycles/Moto Guzzi" }],
+            marks: [
+              { label: "Moto Guzzi", value: "Sports motorcycles/Moto Guzzi" },
+            ],
           },
           {
             label: "Bajaj",
@@ -148,7 +178,9 @@ export const CAR_BRAND_TYPES = [
           },
           {
             label: "TVS Motor",
-            marks: [{ label: "TVS Motor", value: "Sports motorcycles/TVS Motor" }],
+            marks: [
+              { label: "TVS Motor", value: "Sports motorcycles/TVS Motor" },
+            ],
           },
         ],
       },
@@ -468,3 +500,100 @@ export const SUBSCRIPTION_PLANS = [
     ],
   },
 ];
+
+
+export interface FilterOption {
+  id: string;
+  label: string;
+  value: string;
+  parentId?: string;
+  regionId?: string;
+}
+
+export type FilterConfigItem = {
+  title: string;
+  options: FilterOption[];
+  parentKey: keyof FilterState | null;
+  showRegionHelper: boolean;
+  showSearch: boolean;
+};
+
+export const USED_CARS_FILTER_CONFIG: Record<string, FilterConfigItem> = {
+  brand: {
+    title: "Brand",
+    parentKey: null,
+    showRegionHelper: true,
+    showSearch: true,
+    options: [
+      { id: "Toyota", label: "Toyota", value: "Toyota", regionId: "Asian" },
+      { id: "BMW", label: "BMW", value: "BMW", regionId: "European" },
+    ],
+  },
+  model: {
+    title: "Model",
+    parentKey: "brand" as keyof FilterState,
+    showRegionHelper: false,
+    showSearch: true,
+    options: [
+      {
+        id: "Toyota Yaris",
+        label: "Toyota Yaris",
+        value: "Toyota Yaris",
+        parentId: "Toyota",
+      },
+      {
+        id: "BMW X5",
+        label: "BMW X5",
+        value: "BMW X5",
+        parentId: "BMW",
+      },
+    ],
+  },
+  year: {
+    title: "Year",
+    parentKey: "model" as keyof FilterState,
+    showRegionHelper: false,
+    showSearch: true,
+    options: [
+      { id: "None", label: "None", value: "None", parentId: "Toyota Yaris" },
+    ],
+  },
+  exterior_color: {
+    title: "Color",
+    showRegionHelper: false,
+    showSearch: true,
+    parentKey: null,
+    options: [{ id: "None", label: "None", value: "None" }],
+  },
+} as const;
+
+export const MOTORCYCLES_FILTER_CONFIG: Record<string, FilterConfigItem> = {
+  brand: {
+    title: "Brand",
+    parentKey: null,
+    showRegionHelper: true,
+    showSearch: true,
+    options: [
+      { id: "Toyota", label: "Toyota", value: "Toyota", regionId: "Asian" },
+      { id: "BMW", label: "BMW", value: "BMW", regionId: "European" },
+    ],
+  },
+  year: {
+    title: "Year",
+    parentKey: "model" as keyof FilterState,
+    showRegionHelper: false,
+    showSearch: true,
+    options: [
+      { id: "None", label: "None", value: "None", parentId: "Toyota Yaris" },
+    ],
+  },
+  exterior_color: {
+    title: "Color",
+    showRegionHelper: false,
+    showSearch: true,
+    parentKey: null,
+    options: [{ id: "None", label: "None", value: "None" }],
+  },
+} as const;
+
+export type FilterConfigKey = keyof typeof USED_CARS_FILTER_CONFIG;

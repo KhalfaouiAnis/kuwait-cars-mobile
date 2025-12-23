@@ -4,7 +4,7 @@ import { AdvertisementInterface } from "@/core/types";
 import { formatSmartDate } from "@/core/utils/date";
 import { AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, Text, View } from 'react-native';
 import Carousel from "../../ui/shared/carousel";
 import { FavoriteButton } from "../../ui/shared/favorite-button";
@@ -16,13 +16,18 @@ interface Props {
 }
 
 export default function Advertisement({ data, view = "horizontal", isDark }: Props) {
+    const { ad_type, ad_category } = useLocalSearchParams<{ ad_type: string, ad_category: string }>()
     const { protectAction } = useAuthGuard();
     const { mutate } = useToggleFavorite();
+
+    const path = `/categories/${ad_type}/${ad_category ? `${ad_category}/${data.id}` : `${data.id}`}`
+
+    console.log(path);
 
     if (view === "vertical") {
         return (
             <Pressable
-                onPress={() => router.push("/categories/used_cars/jdhkgkd")}
+                onPress={() => router.push(path as any)}
                 className="w-full rounded-lg p-2 border border-primary-500 shadow-transparent bg-transparent">
                 <Carousel
                     items={data.media}
@@ -66,7 +71,7 @@ export default function Advertisement({ data, view = "horizontal", isDark }: Pro
             <View className="w-1/3">
                 <Image
                     source={data.media.find(media => media.media_type === "THUMBNAIL")?.transformed_url}
-                    contentFit="fill"
+                    contentFit="cover"
                     style={{ width: "auto", height: 110, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}
                 />
             </View>

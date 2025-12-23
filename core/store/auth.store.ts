@@ -1,5 +1,6 @@
+import { queryClient } from "@/core/api/react-query";
 import { AUTH_STORAGE_KEY } from "@/core/constants";
-import { BaseAd, User } from "@/core/types";
+import { User } from "@/core/types";
 import {
   handleTokenValidation,
   validateAndRefreshToken,
@@ -8,26 +9,22 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { queryClient } from "../lib/react-query";
 import { zustandStorage } from "./storage";
 
 interface AuthState {
   user: User | null;
-  recentlyViewedAds: BaseAd[];
   accessToken: string | null;
   refreshToken: string | null;
   _hasHydrated: boolean;
   isAuthenticated: boolean;
   isGuest: boolean;
-  authType: "APP" | "GOOGLE" | "FACEBOOK" | "APPLE";
+  authType: "STANDARD" | "GOOGLE" | "FACEBOOK" | "APPLE";
   otpTargetTime: number | null;
 
   setOtpTargetTime: (durationInSeconds: number | null) => void;
   bootstrapAsync: () => Promise<void>;
   createGuestSesssion: (token: string) => void;
   setUser: (user: User | null) => void;
-  addToRecentlyViewed: (ad: BaseAd) => void;
-  clearRecentlyViewed: () => void;
   signOut: () => void;
 }
 
@@ -36,24 +33,9 @@ const useAuthStore = create<AuthState>()(
     (set, get) => ({
       user: null,
       otpTargetTime: null,
-      recentlyViewedAds: [
-        {
-          id: "ad1",
-          category_id: "vehicles",
-          created_at: "now",
-          description: "ad description",
-          location: { latitude: 0, longitude: 0 },
-          plan: "pro",
-          price: 123,
-          subcategory_id: "mercedes",
-          title: "Mercedes",
-          year: 2019,
-          viewed_at: new Date(),
-          thumbnail: "https://placehold.co/600x400/png",
-        },
-      ],
+      recentlyViewedAds: [],
       _hasHydrated: false,
-      authType: "APP",
+      authType: "STANDARD",
       isAuthenticated: false,
       isGuest: false,
       accessToken: null,
@@ -89,13 +71,6 @@ const useAuthStore = create<AuthState>()(
       setUser: (user) => {
         set({ user });
       },
-      addToRecentlyViewed: (newAd) => {
-        const { recentlyViewedAds } = get();
-        const filtered = recentlyViewedAds.filter((ad) => ad.id !== newAd.id);
-        const updated = [newAd, ...filtered].slice(0, 5);
-        set({ recentlyViewedAds: updated });
-      },
-      clearRecentlyViewed: () => set({ recentlyViewedAds: [] }),
       signOut: async () => {
         if (get().authType === "GOOGLE") {
           await GoogleSignin.signOut();
@@ -129,13 +104,11 @@ const useAuthStore = create<AuthState>()(
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         user: state.user,
-        recentlyViewedAds: state.recentlyViewedAds,
       }),
     }
   )
 );
 
 export const authStore = useAuthStore;
-export const userId = authStore.getState().user?.id;
 
 export default useAuthStore;

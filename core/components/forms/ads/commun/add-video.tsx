@@ -12,7 +12,7 @@ import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
 import { CommunAdInterface } from "@/core/types/schema/ads/commun";
 
 export default function AddVideo({ setValue, getValue, onSkip, isDark }: AdFormStepProps<CommunAdInterface>) {
-    const { video, loading, addVideo, removeVideo, setVideo } = useAdVideo(setValue)
+    const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue)
 
     useEffect(() => {
         (async () => {
@@ -27,11 +27,6 @@ export default function AddVideo({ setValue, getValue, onSkip, isDark }: AdFormS
             }
         })();
     }, []);
-
-    useEffect(() => {
-        const video = getValue?.("video")
-        video && setVideo(video)
-    }, [getValue, setVideo])
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-1">

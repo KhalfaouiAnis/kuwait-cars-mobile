@@ -1,3 +1,4 @@
+import { EmptyState } from '@/core/components/ui/shared/empty-state';
 import { useAdsQuery } from '@/core/services/ads/ad.queries';
 import React from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
@@ -20,7 +21,6 @@ export const AdsListing = ({ view, isDark }: Props) => {
     } = useAdsQuery();
     const ads = data?.pages.flatMap((page) => page.data) ?? [];
 
-    // if (isLoading) return <ActivityIndicator size="large" style={{ flex: 1, backgroundColor: "#FAED02" }} />;
     if (isLoading) return <AdSkeletonList />;
 
     return (
@@ -36,11 +36,11 @@ export const AdsListing = ({ view, isDark }: Props) => {
             onEndReachedThreshold={0.5}
             refreshing={isLoading}
             onRefresh={refetch}
-            contentContainerStyle={{ paddingBottom: 50, position: "relative", zIndex: 2 }}
+            contentContainerStyle={ads.length === 0 ? { flex: 1 } : { paddingBottom: 50, position: "relative", zIndex: 2 }}
             showsVerticalScrollIndicator={false}
             className="bg-transparent me-2"
             removeClippedSubviews={false}
-            ListEmptyComponent={<></>}
+            ListEmptyComponent={!isLoading ? <EmptyState /> : null}
             ListFooterComponent={
                 isFetchingNextPage ? <ActivityIndicator size="small" style={{ backgroundColor: "#FAED02" }} /> : null
             }

@@ -19,55 +19,10 @@ export interface User {
   phone: string;
   email: string;
   role: UserRole;
-  province?: ProvinceInterface;
-  // province?: Omit<ProvinceInterface, "areas">;
-  area?: AreaInterface;
-  location?: LocationInterface;
-  avatar?: string;
-}
-
-export type BaseAd = {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  year: number;
-  category_id: string;
-  subcategory_id: string;
-  location: LocationInterface;
-  thumbnail: string;
-  additional_number?: string;
-  plan: string;
-  created_at: string;
-  viewed_at?: string | number | Date;
-};
-
-export type CarAd = BaseAd & {
-  mileage: string;
-  exterior_color: string;
-  model?: string;
-  body_type?: string;
-  fuel_type?: string;
-  interior_color?: string;
-  seats_material?: string;
-  body_condition?: string;
-  cylinders?: string;
-  transmission?: string;
-};
-
-export interface AdType {
-  id: string;
-  images: { url: any }[];
-  badge: string;
-  name: string;
-  datePosted: string;
-  price: string;
-  description: string;
-  mielage: string;
-  location: string;
-  distanceFromMyLocation: string;
-  engine: string;
-  gearType: string;
+  province: ProvinceInterface;
+  area?: AreaInterface | null;
+  location?: LocationInterface | null;
+  avatar?: ProfilePictureMedia | null;
 }
 
 export enum UserRole {
@@ -107,7 +62,6 @@ export type ProvinceArea = {
   label: string;
 };
 
-export type FilterAdsBy = "brand" | "model" | "year" | "price";
 export type MediaType = "THUMBNAIL" | "IMAGE" | "VIDEO";
 export type SoundEffectTypes =
   | "mute"
@@ -131,6 +85,8 @@ export interface AdFormStepProps<T extends FieldValues> {
 export interface CloudinarySignRequestInterface {
   mediaType: "image" | "video" | "profile_pic";
   audioFlag?: SoundEffectTypes;
+  overwrite?: boolean;
+  invalidate?: boolean;
 }
 
 export interface AdvertisementMedia {
@@ -156,7 +112,7 @@ export interface AdvertisementInterface {
   title: string;
   description: string;
   plan: AdvertisementPlan;
-  province: Omit<ProvinceInterface, "areas">;
+  province: ProvinceInterface;
   media: AdvertisementMedia[];
   area?: AreaInterface;
   location?: LocationInterface;
@@ -205,4 +161,12 @@ export interface PaginatedResponse<T> {
     hasNextPage: boolean;
     totalCount: number;
   };
+}
+
+export interface ProfilePictureMedia {
+  id?: string;
+  public_id: string;
+  media_type: MediaType;
+  original_url: string;
+  transformed_url?: string;
 }

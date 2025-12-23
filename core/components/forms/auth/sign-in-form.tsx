@@ -46,7 +46,7 @@ export default function SignInForm() {
                 disabled={isSubmitting}
             >
                 <Text className="text-lg font-semibold text-secondary-900">
-                    {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("signIn")}
+                    {isSubmitting ? <ActivityIndicator size="small" color="#fff" /> : t("signIn")}
                 </Text>
             </TouchableOpacity>
             <Link href={"/(auth)/signup"} className="items-center mt-4">

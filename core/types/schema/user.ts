@@ -1,6 +1,18 @@
 import { z } from "zod";
-import { AvatarSchema } from "./media";
-import { AreaSchema, LocationSchema, ProvinceSchema } from "./shared";
+import {
+  AreaSchema,
+  createFileSchema,
+  LocationSchema,
+  ProvinceSchema,
+} from "./shared";
+
+export const ExistingAvatarSchema = z.object({
+  id: z.string().optional(),
+  public_id: z.string(),
+  original_url: z.string(),
+  media_type: z.string(),
+  transformed_url: z.string().optional(),
+});
 
 export const UpdateProfileSchema = z.object({
   fullname: z.string().min(3, "Name must be at least 3 characters"),
@@ -9,10 +21,16 @@ export const UpdateProfileSchema = z.object({
     .string()
     .min(6, "Please enter a valid phone number")
     .max(15, "Please enter a valid phone number"),
-  province: ProvinceSchema.optional(),
-  area: AreaSchema.optional(),
-  location: LocationSchema.optional(),
-  avatar: AvatarSchema.optional().or(z.string().optional()),
+  province: ProvinceSchema,
+  area: AreaSchema.nullish(),
+  location: LocationSchema.nullish(),
+  avatar: z
+    .union([
+      createFileSchema("Please choose a valid profile image"),
+      ExistingAvatarSchema,
+    ])
+    .nullish(),
 });
 
 export type UpdateProfileInterface = z.infer<typeof UpdateProfileSchema>;
+export type ExistingAvatarType = z.infer<typeof ExistingAvatarSchema>;

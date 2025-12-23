@@ -9,7 +9,7 @@ const ProfileHeader = ({ title }: { title: string }) => {
 
     return (
         <View style={{direction: isRTL ? "rtl" : 'ltr'}} className='mt-1 flex flex-row items-center px-4 mb-2'>
-            <Pressable onPress={onBack} className=''>
+            <Pressable onPress={onBack} hitSlop={4}>
                 <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={theme !== "light" ? "white" : "black"} />
             </Pressable>
             <View className='flex-1 items-center ms-2'>

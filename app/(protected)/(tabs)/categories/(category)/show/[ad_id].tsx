@@ -1,15 +1,14 @@
 import Container from "@/core/components/ui/container";
+import BackArrow from "@/core/components/ui/shared/back-arrow";
 import { IMAGES } from "@/core/constants/images";
-import useUserPreferencesStore from "@/core/store/preferences.store";
 import useRecentlyViewedStore from "@/core/store/recently-viewed-ad.store";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import { Pressable, ScrollView, Text, View } from 'react-native';
 
 export default function UsedCarDetailsScreen() {
-    const { isRTL } = useUserPreferencesStore()
     const { ad_id } = useLocalSearchParams();
     const addView = useRecentlyViewedStore((state) => state.addView);
 
@@ -22,7 +21,7 @@ export default function UsedCarDetailsScreen() {
     return (
         <Container scrollable header={
             <View className="flex-row items-center justify-between mb-2 mt-4 px-4">
-                <Pressable onPress={() => router.back()}><Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} /></Pressable>
+                <BackArrow />
                 <View className="flex-row items-center gap-x-3">
                     <Pressable><Ionicons name="flag" size={22} color={"red"} /></Pressable>
                     <Feather name="share-2" size={22} color="black" />

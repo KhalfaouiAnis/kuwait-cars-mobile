@@ -4,9 +4,12 @@ import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { useLocalSearchParams } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
 export default function MotorcycleCategoriesScreen() {
+    const { ad_type } = useLocalSearchParams<{ ad_type: string }>()
+
     return (
         <Container header={<MainHeader back />}>
             <View className="mt-4">
@@ -14,16 +17,36 @@ export default function MotorcycleCategoriesScreen() {
             </View>
             <View className="mt-4 mx-2 p-4 flex-row justify-start gap-3 flex-wrap">
                 <View className="w-[48%]">
-                    <CategoryLink fullWidth href="/categories/motorcycles/sport" image={IMAGES.BrakesCategory} label="Sports motorcycles" />
+                    <CategoryLink
+                        fullWidth
+                        params={{ ad_type, ad_category: 'sport' }}
+                        href="/categories/motorcycles/sport"
+                        image={IMAGES.BrakesCategory}
+                        label="Sports motorcycles" />
                 </View>
                 <View className="w-[48%]">
-                    <CategoryLink fullWidth href="/categories/motorcycles/quand" image={IMAGES.EngineCoolingSystemCategory} label="Quand bikes" />
+                    <CategoryLink
+                        fullWidth
+                        params={{ ad_type, ad_category: 'quad' }}
+                        href="/categories/motorcycles/quad"
+                        image={IMAGES.EngineCoolingSystemCategory}
+                        label="Quand bikes" />
                 </View>
                 <View className="w-[48%]">
-                    <CategoryLink fullWidth href="/categories/motorcycles/bikes" image={IMAGES.AirConditionCategory} label="Bikes" />
+                    <CategoryLink
+                        fullWidth
+                        params={{ ad_type, ad_category: 'bikes' }}
+                        href="/categories/motorcycles/bikes"
+                        image={IMAGES.AirConditionCategory}
+                        label="Bikes" />
                 </View>
                 <View className="w-[48%]">
-                    <CategoryLink fullWidth href="/categories/motorcycles/scooter" image={IMAGES.LexusNX250Category} label="Scooter" />
+                    <CategoryLink
+                        fullWidth
+                        params={{ ad_type, ad_category: 'scooter' }}
+                        href="/categories/motorcycles/scooter"
+                        image={IMAGES.LexusNX250Category}
+                        label="Scooter" />
                 </View>
             </View>
             <View className="mt-4">

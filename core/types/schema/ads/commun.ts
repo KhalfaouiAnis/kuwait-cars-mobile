@@ -7,6 +7,7 @@ import {
   LocationSchema,
   MultiFileSchema,
   ProvinceSchema,
+  SubscriptionPlanSchema,
   VideoSchema,
 } from "../shared";
 
@@ -16,7 +17,7 @@ export const CommunAdSchema = z.object({
   }),
   title: z.string().min(3, "The title field is required"),
   description: z.string().min(3, "The description field is required"),
-  plan: z.string().min(1, "The plan field is required"),
+  plan: SubscriptionPlanSchema,
   price: z.coerce.number().min(0, "The price field is required"),
   province: ProvinceSchema,
   area: AreaSchema.optional(),

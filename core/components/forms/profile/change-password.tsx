@@ -31,7 +31,7 @@ export default function ChangePasswordForm({ t }: { t: (key: string) => string }
                     <View className="relative">
                         <Image
                             source={user?.avatar
-                                ? { uri: user?.avatar }
+                                ? { uri: user?.avatar.original_url }
                                 : IMAGES.DefaultAvatar}
                             style={{ width: 75, height: 75, borderRadius: 50 }}
                             contentFit="cover"
