@@ -1,10 +1,14 @@
 import useAuthStore from "@/core/store/auth.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { useEffect, useState } from "react";
-import { Button, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Pressable, Text, View } from "react-native";
 
 export const ResendOTPTimer = ({ onResend }: { onResend: () => void }) => {
     const { otpTargetTime, setOtpTargetTime } = useAuthStore();
     const [secondsRemaining, setSecondsRemaining] = useState(0);
+    const { t } = useTranslation("auth");
+    const { isRTL } = useUserPreferencesStore()
 
     useEffect(() => {
         if (!otpTargetTime) {
@@ -38,15 +42,18 @@ export const ResendOTPTimer = ({ onResend }: { onResend: () => void }) => {
     const canResend = secondsRemaining === 0;
 
     return (
-        <View>
-            <Button
+        <View className="items-center justify-center" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+            <Pressable
                 disabled={!canResend}
                 onPress={() => {
                     onResend();
                     setOtpTargetTime(60);
                 }}
-                title={canResend ? "Resend via WhatsApp" : `Resend in ${secondsRemaining}s`}
-            />
+            >
+                <Text>
+                    {canResend ? t("ResendViaWhatsApp") : `${t("ResendIn")} ${secondsRemaining}${t("s")}`}
+                </Text>
+            </Pressable>
         </View>
     )
 };

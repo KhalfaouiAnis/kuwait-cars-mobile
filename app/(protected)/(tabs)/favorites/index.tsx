@@ -1,71 +1,17 @@
+import Advertisement from "@/core/components/layout/ads/advertisement";
 import MainHeader from "@/core/components/layout/header/main-header";
+import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-list";
 import Container from "@/core/components/ui/container";
-import { IMAGES } from "@/core/constants/images";
+import { EmptyState } from "@/core/components/ui/shared/empty-state";
+import { useMyFavoritedAdsQuery } from "@/core/services/ads/ad.queries";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { FlatList, Text, View } from 'react-native';
 
-export const listings = [
-    {
-        id: "listing-1",
-        images: [
-            { url: IMAGES.CarChevrolet },
-            { url: IMAGES.CarHyunday },
-            { url: IMAGES.CarMercedes },
-            { url: IMAGES.CarToyota },
-        ],
-        badge: "Super DEAL",
-        name: "Chevrolet",
-        datePosted: "2015",
-        price: "$525000",
-        description: "Great deal on my car",
-        mielage: "km 192.354",
-        location: "kuwait",
-        distanceFromMyLocation: "3km",
-        engine: "Petrol- 10",
-        gearType: "Manual"
-    },
-    {
-        id: "listing-2",
-        images: [
-            { url: IMAGES.CarHyunday },
-            { url: IMAGES.CarChevrolet },
-            { url: IMAGES.CarMercedes },
-            { url: IMAGES.CarToyota },
-        ],
-        badge: "Super DEAL 2",
-        name: "Hundai",
-        datePosted: "2018",
-        price: "$625000",
-        description: "Great deal on my car",
-        mielage: "km 82.354",
-        location: "kuwait",
-        distanceFromMyLocation: "1km",
-        engine: "Petrol- 1.2",
-        gearType: "Automatic"
-    },
-    {
-        id: "listing-3",
-        images: [
-            { url: IMAGES.CarMercedes },
-            { url: IMAGES.CarHyunday },
-            { url: IMAGES.CarChevrolet },
-            { url: IMAGES.CarToyota },
-        ],
-        badge: "Super DEAL 3",
-        name: "Mercedes",
-        datePosted: "2018",
-        price: "$1625000",
-        description: "Great deal on my car",
-        mielage: "km 80.054",
-        location: "kuwait",
-        distanceFromMyLocation: "12km",
-        engine: "Petrol- 1.8",
-        gearType: "Automatic"
-    },
-]
-
 export default function FavoritesScreen() {
     const { theme } = useUserPreferencesStore()
+    const { data, isLoading } = useMyFavoritedAdsQuery();
+
+    if (isLoading) return <AdSkeletonList />;
 
     return (
         <Container header={<MainHeader drawer back={false} />}>
@@ -74,14 +20,16 @@ export default function FavoritesScreen() {
                     <Text className="font-inter-bold text-center text-3xl text-black dark:text-white">My Favorites</Text>
                 </View>
                 <FlatList
-                    data={listings}
+                    data={data}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2">
-                        {/* <Advertisement data={[]} view="vertical" isDark={theme !== "light"} /> */}
+                    renderItem={({ item }) => <View className="mb-2 me-1">
+                        <Advertisement data={item} view="vertical" isDark={theme !== "light"} />
                     </View>}
                     contentContainerStyle={{ paddingBottom: 180 }}
                     showsVerticalScrollIndicator={false}
+                    className="bg-transparent me-2"
                     removeClippedSubviews={false}
+                    ListEmptyComponent={!isLoading ? <EmptyState showReset={false} title="" description="You don't have any favorited ads." /> : null}
                 />
             </View>
         </Container>

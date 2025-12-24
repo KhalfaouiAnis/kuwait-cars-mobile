@@ -1,4 +1,5 @@
 import { COUNTRIES } from '@/core/constants/';
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
@@ -24,6 +25,7 @@ type Country = {
 
 export default function PhoneInput<TForm extends FieldValues>({ onChangeText, control, name, error, label, showCode = false, placeHolder = "PHONE NUMBER" }: PhoneInputProps<TForm>) {
     const [selectedCountry, setSelectedCountry] = useState<Country>(COUNTRIES[0]);
+    const { isRTL } = useUserPreferencesStore();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [showModal, setShowModal] = useState(false);
 
@@ -60,7 +62,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
     return (
         <View className="w-full">
             {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
-            <View className='flex-row items-center border-primary-500 border rounded-lg p-2'>
+            <View className='flex-row items-center border-primary-500 border rounded-lg p-2' style={{direction: isRTL ? "rtl" : "ltr"}}>
                 <TouchableOpacity
                     className={`flex-row items-center pl-2 py-1 border-e border-e-primary-500 ${error ? 'border-red-500' : ''}`}
                     onPress={() => setShowModal(true)}
@@ -71,24 +73,26 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                     {showCode && (<Text className="mr-1 text-base">+{selectedCountry.callingCode}</Text>)}
                     <Ionicons name="chevron-down" size={20} color="#8E8E93" />
                 </TouchableOpacity>
-                <Controller
-                    name={name}
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                        <TextInput
-                            className={`flex-1 ps-1 h-full ${error ? 'border-red-500' : 'text-[#333] dark:text-white'}`}
-                            value={value}
-                            onChangeText={(text) => {
-                                handlePhoneChange(text)
-                                onChange(text)
-                            }}
-                            keyboardType="phone-pad"
-                            placeholder={placeHolder}
-                            returnKeyType="done"
-                        />
-                    )}
-                />
-                <Text className='me-auto text-error'>*</Text>
+                <View className='flex-row items-center flex-1'>
+                    <Controller
+                        name={name}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <TextInput
+                                className={`flex-1 text-start overflow-hidden ${error ? 'border-red-500' : 'text-[#333] dark:text-white'}`}
+                                value={value}
+                                onChangeText={(text) => {
+                                    handlePhoneChange(text)
+                                    onChange(text)
+                                }}
+                                keyboardType="phone-pad"
+                                placeholder={placeHolder}
+                                returnKeyType="done"
+                            />
+                        )}
+                    />
+                    <Text className='ms-auto pe-3 text-error'>*</Text>
+                </View>
             </View>
             {error && <Text className="text-error text-sm ms-2">{error}</Text>}
             <Modal

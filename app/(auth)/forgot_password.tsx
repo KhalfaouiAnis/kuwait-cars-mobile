@@ -3,7 +3,6 @@ import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { useFormHook } from "@/core/hooks/use-form-hook";
 import { RequestResetPasswordInterface, RequestResetPasswordSchema } from "@/core/types/schema/auth";
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
@@ -15,13 +14,11 @@ export default function ForgotPasswordScreen() {
             defaultValues: { email: "", phone: "" }
         })
 
-    const onSubmit = (data: RequestResetPasswordInterface) => {
-
-    }
+    const onSubmit = (data: RequestResetPasswordInterface) => { }
 
     return (
-        <FormWrapper title="Forgot Password">
-            <Text className="mt-6 text-base text-center dark:text-white">
+        <FormWrapper title={t("forgotPassword")}>
+            <Text numberOfLines={2} ellipsizeMode="tail" className="mt-6 text-base text-center dark:text-white px-4">
                 {t("emailToResetPassword")}
             </Text>
             <View className="pt-6 px-4">
@@ -30,10 +27,10 @@ export default function ForgotPasswordScreen() {
                     name="phone"
                     error={errors.phone?.message}
                     keyboardType="phone-pad"
-                    customIcon={<Ionicons name="logo-whatsapp" size={24} color="#25D366" className="mr-2" />}
+                    customIcon={<Ionicons name="logo-whatsapp" size={20} color="#25D366" className="mr-2" />}
                     placeholder={t("enterWhatsappNumber")}
                 />
-                <Text className="my-1 text-gray-400 text-base text-center">{t("or")}</Text>
+                <Text className="my-2 text-gray-400 text-base text-center">{t("or")}</Text>
                 <InputWithIcon
                     control={control}
                     name="email"
@@ -50,10 +47,6 @@ export default function ForgotPasswordScreen() {
                         {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("resetPassword")}
                     </Text>
                 </TouchableOpacity>
-                <Link href={"/verify_password"}>Verify password</Link>
-                <Link href={"/password_reset_confirmation"}>confirm password reset</Link>
-                <Link href={"/reset_password"}>reset password</Link>
-                <Link href={"/authentication_success"}>Success</Link>
             </View>
         </FormWrapper>
     )

@@ -1,6 +1,6 @@
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-import { FlatList, Image, Pressable, Text, TextInput, View } from "react-native";
+import { FlatList, Image, Text, TextInput, View } from "react-native";
 import Reanimated, {
     interpolate,
     SharedValue,
@@ -10,6 +10,7 @@ import Reanimated, {
 import ConfirmDeleteDialog from "@/core/components/ui/dialog/confirm-delete-dialog";
 import { AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useRef, useState } from "react";
+import { RectButton } from "react-native-gesture-handler";
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
 const ReanimatedView = Reanimated.View;
@@ -107,15 +108,13 @@ const RightAction = ({ progress, handleDelete }: { progress: SharedValue<number>
     });
 
     return (
-        <ReanimatedView style={animatedStyle} className="flex-row items-center gap-x-2">
-            <View className="bg-[#ECEEFF] px-2 py-4 rounded-xl">
+        <ReanimatedView style={animatedStyle} className="flex-row items-center gap-x-2 ms-2">
+            <RectButton style={{ height: 56, backgroundColor: "#ECEEFF", paddingVertical: 16, paddingHorizontal: 8, borderRadius: 12 }}>
                 <AntDesign name="folder-open" size={24} color="#3641B7" />
-            </View>
-            <View className="bg-[#FFE7E5] px-2 py-4 rounded-xl">
-                <Pressable onPress={handleDelete}>
-                    <Ionicons name="trash-outline" size={24} color="#F44336" />
-                </Pressable>
-            </View>
+            </RectButton>
+            <RectButton onPress={handleDelete} style={{ height: 56, backgroundColor: "#FFE7E5", paddingVertical: 16, paddingHorizontal: 8, borderRadius: 12 }}>
+                <Ionicons name="trash-outline" size={24} color="#F44336" />
+            </RectButton>
         </ReanimatedView>
     );
 };

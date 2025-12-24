@@ -23,6 +23,7 @@ export interface User {
   area?: AreaInterface | null;
   location?: LocationInterface | null;
   avatar?: ProfilePictureMedia | null;
+  created_at: Date
 }
 
 export enum UserRole {
@@ -143,6 +144,8 @@ export interface AdvertisementInterface {
 
   is_favorited?: boolean;
   is_flagged?: boolean;
+
+  user?: User;
 }
 
 export interface AdSearchParams {
@@ -152,6 +155,8 @@ export interface AdSearchParams {
   limit?: number;
   direction?: "forward" | "backward";
 }
+
+export type AdStatus = "COMPLETED" | "ACTIVE";
 
 export interface PaginatedResponse<T> {
   status?: "success";

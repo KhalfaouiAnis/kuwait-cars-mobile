@@ -1,18 +1,15 @@
-import { httpClient } from "@/core/api/httpClient";
 import {
   fetchAds,
+  fetchBatchAds,
   fetchMyAds,
+  fetchMyFavoritedAds,
   getAdById,
 } from "@/core/services/ads/ad.service";
 import useRecentlyViewedStore from "@/core/store/recently-viewed-ad.store";
 import useSearchStore from "@/core/store/search.store";
-import { AdvertisementInterface } from "@/core/types";
+import { AdStatus } from "@/core/types";
 import { sanitizeFiltersForApi } from "@/core/utils/filter-sanitizer";
-import {
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const useAdsQuery = () => {
   const { appliedFilters } = useSearchStore();
@@ -35,16 +32,27 @@ export const useAdsQuery = () => {
   });
 };
 
-export const useMyAdsQuery = () => {
+export const useMyAdsQuery = (tab: AdStatus) => {
   return useInfiniteQuery({
-    queryKey: ["ads", "me"],
+    queryKey: ["ads", "me", tab],
     queryFn: ({ pageParam }) =>
-      fetchMyAds({
-        cursor: pageParam as string | null,
-      }),
+      fetchMyAds(
+        {
+          cursor: pageParam as string | null,
+        },
+        tab
+      ),
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) =>
       lastPage.meta.hasNextPage ? lastPage.meta.nextCursor : null,
+  });
+};
+
+export const useMyFavoritedAdsQuery = () => {
+  return useQuery({
+    queryKey: ["ads", "my-favorited"],
+    queryFn: fetchMyFavoritedAds,
+    staleTime: 1000 * 60 * 10,
   });
 };
 
@@ -53,35 +61,16 @@ export const useRecentlyViewedQuery = () => {
 
   return useQuery({
     queryKey: ["ads", "recently-viewed", viewedIds],
-    queryFn: async () =>
-      httpClient
-        .post<AdvertisementInterface[]>("/ads/batch-list", { ids: viewedIds })
-        .then((res) =>
-          res.data?.sort(
-            (a, b) => viewedIds.indexOf(a.id) - viewedIds.indexOf(b.id)
-          )
-        ),
+    queryFn: async () => fetchBatchAds(viewedIds),
     enabled: viewedIds.length > 0,
     staleTime: 1000 * 60 * 10,
   });
 };
 
-export const useAdQuery = (adId: string) => {
-  const queryClient = useQueryClient();
-
+export const useAdDetailQuery = (adId: string) => {
   return useQuery({
     queryKey: ["ads", "detail", adId],
     queryFn: () => getAdById(adId),
-    // 1. PERFORMANCE: Seed the cache from the existing search results
-    initialData: () => {
-      // Look through all pages of the infinite query cache
-      const searchCache = queryClient.getQueryData<any>(["ads"]);
-      const foundad = searchCache?.pages
-        .flatMap((page: any) => page.data)
-        .find((p: any) => p.id === adId);
-
-      return foundad;
-    },
     staleTime: 1000 * 60 * 2,
   });
 };

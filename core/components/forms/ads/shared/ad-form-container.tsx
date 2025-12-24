@@ -1,5 +1,5 @@
 import Container from "@/core/components/ui/container";
-import { Ionicons } from "@expo/vector-icons";
+import BackArrow from "@/core/components/ui/shared/back-arrow";
 import { router } from "expo-router";
 import { ReactNode } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -24,10 +24,11 @@ export default function AdFormContainer({ children, reset, resetLabel, previous,
 
     return (
         <Container>
-            <View style={{direction: isRTL ? "rtl" : "ltr"}} className='mt-1 flex flex-row items-center justify-between px-4 mb-2 mx-2'>
-                <Pressable onPress={handlePrevious}>
+            <View style={{ direction: isRTL ? "rtl" : "ltr" }} className='mt-1 flex flex-row items-center justify-between px-4 mb-2 mx-2'>
+                {/* <Pressable onPress={handlePrevious}>
                     <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={isDark ? "white" : "black"} />
-                </Pressable>
+                </Pressable> */}
+                <BackArrow navigate={handlePrevious} />
                 <Text className='font-inter-semibold text-2xl text-center dark:text-white'>{title}</Text>
                 <Pressable onPress={reset}>
                     <Text className="text-error">{resetLabel}</Text>

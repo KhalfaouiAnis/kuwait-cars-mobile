@@ -13,7 +13,7 @@ export default function OTPVerificationScreen() {
     const { verifyOtp } = useOTP()
 
     return (
-        <FormWrapper title="OTP Verification">
+        <FormWrapper title={t("OTPVerification")}>
             <Text className="mt-12 text-base text-center dark:text-white">
                 {t("sendOTPPhone")}
             </Text>
@@ -22,7 +22,7 @@ export default function OTPVerificationScreen() {
             </Text>
             <View className="pt-8 px-4">
                 <VerificationCode numberOfElements={4} onComplete={async (otp) => verifyOtp(phone as string, otp)} textContentType="oneTimeCode" />
-                <Text className="mt-6 text-base text-center">10 minutes</Text>
+                {/* <Text className="mt-6 text-base text-center">00:59 {t("seconds")}</Text> */}
                 <View className="mt-8">
                     <ResendOTPTimer
                         onResend={() => { }}

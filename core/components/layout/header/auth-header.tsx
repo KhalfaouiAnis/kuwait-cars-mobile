@@ -1,18 +1,23 @@
 import LanguageSwitcher from '@/core/components/ui/menu/language-switcher';
 import useUserPreferencesStore from '@/core/store/preferences.store';
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
+import BackArrow from '../../ui/shared/back-arrow';
 
 const AuthHeader = () => {
-    const { theme, isRTL } = useUserPreferencesStore()
-    const onBack = () => router.canGoBack() && router.back()
+    const { isRTL } = useUserPreferencesStore()
+
+    const handleNavigate = () => {
+        if (router.canGoBack()) {
+            router.back()
+        } else {
+            router.push("/welcome")
+        }
+    }
 
     return (
         <View className={`mt-1 flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} items-center justify-between px-4`}>
-            <Pressable onPress={onBack} hitSlop={10}>
-                <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={24} color={theme !== "light" ? "white" : "black"} />
-            </Pressable>
+            <BackArrow navigate={handleNavigate} />
             <LanguageSwitcher />
         </View>
     );

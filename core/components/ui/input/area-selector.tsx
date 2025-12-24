@@ -38,7 +38,7 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
     };
 
     return (
-        <View >
+        <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
             {label && <Text className="text-base font-semibold ps-6 mb-1 dark:text-white text-black">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}
                 className={clsx('flex-row items-center p-4 justify-between border dark:border-primary-500 dark:bg-darkish', {
@@ -48,7 +48,7 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
                 })}
             >
                 <View className='flex-row items-center gap-2'>
-                    <MaterialIcons name="location-city" size={24} color={isDark ? "white" : "black"} />
+                    <MaterialIcons name="location-city" size={20} color={isDark ? "white" : "gray"} />
                     <Text className="dark:text-white">
                         {value?.area ? t("areas." + value?.area) : placeholder}
                     </Text>

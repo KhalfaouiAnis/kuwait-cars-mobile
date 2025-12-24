@@ -6,8 +6,8 @@ export default function PasswordResetConfirmationScreen() {
     const { t } = useTranslation("auth");
 
     return (
-        <FormWrapper title="Password Reset">
-            <Text className="mt-6 text-base text-center dark:text-white">
+        <FormWrapper title={t("passwordReset")}>
+            <Text className="mt-6 text-base text-center dark:text-white px-4">
                 {t("passSuccessReset")}
             </Text>
             <View className="mt-32 px-4">

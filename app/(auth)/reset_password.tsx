@@ -9,7 +9,7 @@ export default function ResetPasswordScreen() {
     const { t } = useTranslation("auth");
 
     return (
-        <FormWrapper title="Reset Password">
+        <FormWrapper title={t("resetPassword")}>
             <Text className="mt-6 text-base text-center dark:text-white">
                 {t("createYourNewPassword")}
             </Text>

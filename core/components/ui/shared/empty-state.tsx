@@ -7,11 +7,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 interface Props {
     title?: string;
     description?: string;
+    showReset?: boolean
 }
 
 export const EmptyState = ({
     title = "No results found",
-    description = "Try adjusting your filters or search term to find what you're looking for."
+    description = "Try adjusting your filters or search term to find what you're looking for.",
+    showReset = true
 }: Props) => {
     const resetAll = useSearchStore((state) => state.resetAll);
 
@@ -24,13 +26,17 @@ export const EmptyState = ({
             <Text className='text-lg font-semibold text-center mb-3 text-gray-900'>{title}</Text>
             <Text className='text-center mb-8 text-gray-700'>{description}</Text>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={resetAll}
-                activeOpacity={0.8}
-            >
-                <Text className='font-inter-semibold text-base text-white'>Clear all filters</Text>
-            </TouchableOpacity>
+            {
+                showReset && (
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={resetAll}
+                        activeOpacity={0.8}
+                    >
+                        <Text className='font-inter-semibold text-base text-white'>Clear all filters</Text>
+                    </TouchableOpacity>
+                )
+            }
         </View>
     );
 };

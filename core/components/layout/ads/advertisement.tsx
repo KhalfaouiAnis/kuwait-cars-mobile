@@ -1,13 +1,14 @@
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdvertisementInterface } from "@/core/types";
 import { formatSmartDate } from "@/core/utils/date";
 import { AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, Text, View } from 'react-native';
+import { FavoriteButton } from "../../ui/button/favorite-button";
 import Carousel from "../../ui/shared/carousel";
-import { FavoriteButton } from "../../ui/shared/favorite-button";
 
 interface Props {
     data: AdvertisementInterface,
@@ -17,22 +18,19 @@ interface Props {
 
 export default function Advertisement({ data, view = "horizontal", isDark }: Props) {
     const { ad_type, ad_category } = useLocalSearchParams<{ ad_type: string, ad_category: string }>()
+    const { isRTL } = useUserPreferencesStore()
     const { protectAction } = useAuthGuard();
     const { mutate } = useToggleFavorite();
 
     const path = `/categories/${ad_type}/${ad_category ? `${ad_category}/${data.id}` : `${data.id}`}`
-
-    console.log(path);
 
     if (view === "vertical") {
         return (
             <Pressable
                 onPress={() => router.push(path as any)}
                 className="w-full rounded-lg p-2 border border-primary-500 shadow-transparent bg-transparent">
-                <Carousel
-                    items={data.media}
-                />
-                <View className="mt-3 px-2 pb-2">
+                <Carousel items={data.media} />
+                <View className="mt-3 px-2 pb-2" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                     <View className="flex-1 flex-row items-center justify-between">
                         <Text className="font-inter-semibold text-lg text-black dark:text-white">{data.title} {data.year}</Text>
                         <Text className="font-inter-semibold text-black dark:text-white">${data.price}</Text>

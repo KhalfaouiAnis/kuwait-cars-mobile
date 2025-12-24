@@ -136,10 +136,10 @@ export default function AdDetails({ control, errors, setValue, t, isDark }: AdFo
                 <RadioGroup
                     name="roof"
                     control={control}
-                    label={t("Roof")}
+                    label={t("roof")}
                     options={[
                         { id: "Sunroof", label: t("Sunroof"), value: "Sunroof" },
-                        { id: "panoramic", label: t("Panoramic"), value: "Panoramic" },
+                        { id: "Panoramic", label: t("Panoramic"), value: "Panoramic" },
                         { id: "Convertible Roof", label: t("ConvertibleRoof"), value: "Convertible Roof" }
                     ]}
                 />

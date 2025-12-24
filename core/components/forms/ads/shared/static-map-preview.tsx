@@ -1,11 +1,18 @@
 import { Image } from 'expo-image';
 import { StyleSheet, View } from 'react-native';
 
-export const StaticMapPreview = ({ latitude, longitude }: { latitude: number, longitude: number }) => {
-    const API_KEY = process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID;
-    const zoom = 15;
-    const size = '600x300';
-    const mapUrl = `https://maps.googleapis.com{latitude},${longitude}&zoom=${zoom}&size=${size}&markers=color:red%7C${latitude},${longitude}&key=${API_KEY}`;
+export const StaticMapPreview = ({ lat, lng }: { lat: number, lng: number }) => {
+    const API_KEY = process.env.EXPO_PUBLIC_GOOGLE_STREET_STATIC_API_KEY || ""
+
+    const params = new URLSearchParams({
+        center: `${lat},${lng}`,
+        zoom: '15',
+        size: '600x300',
+        markers: `color:red|${lat},${lng}`,
+        key: API_KEY
+    });
+
+    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?${params.toString()}`;
 
     return (
         <View style={styles.container}>

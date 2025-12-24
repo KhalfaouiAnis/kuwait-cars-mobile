@@ -1,29 +1,19 @@
 import useUserPreferencesStore from '@/core/store/preferences.store';
-import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import { Pressable, TextInput, View } from 'react-native';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { TextInput, View } from 'react-native';
+import BackArrow from '../../ui/shared/back-arrow';
+import { ProfileDrawer } from '../../ui/shared/profile-drawer';
 
 const MainHeader = ({ drawer = false, back = true }: { drawer?: boolean, back?: boolean }) => {
     const { theme, isRTL } = useUserPreferencesStore()
 
-    const onBack = () => router.canGoBack() && router.back()
-    const openProfile = () => router.push("/profile")
-
     return (
-        <View style={{direction: isRTL ? 'rtl' : 'ltr'}} className={`mt-1 h-16 flex-row items-center justify-center mx-2`}>
+        <View style={{ direction: isRTL ? 'rtl' : 'ltr' }} className={`mt-1 h-16 flex-row items-center justify-center mx-2`}>
             {
-                back && (
-                    <Pressable onPress={onBack} hitSlop={4}>
-                        <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={theme !== "light" ? "white" : "black"} />
-                    </Pressable>
-                )
+                back && <BackArrow />
             }
             {
-                drawer && (
-                    <Pressable onPress={openProfile} hitSlop={4}>
-                        <MaterialIcons name="sort" size={28} color={theme !== "light" ? "white" : "black"} />
-                    </Pressable>
-                )
+                drawer && <ProfileDrawer />
             }
             <View className='flex-1 flex-row items-center justify-between rounded-xl border border-primary-500 px-2 ms-1 bg-white dark:bg-darkish'>
                 <View className="flex-row items-center gap-x-2 flex-1">

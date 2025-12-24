@@ -1,7 +1,7 @@
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
+import BackArrow from './shared/back-arrow';
 
 type Props = {
     title: string,
@@ -12,17 +12,12 @@ type Props = {
 };
 
 const Header = ({ title, headerAction }: Props) => {
-    const { theme, isRTL } = useUserPreferencesStore()
-    const onBack = () => {
-        router.canGoBack() && router.back()
-    }
+    const { theme } = useUserPreferencesStore()
 
     return (
         <View className='mb-4 flex flex-row items-center justify-between px-2 '>
             <View className='flex flex-row items-center justify-center'>
-                <Pressable onPress={onBack}>
-                    <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={24} color={theme !== "light" ? "white" : "black"} />
-                </Pressable>
+                <BackArrow />
                 <Text className='mx-2 text-center dark:text-white'>{title}</Text>
             </View>
             {

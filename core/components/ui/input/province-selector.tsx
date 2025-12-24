@@ -40,7 +40,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
     };
 
     return (
-        <View >
+        <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
             {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}
                 className={clsx('flex-row items-center p-4 justify-between border dark:border-primary-500 dark:bg-darkish', {
@@ -50,18 +50,18 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
                 })}
             >
                 <View className='flex-row items-center gap-2'>
-                    <MaterialCommunityIcons name="town-hall" size={24} color={isDark ? "white" : "black"} />
+                    <MaterialCommunityIcons name="town-hall" size={20} color={isDark ? "white" : "gray"} />
                     <Text className="text-[#333] dark:text-white">
                         {value?.province ? t("provinces." + value?.province) : placeholder}
                     </Text>
                 </View>
                 <View className='flex-row'>
+                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} />
                     {required && (
                         <View>
                             <Text className="text-error">*</Text>
                         </View>
                     )}
-                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} />
                 </View>
             </Pressable>
             <Modal

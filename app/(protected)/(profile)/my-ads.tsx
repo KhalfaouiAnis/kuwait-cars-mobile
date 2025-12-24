@@ -1,12 +1,17 @@
 import ProfileHeader from "@/core/components/layout/header/profile-header";
+import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-list";
 import Container from "@/core/components/ui/container";
 import ConfirmDeleteDialog from "@/core/components/ui/dialog/confirm-delete-dialog";
-import { IMAGES } from "@/core/constants/images";
+import { EmptyState } from "@/core/components/ui/shared/empty-state";
+import { useMyAdsQuery } from "@/core/services/ads/ad.queries";
+import { AdStatus, AdvertisementInterface } from "@/core/types";
+import { formatSmartDate } from "@/core/utils/date";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native";
+import { RectButton } from "react-native-gesture-handler";
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Reanimated, {
     interpolate,
@@ -26,74 +31,34 @@ const LeftAction = ({ progress, handleDelete }: { progress: SharedValue<number>,
     });
 
     return (
-        <ReanimatedView style={animatedStyle} className="items-center justify-center mx-2 h-full pb-4">
-            <Pressable className="bg-[#FFE7E5] px-2 justify-center h-full rounded-xl" onPress={handleDelete}>
+        <ReanimatedView style={animatedStyle} className="items-center justify-center mx-1 h-full pb-4 w-14">
+            <RectButton
+                style={{ backgroundColor: "#FFE7E5", alignItems: "center", justifyContent: "center", width: "100%", height: "100%", borderRadius: 12 }}
+                onPress={handleDelete}>
                 <Ionicons name="trash-outline" size={24} color="#F44336" />
-            </Pressable>
+            </RectButton>
         </ReanimatedView>
     );
 };
-
-const listings = [
-    {
-        id: "listing-1",
-        status: "active",
-        location: "Kuwait",
-        date: "21-12-2025",
-        description: "Toyota Yaris Cross",
-        name: "Toyota Yaris Cross",
-        image: IMAGES.Toyota_1,
-        price: "2.000 kwd",
-    },
-    {
-        id: "listing-2",
-        image: IMAGES.Toyota_2,
-        name: "Toyota Yaris Cross",
-        price: "1.700 kwd",
-        status: "active",
-        location: "Kuwait",
-        date: "21-12-2025",
-        description: "Toyota Yaris Cross",
-    },
-    {
-        id: "listing-3",
-        image: IMAGES.Toyota_3,
-        name: "Toyota Yaris Cross",
-        price: "2.300 kwd",
-        status: "active",
-        location: "Kuwait",
-        date: "21-12-2025",
-        description: "Toyota Yaris Cross",
-    },
-    {
-        id: "listing-4",
-        image: IMAGES.Toyota_4,
-        name: "Toyota Yaris Cross",
-        price: "2.000 kwd",
-        status: "active",
-        location: "Kuwait",
-        date: "21-12-2025",
-        description: "Toyota Yaris Cross",
-    },
-]
 
 export default function MyAdsScreen() {
     const { t } = useTranslation("profile");
     const swipeableRef = useRef<any>(null);
     const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
-    const [activeTab, setActiveTab] = useState<"completed" | "active">("completed")
+    const [activeTab, setActiveTab] = useState<AdStatus>("ACTIVE")
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isLoading,
+        refetch,
+    } = useMyAdsQuery(activeTab)
+
+    const ads = data?.pages.flatMap(page => page.data) ?? [];
 
     const renderItem = ({ item }: {
-        item: {
-            id: string;
-            status: string
-            location: string
-            image: any;
-            name: string;
-            description: string;
-            date: string;
-            price: string;
-        }
+        item: AdvertisementInterface
     }) => {
         return (
             <Swipeable
@@ -103,26 +68,29 @@ export default function MyAdsScreen() {
                 renderLeftActions={(progress) => <LeftAction progress={progress} handleDelete={() => setShowDeleteDialog(true)} />}
             >
                 <View className="rounded-lg p-1 flex-row items-center mb-4 mx-1 border-gray-200 border-2 bg-white dark:bg-darkish">
-                    <Image source={item.image} style={{ width: 60, height: 60 }} contentFit="cover" />
+                    <Image
+                        source={{ uri: item.media[0].transformed_url }}
+                        style={{ width: 60, height: 80, borderRadius: 4 }}
+                        contentFit="cover" />
                     <View className="gap-y-3 flex-1 mx-4">
-                        <Text className="font-inter-semibold text-black dark:text-white">{item.name}</Text>
-                        <Text className="font-inter-medium text-sm text-gray-300">{item.description}</Text>
+                        <Text className="font-inter-semibold text-black dark:text-white">{item.title}</Text>
+                        <Text className="font-inter-medium text-sm text-gray-400">{item.description}</Text>
                         <View className="flex-row items-center justify-between">
-                            <Text className="text-black dark:text-white">{item.location}</Text>
-                            <Text className="font-inter-medium text-gray-300 text-sm">{item.date}</Text>
+                            <Text className="text-black dark:text-white">{item.province.province}</Text>
+                            <Text className="font-inter-medium text-gray-300 text-xs">{formatSmartDate(item.created_at)}</Text>
                         </View>
                     </View>
                     <View className="h-28 justify-between">
-                        <View className="flex-row gap-x-1 mt-2">
-                            <Text className="font-semibold text-black dark:text-white">{item.price}</Text>
+                        <View style={{ direction: "rtl" }} className="mt-2">
+                            <Text className="font-semibold text-start text-black dark:text-white">${item.price}</Text>
                         </View>
                         <View className="flex-1 justify-evenly">
-                            <TouchableOpacity className="bg-primary-500 py-1 px-3 mb-1 rounded-lg">
+                            <TouchableOpacity className="bg-primary-500 items-center py-1 px-3 mb-1 rounded-lg">
                                 <Text className="text-sm">
                                     {t("repost")}
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity className="bg-success py-1 px-3 mb-1 rounded-lg">
+                            <TouchableOpacity className="bg-success items-center py-1 px-3 mb-1 rounded-lg">
                                 <Text className="text-sm">
                                     {t("editAd")}
                                 </Text>
@@ -135,26 +103,44 @@ export default function MyAdsScreen() {
     }
 
     return (
-        <Container header={<ProfileHeader title="My Ads" />}>
-            <View className="flex-1 mx-2">
+        <Container header={<ProfileHeader title={t("myAds")} />}>
+            <View className="flex-1 mx-2 mt-4">
                 <View className="flex-row items-center justify-center gap-6">
-                    <TouchableOpacity onPress={() => setActiveTab("completed")}>
-                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b border-${activeTab === "completed" ? "primary-500" : "gray-300"}`}>{t("completed")}</Text>
+                    <TouchableOpacity onPress={() => setActiveTab("COMPLETED")}>
+                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b-2 border-${activeTab === "COMPLETED" ? "primary-500" : "gray-300"}`}>{t("completed")}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setActiveTab("active")}>
-                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b border-${activeTab === "active" ? "primary-500" : "gray-300"}`}>{t("active")}</Text>
+                    <TouchableOpacity onPress={() => setActiveTab("ACTIVE")}>
+                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b-2 border-${activeTab === "ACTIVE" ? "primary-500" : "gray-300"}`}>{t("active")}</Text>
                     </TouchableOpacity>
                 </View>
                 <View className="flex-1 mt-4">
-                    <FlatList
-                        data={listings}
-                        keyExtractor={item => item.id}
-                        renderItem={renderItem}
-                        contentContainerStyle={{ paddingBottom: 40 }}
-                        className="my-4"
-                        showsVerticalScrollIndicator={false}
-                        removeClippedSubviews={false}
-                    />
+                    {
+                        isLoading ?
+                            (<AdSkeletonList />)
+                            : (
+                                <FlatList
+                                    data={ads}
+                                    keyExtractor={item => item.id}
+                                    renderItem={renderItem}
+                                    className="my-4"
+                                    showsVerticalScrollIndicator={false}
+                                    removeClippedSubviews={false}
+                                    onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
+                                    onEndReachedThreshold={0.5}
+                                    refreshing={isLoading}
+                                    onRefresh={refetch}
+                                    contentContainerStyle={ads.length === 0 ? { flex: 1 } : { paddingBottom: 40 }}
+                                    ListEmptyComponent={!isLoading ? <EmptyState
+                                        showReset={false}
+                                        title=""
+                                        description="You don't have any ads yet."
+                                    /> : null}
+                                    ListFooterComponent={
+                                        isFetchingNextPage ? <ActivityIndicator size="small" style={{ backgroundColor: "#FAED02" }} /> : null
+                                    }
+                                />
+                            )
+                    }
                 </View>
             </View>
             <ConfirmDeleteDialog show={showDeleteDialog} setShow={setShowDeleteDialog} />

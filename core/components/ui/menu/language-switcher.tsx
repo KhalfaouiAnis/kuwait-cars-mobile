@@ -14,8 +14,8 @@ type LanguageSwitcherProps = {
 
 export default function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const { lang: selectedLang, setLang } = useUserPreferencesStore();
-    const { t } = useTranslation();
+    const { lang: selectedLang, setLang, isRTL } = useUserPreferencesStore();
+    const { t } = useTranslation("common");
 
     const handleSelect = (lang: Language) => {
         setLang(lang.code);
@@ -29,9 +29,10 @@ export default function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherP
             className="flex-row items-center p-4 border-b border-gray-200 dark:border-primary-500"
             onPress={() => handleSelect(item)}
             activeOpacity={0.7}
+            style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
-            <Flag name={item.code} size={36} />
-            <Text className="flex-1 text-base text-gray-900 dark:text-white font-medium ml-4">{t(item.name)}</Text>
+            <Flag name={item.code} size={30} />
+            <Text className="flex-1 text-base text-gray-900 dark:text-white font-medium ms-4">{t(`languages.${item.name}`)}</Text>
             {selectedLang === item.code && (
                 <Checkbox checked={item.code === selectedLang} />
             )}
