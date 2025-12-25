@@ -28,7 +28,7 @@ export const AdsListing = ({ view, isDark }: Props) => {
             data={ads}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-                <View className="mb-2 me-1">
+                <View className="mb-4 me-2">
                     <Advertisement data={item} view={view} isDark={isDark} />
                 </View>
             )}
@@ -38,7 +38,7 @@ export const AdsListing = ({ view, isDark }: Props) => {
             onRefresh={refetch}
             contentContainerStyle={ads.length === 0 ? { flex: 1 } : { paddingBottom: 50, position: "relative", zIndex: 2 }}
             showsVerticalScrollIndicator={false}
-            className="bg-transparent me-2"
+            className="bg-transparent"
             removeClippedSubviews={false}
             ListEmptyComponent={!isLoading ? <EmptyState /> : null}
             ListFooterComponent={

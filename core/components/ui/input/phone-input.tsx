@@ -91,7 +91,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
                             />
                         )}
                     />
-                    <Text className='ms-auto pe-3 text-error'>*</Text>
+                    <Text className='ms-auto text-error'>*</Text>
                 </View>
             </View>
             {error && <Text className="text-error text-sm ms-2">{error}</Text>}

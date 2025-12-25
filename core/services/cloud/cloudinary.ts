@@ -61,8 +61,8 @@ export const uploadFileToCloudinary = async (
 
 export const uploadStructuredMedia = async (
   thumbnail: any,
-  images: any[],
-  video: any,
+  images?: any[],
+  video?: any,
   audioFlag?: SoundEffectTypes
 ) => {
   const promises = [];
@@ -87,7 +87,7 @@ export const uploadStructuredMedia = async (
     );
   }
 
-  if (images.length > 0) {
+  if (images && images.length > 0) {
     images.forEach((image) => {
       promises.push(
         uploadFileToCloudinary(

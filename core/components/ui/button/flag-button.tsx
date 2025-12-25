@@ -1,3 +1,4 @@
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import React from 'react';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const FlagButton = ({ isFlagged, onPress }: Props) => {
+    const { theme } = useUserPreferencesStore()
     const scale = useSharedValue(1);
 
     const snappySpring = {
@@ -42,7 +44,7 @@ export const FlagButton = ({ isFlagged, onPress }: Props) => {
             <Animated.View style={animatedStyle}>
                 <Ionicons
                     name="flag"
-                    size={22} color={isFlagged ? "#FF0909" : "black"} />
+                    size={22} color={isFlagged ? "#FF0909" : theme !== "light" ? "white" : "black"} />
             </Animated.View>
         </Pressable>
     );

@@ -1,6 +1,15 @@
+import { httpClient } from "@/core/api/httpClient";
+import { CloudinarySignRequestInterface, MediaType } from "@/core/types";
+import { MediaInterface } from "@/core/types/schema/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner-native";
 import { flag, toggleFavorite } from "./ad.service";
+
+export type UploadFileType = {
+  file: MediaInterface;
+  media_type: MediaType;
+  signingParams: CloudinarySignRequestInterface;
+};
 
 export const useToggleFavorite = () => {
   const queryClient = useQueryClient();
@@ -96,4 +105,20 @@ export const useFlag = () => {
       queryClient.invalidateQueries({ queryKey: ["ads"] });
     },
   });
+};
+
+export const useAdMutation = () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const { data } = await httpClient.post("/ads/create", payload);
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ads"] });
+    },
+  });
+
+  return { ...mutation };
 };

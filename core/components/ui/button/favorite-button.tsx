@@ -1,3 +1,4 @@
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import React from 'react';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const FavoriteButton = ({ isFavorite, onPress }: Props) => {
+    const { theme } = useUserPreferencesStore()
     const scale = useSharedValue(1);
 
     const snappySpring = {
@@ -41,8 +43,10 @@ export const FavoriteButton = ({ isFavorite, onPress }: Props) => {
         <Pressable onPress={handlePress} hitSlop={10}>
             <Animated.View style={animatedStyle}>
                 <Ionicons
+                    size={22}
                     name={isFavorite ? "star" : "star-outline"}
-                    size={22} color={isFavorite ? "#FAED02" : "black"} />
+                    color={isFavorite ? "#FAED02" : theme !== "light" ? "white" : "black"}
+                />
             </Animated.View>
         </Pressable>
     );

@@ -83,6 +83,6 @@ const styles = StyleSheet.create({
         height: 40,
     },
     suffixIcon: {
-        marginLeft: 8,
+        marginStart: 8,
     },
 });

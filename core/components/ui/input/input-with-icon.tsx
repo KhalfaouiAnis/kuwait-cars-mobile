@@ -40,7 +40,7 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
                     secureTextEntry={props.secureTextEntry && !showPassword}
                 />
                 {endIcon && (
-                    <Pressable className="me-1" onPress={() => setShowPassword(prevState => !prevState)}>
+                    <Pressable hitSlop={6} className="me-1" onPress={() => setShowPassword(prevState => !prevState)}>
                         <Ionicons name={showPassword ? "eye-off-outline" : endIcon} size={20} color={error ? "#D80027" : "#677185"} />
                     </Pressable>
                 )}

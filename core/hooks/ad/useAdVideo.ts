@@ -37,7 +37,7 @@ export const useAdVideo = (
       const fileObj: any = {
         id: result.assets[0].assetId || generateId(),
         uri: compressedUri,
-        type: "VIDEO",
+        type: result.assets[0].mimeType,
         name: result.assets[0].fileName,
         size: compressedSize,
         duration: result.assets[0].duration,

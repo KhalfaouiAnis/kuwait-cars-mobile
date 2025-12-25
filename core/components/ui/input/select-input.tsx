@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
-import { FlatList, Modal, Pressable, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
+import { FlatList, Modal, Pressable, StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
 
 type SelectInputProps<TForm extends FieldValues> = TextInputProps & {
     name: FieldPath<TForm>;
@@ -47,7 +47,9 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
                     "border-error": error,
                     "px-3 py-1": !extraPadding,
                     "p-3": extraPadding,
-                })}>
+                })}
+                style={styles.button}
+                >
                     <View className='items-center me-2'>
                         {icon}
                     </View>
@@ -96,3 +98,18 @@ export default function SelectInput<TForm extends FieldValues>({ onChangeText, c
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    button: {
+        borderWidth: 1,
+        boxShadow: [
+            {
+                offsetX: 0,
+                offsetY: 2,
+                blurRadius: 4,
+                spreadDistance: 0,
+                color: 'rgb(000 000 000 / 0.25)',
+            },
+        ],
+    }
+});

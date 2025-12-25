@@ -96,15 +96,8 @@ export default function NewAdScreen() {
         if (isValid && currentStep < TOTAL_STEPS) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            setIsUploading(true);
             setUploadProgress(0);
-            handleSubmit((data) => onSubmit(data, (progressEvent) => {
-                if (progressEvent.total) {
-                    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    setUploadProgress(progress);
-                }
-            }), onError)();
-            setUploadProgress(100);
+            handleSubmit((data) => onSubmit(data), onError)();
         }
     }
 

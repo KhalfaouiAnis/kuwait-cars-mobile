@@ -1,3 +1,4 @@
 export interface CTAProps {
-  label: string;
+  label?: string;
+  variant?: "icon" | "button"
 }

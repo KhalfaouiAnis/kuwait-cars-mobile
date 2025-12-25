@@ -39,8 +39,7 @@ export default function NewAdScreen() {
     const { t } = useTranslation("ad_creation")
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
-    const [uploadProgress, setUploadProgress] = useState(0);
-    const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress] = useState(0);
 
     const handlePrevious = () => {
         if (currentStep === 1) {
@@ -97,15 +96,7 @@ export default function NewAdScreen() {
         if (isValid && currentStep < TOTAL_STEPS) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            setIsUploading(true);
-            setUploadProgress(0);
-            handleSubmit((data) => onSubmit(data, (progressEvent) => {
-                if (progressEvent.total) {
-                    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    setUploadProgress(progress);
-                }
-            }), onError)();
-            setUploadProgress(100);
+            handleSubmit((data) => onSubmit(data), onError)();
         }
     }
 
@@ -146,7 +137,7 @@ export default function NewAdScreen() {
     return (
         <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} reset={handleReset} resetLabel={t("Reset")} previous={handlePrevious}>
             {
-                isUploading && uploadProgress < 100 && (
+                uploadProgress > 0 && uploadProgress < 100 && (
                     <View className="mb-1">
                         <UploadProgress uploadProgress={uploadProgress} />
                     </View>

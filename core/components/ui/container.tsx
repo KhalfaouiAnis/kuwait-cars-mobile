@@ -6,7 +6,7 @@ const Container = ({ children, backgroundColor, header, scrollable }:
     PropsWithChildren<{ backgroundColor?: string, header?: ReactNode, scrollable?: boolean }>
 ) => {
     const { bottom } = useSafeAreaInsets()
-    return <SafeAreaView edges={['top', 'left', 'right']} className='flex-1' style={{ marginBottom: bottom, backgroundColor }}>
+    return <SafeAreaView edges={['top', 'left', 'right']} className='flex-1 ' style={{ marginBottom: bottom, backgroundColor }}>
         {scrollable ? (
             <>
                 {header && header}

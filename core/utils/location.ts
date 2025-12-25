@@ -1,7 +1,14 @@
 const R = 6371.0;
-const toRadians = (deg: any) => deg * (Math.PI / 180);
+const toRadians = (deg: number) => deg * (Math.PI / 180);
 
-export function haversineDistance(lat1: any, lon1: any, lat2: any, lon2: any) {
+export function haversineDistance(
+  lat1?: number,
+  lon1?: number,
+  lat2?: number,
+  lon2?: number
+) {
+
+  if(!lat1 || !lat2 || !lon1 || !lon2) return 0
   const lat1Rad = toRadians(lat1);
   const lon1Rad = toRadians(lon1);
   const lat2Rad = toRadians(lat2);
@@ -17,7 +24,7 @@ export function haversineDistance(lat1: any, lon1: any, lat2: any, lon2: any) {
       Math.sin(dlon / 2) *
       Math.sin(dlon / 2);
 
-  return 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * R;
+  return Math.floor(2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * R)
 }
 
 // const dc_lat = 36.828537825339424;

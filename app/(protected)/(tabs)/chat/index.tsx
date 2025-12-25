@@ -1,6 +1,6 @@
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
-import { FlatList, Image, Text, TextInput, View } from "react-native";
+import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import Reanimated, {
     interpolate,
     SharedValue,
@@ -8,8 +8,13 @@ import Reanimated, {
 } from 'react-native-reanimated';
 
 import ConfirmDeleteDialog from "@/core/components/ui/dialog/confirm-delete-dialog";
-import { AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { ProfileDrawer } from "@/core/components/ui/shared/profile-drawer";
+import useUserPreferencesStore from "@/core/store/preferences.store";
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { Image } from "expo-image";
+import { Link } from "expo-router";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { RectButton } from "react-native-gesture-handler";
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
@@ -20,7 +25,7 @@ const listings = [
         id: "1",
         avatar: IMAGES.AvatarVideoBoy,
         username: "Michael tony",
-        message: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+        message: "Lorem ipsum dolor sit amet amet consectetur adipisicing elit. consectetur adipisicing elit.",
         sentAt: "10 min",
         unreadCount: 2
     },
@@ -108,9 +113,9 @@ const RightAction = ({ progress, handleDelete }: { progress: SharedValue<number>
     });
 
     return (
-        <ReanimatedView style={animatedStyle} className="flex-row items-center gap-x-2 ms-2">
-            <RectButton style={{ height: 56, backgroundColor: "#ECEEFF", paddingVertical: 16, paddingHorizontal: 8, borderRadius: 12 }}>
-                <AntDesign name="folder-open" size={24} color="#3641B7" />
+        <ReanimatedView style={[animatedStyle]} className="flex-row items-center gap-x-2 me-2">
+            <RectButton style={{ height: 56, backgroundColor: "#FF123D", paddingVertical: 16, paddingHorizontal: 8, borderRadius: 12 }}>
+                <MaterialIcons name="block-flipped" size={24} color="white" />
             </RectButton>
             <RectButton onPress={handleDelete} style={{ height: 56, backgroundColor: "#FFE7E5", paddingVertical: 16, paddingHorizontal: 8, borderRadius: 12 }}>
                 <Ionicons name="trash-outline" size={24} color="#F44336" />
@@ -123,6 +128,10 @@ const RightAction = ({ progress, handleDelete }: { progress: SharedValue<number>
 export default function ChatScreen() {
     const swipeableRef = useRef<any>(null);
     const [show, setShow] = useState<boolean>(false)
+    const { theme, isRTL } = useUserPreferencesStore()
+    const { t } = useTranslation("communication")
+
+    const isDark = theme !== "light"
 
     const renderItem = ({ item }: {
         item: {
@@ -140,47 +149,59 @@ export default function ChatScreen() {
                 ref={swipeableRef}
                 friction={2}
                 rightThreshold={40}
-                renderRightActions={(progress) => <RightAction progress={progress} handleDelete={() => setShow(true)} />}
+                leftThreshold={40}
+                renderRightActions={isRTL ? (progress) => <RightAction progress={progress} handleDelete={() => setShow(true)} /> : undefined}
+                renderLeftActions={isRTL ? undefined : (progress) => <RightAction progress={progress} handleDelete={() => setShow(true)} />}
             >
-                <View className="flex-row border-b py-4 items-center justify-around border-primary-500">
-                    <View className="w-2/12 border border-gray-100 rounded-full items-center justify-center p-1 me-1">
-                        <Image source={item.avatar} style={{ width: 50, height: 50, borderRadius: 100, objectFit: "contain", marginEnd: 4 }} />
-                    </View>
-                    <View className="w-8/12">
-                        <Text className="font-inter-semibold mb-1">{item.username}</Text>
-                        <Text className="text-[#636363]">{item.message}</Text>
-                    </View>
-                    <View className="items-center justify-between w-2/12">
-                        <Text>{item.sentAt}</Text>
-                        <Text className="py-1 px-2 bg-primary-500 rounded-md text-center mt-2 font-bold text-sm">{item.unreadCount}</Text>
-                    </View>
-                </View>
+                <Link href={"/chat/id12545555"} asChild>
+                    <Pressable className="flex-row border-b py-4 items-center justify-around border-primary-500">
+                        <View className="w-2/12 border rounded-full items-center justify-center p-1 me-1">
+                            <Image source={item.avatar} style={{ width: 50, height: 50, marginEnd: 4 }} contentFit="contain" />
+                        </View>
+                        <View className="w-7/12">
+                            <View className="flex-row items-center gap-2">
+                                <Text className="font-inter-semibold mb-1 text-black dark:text-gray-200">{item.username}</Text>
+                                <Text className="py-1 px-2 bg-primary-500 rounded-md text-center mt-2 font-bold text-sm">{item.unreadCount}</Text>
+                            </View>
+                            <View>
+                                <Text numberOfLines={2} ellipsizeMode="tail" className="text-[#636363] dark:text-gray-300 text-sm">{item.message}</Text>
+                            </View>
+                            <View className="mt-1 ms-2">
+                                <Text className="text-error text-xs">{item.sentAt}</Text>
+                            </View>
+                        </View>
+                        <View className="me-1 rounded-md">
+                            <Image source={IMAGES.CarMercedes} style={{ width: 60, height: 70, borderRadius: 6 }} contentFit="cover" />
+                        </View>
+                    </Pressable>
+                </Link>
             </Swipeable>
         );
     };
 
     return (
         <Container>
-            <View className="py-2 px-4">
-                <View className="my-4 mx-2 flex-row items-center justify-between">
-                    <MaterialIcons name="sort" size={24} color="black" className="me-2" />
+            <View className="py-2 px-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+                <View className="my-4 mx-2 flex-row items-center justify-between" >
+                    <ProfileDrawer />
                     <View className="flex-row items-center ps-2 flex-1 h-12 overflow-hidden text-[#333] text-base border rounded-lg border-primary-500 me-1">
-                        <Ionicons name="search-outline" size={24} color="black" />
+                        <Ionicons name="search-outline" size={24} color={isDark ? "white" : "black"} />
                         <TextInput
-                            placeholder="Search..."
+                            placeholder={t("chat.search")}
                             className="flex-1"
                             autoCapitalize="none"
                         />
                     </View>
-                    <MaterialCommunityIcons name="bell-ring-outline" size={24} color="black" className="me-2" />
-                    <Image
-                        source={IMAGES.Mohamed}
-                        style={{ width: 36, height: 36, objectFit: "cover", borderRadius: 100 }}
-                    />
+                    <MaterialCommunityIcons name="bell-ring-outline" size={24} color={isDark ? "white" : "black"} className="me-2" />
+                    <View className="rounded-full h-10 w-10">
+                        <Image
+                            source={IMAGES.Mohamed}
+                            style={{ width: "100%", height: "100%", objectFit: "fill" }}
+                        />
+                    </View>
                 </View>
-                <View className="my-4 mx-4 flex-row items-center justify-between ">
-                    <Text className="font-inter-semibold text-xl">Recent chats</Text>
-                    <Text className="text-[#3641B7]">8 Requests</Text>
+                <View className="my-4 mx-4 flex-row items-center justify-between">
+                    <Text className="font-inter-semibold text-xl text-black dark:text-gray-200">{t("chat.recentChats")}</Text>
                 </View>
                 <View className="w-dvw h-[1px] bg-primary-500 px-0 mx-0" />
 

@@ -43,7 +43,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
             {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}
-                className={clsx('flex-row items-center p-4 justify-between border dark:border-primary-500 dark:bg-darkish', {
+                className={clsx('flex-row items-center py-4 ps-3 pe-2 justify-between border dark:border-primary-500 dark:bg-darkish', {
                     "border-error": error,
                     "border-primary-500 rounded-lg border": primary,
                     "border-transparent elevation-sm": !primary && !error,
@@ -51,7 +51,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
             >
                 <View className='flex-row items-center gap-2'>
                     <MaterialCommunityIcons name="town-hall" size={20} color={isDark ? "white" : "gray"} />
-                    <Text className="text-[#333] dark:text-white">
+                    <Text className={`${value?.province ? 'text-[#333]' : 'text-gray-400'} dark:text-white`}>
                         {value?.province ? t("provinces." + value?.province) : placeholder}
                     </Text>
                 </View>
@@ -64,6 +64,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
                     )}
                 </View>
             </Pressable>
+            {error && <Text className="text-error text-sm ms-2">{error}</Text>}
             <Modal
                 visible={showModal}
                 animationType="fade"

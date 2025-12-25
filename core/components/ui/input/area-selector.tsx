@@ -49,7 +49,7 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
             >
                 <View className='flex-row items-center gap-2'>
                     <MaterialIcons name="location-city" size={20} color={isDark ? "white" : "gray"} />
-                    <Text className="dark:text-white">
+                    <Text className={`${value?.area ? 'text-[#333]': 'text-gray-400'} dark:text-white`}>
                         {value?.area ? t("areas." + value?.area) : placeholder}
                     </Text>
                 </View>

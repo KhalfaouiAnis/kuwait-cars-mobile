@@ -6,12 +6,11 @@ import i18n from "@/core/i18n/i18n";
 import { authStore } from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Language } from "@/core/types";
-import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Redirect, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
@@ -27,10 +26,8 @@ export default function Index() {
 
   const renderItem = ({ item }: { item: Language }) => (
     <TouchableOpacity
-      className={cn("flex-row items-center justify-between w-64 px-4 py-2 my-2 rounded-lg bg-[#FFFFFFB2] ", {
-        "border border-green-300": currentLang === item.code,
-        "border-b-4 border-r-2 border-gray-200": currentLang !== item.code,
-      })}
+      style={currentLang === item.code ? { ...styles.buttonSelected } : { ...styles.button }}
+      className="flex-row items-center justify-between w-64 px-4 py-1.5 my-1.5 rounded-lg bg-white/70"
       onPress={() => handleSelect(item)}
     >
       <Flag name={item.code} />
@@ -62,3 +59,24 @@ export default function Index() {
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    boxShadow: [{
+      offsetX: 2,
+      offsetY: 4,
+      blurRadius: 4,
+      spreadDistance: 0,
+      color: 'rgb(000 000 000 / 0.25)',
+    }],
+  },
+  buttonSelected: {
+    boxShadow: [{
+      offsetX: 2,
+      offsetY: 4,
+      blurRadius: 4,
+      spreadDistance: 0,
+      color: 'rgba(79, 186, 0, 0.7)',
+    }],
+  }
+});

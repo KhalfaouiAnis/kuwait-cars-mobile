@@ -24,17 +24,14 @@ export default function AdFormContainer({ children, reset, resetLabel, previous,
 
     return (
         <Container>
-            <View style={{ direction: isRTL ? "rtl" : "ltr" }} className='mt-1 flex flex-row items-center justify-between px-4 mb-2 mx-2'>
-                {/* <Pressable onPress={handlePrevious}>
-                    <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={isDark ? "white" : "black"} />
-                </Pressable> */}
+            <View style={{ direction: isRTL ? "rtl" : "ltr" }} className='mt-1 flex flex-row items-center justify-between px-4 mb-2 mx-1'>
                 <BackArrow navigate={handlePrevious} />
                 <Text className='font-inter-semibold text-2xl text-center dark:text-white'>{title}</Text>
                 <Pressable onPress={reset}>
                     <Text className="text-error">{resetLabel}</Text>
                 </Pressable>
             </View>
-            <View className="mt-4 px-4 mx-2 flex-1">
+            <View className="mt-4 px-4 flex-1">
                 {children}
             </View>
         </Container>

@@ -36,13 +36,11 @@ const getStepTitle = (step: number, t: (key: string) => string) => {
 const TOTAL_STEPS = 6;
 
 export default function UsedCarAdScreen() {
-    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useUsedCarAd()
+    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting, totalProgress } = useUsedCarAd()
     const { theme, isRTL } = useUserPreferencesStore()
     const { t } = useTranslation("ad_creation")
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
-    const [uploadProgress, setUploadProgress] = useState(0);
-    const [isUploading, setIsUploading] = useState(false);
 
     const handlePrevious = () => {
         if (currentStep === 1) {
@@ -101,15 +99,7 @@ export default function UsedCarAdScreen() {
         if (isValid && currentStep < TOTAL_STEPS) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            setIsUploading(true);
-            setUploadProgress(0);
-            handleSubmit((data) => onSubmit(data, (progressEvent) => {
-                if (progressEvent.total) {
-                    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    setUploadProgress(progress);
-                }
-            }), onError)();
-            setUploadProgress(100);
+            handleSubmit((data) => onSubmit(data), onError)();
             setCurrentStep(TOTAL_STEPS);
         }
     }
@@ -153,9 +143,9 @@ export default function UsedCarAdScreen() {
     return (
         <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>
             {
-                isUploading && uploadProgress < 100 && (
+                totalProgress >0 && totalProgress < 100 && (
                     <View className="mb-1">
-                        <UploadProgress uploadProgress={uploadProgress} />
+                        <UploadProgress uploadProgress={totalProgress} />
                     </View>
                 )
             }

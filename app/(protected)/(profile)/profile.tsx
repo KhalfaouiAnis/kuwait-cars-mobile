@@ -41,7 +41,7 @@ export default function ProfileScreen() {
                                 style={{ width: 75, height: 75, borderRadius: 50 }}
                                 contentFit="cover"
                             />
-                            <Pressable className="absolute -left-7 bottom-1 z-10 bg-white rounded-full p-2">
+                            <Pressable className="absolute -start-7 bottom-1 z-10 bg-white rounded-full p-2">
                                 <Ionicons name="camera-outline" size={24} />
                             </Pressable>
                         </View>

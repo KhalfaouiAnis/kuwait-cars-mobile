@@ -2,7 +2,7 @@ import { AD_TYPES } from '@/core/constants/ad';
 import { DataItem } from '@/core/types/schema/shared';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, Modal, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 type AdTypeSelectorProps = {
     onChange: (value: { ad_type: string, params: any } | null) => void,
@@ -38,7 +38,8 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
         if (isLeaf) {
             return (
                 <TouchableOpacity
-                    className={`flex-row items-center my-1 p-3 py-4 elevation-sm border border-transparent dark:border-primary-500 bg-white dark:bg-darkish ms-${(level) * 6}`}
+                    style={styles.selectButton}
+                    className={`flex-row items-center my-2 p-3 py-4 border border-x-[#f7f7f7] border-y-transparent dark:border-x-primary-500 dark:border-y-primary-500 dark:border-primary-500 bg-white dark:bg-darkish ms-${(level) * 6}`}
                     onPress={() => {
                         if (AD_TYPES.used_cars === path[0]) {
                             const [brand, model] = item.value.split("/")
@@ -77,7 +78,8 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
         return (
             <>
                 <TouchableOpacity
-                    className="flex-row items-center my-1 p-3 py-4 elevation-sm border border-transparent dark:border-primary-500 bg-white dark:bg-darkish rounded-sm"
+                    style={[styles.selectButton]}
+                    className="flex-row items-center my-2 p-3 py-4 border border-x-[#f7f7f7] border-y-transparent dark:border-x-primary-500 dark:border-y-primary-500 dark:border-primary-500 bg-white dark:bg-darkish rounded-sm"
                     onPress={() => hasChildren && toggleExpand(itemPath)}
                 >
                     <Ionicons name={item?.icon} size={20} color="gray" />
@@ -105,50 +107,79 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
     };
 
     return (
-        <Pressable onPress={() => setShowModal(true)}>
-            <View className={'flex-row items-center justify-between border border-transparent bg-white dark:bg-darkish dark:border-primary-500 elevation-md p-3'}>
-                <View>
-                    <TextInput
-                        className={"text-[#333] dark:text-white"}
-                        editable={false}
-                        pointerEvents="none"
-                        value={selectedValue}
-                        placeholder={placeholder}
-                        {...props}
-                    />
-                    <Modal
-                        visible={showModal}
-                        animationType="slide"
-                        transparent={false}
-                        onRequestClose={() => setShowModal(false)}
-                    >
+        <Pressable
+            onPress={() => setShowModal(true)}
+            style={styles.outerButton}
+            className={'flex-row items-center justify-between border border-[#cccccc] bg-white dark:bg-darkish dark:border-primary-500 p-3'}
+        >
+            <View>
+                <TextInput
+                    className={"text-[#333] dark:text-white"}
+                    editable={false}
+                    pointerEvents="none"
+                    value={selectedValue}
+                    placeholder={placeholder}
+                    {...props}
+                />
+                <Modal
+                    visible={showModal}
+                    animationType="slide"
+                    transparent={false}
+                    onRequestClose={() => setShowModal(false)}
+                >
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        onPress={() => setShowModal(false)}
+                        className="flex-1 justify-end bg-black/20">
                         <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={() => setShowModal(false)}
-                            className="flex-1 justify-end bg-black/20">
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                onPress={() => { }}
-                                className="bg-white dark:bg-darkish pt-6 mb-10 rounded-t-2xl p-2 w-full h-[86%] min-h-0">
-                                <FlatList
-                                    data={data}
-                                    renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
-                                    keyExtractor={(_, index) => index.toString()}
-                                    showsVerticalScrollIndicator={false}
-                                    style={{ marginBottom: 20 }}
-                                    nestedScrollEnabled
-                                />
-                            </TouchableOpacity>
+                            activeOpacity={0.8}
+                            onPress={() => { }}
+                            className="bg-white dark:bg-darkish pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-3">
+                            <FlatList
+                                data={data}
+                                renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
+                                keyExtractor={(_, index) => index.toString()}
+                                showsVerticalScrollIndicator={false}
+                                style={{ marginBottom: 20 }}
+                                nestedScrollEnabled
+                            />
                         </TouchableOpacity>
-                    </Modal>
+                    </TouchableOpacity>
+                </Modal>
+            </View>
+            <View className="ms-auto flex-row items-end">
+                <View>
+                    <Text className="text-error">*</Text>
                 </View>
-                <View className="ms-auto flex-row items-end">
-                    <View>
-                        <Text className="text-error">*</Text>
-                    </View>
-                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} />
-                </View>
+                <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} color="gray" size={20} />
             </View>
         </Pressable>
     );
 }
+
+const styles = StyleSheet.create({
+    outerButton: {
+        borderWidth: 1,
+        boxShadow: [
+            {
+                offsetX: 0,
+                offsetY: 4,
+                blurRadius: 9,
+                spreadDistance: 0,
+                color: 'rgb(000 000 000 / 0.25)',
+            },
+        ],
+    },
+    selectButton: {
+        borderWidth: 1,
+        boxShadow: [
+            {
+                offsetX: 0,
+                offsetY: 4,
+                blurRadius: 4,
+                spreadDistance: 0,
+                color: 'rgb(000 000 000 / 0.25)',
+            },
+        ],
+    }
+});

@@ -1,13 +1,11 @@
 import { httpClient } from "@/core/api/httpClient";
+import { useUploadMedia } from "@/core/hooks/shared/use-upload-media";
 import useAuthStore from "@/core/store/auth.store";
 import { UpdateProfileInterface } from "@/core/types/schema/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { useState } from "react";
-import { signCloudinaryUpload } from "../cloud/cloudinary";
 
 export const useUpdateProfile = () => {
-  const [progress, setProgress] = useState(0);
+  const { totalProgress, setFileProgress, upload } = useUploadMedia();
   const queryClient = useQueryClient();
   const { setUser, user } = useAuthStore((state) => state);
 
@@ -17,41 +15,20 @@ export const useUpdateProfile = () => {
       let avatarData = null;
 
       if (avatar && "uri" in avatar) {
-        const { data: response } = await signCloudinaryUpload({
-          mediaType: "profile_pic",
-        });
-
-        const uploadFormData = new FormData();
-
-        uploadFormData.append("file", {
-          uri: avatar.uri,
-          type: avatar.type,
-          name: `avatar_${user?.id}`,
-        } as any);
-
-        uploadFormData.append("api_key", response.apiKey);
-        uploadFormData.append("signature", response.signature);
-        uploadFormData.append("timestamp", response.params.timestamp);
-        uploadFormData.append("upload_preset", response.params.upload_preset);
-        uploadFormData.append("overwrite", true as any);
-        uploadFormData.append("invalidate", true as any);
-
-        const { data: cloudinaryRes } = await axios.postForm(
-          response.uploadUrl,
-          uploadFormData,
+        const uploadResponse = await upload([
           {
-            onUploadProgress: (ev) => {
-              const percent = Math.round((ev.loaded * 100) / (ev.total || 1));
-              setProgress(percent);
-            },
-          }
-        );
-
-        avatarData = {
-          public_id: cloudinaryRes.public_id,
-          original_url: cloudinaryRes.secure_url,
-          media_type: "IMAGE",
-        };
+            file: { ...avatar, name: `avatar_${user?.id}` },
+            media_type: "IMAGE",
+            signingParams: { mediaType: "profile_pic" },
+          },
+        ]);
+        if (uploadResponse) {
+          avatarData = {
+            public_id: uploadResponse[0].public_id,
+            original_url: uploadResponse[0].original_url,
+            media_type: "IMAGE",
+          };
+        }
       }
 
       const { data: finalResponse } = await httpClient.patch("/users", {
@@ -64,10 +41,10 @@ export const useUpdateProfile = () => {
     onSuccess: (updatedUser) => {
       setUser(updatedUser);
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      setProgress(0);
+      setFileProgress({});
     },
-    onError: () => setProgress(0),
+    onError: () => setFileProgress({}),
   });
 
-  return { ...mutation, uploadProgress: progress };
+  return { ...mutation, uploadProgress: totalProgress };
 };

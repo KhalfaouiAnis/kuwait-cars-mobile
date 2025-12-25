@@ -1,14 +1,20 @@
-import { httpClient } from "@/core/api/httpClient";
-import { uploadStructuredMedia } from "@/core/services/cloud/cloudinary";
+import {
+  UploadFileType,
+  useAdMutation,
+} from "@/core/services/ads/ad.mutations";
 import { hideLisencePlate } from "@/core/services/cloud/lisence-plate";
 import {
   UsedCarAdInterface,
   UsedCarAdSchema,
 } from "@/core/types/schema/ads/usedCar";
-import { AxiosProgressEvent, isAxiosError } from "axios";
+import { isAxiosError } from "axios";
+import { useUploadMedia } from "../../shared/use-upload-media";
 import { useFormHook } from "../../use-form-hook";
 
 export function useUsedCarAd() {
+  const { totalProgress, setFileProgress, upload } = useUploadMedia();
+  const { mutateAsync } = useAdMutation();
+
   const {
     control,
     handleSubmit,
@@ -34,49 +40,51 @@ export function useUsedCarAd() {
     },
   });
 
-  const onSubmit = async (
-    data: UsedCarAdInterface,
-    onUploadProgress?: (progressEvent: AxiosProgressEvent) => void
-  ) => {
+  const onSubmit = async (payload: UsedCarAdInterface) => {
     try {
-      const { thumbnail, video, images, province, ...adData } = data;
-
-      const { thumbnailData, imagesData, videoData } =
-        await uploadStructuredMedia(thumbnail, images, video);
-
-      let finalUrl = thumbnailData.transformed_url;
-      console.log("data.hide_license_plate: ", data.hide_license_plate);
-
-      if (data.hide_license_plate) {
-        finalUrl = await hideLisencePlate(thumbnailData.transformed_url);
-      }
-
-      const media = [
-        { ...thumbnailData, transformedUrl: finalUrl, media_type: "THUMBNAIL" },
-        ...imagesData.map((image) => ({ ...image, media_type: "IMAGE" })),
+      const { thumbnail, images, video, ...restData } = payload;
+      const media: UploadFileType[] = [
+        {
+          file: thumbnail,
+          media_type: "THUMBNAIL",
+          signingParams: { mediaType: "image" },
+        },
       ];
 
-      if (videoData) {
-        media.push({ ...videoData, media_type: "VIDEO" });
+      if (video) {
+        console.log("video is here: ", video);
+
+        media.push({
+          file: video,
+          media_type: "VIDEO",
+          signingParams: { mediaType: "video" },
+        });
       }
 
-      const response = await httpClient.post(
-        "/ads/create",
-        {
-          ...adData,
-          media,
-          province: {
-            province: province.province,
-            latitude: province.latitude,
-            longitude: province.longitude,
-          },
-        },
-        {
-          onUploadProgress,
-        }
-      );
+      if (images) {
+        images.forEach((image) =>
+          media.push({
+            file: image,
+            media_type: "IMAGE",
+            signingParams: { mediaType: "image" },
+          })
+        );
+      }
 
-      return response.data;
+      const uploadResponse = await upload(media);
+
+      let finalUrl = uploadResponse[0].transformed_url;
+      console.log("data.hide_license_plate: ", payload.hide_license_plate);
+
+      if (payload.hide_license_plate) {
+        finalUrl = await hideLisencePlate(finalUrl!);
+        uploadResponse[0].transformed_url = finalUrl;
+      }
+
+      await mutateAsync({
+        ...restData,
+        media: [...uploadResponse],
+      });
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.code === "ERR_NETWORK") {
@@ -85,6 +93,8 @@ export function useUsedCarAd() {
         console.log(error.response?.data);
       }
       console.error("Submit error:", error);
+    } finally {
+      setFileProgress({});
     }
   };
 
@@ -100,5 +110,6 @@ export function useUsedCarAd() {
     isDirty,
     trigger,
     reset,
+    totalProgress,
   };
 }

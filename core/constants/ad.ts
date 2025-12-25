@@ -62,6 +62,18 @@ export const CAR_BRAND_TYPES = [
               },
             ],
           },
+          {
+            label: "Lexus",
+            value: "Lexus",
+            icon: "car-sport-outline",
+            marks: [
+              {
+                label: "Lexus - ES",
+                icon: "car-sport-outline",
+                value: "Lexus/ES",
+              },
+            ],
+          },
         ],
       },
     ],
@@ -500,7 +512,6 @@ export const SUBSCRIPTION_PLANS = [
     ],
   },
 ];
-
 
 export interface FilterOption {
   id: string;

@@ -1,3 +1,4 @@
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Feather } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import React from 'react';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export const ShareButton = ({ onPress }: Props) => {
+    const { theme } = useUserPreferencesStore()
     const scale = useSharedValue(1);
 
     const snappySpring = {
@@ -39,7 +41,7 @@ export const ShareButton = ({ onPress }: Props) => {
     return (
         <Pressable onPress={handlePress} hitSlop={10}>
             <Animated.View style={animatedStyle}>
-                <Feather name="share-2" size={22} color="black" />
+                <Feather name="share-2" size={22} color={theme !== "light" ? "white" : "black"} />
             </Animated.View>
         </Pressable>
     );

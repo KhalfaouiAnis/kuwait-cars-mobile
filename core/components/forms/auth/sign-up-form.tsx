@@ -15,7 +15,7 @@ export default function SignUpForm() {
     const { t } = useTranslation("auth");
     const { control, handleSubmit, onSubmit, isSubmitting, errors } = useSignUp()
     const province = useWatch({ control, name: "province" })
-    const Areas = province?.areas.map(area => ({ ...area, label: area.area })) || []
+    const Areas = PROVINCES.find(prov => prov.province === province?.province)?.areas || []
 
     return (
         <View className="pt-8 px-4 pb-10">
@@ -58,7 +58,7 @@ export default function SignUpForm() {
                     required
                     options={PROVINCES}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder={t("YourProvince")}
+                    placeholder={t("yourProvince")}
                 />
                 <AreaSelector
                     control={control}
