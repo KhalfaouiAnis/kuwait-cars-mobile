@@ -31,7 +31,10 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
     }, []);
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+        <ScrollView
+            className="flex-1 px-2"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 10 }}>
             <View className="items-center mb-6">
                 <View className="flex-row items-center ms-6">
                     <View className="rounded-full h-3 bg-primary-500 w-[60%]">
@@ -52,7 +55,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                                 {t("VideoClip", { minDuration: 5, maxDuration: 15 })}
                             </Text>
                         </View>
-                        <View style={{direction: isRTL ? "rtl" : "ltr"}}>
+                        <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
                             <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("AddVideos")}</Text>
                             <PickFromGallery disabled={loading} label={t("selectFile")} video addMedia={() => addVideo(false)} />
                         </View>

@@ -6,14 +6,14 @@ import AddPhotos from "@/core/components/forms/ads/used-cars/add-photos";
 import AddVideo from "@/core/components/forms/ads/used-cars/add-video";
 import ChoosePlan from "@/core/components/forms/ads/used-cars/choose-plan";
 import PostAd from "@/core/components/forms/ads/used-cars/post-ad";
+import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
-import UploadProgress from "@/core/components/ui/shared/upload-progress";
 import { useUsedCarAd } from "@/core/hooks/ad/flows/useUsedCarAd";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { toast } from "sonner-native";
 
 const getStepTitle = (step: number, t: (key: string) => string) => {
@@ -36,7 +36,7 @@ const getStepTitle = (step: number, t: (key: string) => string) => {
 const TOTAL_STEPS = 6;
 
 export default function UsedCarAdScreen() {
-    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting, totalProgress } = useUsedCarAd()
+    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, totalProgress } = useUsedCarAd()
     const { theme, isRTL } = useUserPreferencesStore()
     const { t } = useTranslation("ad_creation")
     const [showDialog, setShowDialog] = useState(false);
@@ -100,7 +100,6 @@ export default function UsedCarAdScreen() {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
             handleSubmit((data) => onSubmit(data), onError)();
-            setCurrentStep(TOTAL_STEPS);
         }
     }
 
@@ -142,24 +141,14 @@ export default function UsedCarAdScreen() {
 
     return (
         <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>
-            {
-                totalProgress >0 && totalProgress < 100 && (
-                    <View className="mb-1">
-                        <UploadProgress uploadProgress={totalProgress} />
-                    </View>
-                )
-            }
             {renderCurrentStep()}
-            <View className="mt-auto mb-4">
-                <TouchableOpacity
-                    className="py-3 w-full rounded-lg bg-primary-500 disabled:bg-yellow-200"
+            <View className="mt-auto mb-4 mx-2">
+                <ProgressButton
+                    progress={totalProgress}
+                    isPending={totalProgress > 0}
                     onPress={handleNext}
-                    disabled={isSubmitting}
-                >
-                    <Text className="text-center text-xl font-inter-semibold">
-                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : currentStep === TOTAL_STEPS ? t("Submit") : t("Next")}
-                    </Text>
-                </TouchableOpacity>
+                    title={currentStep === TOTAL_STEPS ? t("Submit") : t("Next")}
+                />
             </View>
             <LeaveDialog
                 onLeave={handleLeave}

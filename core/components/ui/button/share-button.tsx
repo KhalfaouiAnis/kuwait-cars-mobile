@@ -19,8 +19,8 @@ export const ShareButton = ({ onPress }: Props) => {
     const scale = useSharedValue(1);
 
     const snappySpring = {
-        damping: 25,
-        stiffness: 300,
+        damping: 45,
+        stiffness: 600,
         mass: 0.5,
     };
 
@@ -32,7 +32,7 @@ export const ShareButton = ({ onPress }: Props) => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
         scale.value = withSequence(
-            withSpring(1.35, snappySpring),
+            withSpring(1.2, snappySpring),
             withSpring(1, snappySpring)
         );
         onPress();

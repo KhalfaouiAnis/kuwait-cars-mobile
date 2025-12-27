@@ -4,6 +4,7 @@ import ProvinceSelector from "@/core/components/ui/input/province-selector";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { PROVINCES } from "@/core/constants";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,15 +17,17 @@ import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import { StaticMapPreview } from "../shared/static-map-preview";
 
 export default function PostAd({ control, errors, isDark, setValue, t }: AdFormStepProps<MotorcycleAdInterface>) {
-    const { brand, ad_type } = useLocalSearchParams()
+    const { ad_category, brand } = useLocalSearchParams<{ brand: string, ad_category: string }>()
+    const { isRTL } = useUserPreferencesStore()
     const province = useWatch({ control, name: "province" })
     const Areas = PROVINCES.find(prov => prov.province === province?.province)?.areas || []
 
     return (
         <ScrollView
+            className="flex-1 px-2"
             showsVerticalScrollIndicator={false}
-            className="flex-1"
-            contentContainerStyle={{ paddingBottom: 10, rowGap: 8 }}
+            contentContainerStyle={{ paddingBottom: 12, rowGap: 12 }}
+            style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
             <View>
                 <View className="flex-row items-center justify-between">
@@ -32,7 +35,7 @@ export default function PostAd({ control, errors, isDark, setValue, t }: AdFormS
                     <Text className="text-sm text-gray-300">{t("adCategories.motorcycles")}</Text>
                 </View>
                 <SelectedAdType
-                    label={`${ad_type} - ${brand}`}
+                    label={`${ad_category}-${brand}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>
@@ -68,7 +71,7 @@ export default function PostAd({ control, errors, isDark, setValue, t }: AdFormS
             </View>
             {province?.latitude &&
                 (<View className="my-2 w-full h-32 rounded-lg" pointerEvents="none">
-                    <StaticMapPreview latitude={province.latitude} longitude={province.longitude} />
+                    <StaticMapPreview lat={province.latitude} lng={province.longitude} />
                 </View>)
             }
             <AdTextInput

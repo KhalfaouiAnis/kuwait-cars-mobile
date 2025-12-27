@@ -22,7 +22,7 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: "in", name: "hindi", flag: "🇮🇳" },
 ];
 
-export const RTL_LANGUAGES = ["ar", "jo"];
+export const RTL_LANGUAGES = ["ar", "ur"];
 
 export const COUNTRIES = [
   { name: "Kuwait", cca2: "KW", callingCode: ["965"], flag: "🇰🇼" },

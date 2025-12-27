@@ -1,20 +1,25 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import Checkbox from "@/core/components/ui/input/checkbox";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import ReceiveCall from "../shared/contact/receive-call";
+import WhatsappContact from "../shared/contact/whatsapp";
+import XCarCall from "../shared/contact/xcar-call";
+import XCarChat from "../shared/contact/xcar-chat";
 
-export default function AdDetails({ control, errors, setValue, getValue }: AdFormStepProps<SparePartAdInterface>) {
+export default function AdDetails({ control, errors, t, setValue, getValue }: AdFormStepProps<SparePartAdInterface>) {
     const [showSecondNumber, setShowSecondNumber] = useState(() => getValue?.("second_additional_number") !== undefined)
+    const { isRTL } = useUserPreferencesStore()
 
     return (
         <ScrollView
+            className="flex-1 px-2"
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
             contentContainerStyle={{ paddingBottom: 10 }}>
-            <View className="gap-y-2 mt-4">
+            <View className="gap-y-2 mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <View className="relative">
                     <AdTextInput
                         control={control}
@@ -41,25 +46,11 @@ export default function AdDetails({ control, errors, setValue, getValue }: AdFor
                         extraPadding
                         error={errors.additional_number?.message} placeholder="Add Additional Number" />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2 mt-6">
-                    <Ionicons name="logo-whatsapp" size={24} color="#25D366" />
-                    <Text>Contact via WhatsApp</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} />
-                </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
-                    <Ionicons name="call-outline" size={24} color="#25D366" />
-                    <Text>Receive Calls</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("receive_calls", value)} />
-                </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
-                    <Ionicons name="call-outline" size={24} color="#00A6DA" />
-                    <Text>Receive Call via XCar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} />
-                </View>
-                <View className="flex-row items-center justify-between border border-gray-200 p-2">
-                    <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
-                    <Text>Chat via Xcar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} />
+                <View className="mt-4 gap-y-4">
+                    <WhatsappContact t={t} getValue={getValue} setValue={setValue} />
+                    <ReceiveCall t={t} getValue={getValue} setValue={setValue} />
+                    <XCarCall t={t} getValue={getValue} setValue={setValue} />
+                    <XCarChat t={t} getValue={getValue} setValue={setValue} />
                 </View>
             </View>
         </ScrollView>

@@ -5,14 +5,14 @@ import AddPhotos from "@/core/components/forms/ads/spare-parts/add-photos";
 import AddVideo from "@/core/components/forms/ads/spare-parts/add-video";
 import ChoosePlan from "@/core/components/forms/ads/spare-parts/choose-plan";
 import PostAd from "@/core/components/forms/ads/spare-parts/post-ad";
+import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
-import UploadProgress from "@/core/components/ui/shared/upload-progress";
 import { useSparePartAd } from "@/core/hooks/ad/flows/useSparePartAd";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { toast } from "sonner-native";
 
 const getStepTitle = (step: number, t: (key: string) => string) => {
@@ -33,13 +33,11 @@ const getStepTitle = (step: number, t: (key: string) => string) => {
 const TOTAL_STEPS = 5;
 
 export default function NewAdScreen() {
-    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, isSubmitting } = useSparePartAd()
+    const { control, errors, totalProgress, dirtyFields, trigger, reset, setValue, getValues, handleSubmit, onSubmit } = useSparePartAd()
     const { theme, isRTL } = useUserPreferencesStore()
     const { t } = useTranslation("ad_creation")
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
-    const [uploadProgress, setUploadProgress] = useState(0);
-    const [isUploading, setIsUploading] = useState(false);
 
     const handlePrevious = () => {
         if (currentStep === 1) {
@@ -96,7 +94,6 @@ export default function NewAdScreen() {
         if (isValid && currentStep < TOTAL_STEPS) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            setUploadProgress(0);
             handleSubmit((data) => onSubmit(data), onError)();
         }
     }
@@ -136,25 +133,15 @@ export default function NewAdScreen() {
     if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
-        <AdFormContainer isRTL={isRTL} title={getStepTitle(currentStep, t)} reset={handleReset} resetLabel={t("Reset")} previous={handlePrevious}>
-            {
-                isUploading && uploadProgress < 100 && (
-                    <View className="mb-1">
-                        <UploadProgress uploadProgress={uploadProgress} />
-                    </View>
-                )
-            }
+        <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>
             {renderCurrentStep()}
-            <View className="mt-auto mb-4">
-                <TouchableOpacity
-                    className="py-3 w-full rounded-lg bg-primary-500 disabled:bg-yellow-200"
+            <View className="mt-auto mb-4 mx-2">
+                <ProgressButton
+                    progress={totalProgress}
+                    isPending={totalProgress > 0}
                     onPress={handleNext}
-                    disabled={isSubmitting}
-                >
-                    <Text className="text-center text-xl font-inter-semibold">
-                        {isSubmitting ? <ActivityIndicator size="small" color="black" /> : currentStep === TOTAL_STEPS ? t("Submit") : t("Next")}
-                    </Text>
-                </TouchableOpacity>
+                    title={currentStep === TOTAL_STEPS ? t("Submit") : t("Next")}
+                />
             </View>
             <LeaveDialog
                 onLeave={handleLeave}

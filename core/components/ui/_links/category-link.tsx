@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
                 offsetY: 6,
                 blurRadius: 20,
                 spreadDistance: 0,
-                color: 'rgb(000 000 000 / 0.15)',
+                color: 'rgb(000 000 000 / 0.25)',
             },
         ],
     },

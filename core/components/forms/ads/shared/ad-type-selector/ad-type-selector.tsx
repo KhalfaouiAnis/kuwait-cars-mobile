@@ -1,18 +1,21 @@
 import { AD_TYPES } from '@/core/constants/ad';
 import { DataItem } from '@/core/types/schema/shared';
 import { Ionicons } from '@expo/vector-icons';
+import { FlashList } from "@shopify/flash-list";
 import React, { useState } from 'react';
-import { FlatList, Modal, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type AdTypeSelectorProps = {
     onChange: (value: { ad_type: string, params: any } | null) => void,
     data: DataItem[];
+    isRTL: boolean;
     selectedValue?: string;
     placeholder?: string;
-    isRTL: boolean;
 }
 
-export default function AdTypeSelector({ data, onChange, placeholder, selectedValue, isRTL, ...props }: AdTypeSelectorProps) {
+export default function AdTypeSelector({ data, onChange, placeholder, selectedValue, isRTL }: AdTypeSelectorProps) {
+    const { t } = useTranslation("car_categories")
     const [showModal, setShowModal] = useState(false);
     const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
 
@@ -30,7 +33,7 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
         const itemPath = [...path, item.value].join(';');
         const isExpanded = expandedPaths.has(itemPath);
 
-        const children = item.regions || item.brands || item.marks || item.categories || [];
+        const children = item.regions || item.brands || item.models || [];
         const hasChildren = children.length > 0;
 
         const isLeaf = !hasChildren;
@@ -39,32 +42,32 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
             return (
                 <TouchableOpacity
                     style={styles.selectButton}
-                    className={`flex-row items-center my-2 p-3 py-4 border border-x-[#f7f7f7] border-y-transparent dark:border-x-primary-500 dark:border-y-primary-500 dark:border-primary-500 bg-white dark:bg-darkish ms-${(level) * 6}`}
+                    className={`flex-row items-center my-1.5 p-3 py-4 dark:border-primary-500 dark:border ms-${(level) * 6}`}
                     onPress={() => {
                         if (AD_TYPES.used_cars === path[0]) {
                             const [brand, model] = item.value.split("/")
                             handleSelect({
-                                ad_type: path[0],
-                                params: { model, brand, label: item.label }
+                                ad_type: AD_TYPES.used_cars,
+                                params: { model, brand, label: t(item.label) }
                             })
                         } else if (AD_TYPES.motorcycles === path[0]) {
-                            const [category, brand] = item.value.split("/")
+                            const [ad_category, brand] = item.value.split("/")
                             handleSelect({
-                                ad_type: path[0],
-                                params: { category, brand, label: item.label }
+                                ad_type: AD_TYPES.motorcycles,
+                                params: { ad_category, brand, label: t(item.label) }
                             })
                         } else if (AD_TYPES.spare_parts === path[0]) {
                             handleSelect({
-                                ad_type: path[0],
-                                params: { regison: item.value, label: item.label }
+                                ad_type: AD_TYPES.spare_parts,
+                                params: { regison: item.value, label: t(item.label) }
                             })
                         } else {
-                            handleSelect({ ad_type: item.value, params: { label: item.label, } })
+                            handleSelect({ ad_type: item.value, params: { label: t(item.label), } })
                         }
                     }}
                 >
                     <Ionicons name={item?.icon} size={20} color="gray" />
-                    <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{item.label}</Text>
+                    <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{t(item.label)}</Text>
                     <Ionicons
                         className='justify-start'
                         name={isRTL ? 'chevron-back' : 'chevron-forward'}
@@ -79,11 +82,11 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
             <>
                 <TouchableOpacity
                     style={[styles.selectButton]}
-                    className="flex-row items-center my-2 p-3 py-4 border border-x-[#f7f7f7] border-y-transparent dark:border-x-primary-500 dark:border-y-primary-500 dark:border-primary-500 bg-white dark:bg-darkish rounded-sm"
+                    className="flex-row items-center my-1.5 p-3 py-4 dark:border-primary-500 dark:border rounded-sm"
                     onPress={() => hasChildren && toggleExpand(itemPath)}
                 >
                     <Ionicons name={item?.icon} size={20} color="gray" />
-                    <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{item.label}</Text>
+                    <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">{t(item.label)}</Text>
                     <Ionicons
                         name={isExpanded ? 'chevron-down' : isRTL ? 'chevron-back' : 'chevron-forward'}
                         size={16}
@@ -91,7 +94,6 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                         style={{ marginStart: level + 6 }}
                     />
                 </TouchableOpacity>
-
                 {isExpanded && hasChildren && children.map((child: any, idx: number) => (
                     <View style={{ marginStart: level + 10 }} key={idx}>
                         {renderItem(child, level + 1, [...path, item.value], handleSelect)}
@@ -108,19 +110,17 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
 
     return (
         <Pressable
+            style={styles.wrapper}
             onPress={() => setShowModal(true)}
-            style={styles.outerButton}
-            className={'flex-row items-center justify-between border border-[#cccccc] bg-white dark:bg-darkish dark:border-primary-500 p-3'}
+            className={'flex-row items-center justify-between bordered-box p-3'}
         >
             <View>
-                <TextInput
+                <Text
                     className={"text-[#333] dark:text-white"}
-                    editable={false}
                     pointerEvents="none"
-                    value={selectedValue}
-                    placeholder={placeholder}
-                    {...props}
-                />
+                >
+                    {selectedValue ? t(selectedValue) : placeholder}
+                </Text>
                 <Modal
                     visible={showModal}
                     animationType="slide"
@@ -134,13 +134,13 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                         <TouchableOpacity
                             activeOpacity={0.8}
                             onPress={() => { }}
-                            className="bg-white dark:bg-darkish pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-3">
-                            <FlatList
+                            className="bg-white dark:bg-darkish pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-4">
+                            <FlashList
                                 data={data}
                                 renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
                                 keyExtractor={(_, index) => index.toString()}
                                 showsVerticalScrollIndicator={false}
-                                style={{ marginBottom: 20 }}
+                                contentContainerClassName='pb-6 px-1.5'
                                 nestedScrollEnabled
                             />
                         </TouchableOpacity>
@@ -158,8 +158,8 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
 }
 
 const styles = StyleSheet.create({
-    outerButton: {
-        borderWidth: 1,
+    wrapper: {
+        height: 70,
         boxShadow: [
             {
                 offsetX: 0,
@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
         ],
     },
     selectButton: {
-        borderWidth: 1,
         boxShadow: [
             {
                 offsetX: 0,

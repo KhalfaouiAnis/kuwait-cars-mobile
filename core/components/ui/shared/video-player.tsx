@@ -65,7 +65,7 @@ export default function VideoPlayer({ source }: { source?: string }) {
 
     return (
         <View
-            className="bg-slate-900 overflow-hidden relative w-full aspect-video rounded-lg"        >
+            className="bg-slate-900 overflow-hidden relative w-full h-full aspect-video rounded-lg"        >
             <VideoView
                 player={videoPlayer}
                 nativeControls={false}

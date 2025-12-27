@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import "../global.css";
 
 SplashScreen.preventAutoHideAsync();
@@ -22,6 +23,7 @@ export default function RootLayout() {
   });
 
   const { _hasHydrated, bootstrapAsync } = useAuthStore();
+  const { isI18nReady } = useUserPreferencesStore()
 
   useEffect(() => {
     bootstrapAsync()
@@ -35,7 +37,7 @@ export default function RootLayout() {
     }
   }, [fontsLoaded, _hasHydrated]);
 
-  if (!_hasHydrated || !fontsLoaded) {
+  if (!_hasHydrated || !fontsLoaded || !isI18nReady) {
     return null;
   }
 

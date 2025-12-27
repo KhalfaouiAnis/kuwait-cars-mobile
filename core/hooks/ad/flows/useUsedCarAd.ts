@@ -8,6 +8,8 @@ import {
   UsedCarAdSchema,
 } from "@/core/types/schema/ads/usedCar";
 import { isAxiosError } from "axios";
+import { router } from "expo-router";
+import { toast } from "sonner-native";
 import { useUploadMedia } from "../../shared/use-upload-media";
 import { useFormHook } from "../../use-form-hook";
 
@@ -18,7 +20,7 @@ export function useUsedCarAd() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting, isDirty, dirtyFields },
+    formState: { errors, isDirty, dirtyFields },
     trigger,
     reset,
     setValue,
@@ -52,8 +54,6 @@ export function useUsedCarAd() {
       ];
 
       if (video) {
-        console.log("video is here: ", video);
-
         media.push({
           file: video,
           media_type: "VIDEO",
@@ -74,27 +74,35 @@ export function useUsedCarAd() {
       const uploadResponse = await upload(media);
 
       let finalUrl = uploadResponse[0].transformed_url;
-      console.log("data.hide_license_plate: ", payload.hide_license_plate);
 
       if (payload.hide_license_plate) {
         finalUrl = await hideLisencePlate(finalUrl!);
         uploadResponse[0].transformed_url = finalUrl;
       }
 
-      await mutateAsync({
-        ...restData,
-        media: [...uploadResponse],
-      });
+      await mutateAsync(
+        {
+          ...restData,
+          media: [...uploadResponse],
+        },
+        {
+          onError(error) {
+            toast.error(error.message);
+          },
+          onSuccess() {
+            router.replace("/create/success");
+          },
+          onSettled() {
+            setFileProgress({});
+          },
+        }
+      );
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.code === "ERR_NETWORK") {
           console.log("Network error - Check baseURL, IP, or CORS");
         }
-        console.log(error.response?.data);
       }
-      console.error("Submit error:", error);
-    } finally {
-      setFileProgress({});
     }
   };
 
@@ -105,7 +113,6 @@ export function useUsedCarAd() {
     handleSubmit,
     onSubmit,
     errors,
-    isSubmitting,
     dirtyFields,
     isDirty,
     trigger,

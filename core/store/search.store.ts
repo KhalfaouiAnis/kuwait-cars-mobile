@@ -22,8 +22,8 @@ export type SortingItem = {
 export type CombinedFilterKeys = MultiFilterKeys & SingleFilterKeys;
 
 const FILTER_DEPENDENCIES: Record<string, string[]> = {
-  brand: ["model", "year"],
-  model: ["year"],
+  brand: [],
+  model: [],
 };
 
 export interface FilterState {

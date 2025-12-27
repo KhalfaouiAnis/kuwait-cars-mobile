@@ -1,4 +1,6 @@
+import { BOX_SHADOW } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
+import { TFunction } from 'i18next';
 import React, { useState } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { FlatList, Modal, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
@@ -7,14 +9,15 @@ type UnitSelectorProps<TForm extends FieldValues> = {
     control: Control<TForm>;
     name: FieldPath<TForm>;
     onSelect?: (code: string) => void;
+    t: TFunction
 }
 
 const UNIT_OPTIONS = [
-    { label: 'KM', value: 'KM' },
-    { label: 'ML', value: 'ML' },
+    { value: 'KM' },
+    { value: 'ML' },
 ];
 
-export default function UnitSelector<TForm extends FieldValues>({ control, name, onSelect }: UnitSelectorProps<TForm>) {
+export default function UnitSelector<TForm extends FieldValues>({ control, name, onSelect, t }: UnitSelectorProps<TForm>) {
     const [isOpen, setIsOpen] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
@@ -24,24 +27,27 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
         onSelect?.(unit);
     };
 
-    const renderItem = ({ item: { value, label } }: { item: { label: string, value: string } }) => (
+    const renderItem = ({ item: { value } }: { item: { value: string } }) => (
         <TouchableOpacity
             className="flex-row items-center p-3 border-b border-gray-200"
             onPress={() => handleSelect(value)}
             activeOpacity={0.7}
         >
-            <Text className="flex-1 text-base text-gray-700 font-medium">{label}</Text>
+            <Text className="flex-1 text-base text-gray-700 font-medium">{t(value)}</Text>
         </TouchableOpacity>
     );
 
     return (
-        <View className='flex-1 items-center justify-center border border-transparent elevation-sm dark:bg-darkish dark:border-primary-500 py-3.5'>
+        <View
+            className='flex-1 items-center justify-center bordered-box px-6'
+            style={BOX_SHADOW.button}
+        >
             <TouchableOpacity
                 className="flex-row items-center gap-2 overflow-hidden"
                 onPress={() => setIsOpen(true)}
                 activeOpacity={0.7}
             >
-                <Text className="text-base text-gray-600 dark:text-white font-medium">{value || "KM"}</Text>
+                <Text className="text-base text-gray-600 dark:text-white font-medium">{t(value) || t("KM")}</Text>
                 <Ionicons name='chevron-down' size={20} color="gray" />
             </TouchableOpacity>
             <Modal

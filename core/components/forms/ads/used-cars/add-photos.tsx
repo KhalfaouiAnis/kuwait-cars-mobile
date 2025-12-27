@@ -33,7 +33,10 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Use
     }, []);
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+            className="flex-1 px-2"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 10 }}>
             <View>
                 <View className="w-full items-center">
                     <View className="rounded-full mb-6 h-3 w-[60%] bg-[#EEEEEE]">
@@ -49,7 +52,7 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Use
                             <View className="relative mr-2 mb-2" style={{ marginTop: isRTL ? 10 : 0 }}>
                                 <Image source={{ uri: thumbnail.uri }} style={{ width: "auto", height: 200, borderRadius: 8 }} contentFit="fill" />
                                 <TouchableOpacity
-                                    className="absolute z-50 -top-4 -right-1 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
+                                    className="absolute z-50 -top-3 -right-1 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
                                     onPress={() => removePhoto(thumbnail.id)}
                                 >
                                     <Ionicons name="close" size={24} color="white" className='border rounded-full border-white' />
@@ -90,6 +93,7 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Use
                     {
                         gallery?.length > 0 && <ImageGallery
                             data={gallery}
+                            mainImageLabel={t("MainPhoto")}
                             removePhoto={removePhoto}
                             setAsThumbnail={setAsThumbnail}
                         />

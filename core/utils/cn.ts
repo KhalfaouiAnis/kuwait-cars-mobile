@@ -8,13 +8,12 @@ export function cn(...inputs: ClassValue[]) {
 
 export const BOX_SHADOW = StyleSheet.create({
   button: {
-    borderWidth: 1,
     boxShadow: [
       {
-        offsetX: 2,
-        offsetY: 2,
-        blurRadius: 6,
-        spreadDistance: 2,
+        offsetX: 0,
+        offsetY: 4,
+        blurRadius: 9,
+        spreadDistance: 0,
         color: "rgb(000 000 000 / 0.25)",
       },
     ],

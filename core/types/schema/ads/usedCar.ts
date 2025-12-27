@@ -19,7 +19,7 @@ export const UsedCarAdSchema = BaseAdSchema.extend({
     .number()
     .min(0, "Year is required")
     .max(new Date().getFullYear()),
-  exterior_color: z.string().min(1, "Color is required"),
+  exterior_color: z.string({ message: "Color is required" }).min(1),
   mileage: z.coerce.number().min(1, "Mileage is required"),
   mileage_unit: z.string().optional(),
 
@@ -29,14 +29,8 @@ export const UsedCarAdSchema = BaseAdSchema.extend({
   under_warranty: z.coerce.boolean().optional(),
   roof: z.string().optional(),
 
-  additional_number: z.string().optional(),
-  second_additional_number: z.string().optional(),
   hide_license_plate: z.coerce.boolean().optional().default(false),
 
-  contact_whatsapp: z.coerce.boolean().optional(),
-  receive_calls: z.coerce.boolean().optional(),
-  xcar_calls: z.coerce.boolean().optional(),
-  xcar_chat: z.coerce.boolean().optional(),
 });
 
 export type UsedCarAdInterface = z.infer<typeof UsedCarAdSchema>;

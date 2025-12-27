@@ -12,7 +12,7 @@ i18n
   .init(
     {
       lng: "ar",
-      fallbackLng: "en",
+      fallbackLng: "ar",
       supportedLngs: SUPPORTED_LANGUAGES.map((lang) => lang.code),
       ns: ["common", "auth"],
       defaultNS: "common",

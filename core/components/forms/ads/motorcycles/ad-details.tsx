@@ -1,19 +1,21 @@
+import AdSelectInput from "@/core/components/ui/input/ad-select-input";
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
-import SelectInput from "@/core/components/ui/input/select-input";
 import { CAR_COLORS, YEARS } from "@/core/constants";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { MotorcycleAdInterface } from "@/core/types/schema/ads/motorcycle";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { renderColorOption, renderYearOption } from "../../../ui/shared/render-option";
+import { renderOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
-export default function AdDetails({ control, errors, setValue, t }: AdFormStepProps<MotorcycleAdInterface>) {
+export default function AdDetails({ control, errors, setValue, t, isDark }: AdFormStepProps<MotorcycleAdInterface>) {
     const { ad_type, ad_category, brand } = useLocalSearchParams()
+    const { isRTL } = useUserPreferencesStore()
 
     useEffect(() => {
         setValue?.("ad_type", ad_type as string)
@@ -23,8 +25,8 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
 
     return (
         <ScrollView
+            className="flex-1 px-2"
             showsVerticalScrollIndicator={false}
-            className="flex-1"
             contentContainerStyle={{ paddingBottom: 10 }}
         >
             <View className="flex-row items-center justify-center w-full">
@@ -33,51 +35,55 @@ export default function AdDetails({ control, errors, setValue, t }: AdFormStepPr
                 <View className="border border-primary-500 w-2/5" />
             </View>
             <View>
-                <View className="flex-row items-center justify-end">
+                <View className="flex-row items-center justify-between">
                     <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
-                    <Text className="text-sm text-gray-300">{t("adCategories.motorcycles")}</Text>
+                    <Text className="text-sm text-gray-300">{t("adCategories.used_cars")}</Text>
                 </View>
                 <SelectedAdType
-                    label={`${ad_category} - ${brand}`}
+                    label={`${ad_category}-${brand}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>
-            <View className="gap-y-4 mt-4">
+            <View className="gap-y-4 mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <View>
-                    <SelectInput
+                    <AdSelectInput
                         control={control}
                         name="year"
                         options={YEARS}
                         required
-                        isDark
-                        renderOption={(option, selected) => renderYearOption(option, selected as string)}
+                        isDark={isDark}
+                        renderOption={(option, selected) => renderOption(option, selected as string)}
                         error={errors.year?.message}
                         placeholder={t("Year")}
                     />
                 </View>
                 <View>
-                    <SelectInput
+                    <AdSelectInput
                         control={control}
                         name="exterior_color"
                         options={CAR_COLORS}
                         required
-                        isDark
-                        renderOption={(option, selected) => renderColorOption(option, selected as string)}
+                        isDark={isDark}
+                        isRTL={isRTL}
+                        renderOption={(option, selected) => renderOption(option, selected as string)}
                         error={errors.exterior_color?.message}
                         placeholder={t("exteriorColor")}
                     />
                 </View>
-                <View className="flex-row gap-1 items-center">
-                    <View className="w-[74%]">
+                <View className="flex-row gap-3 items-center">
+                    <View className="flex-1">
                         <AdTextInput
                             control={control}
                             name="mileage"
                             required
                             error={errors.mileage?.message}
                             placeholder={t("Mileage")}
+                            keyboardType="number-pad"
                         />
                     </View>
-                    <UnitSelector control={control} name="mileage_unit" />
+                    <View className="flex-shrink">
+                        <UnitSelector control={control} name="mileage_unit" t={t} />
+                    </View>
                 </View>
             </View>
             <View className="flex-row items-center justify-center w-full mt-4">

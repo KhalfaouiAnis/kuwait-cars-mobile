@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Props {
     onPress: any;
@@ -25,7 +25,14 @@ export const ProgressButton = ({ onPress, isPending, progress, title }: Props) =
             disabled={isPending}
             style={styles.button}
         >
-            <Text style={styles.text}>{isPending ? `${progress}%` : title}</Text>
+
+            {
+                progress === 100 ? (
+                    <ActivityIndicator size="small" color="black" />
+                ) : (
+                    <Text className='text-center text-xl font-inter-semibold'>{isPending ? `${progress}%` : title}</Text>
+                )
+            }
 
             {progress > 0 && (
                 <View style={styles.progressContainer}>
@@ -57,10 +64,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         borderWidth: 1,
         borderColor: 'transparent',
-    },
-    text: {
-        fontWeight: 'bold',
-        color: '#2D3436',
     },
     progressContainer: {
         position: 'absolute',

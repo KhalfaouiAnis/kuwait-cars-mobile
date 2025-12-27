@@ -1,7 +1,7 @@
 import Checkbox from "@/core/components/ui/input/checkbox";
 import { ProvinceArea, SelectOption } from "@/core/types";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 export const renderCategoryOption = (option: SelectOption) => (
     <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200">
@@ -25,7 +25,7 @@ export const renderProvinceAreaOption = (option: ProvinceArea, selected?: string
 
 export const renderYearOption = (option: SelectOption, selected?: string) => {
     return (
-        <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200">
+        <View className="flex-row items-center py-3 my-1 mx-2 px-2" style={styles.selectButton}>
             <View className='flex-1 ms-2'>
                 <Text className="text-lg dark:text-white">{option.label}</Text>
             </View>
@@ -37,7 +37,7 @@ export const renderYearOption = (option: SelectOption, selected?: string) => {
 }
 
 export const renderColorOption = (option: SelectOption, selected?: string) => (
-    <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200">
+    <View className="flex-row items-center py-3 my-1 mx-2 px-2" style={styles.selectButton}>
         <View className='flex-1 ms-2'>
             <Text className="text-lg dark:text-white">{option.label}</Text>
         </View>
@@ -46,3 +46,33 @@ export const renderColorOption = (option: SelectOption, selected?: string) => (
         </View>
     </View>
 )
+
+export const renderOption = (option: SelectOption, selected?: string | boolean) => {
+    const isSelected = (typeof selected === "boolean" && selected) || option.value === selected
+
+    return (
+        <View className="flex-row items-center py-3 my-1 mx-2 px-2 dark:border-primary-500 dark:border" style={styles.selectButton}>
+            <View className='flex-1 ms-2'>
+                <Text className="text-lg dark:text-white">{option.label}</Text>
+            </View>
+            <View className='pe-2'>
+                <Checkbox size={18} checked={isSelected} disabled />
+            </View>
+        </View>
+    )
+}
+
+
+const styles = StyleSheet.create({
+    selectButton: {
+        boxShadow: [
+            {
+                offsetX: 0,
+                offsetY: 4,
+                blurRadius: 4,
+                spreadDistance: 0,
+                color: 'rgb(000 000 000 / 0.25)',
+            },
+        ],
+    }
+});

@@ -16,6 +16,7 @@ module.exports = {
         error: "#FF123D",
         darkish: "#1F1F1F",
         grayish: "#A8A8A8",
+        whitish: "#FBFBFB",
       },
       fontFamily: {
         inter: ["InterRegular", "sans-serif"],
@@ -23,9 +24,6 @@ module.exports = {
         "inter-medium": ["InterMedium", "sans-serif"],
         "inter-semibold": ["InterSemiBold", "sans-serif"],
         "inter-bold": ["InterBold", "sans-serif"],
-      },
-      boxShadow: {
-        "bottom-small": "0 0 2px rgba(0, 0, 0, 0.2)",
       },
     },
   },

@@ -72,7 +72,7 @@ export default function PostAd({ control, errors, isDark, setValue, t }: AdFormS
             </View>
             {province?.latitude &&
                 (<View className="my-2 w-full h-32 rounded-lg" pointerEvents="none">
-                    <StaticMapPreview latitude={province.latitude} longitude={province.longitude} />
+                    <StaticMapPreview lat={province.latitude} lng={province.longitude} />
                 </View>)
             }
             <AdTextInput

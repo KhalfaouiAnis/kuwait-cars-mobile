@@ -2,7 +2,7 @@ import MoneySign from "@/assets/svg/plan-money-sign";
 import SubscriptionPlan from "@/assets/svg/subscription-plan";
 import { SubscriptionDetail } from "@/core/constants/ad";
 import { AntDesign } from "@expo/vector-icons";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
     plan: SubscriptionDetail,
@@ -14,7 +14,9 @@ interface Props {
 export default function SubscriptionCard({ plan, isSelected, onSelect, t }: Props) {
     return (
         <View
-            className={`bg-white dark:bg-darkish rounded-2xl elevation p-6 relative mt-10 border ${isSelected ? 'border-error' : 'border-gray-100 dark:border-primary-500'}`}>
+            className={`bg-whitish rounded-2xl p-6 relative mt-10 border ${isSelected ? 'border-error' : 'border-gray-100 dark:border-primary-500'}`}
+                style={CARD_BOX_SHADOW.button}
+            >
             <View className="absolute -top-[26px] -right-4 z-10">
                 <SubscriptionPlan price={plan.price} recColor={plan.id === "1" ? "#FF123D" : "#FAED02"} textColor={plan.id === "1" ? "white" : "black"} />
             </View>
@@ -24,7 +26,7 @@ export default function SubscriptionCard({ plan, isSelected, onSelect, t }: Prop
                         <MoneySign />
                     </View>
                     <View>
-                        <Text className="text-xl font-inter-semibold dark:text-white">{plan.title}</Text>
+                        <Text className="text-xl font-inter-semibold dark:text-secondary-900">{plan.title}</Text>
                     </View>
                 </View>
             </View>
@@ -32,7 +34,7 @@ export default function SubscriptionCard({ plan, isSelected, onSelect, t }: Prop
                 {plan.features.map((feature: any, index: number) => (
                     <View key={index} className="flex-row items-center mb-2">
                         <AntDesign name="check" size={22} color="#FAED02" />
-                        <Text className="ml-2 text-gray-600 dark:text-gray-300">{feature}</Text>
+                        <Text className="ml-2 text-gray-600 dark:text-secondary-900">{feature}</Text>
                     </View>
                 ))}
             </View>
@@ -46,3 +48,17 @@ export default function SubscriptionCard({ plan, isSelected, onSelect, t }: Prop
         </View>
     )
 }
+
+export const CARD_BOX_SHADOW = StyleSheet.create({
+  button: {
+    boxShadow: [
+      {
+        offsetX: 0,
+        offsetY: 5,
+        blurRadius: 10,
+        spreadDistance: 0,
+        color: "rgb(000 000 000 / 0.25)",
+      },
+    ],
+  },
+});

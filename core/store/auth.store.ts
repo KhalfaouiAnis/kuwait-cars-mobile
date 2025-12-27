@@ -45,6 +45,8 @@ const useAuthStore = create<AuthState>()(
         try {
           const { accessToken, refreshToken, signOut } = get();
           if (!accessToken || !refreshToken) {
+            console.log("Session expired. logging out");
+
             signOut();
             return;
           }

@@ -2,6 +2,7 @@ import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
 import { useAdPhotos } from "@/core/hooks/ad/useAdPhotos";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,6 +16,7 @@ const MAX_IMAGES = 6;
 
 export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<SparePartAdInterface>) {
     const { gallery, thumbnail, addPhoto, removePhoto, setAsThumbnail } = useAdPhotos(setValue, getValue, MAX_IMAGES)
+    const { isRTL } = useUserPreferencesStore()
 
     useEffect(() => {
         (async () => {
@@ -31,7 +33,10 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Spa
     }, []);
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+            className="flex-1 px-2"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 10 }}>
             <View>
                 <View className="w-full items-center">
                     <View className="rounded-full mb-6 h-3 w-[60%] bg-[#EEEEEE]">
@@ -40,33 +45,39 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Spa
                 </View>
                 <View className="gap-y-8">
                     {
-                        thumbnail?.uri ? (<View>
-                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("addPhotos")} <Text className="text-error">*</Text></Text>
-                            <View className="relative mr-2 mb-2">
+                        thumbnail?.uri ? (<View style={{ direction: isRTL ? "rtl" : "ltr" }}>
+                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">
+                                {t("addPhotos")}<Text className="text-error">*</Text>
+                            </Text>
+                            <View className="relative mr-2 mb-2" style={{ marginTop: isRTL ? 10 : 0 }}>
                                 <Image source={{ uri: thumbnail.uri }} style={{ width: "auto", height: 200, borderRadius: 8 }} contentFit="fill" />
                                 <TouchableOpacity
-                                    className="absolute z-50 -top-4 -right-1 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
+                                    className="absolute z-50 -top-3 -right-1 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
                                     onPress={() => removePhoto(thumbnail.id)}
                                 >
                                     <Ionicons name="close" size={24} color="white" className='border rounded-full border-white' />
                                 </TouchableOpacity>
                             </View>
-                            <Text className="justify-end ml-auto mr-4 font-semibold dark:text-white"> {t("pickedXOofY", { pickedCount: gallery.length, totalCount: MAX_IMAGES })}</Text>
+                            <Text className="ml-auto mr-4 font-semibold dark:text-white">
+                                {t("pickedXOofY", { pickedCount: gallery.length, totalCount: MAX_IMAGES })}
+                            </Text>
                         </View>) : (
                             <View>
                                 <View className="gap-y-6">
-                                    <Text className="font-inter-semibold text-3xl dark:text-white">{t("goodPicturesSellFaster")}</Text>
+                                    <Text className="font-inter-semibold text-center text-3xl dark:text-white">{t("goodPicturesSellFaster")}</Text>
                                     <Text numberOfLines={2} className="text-center dark:text-white">{t("capturePhoto")}</Text>
                                 </View>
-                                <View className="mt-4">
-                                    <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("addPhotos")} <Text className="text-error">*</Text></Text>
-                                    <PickFromGallery label="Select file" addMedia={() => addPhoto(false, true, false)} />
+                                <View className="mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+                                    <Text className="text-xl font-inter-bold mb-1 dark:text-white">
+                                        {t("addPhotos")}<Text className="text-error">*</Text>
+                                    </Text>
+                                    <PickFromGallery label={t("selectFile")} addMedia={() => addPhoto(false, true, false)} />
                                 </View>
                             </View>
                         )
                     }
                     {
-                        gallery?.length < MAX_IMAGES && <TakePhotoButton label="Open Camera & Take Photo" addMedia={() => addPhoto(true, true, false)} />
+                        gallery?.length < MAX_IMAGES && <TakePhotoButton label={t("openCameraTakePhoto")} addMedia={() => addPhoto(true, true, false)} />
                     }
                     {gallery?.length < MAX_IMAGES && (
                         <View className="flex-row items-center justify-center">
@@ -75,13 +86,14 @@ export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<Spa
                             <View className="border border-gray-300 w-2/5" />
                         </View>
                     )}
-                    {gallery?.length < MAX_IMAGES && <PickFromGallerySM label="Open Gallery" addMedia={() => addPhoto(false, false, true)} />}
+                    {gallery?.length < MAX_IMAGES && <PickFromGallerySM label={t("openGallery")} addMedia={() => addPhoto(false, false, true)} />}
                 </View>
 
                 <View className="mt-8 pb-8">
                     {
                         gallery?.length > 0 && <ImageGallery
                             data={gallery}
+                            mainImageLabel={t("MainPhoto")}
                             removePhoto={removePhoto}
                             setAsThumbnail={setAsThumbnail}
                         />

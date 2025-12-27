@@ -14,20 +14,21 @@ export default function ChoosePlan({ setValue, getValue, t }: AdFormStepProps<Us
     };
 
     return (
-        <View className="flex-1">
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 50 }}>
-                <View className="flex-col gap-8">
-                    {SUBSCRIPTION_PLANS.filter(ad => ad.adTypes.some(type => type === getValue?.("ad_type"))).map((plan) => (
-                        <SubscriptionCard
-                            key={plan.id}
-                            plan={plan}
-                            isSelected={plan.type === selectedPlan?.type}
-                            onSelect={handleSelectPlan}
-                            t={t}
-                        />
-                    ))}
-                </View>
-            </ScrollView>
-        </View>
+        <ScrollView
+            className="flex-1 px-2"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 20 }}>
+            <View className="flex-col gap-4">
+                {SUBSCRIPTION_PLANS.filter(ad => ad.adTypes.some(type => type === getValue?.("ad_type"))).map((plan) => (
+                    <SubscriptionCard
+                        key={plan.id}
+                        plan={plan}
+                        isSelected={plan.type === selectedPlan?.type}
+                        onSelect={handleSelectPlan}
+                        t={t}
+                    />
+                ))}
+            </View>
+        </ScrollView>
     )
 }

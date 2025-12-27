@@ -33,7 +33,7 @@ export default function UsedCarsCategoryScreen() {
                     view={view}
                     isDark={isDark}
                 />
-                <Link href="/create/used_cars" className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500">
+                <Link href="/create" className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500">
                     <Ionicons name="add" size={38} />
                 </Link>
             </View>

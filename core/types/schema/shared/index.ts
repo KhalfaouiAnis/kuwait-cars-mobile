@@ -69,7 +69,15 @@ export const BaseAdSchema = z.object({
   plan: SubscriptionPlanSchema,
   thumbnail: createFileSchema("Thumbnail is required"),
   images: MultiFileSchema("Image must be valid file under 5MB").optional(),
-  video: VideoSchema,
+  video: VideoSchema.nullish(),
+
+  additional_number: z.string().optional(),
+  second_additional_number: z.string().optional(),
+
+  contact_whatsapp: z.coerce.boolean().optional(),
+  receive_calls: z.coerce.boolean().optional(),
+  xcar_calls: z.coerce.boolean().optional(),
+  xcar_chat: z.coerce.boolean().optional(),
 });
 
 export const MediaSchema = z.object({
@@ -87,7 +95,7 @@ interface Mark {
 }
 interface Brand {
   label: string;
-  marks?: Mark[];
+  models?: Mark[];
 }
 interface Region {
   label: string;

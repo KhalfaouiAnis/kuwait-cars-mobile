@@ -8,11 +8,12 @@ const IMAGE_HEIGHT = 94;
 
 interface ImageGalleryProps {
     data: any[];
+    mainImageLabel: string
     removePhoto: (id: string) => void
     setAsThumbnail: (id: string) => void
 }
 
-export default function ImageGallery({ data, removePhoto, setAsThumbnail }: ImageGalleryProps) {
+export default function ImageGallery({ data, mainImageLabel, removePhoto, setAsThumbnail }: ImageGalleryProps) {
     return (
         <View className='flex-row flex-wrap gap-3.5'>
             {
@@ -30,8 +31,8 @@ export default function ImageGallery({ data, removePhoto, setAsThumbnail }: Imag
                             />
                             {
                                 index === 0 && (
-                                    <View className='absolute -top-4 me-2 z-30'>
-                                        <Text className='text-xs text-grayish font-inter-semibold'>Main photo</Text>
+                                    <View className='absolute -top-4 me-4 z-30'>
+                                        <Text className='text-xs text-grayish font-inter-semibold'>{mainImageLabel}</Text>
                                     </View>
                                 )
                             }
@@ -48,7 +49,7 @@ export default function ImageGallery({ data, removePhoto, setAsThumbnail }: Imag
                                 )
                             }
                             <TouchableOpacity
-                                className="absolute -top-4 -right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                                className="absolute -top-3 -right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
                                 onPress={() => removePhoto(item.id)}
                             >
                                 <Ionicons name="close" size={20} color="white" className='border rounded-full border-white' />

@@ -24,8 +24,8 @@ export default function PostAd({ control, errors, isDark, setValue, t }: AdFormS
 
     return (
         <ScrollView
+            className="flex-1 px-2"
             showsVerticalScrollIndicator={false}
-            className="flex-1"
             contentContainerStyle={{ paddingBottom: 12, rowGap: 12 }}
             style={{ direction: isRTL ? "rtl" : "ltr" }}
         >

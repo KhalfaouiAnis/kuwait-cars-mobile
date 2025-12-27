@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .bordered-box {
+    @apply border border-grayish bg-whitish dark:border-primary-500 dark:bg-darkish;
+  }
+}

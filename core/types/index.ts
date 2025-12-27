@@ -1,3 +1,4 @@
+import { TFunction } from "i18next";
 import {
   Control,
   FieldErrors,
@@ -23,7 +24,7 @@ export interface User {
   area?: AreaInterface | null;
   location?: LocationInterface | null;
   avatar?: ProfilePictureMedia | null;
-  created_at: Date
+  created_at: Date;
 }
 
 export enum UserRole {
@@ -80,7 +81,7 @@ export interface AdFormStepProps<T extends FieldValues> {
   getValue?: UseFormGetValues<T>;
   setError?: UseFormSetError<T>;
   onSkip?: () => void;
-  t: (key: string, options?: any) => string;
+  t: TFunction;
 }
 
 export interface CloudinarySignRequestInterface {

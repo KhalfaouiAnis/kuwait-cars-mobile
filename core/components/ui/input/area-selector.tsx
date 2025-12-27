@@ -1,5 +1,6 @@
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { AreaOption, ProvinceArea } from '@/core/types';
+import { BOX_SHADOW } from '@/core/utils/cn';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
@@ -44,12 +45,13 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
                 className={clsx('flex-row items-center p-4 justify-between border dark:border-primary-500 dark:bg-darkish', {
                     "border-error": error,
                     "border-primary-500 rounded-lg border": primary,
-                    "border-transparent elevation-sm": !primary && !error,
+                    "border-grayish": !primary && !error,
                 })}
+                style={BOX_SHADOW.button}
             >
                 <View className='flex-row items-center gap-2'>
                     <MaterialIcons name="location-city" size={20} color={isDark ? "white" : "gray"} />
-                    <Text className={`${value?.area ? 'text-[#333]': 'text-gray-400'} dark:text-white`}>
+                    <Text className={`${value?.area ? 'text-[#333]' : 'text-gray-400'} dark:text-white`}>
                         {value?.area ? t("areas." + value?.area) : placeholder}
                     </Text>
                 </View>
@@ -65,7 +67,7 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
             >
                 <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
                     <View className="flex-1 justify-center items-center bg-black/50">
-                        <View className="dark:bg-darkish dark:border-primary-500 border bg-transparent border-transparent -max-h-screen-safe-offset-8 w-80 overflow-hidden">
+                        <View className="dark:bg-darkish border bg-transparent border-transparent -max-h-screen-safe-offset-8 w-80 overflow-hidden">
                             <FlatList
                                 data={options}
                                 keyExtractor={(item) => item?.area}

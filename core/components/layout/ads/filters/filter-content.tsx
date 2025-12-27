@@ -1,5 +1,5 @@
 import { FilterConfigItem, FilterConfigKey } from '@/core/constants/ad';
-import useSearchStore, { FilterState, MultiFilterKeys } from '@/core/store/search.store';
+import useSearchStore, { MultiFilterKeys } from '@/core/store/search.store';
 import { useMemo, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { MultiSelectContent } from './multi-select-content';
@@ -15,19 +15,19 @@ export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: Fil
     const filteredOptions = useMemo(() => {
         let list = [...config.options];
 
-        if (config.parentKey) {
-            const pKey = config.parentKey as keyof FilterState;
-            const parentSelections = draftFilters[pKey];
+        // if (config.parentKey) {
+        //     const pKey = config.parentKey as keyof FilterState;
+        //     const parentSelections = draftFilters[pKey];
 
-            if (Array.isArray(parentSelections)) {
-                const activeSelections = parentSelections as string[];
-                if (activeSelections.length > 0) {
-                    list = list.filter(opt =>
-                        opt.parentId && activeSelections.includes(opt.parentId)
-                    );
-                }
-            }
-        }
+        //     if (Array.isArray(parentSelections)) {
+        //         const activeSelections = parentSelections as string[];
+        //         if (activeSelections.length > 0) {
+        //             list = list.filter(opt =>
+        //                 opt.parentId && activeSelections.includes(opt.parentId)
+        //             );
+        //         }
+        //     }
+        // }
 
         if (config.showRegionHelper && draftFilters.region && draftFilters?.region?.length > 0) {
             if (draftFilters.region?.includes("All")) return list;
@@ -40,7 +40,7 @@ export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: Fil
         }
 
         return list;
-    }, [draftFilters, config.options, config.parentKey, config.showRegionHelper, config.showSearch]);
+    }, [draftFilters, config.options, config.showRegionHelper, config.showSearch]);
 
     return (
         <View className="flex-1">

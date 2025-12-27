@@ -4,6 +4,7 @@ import ProvinceSelector from "@/core/components/ui/input/province-selector";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { PROVINCES } from "@/core/constants";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,31 +18,33 @@ import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import { StaticMapPreview } from "../shared/static-map-preview";
 
 export default function PostAd({ control, setValue, errors, isDark, t }: AdFormStepProps<SparePartAdInterface>) {
-    const { ad_type } = useLocalSearchParams()
+    const { ad_type, region, label } = useLocalSearchParams<{ ad_type: string, region: string, label: string }>()
+    const { isRTL } = useUserPreferencesStore()
 
     const province = useWatch({ control, name: "province" })
     const Areas = PROVINCES.find(prov => prov.province === province?.province)?.areas || []
 
-    useEffect(() => { setValue?.("ad_type", ad_type as string) }, [ad_type, setValue])
+    useEffect(() => setValue?.("ad_type", ad_type), [ad_type, setValue])
 
     return (
         <ScrollView
+            className="flex-1 px-2"
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
-            contentContainerStyle={{ paddingBottom: 10, rowGap: 8 }}
+            contentContainerStyle={{ paddingBottom: 12, rowGap: 12 }}
+            style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
-            <View>
+            <View className="mb-2">
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-semibold mb-2">WHAT ARE YOU SELLING?</Text>
-                    <Text className="text-sm text-gray-300">Used Cars</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
+                    <Text className="text-sm text-gray-300">{t("adCategories.used_cars")}</Text>
                 </View>
                 <SelectedAdType
-                    label={`Spare parts`}
+                    label={`${region} - ${label}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>
             <View>
-                <Text className="font-semibold dark:text-white mb-1">WHERE IS YOUR LISTING?</Text>
+                <Text className="font-semibold dark:text-white mb-1">{t("WhereIsYourListing")}</Text>
                 <ProvinceSelector
                     control={control}
                     name="province"
@@ -49,7 +52,7 @@ export default function PostAd({ control, setValue, errors, isDark, t }: AdFormS
                     isDark={isDark}
                     options={PROVINCES}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder="Province"
+                    placeholder={t("YourProvince")}
                 />
             </View>
             <View className="mt-4">
@@ -59,9 +62,9 @@ export default function PostAd({ control, setValue, errors, isDark, t }: AdFormS
                     isDark={isDark}
                     options={Areas}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder="Area"
+                    placeholder={t("Area")}
                 />
-                <View><Text className="text-center text-grayish my-1">Or</Text></View>
+                <View><Text className="text-center text-grayish my-1">{t("Or")}</Text></View>
                 <LocationPicker
                     control={control}
                     errors={errors}
@@ -72,27 +75,36 @@ export default function PostAd({ control, setValue, errors, isDark, t }: AdFormS
             </View>
             {province?.latitude &&
                 (<View className="my-2 w-full h-32 rounded-lg" pointerEvents="none">
-                    <StaticMapPreview latitude={province.latitude} longitude={province.longitude} />
+                    <StaticMapPreview lat={province.latitude} lng={province.longitude} />
                 </View>)
             }
-            <AdTextInput control={control} name="price" error={errors.price?.message} placeholder="Write Your Price"
-                required label="Price" keyboardType="number-pad" />
+            <AdTextInput
+                control={control}
+                name="price"
+                error={errors.price?.message}
+                placeholder={t("WriteYourPrice")}
+                required
+                label={t("Price")}
+                keyboardType="number-pad"
+                extraPadding
+            />
             <InputWithSpeech
                 control={control}
+                label={t("Title")}
                 name="title"
-                label="Title"
                 required
                 maxLength={30}
                 error={errors.title?.message}
-                placeholder="Write Your Advertisement Title" />
+                placeholder={t("WriteYourAdvertisementTitle")}
+            />
             <TextAreaSpeech
                 control={control}
-                label="Description"
+                label={t("Description")}
                 name="description"
                 maxLength={500}
                 required
                 error={errors.description?.message}
-                placeholder="Write Your Advertisement Description"
+                placeholder={t("WriteYourAdvertisementDescription")}
             />
         </ScrollView>
     )

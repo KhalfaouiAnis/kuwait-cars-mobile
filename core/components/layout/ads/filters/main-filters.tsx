@@ -1,6 +1,6 @@
 import AppModal from "@/core/components/ui/dialog/modal";
 import { FilterConfigItem } from "@/core/constants/ad";
-import useSearchStore, { CombinedFilterKeys, MultiFilterKeys } from "@/core/store/search.store";
+import useSearchStore, { CombinedFilterKeys } from "@/core/store/search.store";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
@@ -17,7 +17,7 @@ interface Props {
 
 export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
     const [activeKey, setActiveKey] = useState<keyof typeof filterConfig | null>(null);
-    const { syncDraftToApplied, applyFilters, draftFilters, resetDraftFilter } = useSearchStore();
+    const { syncDraftToApplied, applyFilters, resetDraftFilter } = useSearchStore();
 
     const handleOpen = (key: keyof typeof filterConfig) => {
         syncDraftToApplied();
@@ -37,7 +37,6 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
                     <Pressable
                         key={key}
                         onPress={() => handleOpen(key as any)}
-                        disabled={draftFilters[config?.parentKey as MultiFilterKeys]?.length === 0}
                     >
                         <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
                             <Text className="mr-2 text-black dark:text-white">{config.title}</Text>

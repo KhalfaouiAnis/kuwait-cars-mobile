@@ -1,7 +1,7 @@
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { AdFormStepProps } from '@/core/types';
+import { BOX_SHADOW, cn } from '@/core/utils/cn';
 import { Ionicons, Octicons } from '@expo/vector-icons';
-import { clsx } from 'clsx';
 import React, { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { Pressable, Text, View } from 'react-native';
@@ -23,10 +23,11 @@ export default function LocationPicker({ setValue, isDark, control, t, primary }
         <View className="w-full">
             <Pressable
                 onPress={showMap}
-                className={clsx('flex-row items-center p-4 justify-between border dark:border-primary-500 dark:bg-darkish', {
+                className={cn('flex-row items-center p-4 justify-between bordered-box', {
                     "border-primary-500 rounded-lg border": primary,
-                    "border-transparent elevation-sm": !primary,
-                })}>
+                })}
+                style={BOX_SHADOW.button}
+            >
                 <View className='flex-row gap-2 items-center'>
                     <Octicons name="location" size={20} color={isDark ? "white" : "black"} />
                     <Text

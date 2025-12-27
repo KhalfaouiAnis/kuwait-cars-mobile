@@ -15,6 +15,8 @@ export default function ChangeLanguageScreen() {
     const { setLang, lang: currentLang } = useUserPreferencesStore();
     const { t } = useTranslation("common");
 
+    console.log(currentLang);
+
     const handleSelect = async (lang: Language) => {
         setLang(lang.code);
         i18n.changeLanguage(lang.code);

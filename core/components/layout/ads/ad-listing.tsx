@@ -1,9 +1,10 @@
 import { EmptyState } from '@/core/components/ui/shared/empty-state';
 import { useAdsQuery } from '@/core/services/ads/ad.queries';
-import React from 'react';
+import { AdvertisementInterface } from '@/core/types';
+import React, { useMemo } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import { AdSkeletonList } from '../skeletons/ad-skeleton-list';
-import Advertisement from './advertisement';
+import { MemoizedAdvertisement } from './advertisement';
 
 interface Props {
     view: "vertical" | "horizontal"
@@ -19,19 +20,22 @@ export const AdsListing = ({ view, isDark }: Props) => {
         isLoading,
         refetch,
     } = useAdsQuery();
-    const ads = data?.pages.flatMap((page) => page.data) ?? [];
+    
+    const ads = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data?.pages]);
 
     if (isLoading) return <AdSkeletonList />;
+
+    const renderItem = ({ item }: { item: AdvertisementInterface }) => (
+        <View className="mb-4 me-2">
+            <MemoizedAdvertisement data={item} view={view} isDark={isDark} />
+        </View>
+    )
 
     return (
         <FlatList
             data={ads}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-                <View className="mb-4 me-2">
-                    <Advertisement data={item} view={view} isDark={isDark} />
-                </View>
-            )}
+            renderItem={renderItem}
             onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
             onEndReachedThreshold={0.5}
             refreshing={isLoading}

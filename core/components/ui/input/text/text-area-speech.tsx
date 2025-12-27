@@ -1,4 +1,5 @@
 import { useSpeechToForm } from '@/core/hooks/shared/use-speech';
+import { BOX_SHADOW } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
 import { ReactNode } from "react";
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
@@ -27,7 +28,9 @@ export default function TextAreaSpeech<TForm extends FieldValues>({ control, nam
     return (
         <View>
             {label && <Text className="text-base font-semibold mb-1 dark:text-white">{label}</Text>}
-            <View className='flex-row items-center justify-between p-3 elevation-sm border-transparent border dark:bg-darkish dark:border-primary-500'>
+            <View className='flex-row items-center justify-between p-3 bordered-box'
+                style={[styles.container, BOX_SHADOW.button]}
+            >
                 {
                     icon && <View className='ms-2 items-center'>
                         {icon}
@@ -73,14 +76,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
         paddingHorizontal: 10,
-    },
-    input: {
-        flex: 1,
-        height: 40,
     },
     suffixIcon: {
         marginStart: 8,

@@ -9,10 +9,12 @@ import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
 
-export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps<SparePartAdInterface>) {
+export default function AddVideo({ t, setValue, getValue, onSkip }: AdFormStepProps<SparePartAdInterface>) {
     const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue)
+    const { isRTL } = useUserPreferencesStore()
 
     useEffect(() => {
         (async () => {
@@ -29,14 +31,17 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
     }, []);
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+        <ScrollView
+            className="flex-1 px-2"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 10 }}>
             <View className="items-center mb-6">
                 <View className="flex-row items-center ms-6">
                     <View className="rounded-full h-3 bg-primary-500 w-[60%]">
                         <View className="rounded-full bg-[#EEEEEE] w-1/2 h-3" />
                     </View>
                     <TouchableOpacity className="flex-row items-center ms-6" onPress={onSkip}>
-                        <Text className="text-lg">Skip</Text>
+                        <Text className="text-lg dark:text-white">{t("Skip")}</Text>
                         <Ionicons name="chevron-forward" size={18} />
                     </TouchableOpacity>
                 </View>
@@ -45,20 +50,22 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
                 !video?.uri && (
                     <View className="gap-y-8">
                         <View className="gap-y-2">
-                            <Text className="font-inter-semibold text-3xl text-center">Attract more buyers</Text>
-                            <Text className="text-center" numberOfLines={2}>A 5–15 second clip can help buyers see your car’s true condition</Text>
+                            <Text className="font-inter-semibold text-3xl text-center dark:text-white">{t("AttractMoreBuyers")}</Text>
+                            <Text className="text-center dark:text-white" numberOfLines={2}>
+                                {t("VideoClip", { minDuration: 5, maxDuration: 15 })}
+                            </Text>
                         </View>
-                        <View>
-                            <Text className="text-xl font-inter-bold mb-1">Add Videos</Text>
-                            <PickFromGallery disabled={loading} label="Select file" video addMedia={() => addVideo(false)} />
+                        <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
+                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("AddVideos")}</Text>
+                            <PickFromGallery disabled={loading} label={t("selectFile")} video addMedia={() => addVideo(false)} />
                         </View>
-                        <TakePhotoButton disabled={loading} label="Open Camera & Take Video" addMedia={() => addVideo(true)} />
+                        <TakePhotoButton disabled={loading} label={t("openCameraTakeVideo")} addMedia={() => addVideo(true)} />
                         <View className="flex-row items-center justify-center">
                             <View className="border border-gray-300 w-2/5" />
-                            <Text className="px-2">Or</Text>
+                            <Text className="px-2 dark:text-white">{t("Or")}</Text>
                             <View className="border border-gray-300 w-2/5" />
                         </View>
-                        <PickFromGallerySM label="Open Gallery" addMedia={() => addVideo(false)} />
+                        <PickFromGallerySM label={t("openGallery")} addMedia={() => addVideo(false)} />
                     </View>
                 )
             }
@@ -66,14 +73,13 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
             {
                 video && video?.uri && (
                     <View>
-                        <Text className="text-xl font-inter-bold mb-2">Add Videos</Text>
                         <View className="relative w-full pr-2">
                             <VideoPlayer source={video.uri} />
                             <TouchableOpacity
                                 onPress={removeVideo}
-                                className="absolute -top-4 -right-0 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                                className="absolute -top-3 -right-0 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
                             >
-                                <Ionicons name="close" size={20} color="white" />
+                                <Ionicons name="close" size={26} color="white" />
                             </TouchableOpacity>
                         </View>
                     </View>

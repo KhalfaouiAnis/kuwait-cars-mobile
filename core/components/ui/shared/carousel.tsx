@@ -8,7 +8,7 @@ import VideoPlayer from './video-player';
 const screenWidth = Dimensions.get('window').width;
 
 const containerWidth = 320;
-const containerHeight = 190;
+const containerHeight = 220;
 
 type CarouselProps = {
     items: AdvertisementMedia[];

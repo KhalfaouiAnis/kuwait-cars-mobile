@@ -1,5 +1,5 @@
 import { SelectOption } from '@/core/types';
-import { clsx } from 'clsx';
+import { BOX_SHADOW, cn } from '@/core/utils/cn';
 import React from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { Text, View } from 'react-native';
@@ -20,8 +20,11 @@ export default function RadioGroup<TForm extends FieldValues>({ control, name, o
 
     return (
         <View className='flex-1'>
-            {label && <Text className="text-base font-semibold mb-2 dark:text-white">{label}</Text>}
-            <View className={clsx('flex-row gap-3 flex-wrap', { "border border-gray-200 p-1 dark:border-primary-500": bordered })}>
+            {label && <Text className="text-base font-semibold mb-1 dark:text-white">{label}</Text>}
+            <View
+                className={cn('flex-row gap-2 flex-wrap', { "border border-gray-200 p-1 dark:border-primary-500": bordered })}
+                style={bordered ? BOX_SHADOW.button : undefined}
+            >
                 {options.map(option => (
                     <RadioButton
                         key={option.id}

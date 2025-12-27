@@ -26,7 +26,7 @@ export default function NewAdScreen() {
 
     return (
         <Container header={<ProfileHeader title={t("steps.postAd")} />}>
-            <View className="p-4 flex-1 dark:bg-darkish">
+            <View className="p-4 mx-1 flex-1 dark:bg-darkish">
                 <View style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
                     <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
                     <AdTypeSelector

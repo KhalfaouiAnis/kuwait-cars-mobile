@@ -7,20 +7,12 @@ import CarChevrolet from "@/assets/images/chevrolet-corvette.jpg";
 import DefaultAvatar from "@/assets/images/default_avatar.jpg";
 import DeleteMessage from "@/assets/images/delete-message.png";
 import EngineCoolingSystemCategory from "@/assets/images/Engine_cooling_system.png";
-import Nature from "@/assets/images/genfill-nature.jpg";
 import CarHyunday from "@/assets/images/hyunday-tucson.png";
 import LexusNX250Category from "@/assets/images/Lexus-NX-250-style-selector-grecianwater-visualizer.png";
 import Logo from "@/assets/images/logo.png";
 import CarMercedes from "@/assets/images/mercedes-amg.png";
 import Mohamed from "@/assets/images/mohamed.png";
 import NoContent from "@/assets/images/nothing-here.png";
-import CarToyota from "@/assets/images/toyota-yaris.png";
-import Toyota from "@/assets/images/toyota.jpg";
-import Toyota_1 from "@/assets/images/toyota_1.png";
-import Toyota_2 from "@/assets/images/toyota_2.png";
-import Toyota_3 from "@/assets/images/toyota_3.png";
-import Toyota_4 from "@/assets/images/toyota_4.png";
-import Toyota_5 from "@/assets/images/toyota_5.jpg";
 import AvatarVideoBoy from "@/assets/images/video-call-boy.png";
 import AvatarVideoGirl from "@/assets/images/video-call-girl.png";
 import ZerexG05PhosphateCategory from "@/assets/images/Zerex_G05_Phosphate_Free_Antifreeze_Coolant_Concentrate_1_GA.png";
@@ -28,7 +20,6 @@ import ZerexG05PhosphateCategory from "@/assets/images/Zerex_G05_Phosphate_Free_
 export const IMAGES = {
   AvatarVideoBoy,
   AvatarVideoGirl,
-  Nature,
   DeleteMessage,
   DefaultAvatar,
   Mohamed,
@@ -37,13 +28,6 @@ export const IMAGES = {
   CarChevrolet,
   CarHyunday,
   CarMercedes,
-  CarToyota,
-  Toyota,
-  Toyota_1,
-  Toyota_2,
-  Toyota_3,
-  Toyota_4,
-  Toyota_5,
   BrakesCategory,
   CarAccessoriesCategory,
   EngineCoolingSystemCategory,
