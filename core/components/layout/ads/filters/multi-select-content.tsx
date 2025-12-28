@@ -29,8 +29,8 @@ export const MultiSelectContent = ({ filterKey, options }: Props) => {
     return (
         <FlatList
             data={options}
-            keyExtractor={(item) => item.id}
             renderItem={renderItem}
+            keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={<Text className="text-center text-gray-500 py-4">No {filterKey} match your filters</Text>}
         />

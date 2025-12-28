@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { View } from 'react-native';
 
 export default function UsedCarsCategoryScreen() {
-    const setExternalFilter = useSearchStore(state => state.setExternalFilter)
+    const { setExternalFilter } = useSearchStore()
     const { theme } = useUserPreferencesStore()
     const isDark = theme !== "light"
     const [view, setView] = useState<"vertical" | "horizontal">('vertical');
@@ -19,6 +19,10 @@ export default function UsedCarsCategoryScreen() {
 
     useEffect(() => {
         setExternalFilter("ad_type", ad_type)
+
+        // return () => {
+        //     resetAll()
+        // }
     }, [setExternalFilter, ad_type])
 
     return (

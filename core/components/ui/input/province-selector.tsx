@@ -49,7 +49,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
                     "border-primary-500 rounded-lg border": primary,
                     "border-grayish": !primary && !error,
                 })}
-                style={BOX_SHADOW.button}
+                style={primary ? undefined : BOX_SHADOW.button}
             >
                 <View className='flex-row items-center gap-2'>
                     <MaterialCommunityIcons name="town-hall" size={20} color={isDark ? "white" : "gray"} />
@@ -78,8 +78,8 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
                         <View className="dark:bg-darkish border bg-transparent border-transparent w-80 overflow-hidden">
                             <FlatList
                                 data={options}
-                                keyExtractor={(item) => item.province}
                                 showsVerticalScrollIndicator={false}
+                                keyExtractor={(item) => item.province}
                                 renderItem={({ item }) => renderSelectOption(item, handleSelect)}
                             />
                         </View>

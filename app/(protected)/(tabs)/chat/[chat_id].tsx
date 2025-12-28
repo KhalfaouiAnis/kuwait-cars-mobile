@@ -1,11 +1,12 @@
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
 import Feather from "@expo/vector-icons/Feather";
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 import ChatHeader from "@/core/components/layout/header/chat-header";
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
+import { FlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
 
@@ -113,12 +114,12 @@ export default function ChatScreen() {
                     </View>
                 </View>
                 <View className="flex-1">
-                    <FlatList
+                    <FlashList
                         data={messages}
+                        renderItem={renderItem}
                         keyExtractor={item => item.id}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ paddingBottom: 85 }}
-                        renderItem={renderItem}
                     />
                 </View>
                 <View className="absolute z-10 end-0 start-0 bottom-3">

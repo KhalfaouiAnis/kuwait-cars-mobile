@@ -10,9 +10,9 @@ import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
 import useUserPreferencesStore from "@/core/store/preferences.store";
-import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
+import { FieldValues } from "react-hook-form";
 
-export default function AddVideo({ t, setValue, getValue, onSkip }: AdFormStepProps<SparePartAdInterface>) {
+export default function AddVideo<T extends FieldValues>({ setValue, getValue, onSkip, t }: AdFormStepProps<T>) {
     const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue)
     const { isRTL } = useUserPreferencesStore()
 

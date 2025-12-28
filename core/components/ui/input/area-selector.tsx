@@ -47,7 +47,7 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
                     "border-primary-500 rounded-lg border": primary,
                     "border-grayish": !primary && !error,
                 })}
-                style={BOX_SHADOW.button}
+                style={primary ? undefined : BOX_SHADOW.button}
             >
                 <View className='flex-row items-center gap-2'>
                     <MaterialIcons name="location-city" size={20} color={isDark ? "white" : "gray"} />

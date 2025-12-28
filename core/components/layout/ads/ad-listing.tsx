@@ -34,17 +34,17 @@ export const AdsListing = ({ view, isDark }: Props) => {
     return (
         <FlatList
             data={ads}
-            keyExtractor={(item) => item.id}
-            renderItem={renderItem}
-            onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
-            onEndReachedThreshold={0.5}
-            refreshing={isLoading}
             onRefresh={refetch}
-            contentContainerStyle={ads.length === 0 ? { flex: 1 } : { paddingBottom: 50, position: "relative", zIndex: 2 }}
-            showsVerticalScrollIndicator={false}
+            refreshing={isLoading}
+            renderItem={renderItem}
             className="bg-transparent"
+            onEndReachedThreshold={0.5}
             removeClippedSubviews={false}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
             ListEmptyComponent={!isLoading ? <EmptyState /> : null}
+            onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
+            contentContainerStyle={ads.length === 0 ? { flex: 1 } : { paddingBottom: 50, position: "relative", zIndex: 2 }}
             ListFooterComponent={
                 isFetchingNextPage ? <ActivityIndicator size="small" style={{ backgroundColor: "#FAED02" }} /> : null
             }

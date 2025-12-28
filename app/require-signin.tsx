@@ -7,7 +7,7 @@ import { Text, View } from "react-native";
 export default function Index() {
     return (
         <Container>
-            <Header title="Access denied" />
+            <Header title="back" />
             <View className="flex-1 items-center justify-center">
                 <Ionicons color="#D80027" name="close-circle" size={100} />
                 <Text className="font-inter-semibold mt-6">Please sign in to continue.</Text>

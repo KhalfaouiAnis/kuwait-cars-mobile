@@ -30,7 +30,7 @@ export default function CategoriesScreen() {
                     <CategoryLink href={`/categories/${AD_TYPES.rims_and_tires}/`} params={{ ad_type: AD_TYPES.rims_and_tires }} image={IMAGES.BMW3SeriesE46Category} label={t("adCategories.rims_and_tires")} />
 
                     <CategoryLink href={`/categories/${AD_TYPES.repair_garages}/`} params={{ ad_type: AD_TYPES.repair_garages }} image={IMAGES.BMW3SeriesE46Category} label={t("adCategories.repair_garages")} />
-                    <CategoryLink href={`/categories/${AD_TYPES.other}/`} params={{ ad_type: AD_TYPES.other }} image={IMAGES.BMW3SeriesE46Category} label={t("adCategories.other")} />
+                    <CategoryLink href={`/categories/${AD_TYPES.Other}/`} params={{ ad_type: AD_TYPES.Other }} image={IMAGES.BMW3SeriesE46Category} label={t("adCategories.Other")} />
                 </View>
             </ScrollView>
         </Container>

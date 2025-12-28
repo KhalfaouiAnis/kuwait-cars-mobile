@@ -1,5 +1,4 @@
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
-import AdPublishSuccess from "@/core/components/forms/ads/shared/success";
 import AdDetails from "@/core/components/forms/ads/show/ad-details";
 import AddPhotos from "@/core/components/forms/ads/show/add-photos";
 import AddVideo from "@/core/components/forms/ads/show/add-video";
@@ -128,8 +127,6 @@ export default function NewAdScreen() {
     const handleStay = () => {
         setShowDialog(false)
     }
-
-    if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
         <AdFormContainer isRTL={isRTL} title={getStepTitle(currentStep, t)} reset={handleReset} resetLabel={t("Reset")} previous={handlePrevious}>

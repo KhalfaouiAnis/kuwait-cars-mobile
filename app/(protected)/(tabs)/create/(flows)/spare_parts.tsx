@@ -1,8 +1,7 @@
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
-import AdPublishSuccess from "@/core/components/forms/ads/shared/success";
+import AddPhotos from "@/core/components/forms/ads/shared/shared-steps/add-photos";
+import AddVideo from "@/core/components/forms/ads/shared/shared-steps/add-video";
 import AdDetails from "@/core/components/forms/ads/spare-parts/ad-details";
-import AddPhotos from "@/core/components/forms/ads/spare-parts/add-photos";
-import AddVideo from "@/core/components/forms/ads/spare-parts/add-video";
 import ChoosePlan from "@/core/components/forms/ads/spare-parts/choose-plan";
 import PostAd from "@/core/components/forms/ads/spare-parts/post-ad";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
@@ -30,6 +29,7 @@ const getStepTitle = (step: number, t: (key: string) => string) => {
             return ""
     }
 }
+
 const TOTAL_STEPS = 5;
 
 export default function NewAdScreen() {
@@ -129,8 +129,6 @@ export default function NewAdScreen() {
     const handleStay = () => {
         setShowDialog(false)
     }
-
-    if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
         <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>

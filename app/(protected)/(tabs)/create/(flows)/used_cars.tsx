@@ -1,9 +1,8 @@
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
-import AdPublishSuccess from "@/core/components/forms/ads/shared/success";
+import AddPhotos from "@/core/components/forms/ads/shared/shared-steps/add-photos";
+import AddVideo from "@/core/components/forms/ads/shared/shared-steps/add-video";
 import AdDetails from "@/core/components/forms/ads/used-cars/ad-details";
 import AdDetailsStep2 from "@/core/components/forms/ads/used-cars/ad-details-step-2";
-import AddPhotos from "@/core/components/forms/ads/used-cars/add-photos";
-import AddVideo from "@/core/components/forms/ads/used-cars/add-video";
 import ChoosePlan from "@/core/components/forms/ads/used-cars/choose-plan";
 import PostAd from "@/core/components/forms/ads/used-cars/post-ad";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
@@ -37,6 +36,7 @@ const TOTAL_STEPS = 6;
 
 export default function UsedCarAdScreen() {
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, totalProgress } = useUsedCarAd()
+    
     const { theme, isRTL } = useUserPreferencesStore()
     const { t } = useTranslation("ad_creation")
     const [showDialog, setShowDialog] = useState(false);
@@ -136,8 +136,6 @@ export default function UsedCarAdScreen() {
     const handleStay = () => {
         setShowDialog(false)
     }
-
-    if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
         <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>

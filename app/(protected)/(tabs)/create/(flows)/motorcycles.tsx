@@ -1,11 +1,10 @@
 import AdDetails from "@/core/components/forms/ads/motorcycles/ad-details";
 import AdDetailsStep2 from "@/core/components/forms/ads/motorcycles/ad-details-step-2";
-import AddPhotos from "@/core/components/forms/ads/motorcycles/add-photos";
-import AddVideo from "@/core/components/forms/ads/motorcycles/add-video";
 import ChoosePlan from "@/core/components/forms/ads/motorcycles/choose-plan";
 import PostAd from "@/core/components/forms/ads/motorcycles/post-ad";
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
-import AdPublishSuccess from "@/core/components/forms/ads/shared/success";
+import AddPhotos from "@/core/components/forms/ads/shared/shared-steps/add-photos";
+import AddVideo from "@/core/components/forms/ads/shared/shared-steps/add-video";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useMotorcycleAd } from "@/core/hooks/ad/flows/useMotorcycleAd";
@@ -135,8 +134,6 @@ export default function NewAdScreen() {
     const handleStay = () => {
         setShowDialog(false)
     }
-
-    if (currentStep > TOTAL_STEPS) return <AdPublishSuccess />
 
     return (
         <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>

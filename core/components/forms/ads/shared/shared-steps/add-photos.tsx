@@ -4,17 +4,17 @@ import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
 import { useAdPhotos } from "@/core/hooks/ad/useAdPhotos";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
-import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect } from "react";
+import { FieldValues } from "react-hook-form";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import ImageGallery from "../shared/image-gallery";
+import ImageGallery from "../image-gallery";
 
 const MAX_IMAGES = 6;
 
-export default function AddPhotos({ t, setValue, getValue }: AdFormStepProps<UsedCarAdInterface>) {
+export default function AddPhotos<T extends FieldValues>({ t, setValue, getValue }: AdFormStepProps<T>) {
     const { gallery, thumbnail, addPhoto, removePhoto, setAsThumbnail } = useAdPhotos(setValue, getValue, MAX_IMAGES)
     const { isRTL } = useUserPreferencesStore()
 

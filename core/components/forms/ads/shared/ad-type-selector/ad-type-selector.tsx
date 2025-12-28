@@ -137,11 +137,11 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                             className="bg-white dark:bg-darkish pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-4">
                             <FlashList
                                 data={data}
-                                renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
-                                keyExtractor={(_, index) => index.toString()}
+                                nestedScrollEnabled
                                 showsVerticalScrollIndicator={false}
                                 contentContainerClassName='pb-6 px-1.5'
-                                nestedScrollEnabled
+                                keyExtractor={(_, index) => index.toString()}
+                                renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
                             />
                         </TouchableOpacity>
                     </TouchableOpacity>

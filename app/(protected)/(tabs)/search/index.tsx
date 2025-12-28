@@ -5,22 +5,24 @@ import { Ad_CATEGORIES } from "@/core/constants/ad";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import useAdvancedSearchStore from "@/core/store/search.store";
 import { AntDesign, Ionicons, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function SearchScreen() {
     const { appliedFilters: { ad_type }, setExternalFilter } = useAdvancedSearchStore()
+    const { t } = useTranslation("common")
     const { theme } = useUserPreferencesStore()
     const isDark = theme !== "light"
 
     return (
-        <Container header={<ProfileHeader title="Choose your car" />}>
-            <View className="p-2">
+        <Container header={<ProfileHeader title={t(`advancedSearch.chooseYourCar`)} />}>
+            <View className="p-2 mx-1">
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {
                         Ad_CATEGORIES.map(category => (
                             <Pressable key={category} onPress={() => setExternalFilter("ad_type", category)}>
-                                <View className={`ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish ${ad_type === category ? "border-primary-500" : ""}`}>
-                                    <Text className="mr-2 text-black dark:text-white">{category}</Text>
+                                <View className={`mr-2 border border-gray-200 bg-white p-2 rounded-lg flex-row items-center dark:bg-darkish ${ad_type === category ? "border-primary-500" : ""}`}>
+                                    <Text className="mr-2 text-black dark:text-white">{t(`adCategories.${category}`)}</Text>
                                 </View>
                             </Pressable>
                         ))
@@ -29,42 +31,42 @@ export default function SearchScreen() {
                 <View className="mt-6 gap-y-4">
                     <SearchItem
                         content={<></>}
-                        label="Location"
+                        label={t(`advancedSearch.location`)}
                         isDark={isDark}
                         icon={<Octicons name="location" size={20} color={isDark ? "white" : "black"} />}
                     />
                     <SearchItem
                         content={<></>}
-                        label="Brand & Model"
+                        label={t(`advancedSearch.brand_model`)}
                         isDark={isDark}
                         icon={<Ionicons name="car-sport" size={20} color={isDark ? "white" : "gray"} />}
                     />
                     <SearchItem
                         content={<></>}
-                        label="Budget"
+                        label={t(`advancedSearch.budget`)}
                         isDark={isDark}
                         icon={<AntDesign name="dollar" size={20} color={isDark ? "white" : "black"} />}
                     />
                     <SearchItem
                         content={<></>}
-                        label="Model year"
+                        label={t(`advancedSearch.model_year`)}
                         isDark={isDark}
                         icon={<Ionicons name="calendar" size={20} color={isDark ? "white" : "black"} />}
                     />
                     <SearchItem
                         content={<></>}
-                        label="Kms Driven"
+                        label={t(`advancedSearch.kms_driven`)}
                         isDark={isDark}
                         icon={<MaterialCommunityIcons name="signal-distance-variant" size={20} color={isDark ? "white" : "black"} />}
                     />
                     <SearchItem
                         content={<></>}
-                        label="Color"
+                        label={t(`advancedSearch.color`)}
                         isDark={isDark}
                         icon={<Ionicons name="color-palette-outline" size={20} color={isDark ? "white" : "black"} />}
                     />
-                    <TouchableOpacity className="rounded-lg bg-primary-500 py-3 mx-6 mt-6 px-12">
-                        <Text className="text-center">555 offers</Text>
+                    <TouchableOpacity className="rounded-lg bg-primary-500 py-4 mx-2 mt-6 px-12">
+                        <Text className="text-center font-inter-semibold">{t(`advancedSearch.offersFound`, { OffersCount: 200 })}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
