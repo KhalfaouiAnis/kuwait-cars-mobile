@@ -45,15 +45,14 @@ const useAuthStore = create<AuthState>()(
         try {
           const { accessToken, refreshToken, signOut } = get();
           if (!accessToken || !refreshToken) {
-            console.log("Session expired. logging out");
-
             signOut();
             return;
           }
 
           const decoded = jwtDecode<{ exp: number }>(accessToken);
+          const currentTime = Date.now() / 1000;
 
-          if (decoded.exp * 1000 < Date.now()) {
+          if (decoded.exp > currentTime) {
             const refreshed = await validateAndRefreshToken(refreshToken);
             if (!refreshed) {
               signOut();
@@ -103,8 +102,9 @@ const useAuthStore = create<AuthState>()(
       name: AUTH_STORAGE_KEY,
       storage: createJSONStorage(() => zustandStorage),
       partialize: (state) => ({
-        accessToken: state.accessToken,
         refreshToken: state.refreshToken,
+        accessToken: state.accessToken,
+        authType: state.authType,
         user: state.user,
       }),
     }

@@ -30,6 +30,7 @@ i18n
       },
     },
     (err) => {
+      useUserPreferencesStore.getState().setLang("ar")
       useUserPreferencesStore.getState().setI18NReady(true);
     }
   );

@@ -1,5 +1,5 @@
+import OTPVerificationInput from "@/core/components/base/otp-verification-input";
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
-import VerificationCode from "@/core/components/ui/input/verification-code";
 import { ResendOTPTimer } from "@/core/components/ui/shared/resend-otp-timer";
 import { useOTP } from "@/core/hooks/auth/useAuth";
 import { useLocalSearchParams } from "expo-router";
@@ -21,8 +21,8 @@ export default function OTPVerificationScreen() {
                 {phone}
             </Text>
             <View className="pt-8 px-4">
-                <VerificationCode numberOfElements={4} onComplete={async (otp) => verifyOtp(phone as string, otp)} textContentType="oneTimeCode" />
-                {/* <Text className="mt-6 text-base text-center">00:59 {t("seconds")}</Text> */}
+                {/* <VerificationCode numberOfElements={4} onComplete={async (otp) => verifyOtp(phone as string, otp)} /> */}
+                <OTPVerificationInput numberOfElements={4} onComplete={async (otp) => verifyOtp(phone as string, otp)} />
                 <View className="mt-8">
                     <ResendOTPTimer
                         onResend={() => { }}

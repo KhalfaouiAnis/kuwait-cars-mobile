@@ -9,6 +9,7 @@ import { UpdateProfileInterface } from "@/core/types/schema/user";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router } from "expo-router";
+import { TFunction } from "i18next";
 import { useState } from "react";
 import { useWatch } from "react-hook-form";
 import { Pressable, Text, View } from "react-native";
@@ -23,7 +24,7 @@ import PhoneInput from "../../ui/input/phone-input";
 import ProvinceSelector from "../../ui/input/province-selector";
 import { renderProvinceAreaOption } from "../../ui/shared/render-option";
 
-export default function EditProfileForm({ theme, t }: { theme: string, t: (key: string) => string }) {
+export default function EditProfileForm({ theme, t }: { theme: string, t: TFunction }) {
     const [showModal, setShowModal] = useState(false)
     const { user } = useAuthStore(state => state);
 
