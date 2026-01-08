@@ -3,6 +3,7 @@ import { FilterConfigItem } from "@/core/constants/ad";
 import useSearchStore, { CombinedFilterKeys } from "@/core/store/search.store";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dispatch, SetStateAction, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import Reset from "../reset";
 import { SortingContent } from "../sorting/sorting";
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
+    const { t } = useTranslation("common")
     const [activeKey, setActiveKey] = useState<keyof typeof filterConfig | null>(null);
     const { syncDraftToApplied, applyFilters, resetDraftFilter } = useSearchStore();
 
@@ -29,7 +31,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerClassName="pe-2">
                 <Pressable>
                     <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
-                        <Text className="mr-2 text-black dark:text-white">Filters</Text>
+                        <Text className="mr-2 text-black dark:text-white">{t("advancedSearch.filters")}</Text>
                         <Ionicons name="filter" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
                     </View>
                 </Pressable>
@@ -39,14 +41,14 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
                         onPress={() => handleOpen(key as any)}
                     >
                         <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
-                            <Text className="mr-2 text-black dark:text-white">{config.title}</Text>
+                            <Text className="mr-2 text-black dark:text-white">{t(`advancedSearch.${config.title}`)}</Text>
                             <Ionicons name="chevron-down" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
                         </View>
                     </Pressable>
                 ))}
                 <Pressable onPress={() => handleOpen("price")}>
                     <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
-                        <Text className="mr-2 text-black dark:text-white">Price</Text>
+                        <Text className="mr-2 text-black dark:text-white">{t("advancedSearch.price")}</Text>
                         <Ionicons name="chevron-down" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
                     </View>
                 </Pressable>
@@ -55,12 +57,12 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
                 <Pressable className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2 dark:bg-darkish"
                     onPress={() => setView(prevState => prevState === "horizontal" ? "vertical" : "horizontal")}>
                     <Fontisto name="nav-icon-list-a" size={16} color={isDark ? "white" : "black"} />
-                    <Text className="text-black dark:text-white">change view</Text>
+                    <Text className="text-black dark:text-white">{t("changeView")}</Text>
                 </Pressable>
                 <Pressable className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2 dark:bg-darkish"
                     onPress={() => handleOpen("sorting")}>
                     <MaterialCommunityIcons name="sort" size={18} color={isDark ? "white" : "black"} />
-                    <Text className="text-black dark:text-white">sort by</Text>
+                    <Text className="text-black dark:text-white">{t("sort.sortBy")}</Text>
                 </Pressable>
                 <Text className="text-black dark:text-white ms-auto me-3">Used Cars</Text>
             </View>

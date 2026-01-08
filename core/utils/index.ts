@@ -10,17 +10,23 @@ export const flattenToModels = (data: any) => {
   const result = [];
   return data.regions.flatMap((region: any) =>
     region.brands.flatMap((brand: any) => {
-      if (!seenValues.has(brand.label)) {
-        seenValues.add(brand.label);
-        result.push(
-          brand.models.map((model: any) => ({
-            id: `${region.value} ${brand.value}_${model.value}`,
-            label: model.label,
-            value: model.value,
-            regionId: region.label,
-          }))
-        );
-      }
+      return brand.models.map((model: any) => ({
+        id: `${region.value} ${brand.value}_${model.value}`,
+        label: model.label,
+        value: model.value,
+        regionId: region.label,
+      }));
+      // if (!seenValues.has(brand.label)) {
+      // seenValues.add(brand.label);
+      // result.push(
+      //   brand.models.map((model: any) => ({
+      //     id: `${region.value} ${brand.value}_${model.value}`,
+      //     label: model.label,
+      //     value: model.value,
+      //     regionId: region.label,
+      //   }))
+      // );
+      // }
     })
   );
 };

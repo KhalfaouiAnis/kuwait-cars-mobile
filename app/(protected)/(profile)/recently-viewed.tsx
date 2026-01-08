@@ -16,7 +16,7 @@ export default function RecentlyViewedAdsScreen() {
     const { protectAction } = useAuthGuard();
     const { mutate } = useToggleFavorite();
     const { data, isLoading } = useRecentlyViewedQuery()
-    const { t } = useTranslation("profile");
+    const { t } = useTranslation("common");
 
     const locale = currentLang()
 
@@ -24,7 +24,7 @@ export default function RecentlyViewedAdsScreen() {
 
     return (
         <Container
-            header={<ProfileHeader title={t("recentlyViewed")} />}>
+            header={<ProfileHeader title={t("profile.recentlyViewed")} />}>
             <View className="w-full px-2 mt-12">
                 <FlatList
                     data={data}

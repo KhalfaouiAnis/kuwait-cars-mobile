@@ -10,7 +10,7 @@ import { Link, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from 'react-native';
 
-export default function UsedCarsCategoryScreen() {
+export default function LogisticsCategoryScreen() {
     const setExternalFilter = useSearchStore(state => state.setExternalFilter)
     const { theme } = useUserPreferencesStore()
     const isDark = theme !== "light"

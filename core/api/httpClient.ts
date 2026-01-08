@@ -1,30 +1,20 @@
-import { authStore } from "@/core/store/auth.store";
-import { handleTokenValidation } from "@/core/utils/authUtils";
 import axios from "axios";
-import { router } from "expo-router";
 import { toast } from "sonner-native";
+import { TokenService } from "../services/token-manager";
 
 export const httpClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL + "/api/v1",
 });
 
-let isRefreshing = false;
-let failedQueue: any[] = [];
+let onUnauthorized: () => void = () => {};
 
-const processQueue = (error: any, token: string | null = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.resolve(token);
-    }
-  });
-  failedQueue = [];
+export const injectLogout = (callback: () => void) => {
+  onUnauthorized = callback;
 };
 
 httpClient.interceptors.request.use(
   async (config) => {
-    const { accessToken } = authStore.getState();
+    const accessToken = TokenService.getAccessToken();
 
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
@@ -42,42 +32,31 @@ httpClient.interceptors.request.use(
 httpClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const { accessToken, signOut } = authStore.getState();
+    const originalRequest = error.config;
     const data = error.response?.data;
 
-    const originalRequest = error.config;
-
     if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        })
-          .then((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            return httpClient(originalRequest);
-          })
-          .catch((err) => Promise.reject(err));
-      }
-
+      console.log("Token session expired! refreshing...");
+      
       originalRequest._retry = true;
-      isRefreshing = true;
 
       try {
-        const authenticated = await handleTokenValidation();
+        const refreshToken = TokenService.getRefreshToken();
+        const { data } = await axios.post(
+          process.env.EXPO_PUBLIC_API_URL + "/api/v1/auth/refresh",
+          {
+            token: refreshToken,
+          }
+        );
 
-        if (authenticated) {
-          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-          processQueue(null, accessToken);
+        TokenService.setAccessToken(data.accessToken);
 
-          return httpClient(originalRequest);
-        }
+        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+        return httpClient(originalRequest);
       } catch (refreshError) {
-        processQueue(refreshError, null);
-        signOut();
-        router.replace("/signin");
+        TokenService.clearTokens();
+        onUnauthorized();
         return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
       }
     } else if (error.response?.status === 400 && data?.errors) {
       toast.error(data.message || "Please check your input");

@@ -1,7 +1,8 @@
-import { MMKV } from "react-native-mmkv";
+import { createMMKV } from "react-native-mmkv";
 import { StateStorage } from "zustand/middleware";
+import { APP_STORAGE_KEY } from "../constants";
 
-export const storage = new MMKV();
+export const storage = createMMKV({ id: APP_STORAGE_KEY });
 
 export function getItem<T>(key: string): T {
   const value = storage.getString(key);
@@ -11,12 +12,12 @@ export function getItem<T>(key: string): T {
   return null as T;
 }
 
-export async function setItem<T>(key: string, value: T) {
+export function setItem<T>(key: string, value: T) {
   storage.set(key, JSON.stringify(value));
 }
 
-export async function removeItem(key: string) {
-  storage.delete(key);
+export function removeItem(key: string) {
+  storage.remove(key);
 }
 
 export const zustandStorage: StateStorage = {

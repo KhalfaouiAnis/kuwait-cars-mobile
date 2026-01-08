@@ -1,11 +1,13 @@
 import { FilterConfigItem, FilterConfigKey } from '@/core/constants/ad';
 import useSearchStore, { MultiFilterKeys } from '@/core/store/search.store';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { MultiSelectContent } from './multi-select-content';
 import SearchField from './search-field';
 
 export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: FilterConfigKey, filterConfig: Record<string, FilterConfigItem> }) => {
+    const { t } = useTranslation("common")
     const config = filterConfig[activeKey];
     const { draftFilters, toggleDraftMultiFilter } = useSearchStore((state) => state);
     const [localSearch, setLocalSearch] = useState('');
@@ -47,7 +49,7 @@ export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: Fil
             {config.showRegionHelper && (
                 <View className="mb-1">
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} className="pb-2">
-                        {["All", "Asian", "Chinese", "European", "American"].map((region) => {
+                        {["all", "asian", "chinese", "european", "american"].map((region) => {
                             const isSelected = selectedValues.includes(region);
                             return (
                                 <TouchableOpacity
@@ -56,7 +58,7 @@ export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: Fil
                                     onPress={() => toggleDraftMultiFilter("region", region)}
                                 >
                                     <Text className={`${isSelected ? 'font-medium' : 'text-gray-600'}`}>
-                                        {region}
+                                        {t(`regions.${region}`)}
                                     </Text>
                                 </TouchableOpacity>
                             );

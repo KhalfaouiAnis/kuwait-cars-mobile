@@ -1,31 +1,27 @@
 import { queryClient } from "@/core/api/react-query";
-import { AUTH_STORAGE_KEY } from "@/core/constants";
+import { ACC_TOKEN_STORAGE_KEY, AUTH_STORAGE_KEY } from "@/core/constants";
 import { User } from "@/core/types";
-import {
-  handleTokenValidation,
-  validateAndRefreshToken,
-} from "@/core/utils/authUtils";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { zustandStorage } from "./storage";
+import { httpClient } from "../api/httpClient";
+import { storage, zustandStorage } from "./storage";
 
 interface AuthState {
-  user: User | null;
-  accessToken: string | null;
-  refreshToken: string | null;
-  _hasHydrated: boolean;
-  isAuthenticated: boolean;
+  isReady: boolean;
   isGuest: boolean;
-  authType: "STANDARD" | "GOOGLE" | "FACEBOOK" | "APPLE";
+  user: User | null;
+  _hasHydrated: boolean;
   otpTargetTime: number | null;
+  authType: "STANDARD" | "GOOGLE" | "FACEBOOK" | "APPLE";
 
   setOtpTargetTime: (durationInSeconds: number | null) => void;
-  bootstrapAsync: () => Promise<void>;
   createGuestSesssion: (token: string) => void;
   setUser: (user: User | null) => void;
+  bootstrapAsync: () => Promise<void>;
   signOut: () => void;
+  setHasHydrated: () => void;
 }
 
 const useAuthStore = create<AuthState>()(
@@ -33,19 +29,15 @@ const useAuthStore = create<AuthState>()(
     (set, get) => ({
       user: null,
       otpTargetTime: null,
-      recentlyViewedAds: [],
       _hasHydrated: false,
+      isReady: false,
       authType: "STANDARD",
-      isAuthenticated: false,
       isGuest: false,
-      accessToken: null,
-      refreshToken: null,
       bootstrapAsync: async () => {
-        await handleTokenValidation();
         try {
-          const { accessToken, refreshToken, signOut } = get();
-          if (!accessToken || !refreshToken) {
-            signOut();
+          const accessToken = storage.getString(ACC_TOKEN_STORAGE_KEY);
+          if (!accessToken) {
+            set({ isReady: true, user: null, isGuest: false });
             return;
           }
 
@@ -53,20 +45,14 @@ const useAuthStore = create<AuthState>()(
           const currentTime = Date.now() / 1000;
 
           if (decoded.exp > currentTime) {
-            const refreshed = await validateAndRefreshToken(refreshToken);
-            if (!refreshed) {
-              signOut();
-              return;
-            } else {
-              set({ isAuthenticated: true });
-            }
+            set({ isReady: true });
           } else {
-            set({ isAuthenticated: true });
+            httpClient
+              .get("/auth/me")
+              .then(({ data }) => set({ user: data, isReady: true }));
           }
         } catch {
           authStore.getState().signOut();
-        } finally {
-          set({ _hasHydrated: true });
         }
       },
       setUser: (user) => {
@@ -78,18 +64,14 @@ const useAuthStore = create<AuthState>()(
         }
         set({
           user: null,
-          isAuthenticated: false,
           isGuest: false,
-          accessToken: null,
-          refreshToken: null,
+          isReady: true,
         });
         queryClient.clear();
       },
-      createGuestSesssion: (accessToken: string) => {
+      createGuestSesssion: () => {
         set({
-          accessToken,
-          refreshToken: "",
-          isAuthenticated: true,
+          user: null,
           isGuest: true,
         });
       },
@@ -97,16 +79,18 @@ const useAuthStore = create<AuthState>()(
         const targetTime = seconds ? Date.now() + seconds * 1000 : null;
         set({ otpTargetTime: targetTime });
       },
+      setHasHydrated: () => set({ _hasHydrated: true, }),
     }),
     {
       name: AUTH_STORAGE_KEY,
       storage: createJSONStorage(() => zustandStorage),
       partialize: (state) => ({
-        refreshToken: state.refreshToken,
-        accessToken: state.accessToken,
         authType: state.authType,
         user: state.user,
       }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated();
+      },
     }
   )
 );

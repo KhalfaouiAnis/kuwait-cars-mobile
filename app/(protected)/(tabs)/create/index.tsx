@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function NewAdScreen() {
-    const { t } = useTranslation("ad_creation")
+    const { t } = useTranslation("common")
     const { isRTL } = useUserPreferencesStore()
 
     const [adType, setAdType] = useState<{ ad_type: string, params: any } | null>(null)
@@ -25,15 +25,15 @@ export default function NewAdScreen() {
     }
 
     return (
-        <Container header={<ProfileHeader title={t("steps.postAd")} />}>
+        <Container header={<ProfileHeader title={t("createAd.steps.postAd")} />}>
             <View className="p-4 mx-1 flex-1 dark:bg-darkish">
                 <View style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
-                    <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">{t("createAd.whatAreYouSelling")}</Text>
                     <AdTypeSelector
                         data={CAR_BRAND_TYPES}
                         selectedValue={adType?.params.label}
                         onChange={setAdType}
-                        placeholder={t("selectYourCategory")}
+                        placeholder={t("createAd.selectYourCategory")}
                         isRTL={isRTL}
                     />
                 </View>
@@ -44,7 +44,7 @@ export default function NewAdScreen() {
                         disabled={!adType}
                     >
                         <Text className="text-center text-xl font-inter-semibold">
-                            {t("Next")}
+                            {t("next")}
                         </Text>
                     </TouchableOpacity>
                 </View>

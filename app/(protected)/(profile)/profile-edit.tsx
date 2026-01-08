@@ -5,11 +5,11 @@ import useUserPreferencesStore from "@/core/store/preferences.store";
 import { useTranslation } from "react-i18next";
 
 export default function EditProfileScreen() {
-    const { t } = useTranslation("profile");
+    const { t } = useTranslation("common");
     const { theme } = useUserPreferencesStore()
 
     return (
-        <Container scrollable backgroundColor={theme !== "light" ? "black" : "#FAED02"} header={<ProfileHeader title={t("editProfile")} />}>
+        <Container scrollable backgroundColor={theme !== "light" ? "black" : "#FAED02"} header={<ProfileHeader title={t("profile.editProfile")} />}>
             <EditProfileForm theme={theme} t={t} />
         </Container>
     )

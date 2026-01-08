@@ -10,7 +10,7 @@ import EngineCoolingSystemCategory from "@/assets/images/Engine_cooling_system.p
 import CarHyunday from "@/assets/images/hyunday-tucson.png";
 import LexusNX250Category from "@/assets/images/Lexus-NX-250-style-selector-grecianwater-visualizer.png";
 import Logo from "@/assets/images/logo.png";
-import CarMercedes from "@/assets/images/mercedes-amg.png";
+import CarMercedes from "@/assets/images/mercedes.jpg";
 import Mohamed from "@/assets/images/mohamed.png";
 import NoContent from "@/assets/images/nothing-here.png";
 import AvatarVideoBoy from "@/assets/images/video-call-boy.png";

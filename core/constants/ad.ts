@@ -3208,7 +3208,7 @@ export const CAR_BRAND_TYPES = [
         brands: [
           {
             label: "Bicycle",
-            value: "Bicycles/Bicycle"
+            value: "Bicycles/Bicycle",
           },
         ],
       },
@@ -3218,7 +3218,7 @@ export const CAR_BRAND_TYPES = [
         brands: [
           {
             label: "Scooter",
-            value: "Scooter/Scooter"
+            value: "Scooter/Scooter",
           },
         ],
       },
@@ -3527,28 +3527,30 @@ export type FilterConfigItem = {
 
 export const USED_CARS_FILTER_CONFIG: Record<string, FilterConfigItem> = {
   brand: {
-    title: "Brand",
+    title: "brand",
     parentKey: "region",
     showRegionHelper: true,
     showSearch: true,
     options: flattenToBrands(CAR_BRAND_TYPES[0]),
   },
   model: {
-    title: "Model",
-    parentKey: "brand" as keyof FilterState,
+    title: "model",
+    // parentKey: "brand" as keyof FilterState,
+    parentKey: null,
     showRegionHelper: false,
     showSearch: true,
     options: flattenToModels(CAR_BRAND_TYPES[0]),
   },
   year: {
-    title: "Year",
-    parentKey: "model" as keyof FilterState,
+    title: "year",
+    // parentKey: "model" as keyof FilterState,
+    parentKey: null,
     showRegionHelper: false,
     showSearch: true,
     options: YEARS as FilterOption[],
   },
   exterior_color: {
-    title: "Color",
+    title: "color",
     showRegionHelper: false,
     showSearch: true,
     parentKey: null,
@@ -3558,21 +3560,21 @@ export const USED_CARS_FILTER_CONFIG: Record<string, FilterConfigItem> = {
 
 export const MOTORCYCLES_FILTER_CONFIG: Record<string, FilterConfigItem> = {
   brand: {
-    title: "Brand",
+    title: "brand",
     parentKey: null,
     showRegionHelper: false,
     showSearch: true,
     options: flattenToBrands(CAR_BRAND_TYPES[0]),
   },
   year: {
-    title: "Year",
+    title: "year",
     parentKey: null,
     showRegionHelper: false,
     showSearch: true,
     options: YEARS as FilterOption[],
   },
   exterior_color: {
-    title: "Color",
+    title: "color",
     showRegionHelper: false,
     showSearch: true,
     parentKey: null,

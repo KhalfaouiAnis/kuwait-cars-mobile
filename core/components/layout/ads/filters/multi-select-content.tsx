@@ -1,5 +1,6 @@
 import { renderOption } from '@/core/components/ui/shared/render-option';
 import useSearchStore, { MultiFilterKeys } from '@/core/store/search.store';
+import { useTranslation } from 'react-i18next';
 import { FlatList, Text, TouchableOpacity } from 'react-native';
 
 interface Option { id: string; label: string; value: string; }
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export const MultiSelectContent = ({ filterKey, options }: Props) => {
+    const { t } = useTranslation("car_categories")
     const selectedValues = useSearchStore((state) => state.draftFilters[filterKey] as string[]);
     const toggleMultiFilter = useSearchStore((state) => state.toggleDraftMultiFilter);
 
@@ -21,7 +23,7 @@ export const MultiSelectContent = ({ filterKey, options }: Props) => {
                 className="flex-row items-center my-1"
                 onPress={() => toggleMultiFilter(filterKey, item.value)}
             >
-                {renderOption(item, isSelected)}
+                {renderOption({ ...item, label: t(filterKey === "exterior_color" ? `colors.${item.label}` : `${item.label}`) }, isSelected)}
             </TouchableOpacity>
         );
     };

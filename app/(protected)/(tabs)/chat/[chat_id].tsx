@@ -62,7 +62,7 @@ const messages = [
 ]
 
 export default function ChatScreen() {
-    const { t } = useTranslation("communication")
+    const { t } = useTranslation("common")
 
     const renderItem = ({ item }: {
         item: {
@@ -145,7 +145,7 @@ export default function ChatScreen() {
                                 <Ionicons name="camera-outline" size={20} color="black" />
                             </Pressable>
                             <TextInput
-                                placeholder={t("chat.typeMsgHere")}
+                                placeholder={t("communication.typeMsgHere")}
                                 className="flex-1 placeholder:text-gray-800 dark:text-gray-600"
                                 autoCapitalize="none"
                             />

@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export default function ProfileScreen() {
-    const { t } = useTranslation("profile");
+    const { t } = useTranslation("common");
     const { signOut, user } = useAuthStore();
     const { theme, toggleTheme } = useUserPreferencesStore()
 
@@ -20,13 +20,13 @@ export default function ProfileScreen() {
         <Container
             scrollable
             backgroundColor={theme !== "light" ? "black" : "#FAED02"}
-            header={<ProfileHeader title={t("profile")} />}
+            header={<ProfileHeader title={t("profile.profile")} />}
         >
             <View className="flex-1 mt-2 bg-white dark:bg-darkish px-4 py-2">
                 <View className="flex-row justify-between w-full border border-primary-500 rounded-lg px-4 pt-1 pb-3">
                     <View>
                         <Text className="font-inter-bold text-xl text-black dark:text-white">{user?.fullname}</Text>
-                        <Text className="my-2 font-inter text-black dark:text-white">{t("viewEditProfile")}</Text>
+                        <Text className="my-2 font-inter text-black dark:text-white">{t("profile.viewEditProfile")}</Text>
                         <View className="flex-row items-start">
                             <Ionicons name="location-outline" size={20} color="#FAED02" />
                             <Text className="ms-2 text-black dark:text-white">{user?.province?.province ? t(`provinces.${user?.province?.province}`) : ""}</Text>
@@ -47,7 +47,7 @@ export default function ProfileScreen() {
                         </View>
                         <Link href={"/profile-edit"} className="bg-primary-500 rounded-lg w-full mt-4">
                             <View className="flex-row px-3 py-2 items-center justify-center gap-1">
-                                <Text className="font-inter-semibold text-sm">{t("editProfile")}</Text>
+                                <Text className="font-inter-semibold text-sm">{t("profile.editProfile")}</Text>
                                 <Feather name="edit-3" size={16} color="black" />
                             </View>
                         </Link>
@@ -59,59 +59,59 @@ export default function ProfileScreen() {
                         isDark={theme !== "light"}
                         href={"/change-password"}
                         icon={<Feather name="key" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("changePassword")}
+                        label={t("profile.changePassword")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
                         href={"/my-ads"}
                         icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("myAds")}
+                        label={t("profile.myAds")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
                         href={"/my-ads"}
                         icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("officeShowroomServices")}
+                        label={t("profile.officeShowroomServices")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
                         href={"/my-ads"}
                         icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("advertisingPhotographyServices")}
+                        label={t("profile.advertisingPhotographyServices")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
-                        href={"/(profile)/(audio)/index"}
+                        href={"/my-ads"}
                         icon={<Ionicons name="card" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("myPayments")}
+                        label={t("profile.myPayments")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
                         href={"/recently-viewed"}
                         icon={<Ionicons name="eye-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("recentlyViewed")}
+                        label={t("profile.recentlyViewed")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
                         href={"/general-condition"}
                         icon={<AntDesign name="exclamation-circle" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("generalCondition")}
+                        label={t("profile.generalCondition")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
                         href={"/change-language"}
                         icon={<Ionicons name="language-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("language")}
+                        label={t("profile.language")}
                     />
 
                     <View className="w-full flex-row items-center">
                         <MaterialCommunityIcons name="bell-ring-outline" size={24} color={theme !== "light" ? "white" : "black"} />
-                        <Text className="ms-2 me-auto text-black dark:text-white">{t("notification")}</Text>
+                        <Text className="ms-2 me-auto text-black dark:text-white">{t("profile.notification")}</Text>
                         <Switch value={true} onValueChange={() => { }} />
                     </View>
                     <View className="w-full flex-row items-center">
                         <MaterialIcons name="dark-mode" size={24} color={theme !== "light" ? "white" : "black"} />
-                        <Text className="ms-2 me-auto text-black dark:text-white">{t("darkMode")}</Text>
+                        <Text className="ms-2 me-auto text-black dark:text-white">{t("profile.darkMode")}</Text>
                         <Switch value={theme !== "light"} onValueChange={toggleTheme} />
                     </View>
 
@@ -119,13 +119,13 @@ export default function ProfileScreen() {
                         isDark={theme !== "light"}
                         href={"/"}
                         icon={<Ionicons name="call-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("contactCustomerService")}
+                        label={t("profile.contactCustomerService")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
                         onPress={signOut}
                         icon={<Ionicons name="log-out-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
-                        label={t("logout")}
+                        label={t("profile.logout")}
                     />
                 </View>
             </View>

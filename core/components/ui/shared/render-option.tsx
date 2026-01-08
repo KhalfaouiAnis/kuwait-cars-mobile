@@ -1,4 +1,5 @@
 import Checkbox from "@/core/components/ui/input/checkbox";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { ProvinceArea, SelectOption } from "@/core/types";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
@@ -48,10 +49,11 @@ export const renderColorOption = (option: SelectOption, selected?: string) => (
 )
 
 export const renderOption = (option: SelectOption, selected?: string | boolean) => {
+    const { isRTL } = useUserPreferencesStore.getState()
     const isSelected = (typeof selected === "boolean" && selected) || option.value === selected
 
     return (
-        <View className="flex-row items-center py-3 my-1 mx-2 px-2 dark:border-primary-500 dark:border" style={styles.selectButton}>
+        <View className="flex-row items-center py-3 my-1 mx-2 px-2 dark:border-primary-500 dark:border" style={[styles.selectButton, { direction: isRTL ? "rtl" : "ltr" }]}>
             <View className='flex-1 ms-2'>
                 <Text className="text-lg dark:text-white">{option.label}</Text>
             </View>

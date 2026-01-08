@@ -5,12 +5,12 @@ import useUserPreferencesStore from "@/core/store/preferences.store";
 import { useTranslation } from "react-i18next";
 
 export default function ChangePasswordScreen() {
-    const { t } = useTranslation("profile");
+    const { t } = useTranslation("common");
 
     const { theme } = useUserPreferencesStore()
 
     return (
-        <Container backgroundColor={theme !== "light" ? "black" : "#FAED02"} header={<ProfileHeader title={t("changePassword")} />}>
+        <Container backgroundColor={theme !== "light" ? "black" : "#FAED02"} header={<ProfileHeader title={t("profile.changePassword")} />}>
             <ChangePasswordForm t={t} />
         </Container>
     )

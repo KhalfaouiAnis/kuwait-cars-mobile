@@ -1,9 +1,14 @@
 import {
+  ACC_TOKEN_STORAGE_KEY,
+  REFRESH_TOKEN_STORAGE_KEY,
+} from "@/core/constants";
+import {
   attemptLogin,
   createAccount,
   verifyOTP,
 } from "@/core/services/authentication/standard";
 import { authStore } from "@/core/store/auth.store";
+import { storage } from "@/core/store/storage";
 import {
   LoginInterface,
   LoginSchema,
@@ -18,7 +23,6 @@ import { useFormHook } from "../use-form-hook";
 export function useSignIn() {
   const router = useRouter();
   const {
-    register,
     handleSubmit,
     formState: { errors, isSubmitting },
     control,
@@ -29,19 +33,16 @@ export function useSignIn() {
       const {
         data: { accessToken, refreshToken, user },
       } = await attemptLogin(phone, password);
-      authStore.setState({
-        accessToken,
-        refreshToken,
-        user,
-        isAuthenticated: true,
-      });
+      storage.set(ACC_TOKEN_STORAGE_KEY, accessToken);
+      storage.set(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
+      authStore.setState({ user });
       router.replace("/categories");
     } catch (error) {
       console.log({ error });
     }
   };
 
-  return { register, handleSubmit, onSubmit, errors, isSubmitting, control };
+  return { handleSubmit, onSubmit, errors, isSubmitting, control };
 }
 
 export function useSignUp() {
@@ -99,8 +100,10 @@ export function useOTP() {
       const {
         data: { accessToken, refreshToken, user },
       } = await verifyOTP(email, code);
+      storage.set(ACC_TOKEN_STORAGE_KEY, accessToken);
+      storage.set(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
 
-      authStore.setState({ accessToken, refreshToken, user });
+      authStore.setState({ user });
       router.replace("/categories");
     } catch (error) {
       console.log({ error });

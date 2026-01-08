@@ -84,36 +84,36 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
                 </View>
             </View>
 
-            <View className="flex-1 py-2 mt-2 gap-y-6">
+            <View className="flex-1 py-2 mt-2 mb-2 gap-y-6">
                 <InputWithIcon
-                    label={t("name")}
+                    label={t("profile.name")}
                     icon="person-outline"
                     name="fullname"
-                    placeholder={t("name")}
+                    placeholder={t("profile.name")}
                     control={control}
                     requiredMark
                 />
                 <PhoneInput
                     control={control}
                     name="phone"
-                    label={t("phoneNumber")}
+                    label={t("profile.phoneNumber")}
                     error={errors.phone?.message}
                 />
                 <InputWithIcon
                     icon="mail-outline"
-                    placeholder={t("yourEmail")}
+                    placeholder={t("profile.yourEmail")}
                     error={errors.email?.message}
                     control={control}
                     name="email"
-                    label={t("yourEmail")}
+                    label={t("profile.yourEmail")}
                 />
                 <ProvinceSelector
                     control={control}
                     name="province"
                     options={PROVINCES}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder={t("yourProvince")}
-                    label={t("yourProvince")}
+                    placeholder={t("profile.yourProvince")}
+                    label={t("profile.yourProvince")}
                     isDark={theme !== "light"}
                     primary
                 />
@@ -122,8 +122,8 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
                     name="area"
                     options={Areas}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder={t("Area")}
-                    label={t("yourArea")}
+                    placeholder={t("profile.Area")}
+                    label={t("profile.yourArea")}
                     isDark={theme !== "light"}
                     primary
                 />
@@ -139,7 +139,7 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
             <ProgressButton
                 onPress={handleSubmit(onSubmit, onError)}
                 isPending={isPending}
-                title={t("updateInfo")}
+                title={t("profile.updateInfo")}
                 progress={uploadProgress}
             />
             <AppModal
@@ -148,14 +148,14 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
                 renderContent={() => (
                     <View className="gap-y-4">
                         <PickFromGallerySM
-                            label={t("openGallery")}
+                            label={t("profile.openGallery")}
                             addMedia={() => {
                                 addAvatar(false)
                                 setShowModal(false)
                             }}
                         />
                         <TakePhotoButton
-                            label={t("OpenCameraTakePhoto")}
+                            label={t("profile.OpenCameraTakePhoto")}
                             addMedia={() => {
                                 addAvatar(true)
                                 setShowModal(false)

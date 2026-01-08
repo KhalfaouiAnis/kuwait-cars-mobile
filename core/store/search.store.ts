@@ -107,42 +107,42 @@ const useSearchStore = create<SearchStore>()((set) => ({
       const current = state.draftFilters[key] as string[];
 
       const updated = current.includes(value)
-        ? current.filter((v) => v !== value)
+        ? current.filter((val) => val !== value)
         : [...current, value];
 
-      const dependents = FILTER_DEPENDENCIES[key] || [];
-      const clearedDependents = dependents.reduce(
-        (acc, depKey) => ({
-          ...acc,
-          [depKey]: initialFilters[depKey as keyof FilterState],
-        }),
-        {}
-      );
+      // const dependents = FILTER_DEPENDENCIES[key] || [];
+      // const clearedDependents = dependents.reduce(
+      //   (acc, depKey) => ({
+      //     ...acc,
+      //     [depKey]: initialFilters[depKey as keyof FilterState],
+      //   }),
+      //   {}
+      // );
 
       return {
         draftFilters: {
           ...state.draftFilters,
           [key]: updated,
-          ...clearedDependents,
+          // ...clearedDependents,
         },
       };
     }),
 
   setDraftFilter: (key, value) =>
     set((state) => {
-      const dependents = FILTER_DEPENDENCIES[key] || [];
-      const clearedDependents = dependents.reduce(
-        (acc, depKey) => ({
-          ...acc,
-          [depKey]: initialFilters[depKey as keyof FilterState],
-        }),
-        {}
-      );
+      // const dependents = FILTER_DEPENDENCIES[key] || [];
+      // const clearedDependents = dependents.reduce(
+      //   (acc, depKey) => ({
+      //     ...acc,
+      //     [depKey]: initialFilters[depKey as keyof FilterState],
+      //   }),
+      //   {}
+      // );
       return {
         draftFilters: {
           ...state.draftFilters,
           [key]: value,
-          ...clearedDependents,
+          // ...clearedDependents,
         },
       };
     }),

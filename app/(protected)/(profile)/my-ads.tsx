@@ -42,7 +42,7 @@ const LeftAction = ({ progress, handleDelete }: { progress: SharedValue<number>,
 };
 
 export default function MyAdsScreen() {
-    const { t } = useTranslation("profile");
+    const { t } = useTranslation("common");
     const swipeableRef = useRef<any>(null);
     const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
     const [activeTab, setActiveTab] = useState<AdStatus>("ACTIVE")
@@ -87,12 +87,12 @@ export default function MyAdsScreen() {
                         <View className="flex-1 justify-evenly">
                             <TouchableOpacity className="bg-primary-500 items-center py-1 px-3 mb-1 rounded-lg">
                                 <Text className="text-sm">
-                                    {t("repost")}
+                                    {t("profile.repost")}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity className="bg-success items-center py-1 px-3 mb-1 rounded-lg">
                                 <Text className="text-sm">
-                                    {t("editAd")}
+                                    {t("profile.editAd")}
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -103,14 +103,14 @@ export default function MyAdsScreen() {
     }
 
     return (
-        <Container header={<ProfileHeader title={t("myAds")} />}>
+        <Container header={<ProfileHeader title={t("profile.myAds")} />}>
             <View className="flex-1 mx-2 mt-4">
                 <View className="flex-row items-center justify-center gap-6">
                     <TouchableOpacity onPress={() => setActiveTab("COMPLETED")}>
-                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b-2 border-${activeTab === "COMPLETED" ? "primary-500" : "gray-300"}`}>{t("completed")}</Text>
+                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b-2 border-${activeTab === "COMPLETED" ? "primary-500" : "gray-300"}`}>{t("profile.completed")}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setActiveTab("ACTIVE")}>
-                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b-2 border-${activeTab === "ACTIVE" ? "primary-500" : "gray-300"}`}>{t("active")}</Text>
+                        <Text className={`text-black dark:text-white font-inter-medium text-lg border-b-2 border-${activeTab === "ACTIVE" ? "primary-500" : "gray-300"}`}>{t("profile.active")}</Text>
                     </TouchableOpacity>
                 </View>
                 <View className="flex-1 mt-4">

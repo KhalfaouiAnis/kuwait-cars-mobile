@@ -6,13 +6,28 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://walrus-app-hz53d.ondigitalocean.app",
+        "EXPO_PUBLIC_PLATE_API_TOKEN": "2bf029a8e90c91a3211cc3a33a8277b6fe7f1c30",
+        "EXPO_PUBLIC_GOOGLE_CLIENT_ID": "178960235551-k6si57eefsilbbsnhvqub4s5f58gvcl8.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_STREET_STATIC_API_KEY": "AIzaSyB03W15Mp98f2SoR6_yHBrt1neMn8vGfoA"
+      }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "android": {
+        "buildType": "apk"
+      }
     }
   },
   "submit": {

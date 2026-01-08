@@ -9,22 +9,23 @@ import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useSparePartAd } from "@/core/hooks/ad/flows/useSparePartAd";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
+import { TFunction } from "i18next";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { toast } from "sonner-native";
 
-const getStepTitle = (step: number, t: (key: string) => string) => {
+const getStepTitle = (step: number, t: TFunction) => {
     switch (step) {
         case 1:
-            return t("steps.postAd")
+            return t("createAd.steps.postAd")
         case 2:
-            return t("steps.addMedia")
+            return t("createAd.steps.addMedia")
         case 3:
         case 4:
-            return t("steps.addedDetails")
+            return t("createAd.steps.addedDetails")
         case 5:
-            return t("steps.ChoosePlans")
+            return t("createAd.steps.ChoosePlans")
         default:
             return ""
     }
@@ -35,7 +36,7 @@ const TOTAL_STEPS = 5;
 export default function NewAdScreen() {
     const { control, errors, totalProgress, dirtyFields, trigger, reset, setValue, getValues, handleSubmit, onSubmit } = useSparePartAd()
     const { theme, isRTL } = useUserPreferencesStore()
-    const { t } = useTranslation("ad_creation")
+    const { t } = useTranslation("common")
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
 
@@ -138,14 +139,13 @@ export default function NewAdScreen() {
                     progress={totalProgress}
                     isPending={totalProgress > 0}
                     onPress={handleNext}
-                    title={currentStep === TOTAL_STEPS ? t("Submit") : t("Next")}
+                    title={currentStep === TOTAL_STEPS ? t("submit") : t("next")}
                 />
             </View>
             <LeaveDialog
                 onLeave={handleLeave}
                 onStay={handleStay}
                 show={showDialog}
-                t={t}
             />
         </AdFormContainer>
     )

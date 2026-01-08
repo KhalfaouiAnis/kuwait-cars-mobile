@@ -30,7 +30,7 @@ export default function MotorcycleCategoriesScreen() {
                         params={{ ad_type, ad_category: 'quad' }}
                         href="/categories/motorcycles/quad"
                         image={IMAGES.EngineCoolingSystemCategory}
-                        label="Quand bikes" />
+                        label="Quad bikes" />
                 </View>
                 <View className="w-[48%]">
                     <CategoryLink

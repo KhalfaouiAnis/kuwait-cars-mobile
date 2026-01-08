@@ -6,11 +6,11 @@ import { Control, FieldPath, FieldValues, useController } from "react-hook-form"
 import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 
 type InputProps<TForm extends FieldValues> = TextInputProps & {
+    name: FieldPath<TForm>;
+    control: Control<TForm>;
     placeholder: string
     icon?: keyof typeof Ionicons.glyphMap,
     customIcon?: ReactNode,
-    name: FieldPath<TForm>;
-    control: Control<TForm>;
     requiredMark?: boolean;
     label?: string;
     error?: string;

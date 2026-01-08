@@ -23,10 +23,11 @@ export default function LocationPicker({ setValue, isDark, control, t, primary }
         <View className="w-full">
             <Pressable
                 onPress={showMap}
-                className={cn('flex-row items-center p-4 justify-between bordered-box', {
+                className={cn('flex-row items-center p-4 justify-between', {
                     "border-primary-500 rounded-lg border": primary,
+                    "bordered-box": !primary
                 })}
-                style={BOX_SHADOW.button}
+                style={primary ? undefined : BOX_SHADOW.button}
             >
                 <View className='flex-row gap-2 items-center'>
                     <Octicons name="location" size={20} color={isDark ? "white" : "black"} />

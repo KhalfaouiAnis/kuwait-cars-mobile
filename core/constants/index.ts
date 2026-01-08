@@ -5,10 +5,12 @@ export const PLATE_RECOGNIZER_API_URL =
   "https://api.platerecognizer.com/v1/plate-reader/";
 export const ADS_PAGE_SIZE = "12";
 
+export const APP_STORAGE_KEY = "KC_APP_STORAGE_KEY"
 export const AUTH_STORAGE_KEY = "KC_AUTH_STORAGE";
 export const USER_PREFERENCES_STORAGE_KEY = "KC_USER_PREFERENCES_STORAGE";
-export const ADS_STORAGE_KEY = "KC_ADS_STORAGE";
-export const VEHICLES_ADS_STORAGE_KEY = "KC_VEHICLES_ADS_STORAGE";
+export const ACC_TOKEN_STORAGE_KEY = "KC_ACC_TOKEN";
+export const REFRESH_TOKEN_STORAGE_KEY = "KC_REFRESH_TOKEN";
+export const HAS_LAUNCHED = 'has_launched';
 
 export const MAX_VIDEO_SIZE = 1024 * 1024 * 100;
 export const MAX_IMAGE_SIZE = 1024 * 1024 * 5;

@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 
-export default function FavouritesLayout() {
+export default function SearchLayout() {
     return (
         <Stack
             screenOptions={{ headerShown: false }}

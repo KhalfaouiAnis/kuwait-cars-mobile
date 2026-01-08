@@ -4,10 +4,11 @@ import { useUpdatePassword } from "@/core/hooks/user/use-profile";
 import useAuthStore from "@/core/store/auth.store";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { TFunction } from "i18next";
 import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { toast } from "sonner-native";
 
-export default function ChangePasswordForm({ t }: { t: (key: string) => string }) {
+export default function ChangePasswordForm({ t }: { t: TFunction }) {
     const { user } = useAuthStore()
     const { control, handleSubmit, onSubmit, isSubmitting, errors } = useUpdatePassword(user?.phone)
 
@@ -48,9 +49,9 @@ export default function ChangePasswordForm({ t }: { t: (key: string) => string }
                     control={control}
                     name="password"
                     secureTextEntry
-                    label={t("newPassword")}
+                    label={t("profile.newPassword")}
                     icon="lock-closed-outline"
-                    placeholder={t("newPassword")}
+                    placeholder={t("profile.newPassword")}
                     requiredMark
                     endIcon="eye-outline"
                     error={errors.password?.message}
@@ -59,9 +60,9 @@ export default function ChangePasswordForm({ t }: { t: (key: string) => string }
                     control={control}
                     name="confirmPassword"
                     secureTextEntry
-                    label={t("confirmPassword")}
+                    label={t("profile.confirmPassword")}
                     icon="lock-closed-outline"
-                    placeholder={t("confirmNewPassword")}
+                    placeholder={t("profile.confirmNewPassword")}
                     requiredMark
                     endIcon="eye-outline"
                     error={errors.password?.message}
@@ -74,7 +75,7 @@ export default function ChangePasswordForm({ t }: { t: (key: string) => string }
                     disabled={isSubmitting}
                 >
                     <Text className="text-lg font-semibold text-secondary-900">
-                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("updatePass")}
+                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("profile.updatePass")}
                     </Text>
                 </TouchableOpacity>
             </View>

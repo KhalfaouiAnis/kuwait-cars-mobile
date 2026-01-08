@@ -129,7 +129,7 @@ export default function ChatScreen() {
     const swipeableRef = useRef<any>(null);
     const [show, setShow] = useState<boolean>(false)
     const { theme, isRTL } = useUserPreferencesStore()
-    const { t } = useTranslation("communication")
+    const { t } = useTranslation("common")
 
     const isDark = theme !== "light"
 
@@ -187,7 +187,7 @@ export default function ChatScreen() {
                     <View className="flex-row items-center ps-2 flex-1 h-12 overflow-hidden text-[#333] text-base border rounded-lg border-primary-500 me-1">
                         <Ionicons name="search-outline" size={24} color={isDark ? "white" : "black"} />
                         <TextInput
-                            placeholder={t("chat.search")}
+                            placeholder={t("communication.search")}
                             className="flex-1"
                             autoCapitalize="none"
                         />
@@ -201,7 +201,7 @@ export default function ChatScreen() {
                     </View>
                 </View>
                 <View className="my-4 mx-4 flex-row items-center justify-between">
-                    <Text className="font-inter-semibold text-xl text-black dark:text-gray-200">{t("chat.recentChats")}</Text>
+                    <Text className="font-inter-semibold text-xl text-black dark:text-gray-200">{t("communication.recentChats")}</Text>
                 </View>
                 <View className="w-dvw h-[1px] bg-primary-500 px-0 mx-0" />
 

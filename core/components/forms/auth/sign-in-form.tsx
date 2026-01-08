@@ -13,11 +13,11 @@ export default function SignInForm() {
         <View className="pt-20 px-4 pb-10">
             <View className="gap-y-3">
                 <InputWithIcon
+                    name="phone"
+                    control={control}
                     icon="call-outline"
                     placeholder={t("phoneNumber")}
-                    name="phone"
                     error={errors.phone?.message}
-                    control={control}
                 />
                 <InputWithIcon
                     icon="lock-closed-outline"

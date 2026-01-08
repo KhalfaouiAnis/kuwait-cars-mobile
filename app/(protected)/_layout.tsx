@@ -1,13 +1,12 @@
 import useAuthStore from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
-
 import { Redirect, Stack } from "expo-router";
 
 export default function ProtectedLayout() {
     const { isRTL } = useUserPreferencesStore()
-    const { isAuthenticated, _hasHydrated } = useAuthStore();
+    const { user, isGuest } = useAuthStore();
 
-    if (_hasHydrated && !isAuthenticated) {
+    if (!user && !isGuest) {
         return <Redirect href="/signin" />;
     }
 

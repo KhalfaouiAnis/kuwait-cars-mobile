@@ -16,7 +16,7 @@ import { ContactCTA } from "../communication/ad-cta/contact";
 import { WhatsappCTA } from "../communication/ad-cta/whatsapp";
 
 export default function AdvertisementDetails({ adDetail }: { adDetail: AdvertisementInterface }) {
-    const { t } = useTranslation("listings")
+    const { t } = useTranslation("common")
     const { isRTL, theme } = useUserPreferencesStore()
     const user = authStore?.getState()?.user
     const isDark = theme !== "light"
@@ -56,7 +56,7 @@ export default function AdvertisementDetails({ adDetail }: { adDetail: Advertise
                     </View>
                     <View className="border-y border-gray-200 gap-y-2 py-3">
                         <View className="flex-row items-center justify-between">
-                            <Text className="font-inter-bold dark:text-white">{t("specification")}</Text>
+                            <Text className="font-inter-bold dark:text-white">{t("adDetails.specification")}</Text>
                             <Text className="font-inter text-xs text-gray-400">{formatSmartDate(adDetail.created_at)}</Text>
                         </View>
                         <View className="flex-row items-center justify-center gap-x-3">
@@ -84,21 +84,21 @@ export default function AdvertisementDetails({ adDetail }: { adDetail: Advertise
                         <View className="flex-row items-center border border-primary-500 rounded-lg p-2 gap-x-2">
                             <Image
                                 contentFit="cover"
-                                source={{ uri: adDetail.user?.avatar?.original_url }}
+                                source={ adDetail.user?.avatar?.original_url ? { uri: adDetail.user?.avatar?.original_url } : IMAGES.DefaultAvatar}
                                 style={{ borderRadius: 50, width: 40, height: 40 }} />
                             <View>
                                 <Text className="font-inter-semibold dark:text-white">{adDetail.user?.fullname}</Text>
-                                <Text className="dark:text-white">{t("since")} {adDetail.user?.created_at && getYear(adDetail.user.created_at)}</Text>
+                                <Text className="dark:text-white">{t("adDetails.since")} {adDetail.user?.created_at && getYear(adDetail.user.created_at)}</Text>
                             </View>
                         </View>
                         <View className="flex-row items-center justify-center gap-x-6 mt-3">
-                            <ChatCTA label={t("chatCall")} />
-                            <WhatsappCTA label={t("whatsApp")} />
-                            <ContactCTA label={t("contact")} />
+                            <ChatCTA variant="button" label={t("adDetails.chatCall")} />
+                            <WhatsappCTA variant="button" label={t("adDetails.whatsApp")} />
+                            <ContactCTA variant="button" label={t("adDetails.contact")} />
                         </View>
                     </View>
                     <View className="gap-y-1 mt-2 mb-4">
-                        <Text className="font-inter-semibold">{t("similarAds")}</Text>
+                        <Text className="font-inter-semibold">{t("adDetails.similarAds")}</Text>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                             <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent dark:border-primary-500 dark:bg-darkish me-4">
                                 <Image source={IMAGES.CarChevrolet} style={{ height: 80, width: 130, borderRadius: 8 }} contentFit="cover" />

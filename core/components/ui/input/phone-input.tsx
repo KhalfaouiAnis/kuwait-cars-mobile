@@ -60,7 +60,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
     );
 
     return (
-        <View className="w-full">
+        <View className="flex-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
             {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <View className='flex-row items-center border-primary-500 border rounded-lg p-2' style={{direction: isRTL ? "rtl" : "ltr"}}>
                 <TouchableOpacity
