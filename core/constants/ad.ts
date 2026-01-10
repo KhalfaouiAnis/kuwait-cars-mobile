@@ -3111,114 +3111,114 @@ export const CAR_BRAND_TYPES = [
     icon: "car-sport-outline",
     regions: [
       {
-        value: "Sports motorcycles",
+        value: "sport",
         label: "Sports motorcycles",
         brands: [
           {
             label: "Honda",
-            value: "Sports motorcycles/Honda",
+            value: "sport/Honda",
           },
           {
             label: "Yamaha",
-            value: "Sports motorcycles/Yamaha",
+            value: "sport/Yamaha",
           },
           {
             label: "Kawasaki",
-            value: "Sports motorcycles/Kawasaki",
+            value: "sport/Kawasaki",
           },
           {
             label: "Suzuki",
-            value: "Sports motorcycles/Suzuki",
+            value: "sport/Suzuki",
           },
           {
             label: "BMW",
-            value: "Sports motorcycles/BMW",
+            value: "sport/BMW",
           },
           {
             label: "Ducati",
-            value: "Sports motorcycles/Ducati",
+            value: "sport/Ducati",
           },
           {
             label: "KTM",
-            value: "Sports motorcycles/KTM",
+            value: "sport/KTM",
           },
           {
             label: "Harley-Davidson",
-            value: "Sports motorcycles/Harley-Davidson",
+            value: "sport/Harley-Davidson",
           },
           {
             label: "Triumph Motorcycles",
-            value: "Sports motorcycles/Triumph Motorcycles",
+            value: "sport/Triumph Motorcycles",
           },
           {
             label: "Royal Enfield",
-            value: "Sports motorcycles/Royal Enfield",
+            value: "sport/Royal Enfield",
           },
           {
             label: "Aprilia",
-            value: "Sports motorcycles/Aprilia",
+            value: "sport/Aprilia",
           },
           {
             label: "Indian Motorcycle",
-            value: "Sports motorcycles/Indian Motorcycle",
+            value: "sport/Indian Motorcycle",
           },
           {
             label: "Benelli",
-            value: "Sports motorcycles/Benelli",
+            value: "sport/Benelli",
           },
           {
             label: "Can-Am",
-            value: "Sports motorcycles/Can-Am",
+            value: "sport/Can-Am",
           },
           {
             label: "MV Agusta",
-            value: "Sports motorcycles/MV Agusta",
+            value: "sport/MV Agusta",
           },
           {
             label: "Husqvarna",
-            value: "Sports motorcycles/Husqvarna",
+            value: "sport/Husqvarna",
           },
           {
             label: "Moto Guzzi",
-            value: "Sports motorcycles/Moto Guzzi",
+            value: "sport/Moto Guzzi",
           },
           {
             label: "Bajaj",
-            value: "Sports motorcycles/Bajaj",
+            value: "sport/Bajaj",
           },
           {
             label: "TVS Motor",
-            value: "Sports motorcycles/TVS Motor",
+            value: "sport/TVS Motor",
           },
         ],
       },
       {
-        value: "Quad bikes",
+        value: "quad",
         label: "Quad bikes",
         brands: [
           {
             label: "Quad",
-            value: "Quad bikes/Quad",
+            value: "quad/Quad",
           },
         ],
       },
       {
-        value: "Bicycles",
+        value: "bikes",
         label: "Bicycles",
         brands: [
           {
             label: "Bicycle",
-            value: "Bicycles/Bicycle",
+            value: "bikes/Bicycle",
           },
         ],
       },
       {
-        value: "Scooter",
+        value: "scooter",
         label: "Scooter",
         brands: [
           {
             label: "Scooter",
-            value: "Scooter/Scooter",
+            value: "scooter/Scooter",
           },
         ],
       },
@@ -3266,34 +3266,34 @@ export const CAR_BRAND_TYPES = [
     value: AD_TYPES.home_services,
     icon: "car-sport-outline",
     label: AD_TYPES.home_services,
-    categories: [
+    regions: [
       {
-        value: "Washing and polishing",
+        value: "washing",
         icon: "car-sport-outline",
-        label: "Washing and polishing",
+        label: "Washing",
       },
       {
-        value: "Protection and shading",
+        value: "protection",
         icon: "car-sport-outline",
-        label: "Protection and shading",
+        label: "Protection",
       },
       {
-        value: "Tire repair, batteries",
+        value: "batteries",
         icon: "car-sport-outline",
-        label: "Tire repair, batteries",
+        label: "Batteries",
       },
       {
-        value: "Check, oil, filter",
+        value: "check",
         icon: "car-sport-outline",
-        label: "Check, oil, filter",
+        label: "Check",
       },
       {
-        value: "Keys and remote",
+        value: "keys",
         icon: "car-sport-outline",
-        label: "Keys and remote",
+        label: "Keys",
       },
       {
-        value: "Insurance",
+        value: "insurance",
         icon: "car-sport-outline",
         label: "Insurance",
       },

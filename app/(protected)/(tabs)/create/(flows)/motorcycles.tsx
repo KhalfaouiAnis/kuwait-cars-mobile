@@ -36,7 +36,7 @@ const TOTAL_STEPS = 6;
 
 export default function NewAdScreen() {
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, totalProgress } = useMotorcycleAd();
-    const { theme, isRTL } = useUserPreferencesStore()
+    const { theme } = useUserPreferencesStore()
     const { t } = useTranslation("common")
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
@@ -59,10 +59,10 @@ export default function NewAdScreen() {
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
                 if (Array.isArray(error) && error.length > 0) {
-                    toast.error(`${error[0].message}`)
+                    toast.error(t(`validation.${error[0].message}`))
                 }
                 if (error.message) {
-                    toast.error(`${error.message}`)
+                    toast.error(t(`validation.${error.message}`))
                 }
             })
         }
@@ -87,10 +87,10 @@ export default function NewAdScreen() {
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
                 if (Array.isArray(error) && error.length > 0) {
-                    toast.error(`${error[0].message}`)
+                    toast.error(t(`validation.${error[0].message}`))
                 }
                 if (error.message) {
-                    toast.error(`${error.message}`)
+                    toast.error(t(`validation.${error.message}`))
                 }
             })
         }
@@ -105,17 +105,17 @@ export default function NewAdScreen() {
     const renderCurrentStep = () => {
         switch (currentStep) {
             case 1:
-                return <AdDetails t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
+                return <AdDetails control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 2:
-                return <AddPhotos t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
+                return <AddPhotos control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 3:
-                return <AddVideo t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} isDark={theme !== "light"} />;
+                return <AddVideo control={control} errors={errors} setValue={setValue} getValue={getValues} onSkip={() => setCurrentStep((prev) => prev + 1)} isDark={theme !== "light"} />;
             case 4:
-                return <PostAd t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
+                return <PostAd control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 5:
-                return <AdDetailsStep2 t={t} control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
+                return <AdDetailsStep2 control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 6:
-                return <ChoosePlan t={t} setValue={setValue} getValue={getValues} control={control} errors={errors} isDark={theme !== "light"} />;
+                return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} isDark={theme !== "light"} />;
             default:
                 return null;
         }
@@ -137,7 +137,7 @@ export default function NewAdScreen() {
     }
 
     return (
-        <AdFormContainer isRTL={isRTL} isDark={theme !== "light"} title={getStepTitle(currentStep, t)} resetLabel={t("Reset")} reset={handleReset} previous={handlePrevious}>
+        <AdFormContainer title={getStepTitle(currentStep, t)} resetLabel={t("reset")} reset={handleReset} previous={handlePrevious}>
             {renderCurrentStep()}
             <View className="mt-auto mb-4 mx-2">
                 <ProgressButton

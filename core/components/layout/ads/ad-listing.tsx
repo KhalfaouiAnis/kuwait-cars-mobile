@@ -4,7 +4,7 @@ import { AdvertisementInterface } from '@/core/types';
 import React, { useMemo } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import { AdSkeletonList } from '../skeletons/ad-skeleton-list';
-import { MemoizedAdvertisement } from './advertisement';
+import Advertisement from './advertisement';
 
 interface Props {
     view: "vertical" | "horizontal"
@@ -20,14 +20,14 @@ export const AdsListing = ({ view, isDark }: Props) => {
         isLoading,
         refetch,
     } = useAdsQuery();
-    
+
     const ads = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data?.pages]);
 
     if (isLoading) return <AdSkeletonList />;
 
     const renderItem = ({ item }: { item: AdvertisementInterface }) => (
         <View className="mb-4 me-2">
-            <MemoizedAdvertisement data={item} view={view} isDark={isDark} />
+            <Advertisement data={item} view={view} isDark={isDark} />
         </View>
     )
 
@@ -42,7 +42,7 @@ export const AdsListing = ({ view, isDark }: Props) => {
             removeClippedSubviews={false}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
-            ListEmptyComponent={!isLoading ? <EmptyState /> : null}
+            ListEmptyComponent={!isLoading ? <EmptyState showReset={false} /> : null}
             onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
             contentContainerStyle={ads.length === 0 ? { flex: 1 } : { paddingBottom: 50, position: "relative", zIndex: 2 }}
             ListFooterComponent={

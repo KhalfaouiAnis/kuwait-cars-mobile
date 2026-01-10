@@ -1,4 +1,4 @@
-import { BOX_SHADOW, cn } from '@/core/utils/cn';
+import { boxShadow, cn } from '@/core/utils/cn';
 import { ReactNode } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 import { Text, TextInput, TextInputProps, View } from 'react-native';
@@ -25,7 +25,7 @@ export default function AdTextInput<TForm extends FieldValues>({ control, name, 
                     "px-3 py-1": !extraPadding,
                     "p-3": extraPadding,
                 })}
-                style={BOX_SHADOW.button}
+                style={boxShadow().button}
             >
                 {
                     icon && <View className='ms-2 items-center'>

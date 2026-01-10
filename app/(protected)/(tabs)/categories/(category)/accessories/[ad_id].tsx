@@ -21,7 +21,7 @@ export default function AccessoriesAdDetails() {
     const { isRTL } = useUserPreferencesStore()
     const { protectAction } = useAuthGuard();
     const { mutate } = useToggleFavorite();
-    const { data: adDetail, isLoading, error, isFetching } = useAdDetailQuery(ad_id);
+    const { data: adDetail, isLoading, error } = useAdDetailQuery(ad_id);
 
     useEffect(() => {
         if (ad_id) {
@@ -34,9 +34,6 @@ export default function AccessoriesAdDetails() {
     const isDataReady = !isLoading && adDetail !== undefined;
     const isFavorited = adDetail?.is_favorited ?? false;
     const isFlagged = adDetail?.is_flagged ?? false;
-
-    console.log("ffff: ", isFetching);
-
 
     return (
         <Container scrollable header={

@@ -1,5 +1,6 @@
+import { boxShadow } from "@/core/utils/cn";
 import { Link } from "expo-router";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 
 interface Props {
     href: any,
@@ -17,7 +18,7 @@ export default function CategoryLink({ href, image, label, params, fullWidth = f
         >
             <Pressable className={`items-center justify-center ${fullWidth ? "w-full" : "w-[31%]"} 
             h-36 p-2 border border-primary-500 rounded-xl bg-white dark:bg-darkish`}
-                style={styles.button}>
+                style={boxShadow(4, 6, 20, 0).button}>
                 <View>
                     <Image
                         source={image}
@@ -31,17 +32,3 @@ export default function CategoryLink({ href, image, label, params, fullWidth = f
         </Link>
     )
 }
-
-const styles = StyleSheet.create({
-    button: {
-        boxShadow: [
-            {
-                offsetX: 4,
-                offsetY: 6,
-                blurRadius: 20,
-                spreadDistance: 0,
-                color: 'rgb(000 000 000 / 0.25)',
-            },
-        ],
-    },
-});

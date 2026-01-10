@@ -4,13 +4,18 @@ import { AdFormStepProps } from "@/core/types";
 import { ShowCarAdInterface } from "@/core/types/schema/ads/showCar";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+import XCarCall from "../shared/contact/xcar-call";
+import XCarChat from "../shared/contact/xcar-chat";
 
-export default function AdDetails({ control, setValue, getValue, t }: AdFormStepProps<ShowCarAdInterface>) {
+export default function AdDetails({ control, setValue, getValue }: AdFormStepProps<ShowCarAdInterface>) {
+    const { t } = useTranslation("common")
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
+            className="flex-1 px-2"
             contentContainerStyle={{ paddingBottom: 10 }}>
             <View className="gap-y-2 mt-4">
                 <View className="mt-8">
@@ -18,25 +23,21 @@ export default function AdDetails({ control, setValue, getValue, t }: AdFormStep
                         control={control}
                         name="hide_license_plate"
                         bordered
-                        label={t("Hidevehiclelicenseplate")}
+                        label={t("createAd.Hidevehiclelicenseplate")}
                         fullWidth
                         options={[{ id: "Yes", label: "Yes", value: true }, { id: "No", label: "No", value: false }]}
                     />
-                    <Text className="text-sm text-gray-300">{t("hideVehicleLicensePlateForUploadedImages")}</Text>
+                    <Text className="text-sm text-gray-300">{t("createAd.hideVehicleLicensePlateForUploadedImages")}</Text>
                 </View>
-                <View className="mt-8 flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
-                    <Ionicons name="call-outline" size={24} color="#00A6DA" />
-                    <Text className="dark:text-white">{t("ReceiveCallViaXCar")}</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} checked={getValue?.("xcar_calls")} />
+
+                <View className="mt-4 gap-y-4">
+                    <XCarCall label={t("createAd.ReceiveCallViaXCar")} getValue={getValue} setValue={setValue} />
+                    <XCarChat label={t("createAd.ChatViaXcar")} getValue={getValue} setValue={setValue} />
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
-                    <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
-                    <Text className="dark:text-white">{t("ChatViaXcar")}</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} checked={getValue?.("xcar_chat")} />
-                </View>
+
                 <View className="border border-error gap-y-2 p-3 mt-6">
                     <View>
-                        <Text className="font-inter-semibold">Terms and conditions</Text>
+                        <Text className="font-inter-semibold">{t("createAd.TermsAndConditions.TermsAndConditions")}</Text>
                     </View>
                     <View>
                         <View className="flex-row items-center gap-2">
@@ -58,7 +59,7 @@ export default function AdDetails({ control, setValue, getValue, t }: AdFormStep
                     </View>
                     <View className="flex-row items-center gap-2 flex-1">
                         <Text className="flex-1">
-                            Accessing this service constitutes your <Text className="text-error">agreement</Text> to our <Text className="text-error">terms</Text>, which govern use and are available for <Text className="text-error">review</Text> on our website
+                            {t("createAd.TermsAndConditions.AccessingThisServiceConstitutesYour")} <Text className="text-error">{t("createAd.TermsAndConditions.agreement")}</Text> {t("createAd.TermsAndConditions.toOur")} <Text className="text-error">{t("createAd.TermsAndConditions.terms")}</Text>, {t("createAd.TermsAndConditions.whichGovernUseAndAreAvailableFor")} <Text className="text-error">{t("createAd.TermsAndConditions.review")}</Text> {t("createAd.TermsAndConditions.OnOurWebsite")}
                         </Text>
                         <Checkbox size={40} />
                     </View>
@@ -67,7 +68,7 @@ export default function AdDetails({ control, setValue, getValue, t }: AdFormStep
                     <Link href="/general-condition">
                         <View className="flex-row items-start">
                             <Text className="underline text-[#0004DD]">
-                                read terms and conditions
+                                {t("createAd.TermsAndConditions.readTermsAndConditions")}
                             </Text>
                             <Ionicons name="chevron-forward-outline" size={18} color="#0004DD" />
                         </View>

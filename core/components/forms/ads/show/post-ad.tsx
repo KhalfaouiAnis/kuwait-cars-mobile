@@ -2,31 +2,35 @@ import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { AdFormStepProps } from "@/core/types";
 import { ShowCarAdInterface } from "@/core/types/schema/ads/showCar";
+import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 
 export default function PostAd({ control, errors }: AdFormStepProps<ShowCarAdInterface>) {
+    const { t } = useTranslation("common")
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
-            className="flex-1 bg-white"
+            className="flex-1 px-2"
             contentContainerStyle={{ paddingBottom: 10, rowGap: 8 }}
         >
             <InputWithSpeech
                 control={control}
+                label={t("createAd.Title")}
                 name="title"
-                label="Title"
                 required
                 maxLength={30}
                 error={errors.title?.message}
-                placeholder="Write Your Advertisement Title" />
+                placeholder={t("createAd.WriteYourAdvertisementTitle")}
+            />
             <TextAreaSpeech
                 control={control}
-                label="Description"
+                label={t("description")}
                 name="description"
                 maxLength={500}
                 required
                 error={errors.description?.message}
-                placeholder="Write Your Advertisement Description"
+                placeholder={t("createAd.WriteYourAdvertisementDescription")}
             />
         </ScrollView>
     )

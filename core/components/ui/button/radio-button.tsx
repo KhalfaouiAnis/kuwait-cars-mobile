@@ -1,4 +1,4 @@
-import { BOX_SHADOW, cn } from '@/core/utils/cn';
+import { boxShadow, cn } from '@/core/utils/cn';
 import { Text, TouchableOpacity } from 'react-native';
 
 interface RadioButtonProps {
@@ -14,7 +14,7 @@ export default function RadioButton({ label, selected, onPress, disabled, fullWi
         <TouchableOpacity
             onPress={onPress}
             disabled={disabled}
-            style={BOX_SHADOW.button}
+            style={boxShadow().button}
             className={cn("min-w-[34px] p-3 px-4 dark:bg-darkish border", {
                 "bg-primary-500 border-error": selected,
                 "bg-white border-[#e7e7e7] dark:border-primary-500": !selected,

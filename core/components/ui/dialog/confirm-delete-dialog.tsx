@@ -2,16 +2,20 @@ import { IMAGES } from '@/core/constants/images';
 import { useConfirmDelete } from '@/core/hooks/shared/use-delete-resource';
 import { Image } from 'expo-image';
 import React, { Dispatch, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 
 type DeleteDialogProps = {
+    show: boolean;
+    setShow: Dispatch<SetStateAction<boolean>>;
+    title: string;
+    description: string;
     onDelete?: () => void;
-    show: boolean
-    setShow: Dispatch<SetStateAction<boolean>>
 };
 
-export default function ConfirmDeleteDialog({ onDelete, show, setShow }: DeleteDialogProps) {
+export default function ConfirmDeleteDialog({ show, setShow, onDelete, title, description }: DeleteDialogProps) {
     const { handleCancel, handleDelete } = useConfirmDelete({ onDelete, show, setShow });
+    const { t } = useTranslation("common")
 
     return (
         <Modal
@@ -27,10 +31,10 @@ export default function ConfirmDeleteDialog({ onDelete, show, setShow }: DeleteD
                         style={{ width: 80, height: 80, objectFit: "cover" }}
                     />
                     <Text className="text-lg font-semibold text-center my-4 dark:text-white">
-                        Delete message?
+                        {t(`confirmation.${title}`)}
                     </Text>
                     <Text className="text-base text-gray-600 text-center mb-6 dark:text-white">
-                        Do you really want to delete this conversation?
+                        {t(`confirmation.${description}`)}
                     </Text>
                     <View className="flex-row justify-between">
                         <TouchableOpacity
@@ -38,14 +42,14 @@ export default function ConfirmDeleteDialog({ onDelete, show, setShow }: DeleteD
                             onPress={handleCancel}
                             activeOpacity={0.7}
                         >
-                            <Text className="text-gray-800 text-center font-semibold dark:text-white">Cancel</Text>
+                            <Text className="text-gray-800 text-center font-semibold dark:text-white">{t("cancel")}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             className="flex-1 bg-error rounded-2xl p-3 mr-2"
                             onPress={handleDelete}
                             activeOpacity={0.7}
                         >
-                            <Text className="text-white text-center font-semibold">Delete</Text>
+                            <Text className="text-white text-center font-semibold">{t("delete")}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

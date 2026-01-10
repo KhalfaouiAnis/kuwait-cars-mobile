@@ -5,14 +5,16 @@ import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ReceiveCall from "../shared/contact/receive-call";
 import WhatsappContact from "../shared/contact/whatsapp";
 import XCarCall from "../shared/contact/xcar-call";
 import XCarChat from "../shared/contact/xcar-chat";
 
-export default function AdDetailsStep2({ control, errors, setValue, getValue, t }: AdFormStepProps<UsedCarAdInterface>) {
+export default function AdDetailsStep2({ control, errors, setValue, getValue }: AdFormStepProps<UsedCarAdInterface>) {
     const [showSecondNumber, setShowSecondNumber] = useState(() => getValue?.("second_additional_number") !== undefined)
+    const { t } = useTranslation("common")
     const { isRTL } = useUserPreferencesStore()
 
     return (
@@ -28,7 +30,7 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue, t 
                         keyboardType="numeric"
                         extraPadding
                         error={errors.additional_number?.message}
-                        placeholder={t("AddAdditionalNumber")}
+                        placeholder={t("createAd.AddAdditionalNumber")}
                     />
                     {
                         (!showSecondNumber) && (
@@ -48,7 +50,7 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue, t 
                         keyboardType="numeric"
                         extraPadding
                         error={errors.additional_number?.message}
-                        placeholder={t("AddAdditionalNumber")}
+                        placeholder={t("createAd.AddAdditionalNumber")}
                     />
                 </View>
 
@@ -57,18 +59,18 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue, t 
                         name="hide_license_plate"
                         bordered
                         control={control}
-                        label={t("Hidevehiclelicenseplate")}
+                        label={t("createAd.Hidevehiclelicenseplate")}
                         fullWidth
-                        options={[{ id: "Yes", label: t("Yes"), value: true }, { id: "No", label: t("No"), value: false }]}
+                        options={[{ id: "Yes", label: t("yes"), value: true }, { id: "No", label: t("no"), value: false }]}
                     />
-                    <Text className="text-sm text-gray-300 mt-1.5">{t("hideVehicleLicensePlateForUploadedImages")}</Text>
+                    <Text className="text-sm text-gray-300 mt-1.5">{t("createAd.hideVehicleLicensePlateForUploadedImages")}</Text>
                 </View>
 
                 <View className="mt-4 gap-y-4">
-                    <WhatsappContact t={t} getValue={getValue} setValue={setValue} />
-                    <ReceiveCall t={t} getValue={getValue} setValue={setValue} />
-                    <XCarCall t={t} getValue={getValue} setValue={setValue} />
-                    <XCarChat t={t} getValue={getValue} setValue={setValue} />
+                    <WhatsappContact label={t("createAd.ContactViaWhatsApp")} getValue={getValue} setValue={setValue} />
+                    <ReceiveCall label={t("createAd.ReceiveCalls")} getValue={getValue} setValue={setValue} />
+                    <XCarCall label={t("createAd.ReceiveCallViaXCar")} getValue={getValue} setValue={setValue} />
+                    <XCarChat label={t("createAd.ChatViaXcar")} getValue={getValue} setValue={setValue} />
                 </View>
 
             </View>

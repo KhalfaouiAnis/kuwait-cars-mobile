@@ -1,6 +1,8 @@
 import FacebookIcon from '@/assets/svg/facebook';
 import { httpClient } from '@/core/api/httpClient';
+import { ACC_TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from '@/core/constants';
 import { authStore } from '@/core/store/auth.store';
+import { storage } from '@/core/store/storage';
 import { useRouter } from 'expo-router';
 import { Alert, TouchableOpacity } from 'react-native';
 import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
@@ -22,7 +24,9 @@ export default function FacebookButton({ onSuccess }: { onSuccess?: (user: any) 
             const res = await httpClient.post('/auth/facebook', { idToken: data?.accessToken });
 
             const { accessToken, refreshToken, user } = res.data
-            authStore.setState({ accessToken, refreshToken, user })
+            storage.set(ACC_TOKEN_STORAGE_KEY, accessToken);
+            storage.set(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
+            authStore.setState({ user })
 
             onSuccess?.(user)
             router.replace('/categories');

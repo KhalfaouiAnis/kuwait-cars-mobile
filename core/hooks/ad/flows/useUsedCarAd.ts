@@ -37,8 +37,8 @@ export function useUsedCarAd() {
       thumbnail: undefined,
       images: [],
       video: undefined,
-      ad_type: "used_cars",
       hide_license_plate: false,
+      ad_type: "used_cars",
     },
   });
 

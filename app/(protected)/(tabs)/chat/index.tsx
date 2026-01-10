@@ -1,22 +1,22 @@
 import Container from "@/core/components/ui/container";
-import { IMAGES } from "@/core/constants/images";
-import { FlatList, Pressable, Text, TextInput, View } from "react-native";
-import Reanimated, {
-    interpolate,
-    SharedValue,
-    useAnimatedStyle
-} from 'react-native-reanimated';
-
 import ConfirmDeleteDialog from "@/core/components/ui/dialog/confirm-delete-dialog";
 import { ProfileDrawer } from "@/core/components/ui/shared/profile-drawer";
+import { IMAGES } from "@/core/constants/images";
+import useAuthStore from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Reanimated, {
+    interpolate,
+    SharedValue,
+    useAnimatedStyle
+} from 'react-native-reanimated';
 
 const ReanimatedView = Reanimated.View;
 
@@ -127,6 +127,7 @@ const RightAction = ({ progress, handleDelete }: { progress: SharedValue<number>
 
 export default function ChatScreen() {
     const swipeableRef = useRef<any>(null);
+    const { user } = useAuthStore();
     const [show, setShow] = useState<boolean>(false)
     const { theme, isRTL } = useUserPreferencesStore()
     const { t } = useTranslation("common")
@@ -150,8 +151,7 @@ export default function ChatScreen() {
                 friction={2}
                 rightThreshold={40}
                 leftThreshold={40}
-                renderRightActions={isRTL ? (progress) => <RightAction progress={progress} handleDelete={() => setShow(true)} /> : undefined}
-                renderLeftActions={isRTL ? undefined : (progress) => <RightAction progress={progress} handleDelete={() => setShow(true)} />}
+                renderRightActions={(progress) => <RightAction progress={progress} handleDelete={() => setShow(true)} />}
             >
                 <Link href={"/chat/id12545555"} asChild>
                     <Pressable className="flex-row border-b py-4 items-center justify-around border-primary-500">
@@ -187,16 +187,19 @@ export default function ChatScreen() {
                     <View className="flex-row items-center ps-2 flex-1 h-12 overflow-hidden text-[#333] text-base border rounded-lg border-primary-500 me-1">
                         <Ionicons name="search-outline" size={24} color={isDark ? "white" : "black"} />
                         <TextInput
-                            placeholder={t("communication.search")}
+                            placeholder={`${t("search")}...`}
                             className="flex-1"
                             autoCapitalize="none"
                         />
                     </View>
-                    <MaterialCommunityIcons name="bell-ring-outline" size={24} color={isDark ? "white" : "black"} className="me-2" />
+                    <MaterialCommunityIcons name="bell-ring-outline" size={24} color={isDark ? "white" : "black"} className="me-1" />
                     <View className="rounded-full h-10 w-10">
                         <Image
-                            source={IMAGES.Mohamed}
-                            style={{ width: "100%", height: "100%", objectFit: "fill" }}
+                            source={user?.avatar
+                                ? { uri: user?.avatar.original_url }
+                                : IMAGES.DefaultAvatar}
+                            style={{ width: "100%", height: "100%" }}
+                            contentFit="fill"
                         />
                     </View>
                 </View>
@@ -206,6 +209,7 @@ export default function ChatScreen() {
                 <View className="w-dvw h-[1px] bg-primary-500 px-0 mx-0" />
 
                 <FlatList
+                    style={{ direction: "ltr" }}
                     data={listings}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
@@ -213,7 +217,12 @@ export default function ChatScreen() {
                     contentContainerStyle={{ paddingBottom: 200 }}
                 />
             </View>
-            <ConfirmDeleteDialog show={show} setShow={setShow} />
+            <ConfirmDeleteDialog
+                show={show}
+                setShow={setShow}
+                title="deleteMessage"
+                description="confirmDeleteConversation"
+            />
         </Container>
     )
 }

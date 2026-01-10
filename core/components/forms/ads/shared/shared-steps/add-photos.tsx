@@ -9,14 +9,16 @@ import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect } from "react";
 import { FieldValues } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ImageGallery from "../image-gallery";
 
 const MAX_IMAGES = 6;
 
-export default function AddPhotos<T extends FieldValues>({ t, setValue, getValue }: AdFormStepProps<T>) {
+export default function AddPhotos<T extends FieldValues>({ setValue, getValue }: AdFormStepProps<T>) {
     const { gallery, thumbnail, addPhoto, removePhoto, setAsThumbnail } = useAdPhotos(setValue, getValue, MAX_IMAGES)
     const { isRTL } = useUserPreferencesStore()
+    const { t } = useTranslation("common")
 
     useEffect(() => {
         (async () => {
@@ -47,7 +49,7 @@ export default function AddPhotos<T extends FieldValues>({ t, setValue, getValue
                     {
                         thumbnail?.uri ? (<View style={{ direction: isRTL ? "rtl" : "ltr" }}>
                             <Text className="text-xl font-inter-bold mb-1 dark:text-white">
-                                {t("addPhotos")}<Text className="text-error">*</Text>
+                                {t("createAd.addPhotos")}<Text className="text-error">*</Text>
                             </Text>
                             <View className="relative mr-2 mb-2" style={{ marginTop: isRTL ? 10 : 0 }}>
                                 <Image source={{ uri: thumbnail.uri }} style={{ width: "auto", height: 200, borderRadius: 8 }} contentFit="fill" />
@@ -59,25 +61,25 @@ export default function AddPhotos<T extends FieldValues>({ t, setValue, getValue
                                 </TouchableOpacity>
                             </View>
                             <Text className="ml-auto mr-4 font-semibold dark:text-white">
-                                {t("pickedXOofY", { pickedCount: gallery.length, totalCount: MAX_IMAGES })}
+                                {t("createAd.pickedXOofY", { pickedCount: gallery.length, totalCount: MAX_IMAGES })}
                             </Text>
                         </View>) : (
                             <View>
                                 <View className="gap-y-6">
-                                    <Text className="font-inter-semibold text-center text-3xl dark:text-white">{t("goodPicturesSellFaster")}</Text>
-                                    <Text numberOfLines={2} className="text-center dark:text-white">{t("capturePhoto")}</Text>
+                                    <Text className="font-inter-semibold text-center text-3xl dark:text-white">{t("createAd.goodPicturesSellFaster")}</Text>
+                                    <Text numberOfLines={2} className="text-center dark:text-white">{t("createAd.capturePhoto")}</Text>
                                 </View>
                                 <View className="mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                                     <Text className="text-xl font-inter-bold mb-1 dark:text-white">
-                                        {t("addPhotos")}<Text className="text-error">*</Text>
+                                        {t("createAd.addPhotos")}<Text className="text-error">*</Text>
                                     </Text>
-                                    <PickFromGallery label={t("selectFile")} addMedia={() => addPhoto(false, true, false)} />
+                                    <PickFromGallery label={t("createAd.selectFile")} addMedia={() => addPhoto(false, true, false)} />
                                 </View>
                             </View>
                         )
                     }
                     {
-                        gallery?.length < MAX_IMAGES && <TakePhotoButton label={t("openCameraTakePhoto")} addMedia={() => addPhoto(true, true, false)} />
+                        gallery?.length < MAX_IMAGES && <TakePhotoButton label={t("createAd.openCameraTakePhoto")} addMedia={() => addPhoto(true, true, false)} />
                     }
                     {gallery?.length < MAX_IMAGES && (
                         <View className="flex-row items-center justify-center">
@@ -86,14 +88,14 @@ export default function AddPhotos<T extends FieldValues>({ t, setValue, getValue
                             <View className="border border-gray-300 w-2/5" />
                         </View>
                     )}
-                    {gallery?.length < MAX_IMAGES && <PickFromGallerySM label={t("openGallery")} addMedia={() => addPhoto(false, false, true)} />}
+                    {gallery?.length < MAX_IMAGES && <PickFromGallerySM label={t("createAd.openGallery")} addMedia={() => addPhoto(false, false, true)} />}
                 </View>
 
                 <View className="mt-8 pb-8">
                     {
                         gallery?.length > 0 && <ImageGallery
                             data={gallery}
-                            mainImageLabel={t("MainPhoto")}
+                            mainImageLabel={t("createAd.MainPhoto")}
                             removePhoto={removePhoto}
                             setAsThumbnail={setAsThumbnail}
                         />

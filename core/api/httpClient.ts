@@ -36,17 +36,18 @@ httpClient.interceptors.response.use(
     const data = error.response?.data;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      console.log("Token session expired! refreshing...");
-      
       originalRequest._retry = true;
 
       try {
         const refreshToken = TokenService.getRefreshToken();
+        if (!refreshToken) {
+          TokenService.clearTokens();
+          onUnauthorized();
+          return;
+        }
         const { data } = await axios.post(
           process.env.EXPO_PUBLIC_API_URL + "/api/v1/auth/refresh",
-          {
-            token: refreshToken,
-          }
+          { refreshToken }
         );
 
         TokenService.setAccessToken(data.accessToken);

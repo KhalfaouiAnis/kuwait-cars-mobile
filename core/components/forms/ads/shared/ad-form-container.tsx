@@ -1,5 +1,6 @@
 import Container from "@/core/components/ui/container";
 import BackArrow from "@/core/components/ui/shared/back-arrow";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
 import { ReactNode } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -10,11 +11,10 @@ interface FormContainerProps {
     previous: () => string,
     reset: () => void,
     children: ReactNode,
-    isRTL?: boolean
-    isDark?: boolean
 }
 
-export default function AdFormContainer({ children, reset, resetLabel, previous, title, isRTL, isDark }: FormContainerProps) {
+export default function AdFormContainer({ children, reset, resetLabel, previous, title }: FormContainerProps) {
+    const { isRTL } = useUserPreferencesStore()
     const handlePrevious = () => {
         const result = previous()
         if (result === "route") {

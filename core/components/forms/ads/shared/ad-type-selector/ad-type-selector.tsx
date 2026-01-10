@@ -1,5 +1,6 @@
 import { AD_TYPES } from '@/core/constants/ad';
 import { DataItem } from '@/core/types/schema/shared';
+import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
 import { FlashList } from "@shopify/flash-list";
 import React, { useState } from 'react';
@@ -60,6 +61,11 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
                             handleSelect({
                                 ad_type: AD_TYPES.spare_parts,
                                 params: { regison: item.value, label: t(item.label) }
+                            })
+                        } else if (AD_TYPES.home_services === path[0]) {
+                            handleSelect({
+                                ad_type: AD_TYPES.home_services,
+                                params: { ad_category: item.value, label: t(item.label) }
                             })
                         } else {
                             handleSelect({ ad_type: item.value, params: { label: t(item.label), } })
@@ -160,25 +166,9 @@ export default function AdTypeSelector({ data, onChange, placeholder, selectedVa
 const styles = StyleSheet.create({
     wrapper: {
         height: 70,
-        boxShadow: [
-            {
-                offsetX: 0,
-                offsetY: 4,
-                blurRadius: 9,
-                spreadDistance: 0,
-                color: 'rgb(000 000 000 / 0.25)',
-            },
-        ],
+        ...boxShadow().button
     },
     selectButton: {
-        boxShadow: [
-            {
-                offsetX: 0,
-                offsetY: 4,
-                blurRadius: 4,
-                spreadDistance: 0,
-                color: 'rgb(000 000 000 / 0.25)',
-            },
-        ],
+        ...boxShadow(0, 4, 4).button
     }
 });

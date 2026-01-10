@@ -25,12 +25,11 @@ export const ProgressButton = ({ onPress, isPending, progress, title }: Props) =
             disabled={isPending}
             style={styles.button}
         >
-
             {
                 progress === 100 ? (
                     <ActivityIndicator size="small" color="black" />
                 ) : (
-                    <Text className='text-center text-xl font-inter-semibold'>{isPending ? `${progress}%` : title}</Text>
+                    <Text className='text-center text-lg font-inter-semibold'>{isPending ? `${progress}%` : title}</Text>
                 )
             }
 

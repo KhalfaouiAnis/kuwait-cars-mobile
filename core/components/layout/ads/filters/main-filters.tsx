@@ -2,6 +2,7 @@ import AppModal from "@/core/components/ui/dialog/modal";
 import { FilterConfigItem } from "@/core/constants/ad";
 import useSearchStore, { CombinedFilterKeys } from "@/core/store/search.store";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
@@ -18,6 +19,7 @@ interface Props {
 
 export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
     const { t } = useTranslation("common")
+    const { ad_type } = useLocalSearchParams<{ ad_type: string }>()
     const [activeKey, setActiveKey] = useState<keyof typeof filterConfig | null>(null);
     const { syncDraftToApplied, applyFilters, resetDraftFilter } = useSearchStore();
 
@@ -64,7 +66,9 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
                     <MaterialCommunityIcons name="sort" size={18} color={isDark ? "white" : "black"} />
                     <Text className="text-black dark:text-white">{t("sort.sortBy")}</Text>
                 </Pressable>
-                <Text className="text-black dark:text-white ms-auto me-3">Used Cars</Text>
+                {ad_type && (
+                    <Text className="text-black dark:text-white ms-auto me-3">{t(`adCategories.${ad_type}`)}</Text>
+                )}
             </View>
             <AppModal
                 visible={!!activeKey}

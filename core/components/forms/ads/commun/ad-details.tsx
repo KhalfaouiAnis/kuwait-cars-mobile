@@ -1,18 +1,27 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import Checkbox from "@/core/components/ui/input/checkbox";
+import RadioGroup from "@/core/components/ui/input/radio-group";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { CommunAdInterface } from "@/core/types/schema/ads/commun";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import ReceiveCall from "../shared/contact/receive-call";
+import WhatsappContact from "../shared/contact/whatsapp";
+import XCarCall from "../shared/contact/xcar-call";
+import XCarChat from "../shared/contact/xcar-chat";
 
 export default function AdDetails({ control, errors, setValue, getValue }: AdFormStepProps<CommunAdInterface>) {
     const [showSecondNumber, setShowSecondNumber] = useState(() => getValue?.("second_additional_number") !== undefined)
+    const { isRTL } = useUserPreferencesStore()
+    const { t } = useTranslation("common")
 
     return (
         <ScrollView
+            className="flex-1 px-2"
             showsVerticalScrollIndicator={false}
-            className="flex-1"
+            style={{ direction: isRTL ? "rtl" : "ltr" }}
             contentContainerStyle={{ paddingBottom: 10 }}>
             <View className="gap-y-4 mt-4">
                 <View className="relative">
@@ -21,7 +30,8 @@ export default function AdDetails({ control, errors, setValue, getValue }: AdFor
                         name="additional_number"
                         keyboardType="numeric"
                         extraPadding
-                        error={errors.additional_number?.message} placeholder="Add Additional Number" />
+                        error={errors.additional_number?.message}
+                        placeholder={t("createAd.AddAdditionalNumber")} />
                     {
                         !showSecondNumber && (
                             <TouchableOpacity
@@ -39,28 +49,27 @@ export default function AdDetails({ control, errors, setValue, getValue }: AdFor
                         readOnly={!showSecondNumber}
                         keyboardType="numeric"
                         extraPadding
-                        error={errors.additional_number?.message} placeholder="Add Additional Number" />
+                        error={errors.additional_number?.message}
+                        placeholder={t("createAd.AddAdditionalNumber")} />
                 </View>
 
-                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2 mt-6">
-                    <Ionicons name="logo-whatsapp" size={24} color="#25D366" />
-                    <Text className="dark:text-white">Contact via WhatsApp</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("contact_whatsapp", value)} checked={getValue?.("contact_whatsapp")} />
+                <View className="mt-4">
+                    <RadioGroup
+                        name="hide_license_plate"
+                        bordered
+                        control={control}
+                        label={t("createAd.Hidevehiclelicenseplate")}
+                        fullWidth
+                        options={[{ id: "Yes", label: t("yes"), value: true }, { id: "No", label: t("no"), value: false }]}
+                    />
+                    <Text className="text-sm text-gray-300 mt-1.5">{t("createAd.hideVehicleLicensePlateForUploadedImages")}</Text>
                 </View>
-                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
-                    <Ionicons name="call-outline" size={24} color="#25D366" />
-                    <Text className="dark:text-white">Receive Calls</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("receive_calls", value)} checked={getValue?.("receive_calls")} />
-                </View>
-                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
-                    <Ionicons name="call-outline" size={24} color="#00A6DA" />
-                    <Text className="dark:text-white">Receive Call via XCar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("xcar_calls", value)} checked={getValue?.("xcar_calls")} />
-                </View>
-                <View className="flex-row items-center justify-between border border-gray-200 dark:border-primary-500 p-2">
-                    <Ionicons name="chatbox-ellipses-outline" size={24} color="#00A6DA" />
-                    <Text className="dark:text-white">Chat via Xcar</Text>
-                    <Checkbox onValueChange={(value) => setValue?.("xcar_chat", value)} checked={getValue?.("xcar_chat")} />
+
+                <View className="mt-4 gap-y-4">
+                    <WhatsappContact label={t("createAd.ContactViaWhatsApp")} getValue={getValue} setValue={setValue} />
+                    <ReceiveCall label={t("createAd.ReceiveCalls")} getValue={getValue} setValue={setValue} />
+                    <XCarCall label={t("createAd.ReceiveCallViaXCar")} getValue={getValue} setValue={setValue} />
+                    <XCarChat label={t("createAd.ChatViaXcar")} getValue={getValue} setValue={setValue} />
                 </View>
             </View>
         </ScrollView>

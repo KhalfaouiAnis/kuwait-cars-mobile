@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 8,
-    boxShadow: boxShadow().button.boxShadow,
+    ...boxShadow(0, 4, 4).button,
   },
 });

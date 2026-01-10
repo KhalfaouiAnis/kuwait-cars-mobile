@@ -6,7 +6,7 @@ export default function useListSearch(list: any[], term: string) {
   useEffect(() => {
     const newData = data.filter((item) => item.label === term);
     setData(newData);
-  }, [term]);
+  }, [term, data]);
 
   return data;
 }

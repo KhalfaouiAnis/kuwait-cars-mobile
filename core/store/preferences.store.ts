@@ -1,6 +1,7 @@
 import { RTL_LANGUAGES, USER_PREFERENCES_STORAGE_KEY } from "@/core/constants";
-import i18n from "@/core/i18n/i18n";
-import { LanguageCode } from "@/core/types";
+// import i18n from "@/core/i18n/i18n";
+import { LanguageCode, ThemeType } from "@/core/types";
+import i18n from "i18next";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { zustandStorage } from "./storage";
@@ -8,10 +9,10 @@ import { zustandStorage } from "./storage";
 interface UserPreferencesState {
   lang: LanguageCode;
   isI18nReady: boolean;
-  theme: "light" | "dark" | "system";
+  theme: ThemeType;
   isRTL: boolean;
   toggleTheme: () => void;
-  setTheme: (theme: "light" | "dark" | "system") => void;
+  setTheme: (theme: ThemeType) => void;
   setLang: (newLang: LanguageCode) => void;
   setI18NReady: (ready: boolean) => void;
 }
@@ -20,7 +21,7 @@ const useUserPreferencesStore = create<UserPreferencesState>()(
   persist(
     (set) => ({
       lang: "ar",
-      theme: "system",
+      theme: "light",
       isI18nReady: false,
       isRTL: false,
       toggleTheme: () => {
@@ -47,6 +48,7 @@ const useUserPreferencesStore = create<UserPreferencesState>()(
   )
 );
 
+export const preferencesStore = useUserPreferencesStore;
 export default useUserPreferencesStore;
 
-export const currentLang = () => useUserPreferencesStore.getState().lang;
+export const currentLang = () => preferencesStore?.getState().lang;

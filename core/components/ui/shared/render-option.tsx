@@ -1,8 +1,9 @@
 import Checkbox from "@/core/components/ui/input/checkbox";
-import useUserPreferencesStore from "@/core/store/preferences.store";
+import { preferencesStore } from "@/core/store/preferences.store";
 import { ProvinceArea, SelectOption } from "@/core/types";
+import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 export const renderCategoryOption = (option: SelectOption) => (
     <View className="flex-row items-center py-3 my-1 mx-2 px-2 border-b border-gray-200">
@@ -26,7 +27,7 @@ export const renderProvinceAreaOption = (option: ProvinceArea, selected?: string
 
 export const renderYearOption = (option: SelectOption, selected?: string) => {
     return (
-        <View className="flex-row items-center py-3 my-1 mx-2 px-2" style={styles.selectButton}>
+        <View className="flex-row items-center py-3 my-1 mx-2 px-2" style={boxShadow(0, 4, 4).button}>
             <View className='flex-1 ms-2'>
                 <Text className="text-lg dark:text-white">{option.label}</Text>
             </View>
@@ -38,7 +39,7 @@ export const renderYearOption = (option: SelectOption, selected?: string) => {
 }
 
 export const renderColorOption = (option: SelectOption, selected?: string) => (
-    <View className="flex-row items-center py-3 my-1 mx-2 px-2" style={styles.selectButton}>
+    <View className="flex-row items-center py-3 my-1 mx-2 px-2" style={boxShadow(0, 4, 4).button}>
         <View className='flex-1 ms-2'>
             <Text className="text-lg dark:text-white">{option.label}</Text>
         </View>
@@ -49,11 +50,11 @@ export const renderColorOption = (option: SelectOption, selected?: string) => (
 )
 
 export const renderOption = (option: SelectOption, selected?: string | boolean) => {
-    const { isRTL } = useUserPreferencesStore.getState()
+    const isRTL = preferencesStore?.getState().isRTL
     const isSelected = (typeof selected === "boolean" && selected) || option.value === selected
 
     return (
-        <View className="flex-row items-center py-3 my-1 mx-2 px-2 dark:border-primary-500 dark:border" style={[styles.selectButton, { direction: isRTL ? "rtl" : "ltr" }]}>
+        <View className="flex-row items-center py-3 my-1 mx-2 px-2 dark:border-primary-500 dark:border" style={[boxShadow(0, 4, 4).button, { direction: isRTL ? "rtl" : "ltr" }]}>
             <View className='flex-1 ms-2'>
                 <Text className="text-lg dark:text-white">{option.label}</Text>
             </View>
@@ -63,18 +64,3 @@ export const renderOption = (option: SelectOption, selected?: string | boolean) 
         </View>
     )
 }
-
-
-const styles = StyleSheet.create({
-    selectButton: {
-        boxShadow: [
-            {
-                offsetX: 0,
-                offsetY: 4,
-                blurRadius: 4,
-                spreadDistance: 0,
-                color: 'rgb(000 000 000 / 0.25)',
-            },
-        ],
-    }
-});

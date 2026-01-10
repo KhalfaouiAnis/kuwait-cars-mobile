@@ -1,7 +1,7 @@
-// src/components/common/EmptyState.tsx
 import useSearchStore from '@/core/store/search.store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Props {
@@ -11,11 +11,12 @@ interface Props {
 }
 
 export const EmptyState = ({
-    title = "No results found",
-    description = "Try adjusting your filters or search term to find what you're looking for.",
+    title = "noResultsFound",
+    description = "adjustFilters",
     showReset = true
 }: Props) => {
     const resetAll = useSearchStore((state) => state.resetAll);
+    const { t } = useTranslation("common")
 
     return (
         <View className='flex-1 items-center justify-center p-10 mt-20'>
@@ -23,8 +24,12 @@ export const EmptyState = ({
                 <MaterialCommunityIcons name="magnify-close" size={60} color="#94A3B8" />
             </View>
 
-            <Text className='text-lg font-semibold text-center mb-3 text-gray-900'>{title}</Text>
-            <Text className='text-center mb-8 text-gray-700'>{description}</Text>
+            {title && (
+                <Text className='text-lg font-semibold text-center mb-3 text-gray-900'>{t(`advancedSearch.${title}`)}</Text>
+            )}
+            {description && (
+                <Text className='text-center mb-8 text-gray-700'>{t(`advancedSearch.${description}`)}</Text>
+            )}
 
             {
                 showReset && (
@@ -33,7 +38,7 @@ export const EmptyState = ({
                         onPress={resetAll}
                         activeOpacity={0.8}
                     >
-                        <Text className='font-inter-semibold text-base text-white'>Clear all filters</Text>
+                        <Text className='font-inter-semibold text-base text-white'>{t("advancedSearch.clearFilters")}</Text>
                     </TouchableOpacity>
                 )
             }

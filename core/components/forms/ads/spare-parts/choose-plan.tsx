@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import SubscriptionCard from "../shared/subscription-card";
 
-export default function ChoosePlan({ setValue, getValue, t }: AdFormStepProps<SparePartAdInterface>) {
+export default function ChoosePlan({ setValue, getValue }: AdFormStepProps<SparePartAdInterface>) {
     const [selectedPlan, setSelectedPlan] = useState<Omit<SubscriptionDetail, "adTypes" | "id"> | undefined>(() => getValue?.("plan"))
 
     const handleSelectPlan = (plan: SubscriptionDetail) => {
@@ -25,7 +25,6 @@ export default function ChoosePlan({ setValue, getValue, t }: AdFormStepProps<Sp
                         plan={plan}
                         isSelected={plan.type === selectedPlan?.type}
                         onSelect={handleSelectPlan}
-                        t={t}
                     />
                 ))}
             </View>

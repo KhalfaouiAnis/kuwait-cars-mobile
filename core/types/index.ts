@@ -1,4 +1,3 @@
-import { TFunction } from "i18next";
 import {
   Control,
   FieldErrors,
@@ -33,7 +32,8 @@ export enum UserRole {
   USER = "USER",
 }
 
-export type LanguageCode = "en" | "ar" | "fr" | "es" | "in" | "ur";
+export type ThemeType = "light" | "dark" | "system"; 
+export type LanguageCode = "en" | "ar" | "fr" | "es" | "hi" | "ur";
 export type Language = { code: LanguageCode; name: string; flag: string };
 
 export type TimerMode = "countdown" | "elapsed";
@@ -81,7 +81,6 @@ export interface AdFormStepProps<T extends FieldValues> {
   getValue?: UseFormGetValues<T>;
   setError?: UseFormSetError<T>;
   onSkip?: () => void;
-  t: TFunction;
 }
 
 export interface CloudinarySignRequestInterface {

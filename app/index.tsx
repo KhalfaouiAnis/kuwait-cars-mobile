@@ -13,8 +13,6 @@ import { useTranslation } from "react-i18next";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
-  console.log("test...", process.env.EXPO_PUBLIC_API_URL);
-  
   const router = useRouter();
   const { user, isGuest, isReady, _hasHydrated, } = authStore()
   const { setLang, lang: currentLang } = useUserPreferencesStore();
@@ -40,7 +38,7 @@ export default function Index() {
 
   if (!isReady || !_hasHydrated) return null;
 
-  if (user || isGuest) return <Redirect href={"/categories"} />
+  if (user || isGuest) return <Redirect href="/categories" />
 
   return (
     <Container backgroundColor="#FAED02">

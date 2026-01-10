@@ -21,7 +21,7 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: "es", name: "spanish", flag: "🇪🇸" },
   { code: "fr", name: "frensh", flag: "🇫🇷" },
   { code: "ur", name: "urdu", flag: "JO" },
-  { code: "in", name: "hindi", flag: "🇮🇳" },
+  { code: "hi", name: "hindi", flag: "🇮🇳" },
 ];
 
 export const RTL_LANGUAGES = ["ar", "ur"];

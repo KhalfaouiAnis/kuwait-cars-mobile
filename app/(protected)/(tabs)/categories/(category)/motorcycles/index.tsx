@@ -5,15 +5,17 @@ import { IMAGES } from "@/core/constants/images";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
 export default function MotorcycleCategoriesScreen() {
     const { ad_type } = useLocalSearchParams<{ ad_type: string }>()
+    const { t } = useTranslation("car_categories")
 
     return (
         <Container header={<MainHeader back />}>
             <View className="mt-4">
-                <Text className="text-center font-semibold text-xl">Bikes categories</Text>
+                <Text className="text-center font-semibold text-xl">{t("BikesCategories")}</Text>
             </View>
             <View className="mt-4 mx-2 p-4 flex-row justify-start gap-3 flex-wrap">
                 <View className="w-[48%]">
@@ -22,7 +24,7 @@ export default function MotorcycleCategoriesScreen() {
                         params={{ ad_type, ad_category: 'sport' }}
                         href="/categories/motorcycles/sport"
                         image={IMAGES.BrakesCategory}
-                        label="Sports motorcycles" />
+                        label={t("SportsMotorcycles")} />
                 </View>
                 <View className="w-[48%]">
                     <CategoryLink
@@ -30,7 +32,7 @@ export default function MotorcycleCategoriesScreen() {
                         params={{ ad_type, ad_category: 'quad' }}
                         href="/categories/motorcycles/quad"
                         image={IMAGES.EngineCoolingSystemCategory}
-                        label="Quad bikes" />
+                        label={t("QuadBikes")} />
                 </View>
                 <View className="w-[48%]">
                     <CategoryLink
@@ -38,7 +40,7 @@ export default function MotorcycleCategoriesScreen() {
                         params={{ ad_type, ad_category: 'bikes' }}
                         href="/categories/motorcycles/bikes"
                         image={IMAGES.AirConditionCategory}
-                        label="Bikes" />
+                        label={t("Bicycles")} />
                 </View>
                 <View className="w-[48%]">
                     <CategoryLink
@@ -46,7 +48,7 @@ export default function MotorcycleCategoriesScreen() {
                         params={{ ad_type, ad_category: 'scooter' }}
                         href="/categories/motorcycles/scooter"
                         image={IMAGES.LexusNX250Category}
-                        label="Scooter" />
+                        label={t("Scooter")} />
                 </View>
             </View>
             <View className="mt-4">

@@ -1,15 +1,14 @@
-import { BOX_SHADOW } from '@/core/utils/cn';
+import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
-import { TFunction } from 'i18next';
 import React, { useState } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { FlatList, Modal, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 
 type UnitSelectorProps<TForm extends FieldValues> = {
     control: Control<TForm>;
     name: FieldPath<TForm>;
     onSelect?: (code: string) => void;
-    t: TFunction
 }
 
 const UNIT_OPTIONS = [
@@ -17,8 +16,9 @@ const UNIT_OPTIONS = [
     { value: 'ML' },
 ];
 
-export default function UnitSelector<TForm extends FieldValues>({ control, name, onSelect, t }: UnitSelectorProps<TForm>) {
+export default function UnitSelector<TForm extends FieldValues>({ control, name, onSelect }: UnitSelectorProps<TForm>) {
     const [isOpen, setIsOpen] = useState(false);
+    const { t } = useTranslation("common")
     const { field: { onChange, value } } = useController({ control, name });
 
     const handleSelect = (unit: string) => {
@@ -33,21 +33,21 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
             onPress={() => handleSelect(value)}
             activeOpacity={0.7}
         >
-            <Text className="flex-1 text-base text-gray-700 font-medium">{t(value)}</Text>
+            <Text className="flex-1 text-base text-gray-700 font-medium">{t(`unit.${value}`)}</Text>
         </TouchableOpacity>
     );
 
     return (
         <View
             className='flex-1 items-center justify-center bordered-box px-6'
-            style={BOX_SHADOW.button}
+            style={boxShadow().button}
         >
             <TouchableOpacity
                 className="flex-row items-center gap-2 overflow-hidden"
                 onPress={() => setIsOpen(true)}
                 activeOpacity={0.7}
             >
-                <Text className="text-base text-gray-600 dark:text-white font-medium">{t(value) || t("KM")}</Text>
+                <Text className="text-base text-gray-600 dark:text-white font-medium">{t(`unit.${value}`) || t("unit.KM")}</Text>
                 <Ionicons name='chevron-down' size={20} color="gray" />
             </TouchableOpacity>
             <Modal

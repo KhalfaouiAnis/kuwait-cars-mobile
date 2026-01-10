@@ -1,17 +1,18 @@
-import useUserPreferencesStore from "@/core/store/preferences.store";
+import { preferencesStore } from "@/core/store/preferences.store";
 import i18n from "i18next";
 import HttpBackend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
 import { RTL_LANGUAGES, SUPPORTED_LANGUAGES } from "../constants";
 
 const API_BASE = process.env.EXPO_PUBLIC_API_URL + "/api/v1";
+const lng = preferencesStore?.getState().lang || "ar";
 
 i18n
   .use(HttpBackend)
   .use(initReactI18next)
   .init(
     {
-      lng: "ar",
+      lng,
       fallbackLng: "ar",
       supportedLngs: SUPPORTED_LANGUAGES.map((lang) => lang.code),
       ns: ["common", "auth"],
@@ -29,9 +30,8 @@ i18n
         useSuspense: false,
       },
     },
-    (err) => {
-      useUserPreferencesStore.getState().setLang("ar")
-      useUserPreferencesStore.getState().setI18NReady(true);
+    async (err) => {
+      preferencesStore?.getState().setI18NReady(true);
     }
   );
 

@@ -6,6 +6,7 @@ import GoogleButton from "@/core/components/ui/button/GoogleButton";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
 import { getGuestAccessToken } from "@/core/services/authentication/standard";
+import { TokenService } from "@/core/services/token-manager";
 import { authStore } from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import Fontisto from '@expo/vector-icons/Fontisto';
@@ -26,7 +27,9 @@ export default function Index() {
         if (!token) {
             return
         }
-        authStore.getState().createGuestSesssion(token)
+
+        TokenService.setAccessToken(token)
+        authStore?.getState().createGuestSesssion(token)
         router.push("/categories")
     }
 

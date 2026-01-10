@@ -8,7 +8,7 @@ const ProfileHeader = ({ title }: { title: string }) => {
     return (
         <View style={{ direction: isRTL ? "rtl" : 'ltr' }} className='mt-1 flex flex-row items-center px-4 mb-2'>
             <BackArrow />
-            <View className='flex-1 items-center ms-2'>
+            <View className='flex-1 items-center -ms-6'>
                 <Text className='font-inter-bold text-2xl text-center text-black dark:text-white'>{title}</Text>
             </View>
         </View>

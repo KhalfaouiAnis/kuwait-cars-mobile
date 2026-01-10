@@ -1,20 +1,25 @@
 import AdSelectInput from "@/core/components/ui/input/ad-select-input";
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
-import { CAR_COLORS, YEARS } from "@/core/constants";
+import { YEARS } from "@/core/constants";
+import useColors from "@/core/hooks/ad/useColors";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 import { renderOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
-export default function AdDetails({ control, errors, setValue, t, isDark }: AdFormStepProps<UsedCarAdInterface>) {
+export default function AdDetails({ control, errors, setValue, isDark }: AdFormStepProps<UsedCarAdInterface>) {
+    const CAR_COLORS = useColors()
     const { model, brand, ad_type } = useLocalSearchParams()
+    const { t } = useTranslation("common")
+    const { t: tBrands } = useTranslation("car_categories")
     const { isRTL } = useUserPreferencesStore()
 
     useEffect(() => {
@@ -31,17 +36,17 @@ export default function AdDetails({ control, errors, setValue, t, isDark }: AdFo
         >
             <View className="flex-row items-center justify-center w-full">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 text-error font-inter-medium text-lg">{t("requiredInformation")}</Text>
+                <Text className="px-2 text-error font-inter-medium text-lg">{t("createAd.requiredInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
-            <View className="gap-y-4 mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+            <View className="gap-y-4 mt-2" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <View>
                     <View className="flex-row items-center justify-between">
-                        <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
+                        <Text className="font-semibold mb-2 dark:text-white">{t("createAd.whatAreYouSelling")}</Text>
                         <Text className="text-sm text-gray-300">{t("adCategories.used_cars")}</Text>
                     </View>
                     <SelectedAdType
-                        label={`${brand}-${model}`}
+                        label={`${tBrands(brand)}-${tBrands(model)}`}
                         icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                     />
                 </View>
@@ -55,20 +60,21 @@ export default function AdDetails({ control, errors, setValue, t, isDark }: AdFo
                         isDark={isDark}
                         renderOption={(option, selected) => renderOption(option, selected as string)}
                         error={errors.year?.message}
-                        placeholder={t("Year")}
+                        placeholder={t("year")}
                     />
                 </View>
                 <View>
                     <AdSelectInput
                         control={control}
                         name="exterior_color"
+                        translatedValue
                         options={CAR_COLORS}
                         required
                         isDark={isDark}
                         isRTL={isRTL}
                         renderOption={(option, selected) => renderOption(option, selected as string)}
                         error={errors.exterior_color?.message}
-                        placeholder={t("exteriorColor")}
+                        placeholder={t("createAd.exteriorColor")}
                     />
                 </View>
                 <View className="flex-row gap-3 items-center">
@@ -78,37 +84,37 @@ export default function AdDetails({ control, errors, setValue, t, isDark }: AdFo
                             name="mileage"
                             required
                             error={errors.mileage?.message}
-                            placeholder={t("Mileage")}
+                            placeholder={t("createAd.Mileage")}
                             keyboardType="number-pad"
                         />
                     </View>
                     <View className="flex-shrink">
-                        <UnitSelector control={control} name="mileage_unit" t={t} />
+                        <UnitSelector control={control} name="mileage_unit" />
                     </View>
                 </View>
             </View>
-            <View className="flex-row items-center justify-center w-full mt-4">
+            <View className="flex-row items-center justify-center w-full mt-6">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 font-inter-medium text-lg dark:text-white">{t("optionalInformation")}</Text>
+                <Text className="px-2 font-inter-medium text-lg dark:text-white">{t("createAd.optionalInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
-            <View className="gap-y-4 py-1 mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+            <View className="gap-y-4 py-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <RadioGroup
                     name="fuel_type"
                     control={control}
-                    label={t("fuelType")}
+                    label={t("createAd.fuelType")}
                     fullWidth
                     options={[
-                        { id: "Petrol", label: t("Petrol"), value: "Petrol" },
-                        { id: "Diesel", label: t("diesel"), value: "Diesel" },
-                        { id: "Electric", label: t("Electric"), value: "Electric" },
-                        { id: "Hybrid", label: t("Hybrid"), value: "Hybrid" },
+                        { id: "Petrol", label: t("createAd.Petrol"), value: "Petrol" },
+                        { id: "Diesel", label: t("createAd.Diesel"), value: "Diesel" },
+                        { id: "Electric", label: t("createAd.Electric"), value: "Electric" },
+                        { id: "Hybrid", label: t("createAd.Hybrid"), value: "Hybrid" },
                     ]}
                 />
                 <RadioGroup
                     name="cylinders"
                     control={control}
-                    label={t("Cylinders")}
+                    label={t("createAd.Cylinders")}
                     options={[
                         { id: "2", label: "2", value: "2" },
                         { id: "4", label: "4", value: "4" },
@@ -122,7 +128,7 @@ export default function AdDetails({ control, errors, setValue, t, isDark }: AdFo
                 <RadioGroup
                     name="transmission"
                     control={control}
-                    label={t("Transmission")}
+                    label={t("transmission")}
                     bordered
                     fullWidth
                     options={[{ id: "auto", label: t("Auto"), value: "Auto" }, { id: "manual", label: t("Manual"), value: "Manual" }]}
@@ -130,7 +136,7 @@ export default function AdDetails({ control, errors, setValue, t, isDark }: AdFo
                 <RadioGroup
                     name="under_warranty"
                     control={control}
-                    label={t("underWarranty")}
+                    label={t("createAd.underWarranty")}
                     fullWidth
                     bordered
                     options={[{ id: "Yes", label: t("yes"), value: "Yes" }, { id: "No", label: t("no"), value: "No" }]}
@@ -138,11 +144,11 @@ export default function AdDetails({ control, errors, setValue, t, isDark }: AdFo
                 <RadioGroup
                     name="roof"
                     control={control}
-                    label={t("roof")}
+                    label={t("createAd.roof")}
                     options={[
-                        { id: "Sunroof", label: t("Sunroof"), value: "Sunroof" },
-                        { id: "Panoramic", label: t("Panoramic"), value: "Panoramic" },
-                        { id: "Convertible Roof", label: t("ConvertibleRoof"), value: "Convertible Roof" }
+                        { id: "Sunroof", label: t("createAd.Sunroof"), value: "Sunroof" },
+                        { id: "Panoramic", label: t("createAd.Panoramic"), value: "Panoramic" },
+                        { id: "Convertible Roof", label: t("createAd.ConvertibleRoof"), value: "ConvertibleRoof" }
                     ]}
                 />
             </View>

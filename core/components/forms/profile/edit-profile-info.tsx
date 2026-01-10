@@ -112,9 +112,8 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
                     name="province"
                     options={PROVINCES}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder={t("profile.yourProvince")}
-                    label={t("profile.yourProvince")}
-                    isDark={theme !== "light"}
+                    placeholder={t("yourProvince")}
+                    label={t("yourProvince")}
                     primary
                 />
                 <AreaSelector
@@ -122,9 +121,8 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
                     name="area"
                     options={Areas}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder={t("profile.Area")}
-                    label={t("profile.yourArea")}
-                    isDark={theme !== "light"}
+                    placeholder={t("area")}
+                    label={t("area")}
                     primary
                 />
                 <LocationPicker
@@ -132,8 +130,8 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
                     errors={errors}
                     isDark={theme !== "light"}
                     setValue={setValue}
+                    label={t("location")}
                     primary
-                    t={t}
                 />
             </View>
             <ProgressButton

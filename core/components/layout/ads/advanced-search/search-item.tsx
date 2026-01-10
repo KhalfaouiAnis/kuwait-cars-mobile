@@ -1,4 +1,4 @@
-import { BOX_SHADOW } from '@/core/utils/cn';
+import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
@@ -17,7 +17,7 @@ export default function SearchItem({ content, label, icon, isDark }: SearchItemP
     return (
         <View className="w-full">
             <Pressable
-                style={BOX_SHADOW.button}
+                style={boxShadow().button}
                 onPress={() => setShowModal(true)}
                 className={clsx('flex-row items-center px-2 py-4 dark:border dark:border-primary-500')}
             >

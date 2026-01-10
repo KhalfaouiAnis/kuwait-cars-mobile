@@ -76,7 +76,7 @@ export default function MyAdsScreen() {
                         <Text className="font-inter-semibold text-black dark:text-white">{item.title}</Text>
                         <Text className="font-inter-medium text-sm text-gray-400">{item.description}</Text>
                         <View className="flex-row items-center justify-between">
-                            <Text className="text-black dark:text-white">{item.province.province}</Text>
+                            <Text className="text-black dark:text-white">{t(`provinces.${item.province.province}`)}</Text>
                             <Text className="font-inter-medium text-gray-300 text-xs">{formatSmartDate(item.created_at)}</Text>
                         </View>
                     </View>
@@ -133,7 +133,7 @@ export default function MyAdsScreen() {
                                     ListEmptyComponent={!isLoading ? <EmptyState
                                         showReset={false}
                                         title=""
-                                        description="You don't have any ads yet."
+                                        description="noAdsYest"
                                     /> : null}
                                     ListFooterComponent={
                                         isFetchingNextPage ? <ActivityIndicator size="small" style={{ backgroundColor: "#FAED02" }} /> : null
@@ -143,7 +143,12 @@ export default function MyAdsScreen() {
                     }
                 </View>
             </View>
-            <ConfirmDeleteDialog show={showDeleteDialog} setShow={setShowDeleteDialog} />
+            <ConfirmDeleteDialog
+                show={showDeleteDialog}
+                setShow={setShowDeleteDialog}
+                title="deleteAd"
+                description="confirmDeleteAd"
+            />
         </Container>
     )
 }

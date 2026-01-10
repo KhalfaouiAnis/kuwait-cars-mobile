@@ -3,18 +3,25 @@ import { SettingsLink } from "@/core/components/ui/_links/settings-link";
 import Switch from "@/core/components/ui/button/switch";
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import useAuthStore from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AntDesign, Feather, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function ProfileScreen() {
     const { t } = useTranslation("common");
+    const router = useRouter()
     const { signOut, user } = useAuthStore();
     const { theme, toggleTheme } = useUserPreferencesStore()
+    const { protectAction } = useAuthGuard();
+
+    const handleEditProfile = () => {
+        protectAction(() => router.navigate("/profile-edit"))
+    }
 
     return (
         <Container
@@ -41,16 +48,16 @@ export default function ProfileScreen() {
                                 style={{ width: 75, height: 75, borderRadius: 50 }}
                                 contentFit="cover"
                             />
-                            <Pressable className="absolute -start-7 bottom-1 z-10 bg-white rounded-full p-2">
+                            <View className="absolute -start-7 bottom-1 z-10 bg-white rounded-full p-2">
                                 <Ionicons name="camera-outline" size={24} />
-                            </Pressable>
+                            </View>
                         </View>
-                        <Link href={"/profile-edit"} className="bg-primary-500 rounded-lg w-full mt-4">
+                        <TouchableOpacity onPress={(handleEditProfile)} className="bg-primary-500 rounded-lg w-full mt-4">
                             <View className="flex-row px-3 py-2 items-center justify-center gap-1">
                                 <Text className="font-inter-semibold text-sm">{t("profile.editProfile")}</Text>
                                 <Feather name="edit-3" size={16} color="black" />
                             </View>
-                        </Link>
+                        </TouchableOpacity>
                     </View>
                 </View>
 

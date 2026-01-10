@@ -7,7 +7,7 @@ import {
 } from "../shared";
 
 export const SparePartAdSchema = BaseAdSchema.extend({
-  price: z.coerce.number().min(0, "The price field is required"),
+  price: z.coerce.number({ message: "required" }),
   province: ProvinceSchema,
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),

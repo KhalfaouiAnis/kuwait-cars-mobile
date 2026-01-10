@@ -1,22 +1,24 @@
 import MoneySign from "@/assets/svg/plan-money-sign";
 import SubscriptionPlan from "@/assets/svg/subscription-plan";
 import { SubscriptionDetail } from "@/core/constants/ad";
+import { boxShadow } from "@/core/utils/cn";
 import { AntDesign } from "@expo/vector-icons";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
     plan: SubscriptionDetail,
     isSelected: boolean,
     onSelect: (plan: SubscriptionDetail) => void
-    t: (key: string) => string
 }
 
-export default function SubscriptionCard({ plan, isSelected, onSelect, t }: Props) {
+export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) {
+    const { t } = useTranslation("common")
     return (
         <View
             className={`bg-whitish rounded-2xl p-6 relative mt-10 border ${isSelected ? 'border-error' : 'border-gray-100 dark:border-primary-500'}`}
-                style={CARD_BOX_SHADOW.button}
-            >
+            style={boxShadow(0, 5, 10).button}
+        >
             <View className="absolute -top-[26px] -right-4 z-10">
                 <SubscriptionPlan price={plan.price} recColor={plan.id === "1" ? "#FF123D" : "#FAED02"} textColor={plan.id === "1" ? "white" : "black"} />
             </View>
@@ -42,23 +44,9 @@ export default function SubscriptionCard({ plan, isSelected, onSelect, t }: Prop
                 onPress={() => onSelect(plan)}
             >
                 <Text className="font-inter-semibold text-lg dark:text-white">
-                    {t("ChooseThisPlan")}
+                    {t("createAd.ChooseThisPlan")}
                 </Text>
             </TouchableOpacity>
         </View>
     )
 }
-
-export const CARD_BOX_SHADOW = StyleSheet.create({
-  button: {
-    boxShadow: [
-      {
-        offsetX: 0,
-        offsetY: 5,
-        blurRadius: 10,
-        spreadDistance: 0,
-        color: "rgb(000 000 000 / 0.25)",
-      },
-    ],
-  },
-});

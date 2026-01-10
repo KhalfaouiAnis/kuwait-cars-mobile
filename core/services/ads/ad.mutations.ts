@@ -17,15 +17,11 @@ export const useToggleFavorite = () => {
   return useMutation({
     mutationFn: (adId: string) => toggleFavorite(adId),
 
-    // Step 1: When mutate() is called
     onMutate: async (adId) => {
-      // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({ queryKey: ["ads"] });
 
-      // Snapshot the previous value
       const previousAds = queryClient.getQueryData(["ads"]);
 
-      // Optimistically update the cache
       queryClient.setQueryData(["ads"], (old: any) => {
         if (!old) return old;
         return {
@@ -39,20 +35,16 @@ export const useToggleFavorite = () => {
         };
       });
 
-      // Return a context object with the snapshotted value
       return { previousAds };
     },
 
-    // Step 2: If the mutation fails, use the context we returned above
     onError: (err, adId, context) => {
       if (context?.previousAds) {
         queryClient.setQueryData(["ads"], context.previousAds);
       }
-      // Show an error toast using Sonner-native
       toast.error("Could not update favorite. Please try again.");
     },
 
-    // Step 3: Always refetch after error or success to sync with server
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["ads"] });
     },
@@ -65,15 +57,11 @@ export const useFlag = () => {
   return useMutation({
     mutationFn: (adId: string) => flag(adId),
 
-    // Step 1: When mutate() is called
     onMutate: async (adId) => {
-      // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
       await queryClient.cancelQueries({ queryKey: ["ads"] });
 
-      // Snapshot the previous value
       const previousAds = queryClient.getQueryData(["ads"]);
 
-      // Optimistically update the cache
       queryClient.setQueryData(["ads"], (old: any) => {
         if (!old) return old;
         return {
@@ -87,20 +75,16 @@ export const useFlag = () => {
         };
       });
 
-      // Return a context object with the snapshotted value
       return { previousAds };
     },
 
-    // Step 2: If the mutation fails, use the context we returned above
     onError: (err, adId, context) => {
       if (context?.previousAds) {
         queryClient.setQueryData(["ads"], context.previousAds);
       }
-      // Show an error toast using Sonner-native
       toast.error("Could not flag the ad. Please try again.");
     },
 
-    // Step 3: Always refetch after error or success to sync with server
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["ads"] });
     },

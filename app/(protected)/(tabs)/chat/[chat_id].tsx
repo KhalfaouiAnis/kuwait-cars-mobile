@@ -1,10 +1,10 @@
 import Container from "@/core/components/ui/container";
 import { IMAGES } from "@/core/constants/images";
 import Feather from "@expo/vector-icons/Feather";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 
 import ChatHeader from "@/core/components/layout/header/chat-header";
-import { cn } from "@/core/utils/cn";
+import { boxShadow, cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
 import { Image } from "expo-image";
@@ -135,7 +135,7 @@ export default function ChatScreen() {
                         </Pressable>
                     </View>
                     <View
-                        style={styles.button}
+                        style={boxShadow(0, 0, 14, 3, "rgb(000 000 000 / 0.12)").button}
                         className="flex-row py-1 px-2 mx-4 items-center justify-between rounded-3xl bg-primary-500 opacity-95">
                         <View className="flex-1 flex-row items-center gap-x-3">
                             <Pressable hitSlop={4}>
@@ -159,17 +159,3 @@ export default function ChatScreen() {
         </Container>
     )
 }
-
-const styles = StyleSheet.create({
-    button: {
-        boxShadow: [
-            {
-                offsetX: 0,
-                offsetY: 0,
-                blurRadius: 14,
-                spreadDistance: 3,
-                color: "rgb(000 000 000 / 0.12)",
-            },
-        ],
-    },
-});

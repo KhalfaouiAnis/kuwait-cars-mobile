@@ -3,7 +3,7 @@ import {
   ACC_TOKEN_STORAGE_KEY,
   REFRESH_TOKEN_STORAGE_KEY,
 } from "@/core/constants";
-import useAuthStore from "@/core/store/auth.store";
+import { authStore } from "@/core/store/auth.store";
 import { storage } from "@/core/store/storage";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
@@ -27,7 +27,7 @@ export const handleGoogleLoginRequest = async () => {
 
     storage.set(ACC_TOKEN_STORAGE_KEY, accessToken);
     storage.set(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
-    useAuthStore.setState({
+    authStore.setState({
       user,
       authType: "GOOGLE",
     });

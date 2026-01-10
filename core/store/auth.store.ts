@@ -1,12 +1,13 @@
 import { queryClient } from "@/core/api/react-query";
-import { ACC_TOKEN_STORAGE_KEY, AUTH_STORAGE_KEY } from "@/core/constants";
+import { AUTH_STORAGE_KEY } from "@/core/constants";
 import { User } from "@/core/types";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { httpClient } from "../api/httpClient";
-import { storage, zustandStorage } from "./storage";
+import { TokenService } from "../services/token-manager";
+import { zustandStorage } from "./storage";
 
 interface AuthState {
   isReady: boolean;
@@ -35,7 +36,8 @@ const useAuthStore = create<AuthState>()(
       isGuest: false,
       bootstrapAsync: async () => {
         try {
-          const accessToken = storage.getString(ACC_TOKEN_STORAGE_KEY);
+          const accessToken = TokenService.getAccessToken();
+
           if (!accessToken) {
             set({ isReady: true, user: null, isGuest: false });
             return;
@@ -48,11 +50,14 @@ const useAuthStore = create<AuthState>()(
             set({ isReady: true });
           } else {
             httpClient
-              .get("/auth/me")
-              .then(({ data }) => set({ user: data, isReady: true }));
+              .get("/users/details")
+              .then(({ data }) =>
+                set({ user: data, isReady: true, isGuest: false })
+              )
+              .catch(() => get().signOut());
           }
         } catch {
-          authStore.getState().signOut();
+          get().signOut();
         }
       },
       setUser: (user) => {
@@ -62,9 +67,11 @@ const useAuthStore = create<AuthState>()(
         if (get().authType === "GOOGLE") {
           await GoogleSignin.signOut();
         }
+        TokenService.clearTokens();
         set({
           user: null,
           isGuest: false,
+          authType: "STANDARD",
           isReady: true,
         });
         queryClient.clear();
@@ -73,13 +80,14 @@ const useAuthStore = create<AuthState>()(
         set({
           user: null,
           isGuest: true,
+          isReady: true,
         });
       },
       setOtpTargetTime: (seconds) => {
         const targetTime = seconds ? Date.now() + seconds * 1000 : null;
         set({ otpTargetTime: targetTime });
       },
-      setHasHydrated: () => set({ _hasHydrated: true, }),
+      setHasHydrated: () => set({ _hasHydrated: true }),
     }),
     {
       name: AUTH_STORAGE_KEY,
@@ -87,6 +95,7 @@ const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         authType: state.authType,
         user: state.user,
+        isGuest: state.isGuest,
       }),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated();

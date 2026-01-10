@@ -14,6 +14,7 @@ import { SOUND_EFFECTS } from "@/core/constants/audio";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { ShowCarAdInterface } from "@/core/types/schema/ads/showCar";
 import { clsx } from "clsx";
+import { useTranslation } from "react-i18next";
 
 function soundSource(sound_effect: SoundEffectTypes) {
     if (sound_effect === 'mute') return;
@@ -26,8 +27,9 @@ function soundSource(sound_effect: SoundEffectTypes) {
     throw "Sound effect not supported"
 }
 
-export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepProps<ShowCarAdInterface>) {
+export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps<ShowCarAdInterface>) {
     const [showModal, setShowModal] = useState(false)
+    const { t } = useTranslation("common")
     const [currentSoundEffect, setCurrentSoundEffect] = useState<SoundEffectTypes>("mute")
     const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue, 45)
     const { isRTL } = useUserPreferencesStore()
@@ -69,7 +71,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                         <View className="rounded-full bg-[#EEEEEE] w-1/2 h-3" />
                     </View>
                     <TouchableOpacity className="flex-row items-center ms-6" onPress={onSkip}>
-                        <Text className="text-lg dark:text-white">{t("Skip")}</Text>
+                        <Text className="text-lg dark:text-white">{t("skip")}</Text>
                         <Ionicons name="chevron-forward" size={18} />
                     </TouchableOpacity>
                 </View>
@@ -78,22 +80,22 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                 !video?.uri && (
                     <View className="gap-y-8">
                         <View className="gap-y-2">
-                            <Text className="font-inter-semibold text-3xl text-center dark:text-white">{t("AttractMoreBuyers")}</Text>
+                            <Text className="font-inter-semibold text-3xl text-center dark:text-white">{t("createAd.AttractMoreBuyers")}</Text>
                             <Text className="text-center dark:text-white" numberOfLines={2}>
-                                {t("VideoClip", { minDuration: 5, maxDuration: 15 })}
+                                {t("createAd.VideoClip", { minDuration: 5, maxDuration: 15 })}
                             </Text>
                         </View>
                         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("AddVideos")}</Text>
-                            <PickFromGallery disabled={loading} label={t("selectFile")} video addMedia={() => addVideo(false)} />
+                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">{t("createAd.AddVideos")}</Text>
+                            <PickFromGallery disabled={loading} label={t("createAd.selectFile")} video addMedia={() => addVideo(false)} />
                         </View>
-                        <TakePhotoButton disabled={loading} label={t("openCameraTakeVideo")} addMedia={() => addVideo(true)} />
+                        <TakePhotoButton disabled={loading} label={t("createAd.openCameraTakeVideo")} addMedia={() => addVideo(true)} />
                         <View className="flex-row items-center justify-center">
                             <View className="border border-gray-300 w-2/5" />
-                            <Text className="px-2 dark:text-white">{t("Or")}</Text>
+                            <Text className="px-2 dark:text-white">{t("or")}</Text>
                             <View className="border border-gray-300 w-2/5" />
                         </View>
-                        <PickFromGallerySM label={t("openGallery")} addMedia={() => addVideo(false)} />
+                        <PickFromGallerySM label={t("createAd.openGallery")} addMedia={() => addVideo(false)} />
                     </View>
                 )
             }
@@ -101,7 +103,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                 video && video?.uri && (
                     <View className="gap-y-8">
                         <View>
-                            <Text className="text-xl font-inter-bold mb-2">{t("addVideoSoundEffect")}</Text>
+                            <Text className="text-xl font-inter-bold mb-2">{t("createAd.addVideoSoundEffect")}</Text>
                             <View className="relative w-full pr-2">
                                 <VideoPlayer source={video.uri} />
                                 <TouchableOpacity
@@ -121,7 +123,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                                     setCurrentSoundEffect("mute")
                                 }}
                             >
-                                <Text className="text-center font-inter-semibold">{t("soundEffects.silent")}</Text>
+                                <Text className="text-center font-inter-semibold">{t("createAd.soundEffects.silent")}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => handleSelectSoundEffect("effect_1")}
@@ -130,7 +132,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                                     "border-error": currentSoundEffect === "effect_1",
                                 })}
                             >
-                                <Text className="text-center font-inter-semibold">{t("soundEffects.Effect1")}</Text>
+                                <Text className="text-center font-inter-semibold">{t("createAd.soundEffects.Effect1")}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => handleSelectSoundEffect("effect_2")}
@@ -138,7 +140,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                                     "border-primary-500": currentSoundEffect !== "effect_2",
                                     "border-error": currentSoundEffect === "effect_2",
                                 })}>
-                                <Text className="text-center font-inter-semibold">{t("soundEffects.Effect2")}</Text>
+                                <Text className="text-center font-inter-semibold">{t("createAd.soundEffects.Effect2")}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => handleSelectSoundEffect("effect_3")}
@@ -146,7 +148,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                                     "border-primary-500": currentSoundEffect !== "effect_3",
                                     "border-error": currentSoundEffect === "effect_3",
                                 })}>
-                                <Text className="text-center font-inter-semibold">{t("soundEffects.Effect3")}</Text>
+                                <Text className="text-center font-inter-semibold">{t("createAd.soundEffects.Effect3")}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => handleSelectSoundEffect("effect_4")}
@@ -154,7 +156,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                                     "border-primary-500": currentSoundEffect !== "effect_4",
                                     "border-error": currentSoundEffect === "effect_4",
                                 })}>
-                                <Text className="text-center font-inter-semibold">{t("soundEffects.Effect4")}</Text>
+                                <Text className="text-center font-inter-semibold">{t("createAd.soundEffects.Effect4")}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => handleSelectSoundEffect("effect_5")}
@@ -162,7 +164,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                                     "border-primary-500": currentSoundEffect !== "effect_5",
                                     "border-error": currentSoundEffect === "effect_5",
                                 })}>
-                                <Text className="text-center font-inter-semibold">{t("soundEffects.Effect5")}</Text>
+                                <Text className="text-center font-inter-semibold">{t("createAd.soundEffects.Effect5")}</Text>
                             </TouchableOpacity>
                         </View>
                         <Modal
@@ -174,7 +176,7 @@ export default function AddVideo({ setValue, getValue, onSkip, t }: AdFormStepPr
                             <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
                                 <View className="flex-1 justify-center items-center bg-black/50">
                                     <View className="bg-white rounded-lg w-80 h-40 px-4 justify-center items-center overflow-hidden">
-                                        <Text>{t("soundEffects.playingSound")} {currentSoundEffect}</Text>
+                                        <Text>{t("createAd.soundEffects.playingSound")} {currentSoundEffect}</Text>
                                         <View className="w-full h-14 mt-2">
                                             <AudioPlayer source={soundSource(currentSoundEffect)} />
                                         </View>

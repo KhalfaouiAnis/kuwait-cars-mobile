@@ -7,20 +7,22 @@ import {
 } from "../shared";
 
 export const UsedCarAdSchema = BaseAdSchema.extend({
-  price: z.coerce.number().min(0, "The price field is required"),
+  price: z.coerce
+    .number({ message: "required" })
+    .min(0, { message: "required" }),
   province: ProvinceSchema,
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
 
-  brand: z.string().min(1, "Brand is required"),
-  model: z.string().min(1, "Model is required"),
+  brand: z.string({ message: "required" }),
+  model: z.string({ message: "required" }),
 
   year: z.coerce
-    .number()
-    .min(0, "Year is required")
+    .number({ message: "required" })
+    .min(0)
     .max(new Date().getFullYear()),
-  exterior_color: z.string({ message: "Color is required" }).min(1),
-  mileage: z.coerce.number().min(1, "Mileage is required"),
+  exterior_color: z.string({ message: "required" }),
+  mileage: z.coerce.number({ message: "required" }),
   mileage_unit: z.string().optional(),
 
   fuel_type: z.string().optional(),
@@ -28,9 +30,6 @@ export const UsedCarAdSchema = BaseAdSchema.extend({
   transmission: z.string().optional(),
   under_warranty: z.coerce.boolean().optional(),
   roof: z.string().optional(),
-
-  hide_license_plate: z.coerce.boolean().optional().default(false),
-
 });
 
 export type UsedCarAdInterface = z.infer<typeof UsedCarAdSchema>;

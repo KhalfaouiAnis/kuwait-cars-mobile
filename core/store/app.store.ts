@@ -22,7 +22,6 @@ export const useAppStore = create<AppState>((set) => ({
         InterSemiBold: Inter_SemiBold,
         InterBold: Inter_Bold,
       });
-
       await fontPromise;
     } catch (e) {
       console.error("App bootstrap failed", e);

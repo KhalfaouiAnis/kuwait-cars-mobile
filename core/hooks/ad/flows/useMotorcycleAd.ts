@@ -27,9 +27,9 @@ export function useMotorcycleAd() {
     getValues,
   } = useFormHook(MotorcycleAdSchema, {
     defaultValues: {
-      ad_category: "sport motorcycles",
-      title: "title",
-      price: 222,
+      ad_category: "sport",
+      hide_license_plate: false,
+      title: "",
       mileage_unit: "KM",
       thumbnail: undefined,
       images: [],

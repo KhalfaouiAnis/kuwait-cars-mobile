@@ -27,8 +27,9 @@ export function useCommunAd() {
     getValues,
   } = useFormHook(CommunAdSchema, {
     defaultValues: {
-      title: "title",
-      description: "description",
+      title: "",
+      description: "",
+      hide_license_plate: false,
       thumbnail: undefined,
       images: [],
       video: undefined,

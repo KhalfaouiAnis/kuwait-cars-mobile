@@ -1,4 +1,4 @@
-import { BOX_SHADOW } from '@/core/utils/cn';
+import { boxShadow } from '@/core/utils/cn';
 import React, { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 
@@ -10,7 +10,7 @@ interface SelectedAdTypeProps {
 export default function SelectedAdType({ label, icon }: SelectedAdTypeProps) {
     return (
         <View className='flex-row items-center gap-2 p-3 bordered-box'
-            style={BOX_SHADOW.button}
+            style={boxShadow().button}
         >
             <View className='items-center justify-center'>
                 {icon}

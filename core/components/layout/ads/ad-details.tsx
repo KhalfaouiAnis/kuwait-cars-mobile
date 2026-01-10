@@ -4,7 +4,7 @@ import { Image } from "expo-image";
 import { ScrollView, Text, View } from 'react-native';
 
 import { FavoriteButton } from "@/core/components/ui/button/favorite-button";
-import { authStore } from "@/core/store/auth.store";
+import useAuthStore from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdvertisementInterface } from "@/core/types";
 import { formatSmartDate } from "@/core/utils/date";
@@ -18,7 +18,8 @@ import { WhatsappCTA } from "../communication/ad-cta/whatsapp";
 export default function AdvertisementDetails({ adDetail }: { adDetail: AdvertisementInterface }) {
     const { t } = useTranslation("common")
     const { isRTL, theme } = useUserPreferencesStore()
-    const user = authStore?.getState()?.user
+    const user = useAuthStore(state => state.user)
+
     const isDark = theme !== "light"
 
     const thumbnail = adDetail.media.find(pic => pic.media_type === "THUMBNAIL")?.transformed_url
@@ -47,7 +48,7 @@ export default function AdvertisementDetails({ adDetail }: { adDetail: Advertise
                         <View className="flex-row items-center">
                             <Ionicons name="location-outline" size={22} color={isDark ? "white" : "black"} />
                             <Text className="font-inter text-base dark:text-white">
-                                {adDetail.area ? adDetail.area.area : adDetail.province.province}
+                                {adDetail.area ? t(`areas.${adDetail.area.area}`) : t(`provinces.${adDetail.province.province}`)}
                             </Text>
                             <Text className="font-inter text-gray-400 ms-1">
                                 {user && distanceToMyLocation(user, adDetail)}km
@@ -84,7 +85,7 @@ export default function AdvertisementDetails({ adDetail }: { adDetail: Advertise
                         <View className="flex-row items-center border border-primary-500 rounded-lg p-2 gap-x-2">
                             <Image
                                 contentFit="cover"
-                                source={ adDetail.user?.avatar?.original_url ? { uri: adDetail.user?.avatar?.original_url } : IMAGES.DefaultAvatar}
+                                source={adDetail.user?.avatar?.original_url ? { uri: adDetail.user?.avatar?.original_url } : IMAGES.DefaultAvatar}
                                 style={{ borderRadius: 50, width: 40, height: 40 }} />
                             <View>
                                 <Text className="font-inter-semibold dark:text-white">{adDetail.user?.fullname}</Text>

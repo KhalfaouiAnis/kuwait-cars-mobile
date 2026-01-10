@@ -11,14 +11,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import { useWatch } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 import LocationPicker from "../../../layout/location/location-picker";
 import { renderProvinceAreaOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
 import { StaticMapPreview } from "../shared/static-map-preview";
 
-export default function PostAd({ control, setValue, errors, isDark, t }: AdFormStepProps<SparePartAdInterface>) {
-    const { ad_type, region, label } = useLocalSearchParams<{ ad_type: string, region: string, label: string }>()
+export default function PostAd({ control, setValue, errors, isDark }: AdFormStepProps<SparePartAdInterface>) {
+    const { ad_type, label } = useLocalSearchParams<{ ad_type: string, region: string, label: string }>()
+    const { t } = useTranslation("common")
     const { isRTL } = useUserPreferencesStore()
 
     const province = useWatch({ control, name: "province" })
@@ -35,42 +37,40 @@ export default function PostAd({ control, setValue, errors, isDark, t }: AdFormS
         >
             <View className="mb-2">
                 <View className="flex-row items-center justify-between">
-                    <Text className="font-semibold mb-2 dark:text-white">{t("whatAreYouSelling")}</Text>
-                    <Text className="text-sm text-gray-300">{t("adCategories.used_cars")}</Text>
+                    <Text className="font-semibold mb-2 dark:text-white">{t("createAd.whatAreYouSelling")}</Text>
+                    <Text className="text-sm text-gray-300">{t("adCategories.spare_parts")}</Text>
                 </View>
                 <SelectedAdType
-                    label={`${region} - ${label}`}
+                    label={label}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>
             <View>
-                <Text className="font-semibold dark:text-white mb-1">{t("WhereIsYourListing")}</Text>
+                <Text className="font-semibold dark:text-white mb-1">{t("createAd.WhereIsYourListing")}</Text>
                 <ProvinceSelector
                     control={control}
                     name="province"
                     required
-                    isDark={isDark}
                     options={PROVINCES}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder={t("YourProvince")}
+                    placeholder={t("yourProvince")}
                 />
             </View>
             <View className="mt-4">
                 <AreaSelector
                     control={control}
                     name="area"
-                    isDark={isDark}
                     options={Areas}
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
-                    placeholder={t("Area")}
+                    placeholder={t("area")}
                 />
-                <View><Text className="text-center text-grayish my-1">{t("Or")}</Text></View>
+                <View><Text className="text-center text-grayish my-1">{t("or")}</Text></View>
                 <LocationPicker
                     control={control}
                     errors={errors}
                     isDark={isDark}
                     setValue={setValue}
-                    t={t}
+                    label={t("location")}
                 />
             </View>
             {province?.latitude &&
@@ -82,29 +82,29 @@ export default function PostAd({ control, setValue, errors, isDark, t }: AdFormS
                 control={control}
                 name="price"
                 error={errors.price?.message}
-                placeholder={t("WriteYourPrice")}
+                placeholder={t("createAd.WriteYourPrice")}
                 required
-                label={t("Price")}
+                label={t("createAd.Price")}
                 keyboardType="number-pad"
                 extraPadding
             />
             <InputWithSpeech
                 control={control}
-                label={t("Title")}
+                label={t("createAd.Title")}
                 name="title"
                 required
                 maxLength={30}
                 error={errors.title?.message}
-                placeholder={t("WriteYourAdvertisementTitle")}
+                placeholder={t("createAd.WriteYourAdvertisementTitle")}
             />
             <TextAreaSpeech
                 control={control}
-                label={t("Description")}
+                label={t("description")}
                 name="description"
                 maxLength={500}
                 required
                 error={errors.description?.message}
-                placeholder={t("WriteYourAdvertisementDescription")}
+                placeholder={t("createAd.WriteYourAdvertisementDescription")}
             />
         </ScrollView>
     )

@@ -62,12 +62,13 @@ export const MultiFileSchema = (customMessage?: string) =>
 
 export const BaseAdSchema = z.object({
   ad_type: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]], {
-    required_error: "The Ad type is required",
+    message: "required",
   }),
-  title: z.string().min(3, "The title field is required"),
-  description: z.string().min(3, "The description field is required"),
+  ad_category: z.string().optional(),
+  title: z.string({ message: "required" }),
+  description: z.string({ message: "required" }),
   plan: SubscriptionPlanSchema,
-  thumbnail: createFileSchema("Thumbnail is required"),
+  thumbnail: createFileSchema("required"),
   images: MultiFileSchema("Image must be valid file under 5MB").optional(),
   video: VideoSchema.nullish(),
 
@@ -78,6 +79,7 @@ export const BaseAdSchema = z.object({
   receive_calls: z.coerce.boolean().optional(),
   xcar_calls: z.coerce.boolean().optional(),
   xcar_chat: z.coerce.boolean().optional(),
+  hide_license_plate: z.coerce.boolean().optional().default(false),
 });
 
 export const MediaSchema = z.object({

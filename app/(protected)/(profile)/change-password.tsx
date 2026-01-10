@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 
 export default function ChangePasswordScreen() {
     const { t } = useTranslation("common");
-
     const { theme } = useUserPreferencesStore()
 
     return (

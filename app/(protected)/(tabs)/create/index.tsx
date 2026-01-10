@@ -19,6 +19,7 @@ export default function NewAdScreen() {
         if (!adType) return;
 
         const { ad_type, params } = adType
+
         const pathname = getPathname(ad_type)
 
         router.push({ pathname: pathname as any, params: { ...params, ad_type } })

@@ -1,6 +1,6 @@
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { AreaOption, ProvinceArea } from '@/core/types';
-import { BOX_SHADOW } from '@/core/utils/cn';
+import { boxShadow } from '@/core/utils/cn';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
@@ -16,14 +16,13 @@ type AreaSelectorProps<TForm extends FieldValues> = {
     placeholder?: string;
     error?: string;
     label?: string;
-    isDark?: boolean
     primary?: boolean
 }
 
-export default function AreaSelector<TForm extends FieldValues>({ control, name, error, options, renderOption, label, isDark, placeholder, primary }: AreaSelectorProps<TForm>) {
+export default function AreaSelector<TForm extends FieldValues>({ control, name, error, options, renderOption, label, placeholder, primary }: AreaSelectorProps<TForm>) {
     const { t } = useTranslation("common")
-    const { isRTL } = useUserPreferencesStore()
-
+    const { isRTL, theme } = useUserPreferencesStore()
+    const isDark = theme !== "light"
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
 
@@ -47,7 +46,7 @@ export default function AreaSelector<TForm extends FieldValues>({ control, name,
                     "border-primary-500 rounded-lg border": primary,
                     "border-grayish": !primary && !error,
                 })}
-                style={primary ? undefined : BOX_SHADOW.button}
+                style={primary ? undefined : boxShadow().button}
             >
                 <View className='flex-row items-center gap-2'>
                     <MaterialIcons name="location-city" size={20} color={isDark ? "white" : "gray"} />

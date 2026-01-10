@@ -1,6 +1,6 @@
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { ProvinceArea, ProvinceOption } from '@/core/types';
-import { BOX_SHADOW } from '@/core/utils/cn';
+import { boxShadow } from '@/core/utils/cn';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
@@ -13,18 +13,17 @@ type ProvinceSelectorProps<TForm extends FieldValues> = {
     control: Control<TForm>;
     renderOption: (option: ProvinceArea, selected?: string) => ReactNode
     options: ProvinceOption[]
-    defaultValue?: string;
     placeholder?: string;
     required?: boolean;
     error?: string;
     label?: string;
-    isDark?: boolean
     primary?: boolean
 }
 
-export default function ProvinceSelector<TForm extends FieldValues>({ control, name, error, options, renderOption, label, required, isDark, placeholder, primary }: ProvinceSelectorProps<TForm>) {
+export default function ProvinceSelector<TForm extends FieldValues>({ control, name, error, options, renderOption, label, required, placeholder, primary }: ProvinceSelectorProps<TForm>) {
     const { t } = useTranslation("common")
-    const { isRTL } = useUserPreferencesStore()
+    const { isRTL, theme } = useUserPreferencesStore()
+    const isDark = theme !== "light"
 
     const [showModal, setShowModal] = useState(false);
     const { field: { onChange, value } } = useController({ control, name });
@@ -44,12 +43,12 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
             {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}
-                className={clsx('flex-row items-center py-4 ps-3 pe-2 justify-between border dark:border-primary-500 bg-whitish dark:bg-darkish', {
+                className={clsx('flex-row items-center py-4 ps-3 pe-2 justify-between border dark:border-primary-500 dark:bg-darkish', {
                     "border-error": error,
                     "border-primary-500 rounded-lg border": primary,
                     "border-grayish": !primary && !error,
                 })}
-                style={primary ? undefined : BOX_SHADOW.button}
+                style={primary ? undefined : boxShadow().button}
             >
                 <View className='flex-row items-center gap-2'>
                     <MaterialCommunityIcons name="town-hall" size={20} color={isDark ? "white" : "gray"} />
@@ -68,9 +67,9 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
             </Pressable>
             {error && <Text className="text-error text-sm ms-2">{error}</Text>}
             <Modal
+                transparent
                 visible={showModal}
                 animationType="fade"
-                transparent
                 onRequestClose={() => setShowModal(false)}
             >
                 <TouchableWithoutFeedback onPress={() => setShowModal(false)}>

@@ -27,9 +27,8 @@ export function useSparePartAd() {
     getValues,
   } = useFormHook(SparePartAdSchema, {
     defaultValues: {
-      title: "title",
-      description: "description",
-      price: 2555,
+      title: undefined,
+      description: undefined,
       thumbnail: undefined,
       images: [],
       video: undefined,
@@ -37,6 +36,7 @@ export function useSparePartAd() {
       receive_calls: true,
       xcar_calls: true,
       xcar_chat: true,
+      hide_license_plate: false,
       ad_type: "spare_parts",
     },
   });

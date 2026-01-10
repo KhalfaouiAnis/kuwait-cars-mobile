@@ -1,6 +1,7 @@
 import { IMAGES } from '@/core/constants/images';
+import { boxShadow } from '@/core/utils/cn';
 import { Image } from 'expo-image';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import BackArrow from '../../ui/shared/back-arrow';
 import { BlockCTA } from '../communication/ad-cta/block-user';
 import { CallCTA } from '../communication/ad-cta/call';
@@ -12,7 +13,7 @@ const ChatHeader = () => {
         <View className='mt-1 flex-row items-center justify-center px-4 mb-2'>
             <BackArrow />
             <View
-                style={styles.wrapper}
+                style={boxShadow(0, 4, 4).button}
                 className='flex-row gap-1 items-center justify-center border border-primary-500 rounded-xl py-2'>
                 <View className="rounded-full items-center justify-center p-1 me-1">
                     <Image source={IMAGES.AvatarVideoBoy} style={{ width: 40, height: 40 }} contentFit="contain" />
@@ -34,17 +35,3 @@ const ChatHeader = () => {
 };
 
 export default ChatHeader;
-
-const styles = StyleSheet.create({
-    wrapper: {
-        boxShadow: [
-            {
-                offsetX: 0,
-                offsetY: 4,
-                blurRadius: 4,
-                spreadDistance: 0,
-                color: "rgb(000 000 000 / 0.25)",
-            },
-        ],
-    },
-});

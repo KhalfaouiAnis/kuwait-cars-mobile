@@ -1,8 +1,9 @@
 import { useSpeechToForm } from '@/core/hooks/shared/use-speech';
-import { BOX_SHADOW } from '@/core/utils/cn';
+import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
 import { ReactNode } from "react";
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
 
 type AudioInputProps<TForm extends FieldValues> = TextInputProps & {
@@ -16,6 +17,7 @@ type AudioInputProps<TForm extends FieldValues> = TextInputProps & {
 };
 
 export default function InputWithSpeech<TForm extends FieldValues>({ control, name, error, icon, required, label, ...props }: AudioInputProps<TForm>) {
+    const { t } = useTranslation("common")
     const {
         field: { onChange, value },
     } = useController({
@@ -29,7 +31,7 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
         <View>
             {label && <Text className="text-base font-semibold mb-1 dark:text-white">{label}</Text>}
             <View className='flex-row items-center justify-between p-3 bordered-box'
-                style={[styles.container, BOX_SHADOW.button]}
+                style={[styles.container, boxShadow().button]}
             >
                 {
                     icon && <View className='ms-2 items-center'>
@@ -60,7 +62,7 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
             </View>
             {
                 props.maxLength && (
-                    <Text className='ms-auto mt-1 text-sm text-gray-300'>Left: {props.maxLength - (value?.toString().length || 0)}</Text>
+                    <Text className='ms-auto mt-1 text-sm text-gray-300'>{t("textLeft", { count: props.maxLength - (value?.toString().length || 0) })}</Text>
                 )
             }
         </View>

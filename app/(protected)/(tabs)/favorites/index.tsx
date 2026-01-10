@@ -5,32 +5,36 @@ import Container from "@/core/components/ui/container";
 import { EmptyState } from "@/core/components/ui/shared/empty-state";
 import { useMyFavoritedAdsQuery } from "@/core/services/ads/ad.queries";
 import useUserPreferencesStore from "@/core/store/preferences.store";
+import { useTranslation } from "react-i18next";
 import { FlatList, Text, View } from 'react-native';
 
 export default function FavoritesScreen() {
     const { theme } = useUserPreferencesStore()
+    const { t } = useTranslation("common")
     const { data, isLoading } = useMyFavoritedAdsQuery();
-
-    if (isLoading) return <AdSkeletonList />;
 
     return (
         <Container header={<MainHeader drawer back={false} />}>
             <View className="w-full px-2 mt-6">
                 <View className="flex-row items-center justify-center mb-6">
-                    <Text className="font-inter-bold text-center text-3xl text-black dark:text-white">My Favorites</Text>
+                    <Text className="font-inter-bold text-center text-3xl text-black dark:text-white">{t("profile.myFavories")}</Text>
                 </View>
-                <FlatList
-                    data={data}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) => <View className="mb-2 me-1">
-                        <Advertisement data={item} view="vertical" isDark={theme !== "light"} />
-                    </View>}
-                    contentContainerStyle={{ paddingBottom: 180 }}
-                    showsVerticalScrollIndicator={false}
-                    className="bg-transparent me-2"
-                    removeClippedSubviews={false}
-                    ListEmptyComponent={!isLoading ? <EmptyState showReset={false} title="" description="You don't have any favorited ads." /> : null}
-                />
+                {
+                    isLoading ? <AdSkeletonList /> : (
+                        <FlatList
+                            data={data}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => <View className="mb-2 me-1">
+                                <Advertisement data={item} view="vertical" isDark={theme !== "light"} />
+                            </View>}
+                            contentContainerStyle={{ paddingBottom: 180 }}
+                            showsVerticalScrollIndicator={false}
+                            className="bg-transparent me-2"
+                            removeClippedSubviews={false}
+                            ListEmptyComponent={!isLoading ? <EmptyState showReset={false} title="" description="noFavoritedAds" /> : null}
+                        />
+                    )
+                }
             </View>
         </Container>
     )

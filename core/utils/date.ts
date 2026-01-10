@@ -4,7 +4,8 @@ import {
   formatDistanceToNow,
   lastDayOfYear,
 } from "date-fns";
-import { ar, enUS } from "date-fns/locale";
+import { ar, enUS, es, fr, hi, uz } from "date-fns/locale";
+import { LanguageCode } from "../types";
 
 export const generateYears = (
   startYear: number = 1985,
@@ -17,7 +18,7 @@ export const generateYears = (
   return years;
 };
 
-const locales = { enUS, ar };
+const locales = { en: enUS, ar, fr, es, hi, ur: uz };
 
 export function formatPassedTime(
   date: string | number | Date,
@@ -25,14 +26,22 @@ export function formatPassedTime(
 ) {
   return formatDistanceToNow(date, {
     addSuffix: true,
-    // locale: locales[targetLocale],
+    locale: locales[targetLocale as LanguageCode],
   });
 }
 
-export const formatSmartDate = (date: Date | string | number): string => {
+export const formatSmartDate = (
+  date: Date | string | number,
+  targetLocale: LanguageCode = "ar"
+): string => {
   const now = new Date();
-  const monthsUntilYearEnd = differenceInCalendarMonths(lastDayOfYear(now), now);
+  const monthsUntilYearEnd = differenceInCalendarMonths(
+    lastDayOfYear(now),
+    now
+  );
   const pattern = monthsUntilYearEnd > 4 ? "MMMM d" : "MMMM d, yyyy";
 
-  return format(new Date(date), pattern);
+  return format(new Date(date), pattern, {
+    locale: locales[targetLocale],
+  });
 };
