@@ -21,13 +21,13 @@ export default function ForgotPasswordScreen() {
             <Text numberOfLines={2} ellipsizeMode="tail" className="mt-6 text-base text-center dark:text-white px-4">
                 {t("emailToResetPassword")}
             </Text>
-            <View className="pt-6 px-4">
+            <View className="py-6 px-4">
                 <InputWithIcon
                     control={control}
                     name="phone"
                     error={errors.phone?.message}
                     keyboardType="phone-pad"
-                    customIcon={<Ionicons name="logo-whatsapp" size={20} color="#25D366" className="mr-2" />}
+                    customIcon={<Ionicons name="logo-whatsapp" size={20} color="#25D366" className="ms-2" />}
                     placeholder={t("enterWhatsappNumber")}
                 />
                 <Text className="my-2 text-gray-400 text-base text-center">{t("or")}</Text>

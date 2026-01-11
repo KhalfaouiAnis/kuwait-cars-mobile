@@ -41,7 +41,7 @@ export default function ProvinceSelector<TForm extends FieldValues>({ control, n
 
     return (
         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
-            {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
+            {label && <Text className="text-base font-semibold ps-6 mb-1 dark:text-white text-black">{label}</Text>}
             <Pressable onPress={() => setShowModal(true)}
                 className={clsx('flex-row items-center py-4 ps-3 pe-2 justify-between border dark:border-primary-500 dark:bg-darkish', {
                     "border-error": error,

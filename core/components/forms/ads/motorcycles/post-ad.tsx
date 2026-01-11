@@ -20,6 +20,7 @@ import { StaticMapPreview } from "../shared/static-map-preview";
 export default function PostAd({ control, errors, isDark, setValue }: AdFormStepProps<MotorcycleAdInterface>) {
     const { ad_category, brand } = useLocalSearchParams<{ brand: string, ad_category: string }>()
     const { isRTL } = useUserPreferencesStore()
+    const { t: tBrands } = useTranslation("car_categories")
     const { t } = useTranslation("common")
 
     const province = useWatch({ control, name: "province" })
@@ -38,7 +39,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                     <Text className="text-sm text-gray-300">{t("adCategories.motorcycles")}</Text>
                 </View>
                 <SelectedAdType
-                    label={`${ad_category}-${brand}`}
+                    label={`${tBrands(ad_category)}-${tBrands(brand)}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>

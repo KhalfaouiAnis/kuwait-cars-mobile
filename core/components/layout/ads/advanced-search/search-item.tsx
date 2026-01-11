@@ -9,9 +9,10 @@ type SearchItemProps = {
     content: ReactNode
     icon?: ReactNode,
     isDark?: boolean
+    isRTL?: boolean
 }
 
-export default function SearchItem({ content, label, icon, isDark }: SearchItemProps) {
+export default function SearchItem({ content, label, icon, isDark, isRTL }: SearchItemProps) {
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -28,7 +29,7 @@ export default function SearchItem({ content, label, icon, isDark }: SearchItemP
                     <Text className='dark:text-white'>{label}</Text>
                 </View>
                 <View className='ms-auto'>
-                    <Ionicons color={isDark ? "white" : "black"} size={20} name='chevron-forward' />
+                    <Ionicons color={isDark ? "white" : "black"} size={20} name={isRTL ? 'chevron-back' : 'chevron-forward'} />
                 </View>
             </Pressable >
             <Modal

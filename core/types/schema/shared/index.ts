@@ -9,7 +9,7 @@ import { UsedCarAdInterface } from "../ads/usedCar";
 export type AdCategory = (typeof Ad_CATEGORIES)[number];
 
 export const SubscriptionPlanSchema = z.object({
-  type: z.string(),
+  type: z.string({ required_error: "required" }),
   title: z.string(),
   price: z.coerce.number(),
   expires_in: z.coerce.number(),

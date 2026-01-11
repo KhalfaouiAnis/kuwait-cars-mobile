@@ -39,6 +39,12 @@ export default function AdSelectInput<TForm extends FieldValues>({ onChangeText,
         setShowModal(false)
     };
 
+    function displayLabel() {
+        if (!value || value === "") return placeholder;
+        if (translatedValue && value) return t(`colors.${value}`)
+        return value
+    }
+
     return (
         <Pressable onPress={() => setShowModal(true)}>
             <View className={clsx('flex-row items-center bordered-box min-h-14', {
@@ -51,7 +57,7 @@ export default function AdSelectInput<TForm extends FieldValues>({ onChangeText,
                 </View>
                 <View>
                     <Text className={`${value ? 'text-[#333]' : 'text-gray-400'} dark:text-white`}>
-                        {translatedValue ? value ? t(`colors.${value}`) : value : placeholder}
+                        {displayLabel()}
                     </Text>
                 </View>
                 <View className='ms-auto flex-row items-end'>

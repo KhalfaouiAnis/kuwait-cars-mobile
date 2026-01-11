@@ -6,21 +6,16 @@ import { SUPPORTED_LANGUAGES } from "@/core/constants";
 import i18n from "@/core/i18n/i18n";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Language } from "@/core/types";
-import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function ChangeLanguageScreen() {
-    const router = useRouter();
     const { setLang, lang: currentLang } = useUserPreferencesStore();
     const { t } = useTranslation("common");
-
-    console.log(currentLang);
 
     const handleSelect = async (lang: Language) => {
         setLang(lang.code);
         i18n.changeLanguage(lang.code);
-        router.push("/profile")
     }
 
     const renderItem = (item: Language) => (

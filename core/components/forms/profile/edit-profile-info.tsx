@@ -8,7 +8,6 @@ import useAuthStore from "@/core/store/auth.store";
 import { UpdateProfileInterface } from "@/core/types/schema/user";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { router } from "expo-router";
 import { TFunction } from "i18next";
 import { useState } from "react";
 import { useWatch } from "react-hook-form";
@@ -43,7 +42,6 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
         mutate(data, {
             onSuccess: () => {
                 toast.success("Profile updated successfully")
-                router.replace("/profile")
             },
             onError: (err) => {
                 console.log(err.message);

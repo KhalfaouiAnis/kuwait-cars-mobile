@@ -24,6 +24,7 @@ export const ProgressButton = ({ onPress, isPending, progress, title }: Props) =
             onPress={onPress}
             disabled={isPending}
             style={styles.button}
+            className='disabled:bg-yellow-200'
         >
             {
                 progress === 100 ? (

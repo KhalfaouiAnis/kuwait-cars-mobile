@@ -51,7 +51,7 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
             onPress={() => handleCountrySelect(item)}
             activeOpacity={0.7}
         >
-            <Text className="mr-3 text-lg">{item.flag}</Text>
+            <Text className="ms-3 text-lg">{item.flag}</Text>
             <View className="flex-1">
                 <Text className="text-base font-medium text-white">{item.name}</Text>
                 <Text className="text-sm text-gray-500">+{item.callingCode[0]}</Text>
@@ -61,17 +61,18 @@ export default function PhoneInput<TForm extends FieldValues>({ onChangeText, co
 
     return (
         <View className="flex-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-            {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
-            <View className='flex-row items-center border-primary-500 border rounded-lg p-2' style={{direction: isRTL ? "rtl" : "ltr"}}>
+            {label && <Text className="text-base font-semibold ps-6 mb-1 dark:text-white text-black">{label}</Text>}
+            <View className='flex-row items-center border-primary-500 border rounded-lg p-2' style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <TouchableOpacity
-                    className={`flex-row items-center pl-2 py-1 border-e border-e-primary-500 ${error ? 'border-red-500' : ''}`}
+                    className={`flex-row items-center pe-2 ${error ? 'border-red-500' : ''}`}
                     onPress={() => setShowModal(true)}
                     activeOpacity={0.7}
                     disabled
                 >
-                    <Text className="mr-1 text-2xl">{selectedCountry.flag}</Text>
-                    {showCode && (<Text className="mr-1 text-base">+{selectedCountry.callingCode}</Text>)}
+                    <Text className="me-1 text-2xl">{selectedCountry.flag}</Text>
+                    {showCode && (<Text className="ms-1 text-base">+{selectedCountry.callingCode}</Text>)}
                     <Ionicons name="chevron-down" size={20} color="#8E8E93" />
+                    <View className='h-16 bg-primary-500' style={{ marginVertical: -8, width: 1}} />
                 </TouchableOpacity>
                 <View className='flex-row items-center flex-1'>
                     <Controller

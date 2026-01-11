@@ -25,11 +25,11 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
 
     return (
         <View className="flex-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-            {label && <Text className="text-base font-semibold pl-6 mb-1 dark:text-white text-black">{label}</Text>}
+            {label && <Text className="text-base font-semibold ps-6 mb-1 dark:text-white text-black">{label}</Text>}
             <View className={cn("flex-row items-center", {
                 "border-primary-500 border p-1 pe-2 rounded-lg": bordered,
             })}>
-                {customIcon ? customIcon : <Ionicons name={icon} size={20} color={error ? "#D80027" : theme !== "light" ? "white" : "black"} className="mr-2" />}
+                {customIcon ? customIcon : <Ionicons name={icon} size={20} color={error ? "#D80027" : theme !== "light" ? "white" : "black"} className="ms-2" />}
                 <TextInput
                     className={cn("flex-1 text-start overflow-hidden text-[#333] dark:text-white text-base", { "text-error": error })}
                     placeholder={placeholder}

@@ -20,6 +20,7 @@ import { StaticMapPreview } from "../shared/static-map-preview";
 export default function PostAd({ control, errors, isDark, setValue }: AdFormStepProps<UsedCarAdInterface>) {
     const { model, brand } = useLocalSearchParams()
     const { t } = useTranslation("common")
+    const { t: tBrands } = useTranslation("car_categories")
     const { isRTL } = useUserPreferencesStore()
     const province = useWatch({ control, name: "province" })
     const Areas = PROVINCES.find(prov => prov.province === province?.province)?.areas || []
@@ -37,7 +38,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                     <Text className="text-sm text-gray-300">{t("adCategories.used_cars")}</Text>
                 </View>
                 <SelectedAdType
-                    label={`${brand}-${model}`}
+                    label={`${tBrands(brand)}-${tBrands(model)}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>

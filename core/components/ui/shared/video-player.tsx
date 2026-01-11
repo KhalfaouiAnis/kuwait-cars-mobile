@@ -67,9 +67,9 @@ export default function VideoPlayer({ source }: { source?: string }) {
         <View
             className="bg-slate-900 overflow-hidden relative w-full h-full aspect-video rounded-lg"        >
             <VideoView
+                style={{ flex: 1 }}
                 player={videoPlayer}
                 nativeControls={false}
-                style={{ flex: 1 }}
                 fullscreenOptions={{ enable: false }}
                 onTouchStart={() => setIsControlsVisible(!isControlsVisible)}
             />

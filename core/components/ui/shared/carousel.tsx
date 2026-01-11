@@ -65,7 +65,7 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
                             )}
                             {showIndicators && (
                                 <View className="absolute bottom-4 end-4 bg-gray-500 rounded-lg px-3 py-1 flex-row items-center">
-                                    <Text className="text-white text-xs mr-1">{currentIndex + 1}/{items.length}</Text>
+                                    <Text className="text-white text-xs ms-1">{currentIndex + 1}/{items.length}</Text>
                                     <Ionicons name={item.media_type === "VIDEO" ? "videocam-outline" : "images-outline"} size={14} color="white" />
                                 </View>
                             )}

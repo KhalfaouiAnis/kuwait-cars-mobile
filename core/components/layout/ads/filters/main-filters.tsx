@@ -33,7 +33,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerClassName="pe-2">
                 <Pressable>
                     <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
-                        <Text className="mr-2 text-black dark:text-white">{t("advancedSearch.filters")}</Text>
+                        <Text className="ms-2 text-black dark:text-white">{t("advancedSearch.filters")}</Text>
                         <Ionicons name="filter" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
                     </View>
                 </Pressable>
@@ -43,14 +43,14 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
                         onPress={() => handleOpen(key as any)}
                     >
                         <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
-                            <Text className="mr-2 text-black dark:text-white">{t(`advancedSearch.${config.title}`)}</Text>
+                            <Text className="ms-2 text-black dark:text-white">{t(`advancedSearch.${config.title}`)}</Text>
                             <Ionicons name="chevron-down" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
                         </View>
                     </Pressable>
                 ))}
                 <Pressable onPress={() => handleOpen("price")}>
                     <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
-                        <Text className="mr-2 text-black dark:text-white">{t("advancedSearch.price")}</Text>
+                        <Text className="ms-2 text-black dark:text-white">{t("advancedSearch.price")}</Text>
                         <Ionicons name="chevron-down" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
                     </View>
                 </Pressable>

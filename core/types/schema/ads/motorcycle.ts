@@ -13,8 +13,10 @@ export const MotorcycleAdSchema = BaseAdSchema.extend({
   location: LocationSchema.optional(),
 
   brand: z.string({ message: "required" }),
-
-  year: z.string({ message: "required" }),
+  year: z.coerce
+    .number({ message: "required" })
+    .min(0)
+    .max(new Date().getFullYear()),
   exterior_color: z.string({ message: "required" }),
   mileage: z.coerce.number({ message: "required" }),
   mileage_unit: z.string({ message: "required" }).optional(),

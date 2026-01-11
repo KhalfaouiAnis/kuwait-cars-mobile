@@ -35,7 +35,7 @@ export default function LeaveDialog({ show, onLeave, onStay }: LeaveDialogProps)
                             <Text className="text-gray-800 text-center font-semibold">{t("cancel")}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            className="flex-1 bg-red-500 rounded-3xl p-3 mr-2"
+                            className="flex-1 bg-red-500 rounded-3xl p-3 me-2"
                             onPress={onLeave}
                             activeOpacity={0.7}
                         >

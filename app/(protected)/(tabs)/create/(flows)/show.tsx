@@ -135,7 +135,7 @@ export default function NewAdScreen() {
             <View className="mt-auto mb-4 mx-2">
                 <ProgressButton
                     progress={totalProgress}
-                    isPending={totalProgress > 0}
+                    isPending={totalProgress > 0 || totalProgress === 100}
                     onPress={handleNext}
                     title={currentStep === TOTAL_STEPS ? t("submit") : t("next")}
                 />

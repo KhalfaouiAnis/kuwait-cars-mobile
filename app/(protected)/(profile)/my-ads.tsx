@@ -129,11 +129,11 @@ export default function MyAdsScreen() {
                                     onEndReachedThreshold={0.5}
                                     refreshing={isLoading}
                                     onRefresh={refetch}
-                                    contentContainerStyle={ads.length === 0 ? { flex: 1 } : { paddingBottom: 40 }}
+                                    contentContainerStyle={ads.length === 0 ? { } : { paddingBottom: 40 }}
                                     ListEmptyComponent={!isLoading ? <EmptyState
                                         showReset={false}
                                         title=""
-                                        description="noAdsYest"
+                                        description="noAdsYet"
                                     /> : null}
                                     ListFooterComponent={
                                         isFetchingNextPage ? <ActivityIndicator size="small" style={{ backgroundColor: "#FAED02" }} /> : null

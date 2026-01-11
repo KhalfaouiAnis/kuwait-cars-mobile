@@ -11,7 +11,7 @@ export default function CategoriesScreen() {
 
     return (
         <Container header={<MainHeader drawer back={false} />}>
-            <ScrollView style={{ marginBottom: 72 }} contentContainerStyle={{ paddingBottom: 20 }} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ paddingBottom: 90 }} showsVerticalScrollIndicator={false}>
                 <View className="mt-4 mx-2 gap-y-4 flex-row justify-center gap-3 flex-wrap">
                     <CategoryLink href={`/categories/${AD_TYPES.used_cars}/`} params={{ ad_type: AD_TYPES.used_cars }} image={IMAGES.BrakesCategory} label={t("adCategories.used_cars")} />
                     <CategoryLink href={`/categories/${AD_TYPES.new_cars}/`} params={{ ad_type: AD_TYPES.new_cars }} image={IMAGES.EngineCoolingSystemCategory} label={t("adCategories.new_cars")} />
