@@ -18,7 +18,7 @@ export default function Flag({ name, size }: { name: LanguageCode, size?: number
             return <FrenshFlag size={size} />
         case "ur":
             return <UrduFlag size={size} />
-        case "in":
+        case "hi":
             return <IndianFlag size={size} />
         default:
             return <ArabicFlag size={size} />

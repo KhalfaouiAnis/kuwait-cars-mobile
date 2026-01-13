@@ -4,7 +4,6 @@ import i18n from '@/core/i18n/i18n';
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Language } from '@/core/types';
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FlatList, Modal, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Checkbox from '../input/checkbox';
 
@@ -15,7 +14,6 @@ type LanguageSwitcherProps = {
 export default function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { lang: selectedLang, setLang, isRTL } = useUserPreferencesStore();
-    const { t } = useTranslation("common");
 
     const handleSelect = (lang: Language) => {
         setLang(lang.code);
@@ -32,7 +30,7 @@ export default function LanguageSwitcher({ onLanguageChange }: LanguageSwitcherP
             style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
             <Flag name={item.code} size={30} />
-            <Text className="flex-1 text-base text-gray-900 dark:text-white font-medium ms-4">{t(`languages.${item.name}`)}</Text>
+            <Text className="flex-1 text-base text-gray-900 dark:text-white font-medium ms-4">{item.name}</Text>
             {selectedLang === item.code && (
                 <Checkbox checked={item.code === selectedLang} />
             )}

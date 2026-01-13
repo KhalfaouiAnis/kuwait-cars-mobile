@@ -1,5 +1,6 @@
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { IMAGES } from "@/core/constants/images";
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useUpdatePassword } from "@/core/hooks/user/use-profile";
 import useAuthStore from "@/core/store/auth.store";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,6 +11,7 @@ import { toast } from "sonner-native";
 
 export default function ChangePasswordForm({ t }: { t: TFunction }) {
     const { user } = useAuthStore()
+    const { protectAction } = useAuthGuard()
     const { control, handleSubmit, onSubmit, isSubmitting, errors } = useUpdatePassword(user?.phone)
 
     const onError = () => {
@@ -21,6 +23,10 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
             })
         }
     };
+
+    const handleUpdate = () => {
+        protectAction(handleSubmit(onSubmit, onError))
+    }
 
     return (
         <View className="flex-1 mt-2 bg-white dark:bg-darkish px-4 py-2 gap-y-8">
@@ -70,8 +76,8 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
             </View>
             <View className="flex-1 pt-12">
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-lg items-center"
-                    onPress={handleSubmit(onSubmit, onError)}
+                    className="bg-primary-500 py-3 rounded-lg items-center disabled:bg-yellow-200"
+                    onPress={handleUpdate}
                     disabled={isSubmitting}
                 >
                     <Text className="text-lg font-semibold text-secondary-900">

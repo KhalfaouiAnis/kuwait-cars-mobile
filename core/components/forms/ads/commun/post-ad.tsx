@@ -26,9 +26,6 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
     const province = useWatch({ control, name: "province" })
     const Areas = PROVINCES.find(prov => prov.province === province?.province)?.areas || []
 
-    console.log({ ad_type, ad_category });
-
-
     useEffect(() => {
         setValue?.("ad_type", ad_type as string)
         setValue?.("ad_category", ad_category as string)

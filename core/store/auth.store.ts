@@ -47,7 +47,12 @@ const useAuthStore = create<AuthState>()(
           const currentTime = Date.now() / 1000;
 
           if (decoded.exp > currentTime) {
-            set({ isReady: true });
+            if (!get().user) {
+              const { data } = await httpClient.get("/users/details");
+              set({ isReady: true, user: data, isGuest: false });
+            } else {
+              set({ isReady: true });
+            }
           } else {
             httpClient
               .get("/users/details")

@@ -3,25 +3,25 @@ import { generateYears } from "../utils/date";
 
 export const PLATE_RECOGNIZER_API_URL =
   "https://api.platerecognizer.com/v1/plate-reader/";
-export const ADS_PAGE_SIZE = "12";
+export const ADS_PAGE_SIZE = 4;
 
-export const APP_STORAGE_KEY = "KC_APP_STORAGE_KEY"
+export const APP_STORAGE_KEY = "KC_APP_STORAGE_KEY";
 export const AUTH_STORAGE_KEY = "KC_AUTH_STORAGE";
 export const USER_PREFERENCES_STORAGE_KEY = "KC_USER_PREFERENCES_STORAGE";
 export const ACC_TOKEN_STORAGE_KEY = "KC_ACC_TOKEN";
 export const REFRESH_TOKEN_STORAGE_KEY = "KC_REFRESH_TOKEN";
-export const HAS_LAUNCHED = 'has_launched';
+export const HAS_LAUNCHED = "has_launched";
 
 export const MAX_VIDEO_SIZE = 1024 * 1024 * 100;
 export const MAX_IMAGE_SIZE = 1024 * 1024 * 5;
 
 export const SUPPORTED_LANGUAGES: Language[] = [
-  { code: "ar", name: "arabic", flag: "🇰🇼" },
-  { code: "en", name: "english", flag: "🇺🇸" },
-  { code: "es", name: "spanish", flag: "🇪🇸" },
-  { code: "fr", name: "frensh", flag: "🇫🇷" },
-  { code: "ur", name: "urdu", flag: "JO" },
-  { code: "hi", name: "hindi", flag: "🇮🇳" },
+  { code: "ar", name: "العربية", flag: "🇰🇼" },
+  { code: "en", name: "English", flag: "🇺🇸" },
+  { code: "es", name: "Española", flag: "🇪🇸" },
+  { code: "fr", name: "Français", flag: "🇫🇷" },
+  { code: "ur", name: "اردو", flag: "JO" },
+  { code: "hi", name: "हिंदी", flag: "🇮🇳" },
 ];
 
 export const RTL_LANGUAGES = ["ar", "ur"];
@@ -87,7 +87,11 @@ export const CAR_COLORS: SelectOption[] = [
   { id: "Orange", label: "Orange", value: "Orange" },
   { id: "Gold", label: "Gold", value: "Gold" },
   { id: "Purple", label: "Purple", value: "Purple" },
-  { id: "Light Blue / Cyan", label: "Light Blue / Cyan", value: "Light Blue / Cyan" },
+  {
+    id: "Light Blue / Cyan",
+    label: "Light Blue / Cyan",
+    value: "Light Blue / Cyan",
+  },
   { id: "Navy Blue", label: "Navy Blue", value: "Navy Blue" },
   { id: "Burgundy", label: "Burgundy", value: "Burgundy" },
   { id: "Olive", label: "Olive", value: "Olive" },

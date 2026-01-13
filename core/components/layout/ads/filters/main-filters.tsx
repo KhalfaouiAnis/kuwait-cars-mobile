@@ -33,8 +33,8 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerClassName="pe-2">
                 <Pressable>
                     <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
-                        <Text className="ms-2 text-black dark:text-white">{t("advancedSearch.filters")}</Text>
                         <Ionicons name="filter" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
+                        <Text className="ms-2 text-black dark:text-white">{t("advancedSearch.filters")}</Text>
                     </View>
                 </Pressable>
                 {Object.entries(filterConfig).map(([key, config]) => (
@@ -44,7 +44,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
                     >
                         <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-darkish">
                             <Text className="ms-2 text-black dark:text-white">{t(`advancedSearch.${config.title}`)}</Text>
-                            <Ionicons name="chevron-down" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "bold" }} />
+                            <Ionicons name="chevron-down" size={16} color={isDark ? "white" : "black"} style={{ fontWeight: "900", paddingTop: 2 }} />
                         </View>
                     </Pressable>
                 ))}
@@ -67,7 +67,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
                     <Text className="text-black dark:text-white">{t("sort.sortBy")}</Text>
                 </Pressable>
                 {ad_type && (
-                    <Text className="text-black dark:text-white ms-auto me-3">{t(`adCategories.${ad_type}`)}</Text>
+                    <Text className="text-[#D3D3D3] dark:text-white ms-auto me-3">{t(`adCategories.${ad_type}`)}</Text>
                 )}
             </View>
             <AppModal

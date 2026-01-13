@@ -2,6 +2,7 @@ import {
   UploadFileType,
   useAdMutation,
 } from "@/core/services/ads/ad.mutations";
+import { hideLisencePlate } from "@/core/services/cloud/lisence-plate";
 import {
   ShowCarAdInterface,
   ShowCarAdSchema,
@@ -69,6 +70,13 @@ export function useShowCarAd() {
       }
 
       const uploadResponse = await upload(media);
+
+      let finalUrl = uploadResponse[0].transformed_url;
+
+      if (payload.hide_license_plate) {
+        finalUrl = await hideLisencePlate(finalUrl!);
+        uploadResponse[0].transformed_url = finalUrl;
+      }
 
       await mutateAsync(
         {

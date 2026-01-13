@@ -30,6 +30,8 @@ export const FlagButton = ({ isFlagged, onPress }: Props) => {
     }));
 
     const handlePress = () => {
+        if (isFlagged) return;
+
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
         scale.value = withSequence(
@@ -40,7 +42,7 @@ export const FlagButton = ({ isFlagged, onPress }: Props) => {
     };
 
     return (
-        <Pressable onPress={handlePress} hitSlop={10}>
+        <Pressable onPress={handlePress} hitSlop={10} disabled={isFlagged}>
             <Animated.View style={animatedStyle}>
                 <Ionicons
                     name="flag"

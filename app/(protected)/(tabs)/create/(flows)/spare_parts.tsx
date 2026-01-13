@@ -7,6 +7,7 @@ import PostAd from "@/core/components/forms/ads/spare-parts/post-ad";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useSparePartAd } from "@/core/hooks/ad/flows/useSparePartAd";
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
 import { TFunction } from "i18next";
@@ -36,6 +37,7 @@ const TOTAL_STEPS = 5;
 export default function NewAdScreen() {
     const { control, errors, totalProgress, dirtyFields, trigger, reset, setValue, getValues, handleSubmit, onSubmit } = useSparePartAd()
     const { theme } = useUserPreferencesStore()
+    const { protectAction } = useAuthGuard();
     const { t } = useTranslation("common")
     const [showDialog, setShowDialog] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
@@ -95,7 +97,7 @@ export default function NewAdScreen() {
         if (isValid && currentStep < TOTAL_STEPS) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            handleSubmit((data) => onSubmit(data), onError)();
+            protectAction(() => handleSubmit((data) => onSubmit(data), onError)());
         }
     }
 

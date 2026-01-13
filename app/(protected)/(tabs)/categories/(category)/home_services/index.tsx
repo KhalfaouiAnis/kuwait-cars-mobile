@@ -1,13 +1,12 @@
 import MainHeader from "@/core/components/layout/header/main-header";
 import CategoryLink from "@/core/components/ui/_links/category-link";
 import Container from "@/core/components/ui/container";
+import { AD_TYPES } from "@/core/constants/ad";
 import { IMAGES } from "@/core/constants/images";
-import { useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function HomeServicesCategoriesScreen() {
-    const { ad_type } = useLocalSearchParams<{ ad_type: string }>()
     const { t } = useTranslation("car_categories")
 
     return (
@@ -21,7 +20,7 @@ export default function HomeServicesCategoriesScreen() {
                         fullWidth
                         href="/categories/home_services/washing"
                         image={IMAGES.BrakesCategory}
-                        params={{ ad_type, ad_category: 'washing' }}
+                        params={{ ad_type: AD_TYPES.home_services, ad_category: 'washing' }}
                         label={t("Washing")} />
                 </View>
                 <View className="w-[48%]">
@@ -29,7 +28,7 @@ export default function HomeServicesCategoriesScreen() {
                         fullWidth
                         href="/categories/home_services/protection"
                         image={IMAGES.EngineCoolingSystemCategory}
-                        params={{ ad_type, ad_category: 'protection' }}
+                        params={{ ad_type: AD_TYPES.home_services, ad_category: 'protection' }}
                         label={t("Protection")} />
                 </View>
                 <View className="w-[48%]">
@@ -37,7 +36,7 @@ export default function HomeServicesCategoriesScreen() {
                         fullWidth
                         href="/categories/home_services/batteries"
                         image={IMAGES.AirConditionCategory}
-                        params={{ ad_type, ad_category: 'batteries' }}
+                        params={{ ad_type: AD_TYPES.home_services, ad_category: 'batteries' }}
                         label={t("Batteries")} />
                 </View>
                 <View className="w-[48%]">
@@ -45,7 +44,7 @@ export default function HomeServicesCategoriesScreen() {
                         fullWidth
                         href="/categories/home_services/check"
                         image={IMAGES.LexusNX250Category}
-                        params={{ ad_type, ad_category: 'check' }}
+                        params={{ ad_type: AD_TYPES.home_services, ad_category: 'check' }}
                         label={t("Check")} />
                 </View>
                 <View className="w-[48%]">
@@ -53,7 +52,7 @@ export default function HomeServicesCategoriesScreen() {
                         fullWidth
                         href="/categories/home_services/keys"
                         image={IMAGES.LexusNX250Category}
-                        params={{ ad_type, ad_category: 'keys' }}
+                        params={{ ad_type: AD_TYPES.home_services, ad_category: 'keys' }}
                         label={t("Keys")} />
                 </View>
                 <View className="w-[48%]">
@@ -61,7 +60,7 @@ export default function HomeServicesCategoriesScreen() {
                         fullWidth
                         href="/categories/home_services/insurance"
                         image={IMAGES.LexusNX250Category}
-                        params={{ ad_type, ad_category: 'insurance' }}
+                        params={{ ad_type: AD_TYPES.home_services, ad_category: 'insurance' }}
                         label={t("Insurance")} />
                 </View>
                 <View className="w-[48%]">
@@ -69,7 +68,7 @@ export default function HomeServicesCategoriesScreen() {
                         fullWidth
                         href="/categories/home_services/other"
                         image={IMAGES.LexusNX250Category}
-                        params={{ ad_type, ad_category: 'other' }}
+                        params={{ ad_type: AD_TYPES.home_services, ad_category: 'other' }}
                         label={t("Other")} />
                 </View>
             </View>

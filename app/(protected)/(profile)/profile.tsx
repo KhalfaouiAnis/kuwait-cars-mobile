@@ -70,25 +70,25 @@ export default function ProfileScreen() {
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
-                        href={"/my-ads"}
+                        onPress={() => protectAction(() => router.navigate("/my-ads"))}
                         icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
                         label={t("profile.myAds")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
-                        href={"/my-ads"}
+                        href={"/profile"}
                         icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
                         label={t("profile.officeShowroomServices")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
-                        href={"/my-ads"}
+                        href={"/profile"}
                         icon={<MaterialCommunityIcons name="text-box-multiple-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
                         label={t("profile.advertisingPhotographyServices")}
                     />
                     <SettingsLink
                         isDark={theme !== "light"}
-                        href={"/my-ads"}
+                        onPress={() => protectAction(() => router.navigate("/profile"))}
                         icon={<Ionicons name="card" size={24} color={theme !== "light" ? "white" : "black"} />}
                         label={t("profile.myPayments")}
                     />
@@ -124,7 +124,7 @@ export default function ProfileScreen() {
 
                     <SettingsLink
                         isDark={theme !== "light"}
-                        href={"/"}
+                        href={"/profile"}
                         icon={<Ionicons name="call-outline" size={24} color={theme !== "light" ? "white" : "black"} />}
                         label={t("profile.contactCustomerService")}
                     />

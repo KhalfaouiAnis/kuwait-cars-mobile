@@ -25,7 +25,7 @@ export default function ChangeLanguageScreen() {
             onPress={() => handleSelect(item)}
         >
             <Flag name={item.code} />
-            <Text className="text-base text-gray-900 font-medium">{t(`languages.${item.name}`)}</Text>
+            <Text className="text-base text-gray-900 font-medium">{item.name}</Text>
             <Checkbox checked={item.code === currentLang} onValueChange={() => handleSelect(item)} />
         </TouchableOpacity>
     );

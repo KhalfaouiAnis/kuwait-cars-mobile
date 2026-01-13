@@ -2,30 +2,32 @@ import { AdsListing } from "@/core/components/layout/ads/ad-listing";
 import { MainFilters } from "@/core/components/layout/ads/filters/main-filters";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
-import { MOTORCYCLES_FILTER_CONFIG } from "@/core/constants/ad";
+import { AD_TYPES, MOTORCYCLES_FILTER_CONFIG } from "@/core/constants/ad";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import useSearchStore from "@/core/store/search.store";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { Link, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { View } from 'react-native';
 
 export default function LogisticsCategoryScreen() {
-    const setExternalFilter = useSearchStore(state => state.setExternalFilter)
+    const { setExternalFilter, resetAll } = useSearchStore(state => state)
     const { theme } = useUserPreferencesStore()
     const isDark = theme !== "light"
     const [view, setView] = useState<"vertical" | "horizontal">('vertical');
-    const { ad_type } = useLocalSearchParams<{ ad_type: string }>()
 
-    useEffect(() => {
-        setExternalFilter("ad_type", ad_type)
-    }, [setExternalFilter, ad_type])
+    useFocusEffect(
+        useCallback(() => {
+            setExternalFilter("ad_type", AD_TYPES.logistics)
+            return resetAll
+        }, [setExternalFilter, resetAll])
+    );
 
     return (
         <Container header={
             <View className="flex mb-2 mt-4 pl-0.5">
                 <MainHeader back={true} />
-                <MainFilters isDark={isDark} setView={setView} filterConfig={MOTORCYCLES_FILTER_CONFIG}/>
+                <MainFilters isDark={isDark} setView={setView} filterConfig={MOTORCYCLES_FILTER_CONFIG} />
             </View>
         }>
             <View className="w-full pl-2.5 relative flex-1">

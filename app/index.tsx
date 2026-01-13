@@ -9,14 +9,12 @@ import { Language } from "@/core/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Redirect, useRouter } from "expo-router";
-import { useTranslation } from "react-i18next";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
   const { user, isGuest, isReady, _hasHydrated, } = authStore()
   const { setLang, lang: currentLang } = useUserPreferencesStore();
-  const { t } = useTranslation("common");
 
   const handleSelect = async (lang: Language) => {
     setLang(lang.code);
@@ -31,7 +29,7 @@ export default function Index() {
       onPress={() => handleSelect(item)}
     >
       <Flag name={item.code} />
-      <Text className="text-base text-gray-900 font-medium">{t(`languages.${item.name}`)}</Text>
+      <Text className="text-base text-gray-900 font-medium">{item.name}</Text>
       <Ionicons name="chevron-forward" size={20} />
     </TouchableOpacity>
   );

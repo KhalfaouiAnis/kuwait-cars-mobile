@@ -36,7 +36,7 @@ const Advertisement = memo(function Advertisement({ data, view = "horizontal", i
             <Pressable
                 style={boxShadow(0, 4, 4).button}
                 onPress={() => router.push(path as any)}
-                className="w-svw mx-0.5 rounded-lg p-2 border border-primary-500 bg-transparent"
+                className="w-svw mx-0.5 rounded-lg pt-0.5 pb-2 border border-primary-500 bg-transparent"
             >
                 <Carousel items={data.media} />
                 <View className="mt-3 px-2 pb-2" style={{ direction: isRTL ? "rtl" : "ltr" }}>

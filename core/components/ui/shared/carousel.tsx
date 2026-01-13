@@ -7,7 +7,7 @@ import VideoPlayer from './video-player';
 
 const screenWidth = Dimensions.get('window').width;
 
-const containerWidth = 320;
+const containerWidth = screenWidth - 22;
 const containerHeight = 220;
 
 type CarouselProps = {
@@ -64,9 +64,9 @@ export default function Carousel({ items, onItemPress, badge, showIndicators = t
                                 </View>
                             )}
                             {showIndicators && (
-                                <View className="absolute bottom-4 end-4 bg-gray-500 rounded-lg px-3 py-1 flex-row items-center">
-                                    <Text className="text-white text-xs ms-1">{currentIndex + 1}/{items.length}</Text>
+                                <View className="absolute bottom-3 end-4 bg-gray-500 rounded-lg px-3 py-1 flex-row items-center gap-1">
                                     <Ionicons name={item.media_type === "VIDEO" ? "videocam-outline" : "images-outline"} size={14} color="white" />
+                                    <Text className="text-white text-xs ms-1">{currentIndex + 1}/{items.length}</Text>
                                 </View>
                             )}
                         </View>

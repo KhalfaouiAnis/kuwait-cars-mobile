@@ -32,16 +32,18 @@ export default function TabLayout() {
 
     const isDark = theme === 'dark';
 
-    const protectionListeners = (route: "create" | "favorites" | "chat") => ({
-        [route]: ({ navigation }: { navigation: any }) => ({
-            tabPress: (e: EventArg<"tabPress", true, undefined>) => {
-                e.preventDefault();
-                protectAction(() => {
-                    navigation.navigate(route);
-                });
-            },
-        }),
-    })
+    const protectionListeners = (route: "favorites" | "chat") => {
+        return (
+            ({ navigation }: { navigation: any }) => ({
+                tabPress: (e: EventArg<"tabPress", true, undefined>) => {
+                    e.preventDefault();
+                    protectAction(() => {
+                        navigation.navigate(route);
+                    });
+                }
+            })
+        )
+    }
 
     return (
         <Tabs
@@ -78,18 +80,18 @@ export default function TabLayout() {
                             <Ionicons color="black" size={38} name='add-outline' style={{ backgroundColor: "transparent" }} />
                         </View>
                     ),
+                    popToTopOnBlur: true
                 }}
-                listeners={() => protectionListeners("create")}
             />
             <Tabs.Screen
                 name="favorites"
                 options={{ tabBarIcon: ({ color }) => <TabIconButton name="star-outline" color={color} isDark={isDark} /> }}
-                listeners={() => protectionListeners("favorites")}
+                listeners={protectionListeners("favorites")}
             />
             <Tabs.Screen
                 name="chat"
                 options={{ tabBarIcon: ({ color }) => <TabIconButton name="chatbox-ellipses-outline" color={color} isDark={isDark} /> }}
-                listeners={() => protectionListeners("chat")}
+                listeners={protectionListeners("chat")}
             />
         </Tabs>
     );

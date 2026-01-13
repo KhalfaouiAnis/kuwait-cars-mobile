@@ -1,15 +1,14 @@
 import MainHeader from "@/core/components/layout/header/main-header";
 import CategoryLink from "@/core/components/ui/_links/category-link";
 import Container from "@/core/components/ui/container";
+import { AD_TYPES } from "@/core/constants/ad";
 import { IMAGES } from "@/core/constants/images";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
 export default function MotorcycleCategoriesScreen() {
-    const { ad_type } = useLocalSearchParams<{ ad_type: string }>()
     const { t } = useTranslation("car_categories")
 
     return (
@@ -21,7 +20,7 @@ export default function MotorcycleCategoriesScreen() {
                 <View className="w-[48%]">
                     <CategoryLink
                         fullWidth
-                        params={{ ad_type, ad_category: 'sport' }}
+                        params={{ ad_type: AD_TYPES.motorcycles, ad_category: 'sport' }}
                         href="/categories/motorcycles/sport"
                         image={IMAGES.BrakesCategory}
                         label={t("SportsMotorcycles")} />
@@ -29,7 +28,7 @@ export default function MotorcycleCategoriesScreen() {
                 <View className="w-[48%]">
                     <CategoryLink
                         fullWidth
-                        params={{ ad_type, ad_category: 'quad' }}
+                        params={{ ad_type: AD_TYPES.motorcycles, ad_category: 'quad' }}
                         href="/categories/motorcycles/quad"
                         image={IMAGES.EngineCoolingSystemCategory}
                         label={t("QuadBikes")} />
@@ -37,7 +36,7 @@ export default function MotorcycleCategoriesScreen() {
                 <View className="w-[48%]">
                     <CategoryLink
                         fullWidth
-                        params={{ ad_type, ad_category: 'bikes' }}
+                        params={{ ad_type: AD_TYPES.motorcycles, ad_category: 'bikes' }}
                         href="/categories/motorcycles/bikes"
                         image={IMAGES.AirConditionCategory}
                         label={t("Bicycles")} />
@@ -45,7 +44,7 @@ export default function MotorcycleCategoriesScreen() {
                 <View className="w-[48%]">
                     <CategoryLink
                         fullWidth
-                        params={{ ad_type, ad_category: 'scooter' }}
+                        params={{ ad_type: AD_TYPES.motorcycles, ad_category: 'scooter' }}
                         href="/categories/motorcycles/scooter"
                         image={IMAGES.LexusNX250Category}
                         label={t("Scooter")} />

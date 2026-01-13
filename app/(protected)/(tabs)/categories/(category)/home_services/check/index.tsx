@@ -2,24 +2,28 @@ import { AdsListing } from "@/core/components/layout/ads/ad-listing";
 import { MainFilters } from "@/core/components/layout/ads/filters/main-filters";
 import MainHeader from "@/core/components/layout/header/main-header";
 import Container from "@/core/components/ui/container";
-import { MOTORCYCLES_FILTER_CONFIG } from "@/core/constants/ad";
+import { AD_TYPES, MOTORCYCLES_FILTER_CONFIG } from "@/core/constants/ad";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import useSearchStore from "@/core/store/search.store";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { Link, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useState } from "react";
 import { View } from 'react-native';
 
 export default function HomeServicesCategoryScreen() {
-    const setExternalFilter = useSearchStore(state => state.setExternalFilter)
+    const {setExternalFilter, resetAll } = useSearchStore(state => state)
     const { theme } = useUserPreferencesStore()
     const isDark = theme !== "light"
     const [view, setView] = useState<"vertical" | "horizontal">('vertical');
-    const { ad_type } = useLocalSearchParams<{ ad_type: string }>()
+    const { ad_category } = useLocalSearchParams<{ ad_category: string }>()
 
-    useEffect(() => {
-        setExternalFilter("ad_type", ad_type)
-    }, [setExternalFilter, ad_type])
+    useFocusEffect(
+        useCallback(() => {
+            setExternalFilter("ad_type", AD_TYPES.home_services)
+            setExternalFilter("ad_category", ad_category)
+            return resetAll
+        }, [setExternalFilter, resetAll, ad_category])
+    );
 
     return (
         <Container header={

@@ -38,11 +38,11 @@ export const AdsListing = ({ view, isDark }: Props) => {
             refreshing={isLoading}
             renderItem={renderItem}
             className="bg-transparent"
-            onEndReachedThreshold={0.5}
+            onEndReachedThreshold={0.9}
             removeClippedSubviews={false}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
-            ListEmptyComponent={!isLoading ? <EmptyState showReset={false} /> : null}
+            ListEmptyComponent={<EmptyState showReset={false} />}
             onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
             contentContainerStyle={ads.length === 0 ? { flex: 1 } : { paddingBottom: 50, position: "relative", zIndex: 2 }}
             ListFooterComponent={

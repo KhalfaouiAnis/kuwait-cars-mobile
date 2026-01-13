@@ -8,6 +8,7 @@ import PostAd from "@/core/components/forms/ads/used-cars/post-ad";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useUsedCarAd } from "@/core/hooks/ad/flows/useUsedCarAd";
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
 import { TFunction } from "i18next";
@@ -37,6 +38,7 @@ const TOTAL_STEPS = 6;
 
 export default function UsedCarAdScreen() {
     const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, totalProgress } = useUsedCarAd()
+    const { protectAction } = useAuthGuard();
 
     const { theme } = useUserPreferencesStore()
     const { t } = useTranslation("common")
@@ -101,7 +103,7 @@ export default function UsedCarAdScreen() {
         if (isValid && currentStep < TOTAL_STEPS) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            handleSubmit((data) => onSubmit(data), onError)();
+            protectAction(() => handleSubmit((data) => onSubmit(data), onError)());
         }
     }
 

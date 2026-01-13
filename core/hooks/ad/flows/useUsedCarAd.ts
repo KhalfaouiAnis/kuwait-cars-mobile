@@ -90,7 +90,7 @@ export function useUsedCarAd() {
             toast.error(error.message);
           },
           onSuccess() {
-            router.replace("/create/success");
+            router.navigate("/create/success");
           },
           onSettled() {
             setFileProgress({});

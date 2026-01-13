@@ -75,8 +75,8 @@ interface SearchActions {
   ) => void;
   resetDraftFilter: (key: keyof FilterState) => void;
 
-  syncDraftToApplied: () => void; // Call when opening modal
-  applyFilters: () => void; // Call on "Apply" button
+  syncDraftToApplied: () => void;
+  applyFilters: () => void;
 
   resetAll: () => void;
 }
@@ -173,5 +173,7 @@ const useSearchStore = create<SearchStore>()((set) => ({
       draftFilters: { ...initialFilters },
     }),
 }));
+
+export const searchStore = useSearchStore;
 
 export default useSearchStore;

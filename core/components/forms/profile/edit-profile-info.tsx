@@ -1,6 +1,7 @@
 import InputWithIcon from "@/core/components/ui/input/input-with-icon";
 import { PROVINCES } from "@/core/constants";
 import { IMAGES } from "@/core/constants/images";
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useAvatar } from "@/core/hooks/user/use-avatar";
 import { useProfile } from "@/core/hooks/user/use-profile";
 import { useUpdateProfile } from "@/core/services/user/user.mutations";
@@ -29,6 +30,7 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
 
     const { errors, handleSubmit, control, setValue } = useProfile(user)
     const { mutate, isPending, uploadProgress } = useUpdateProfile();
+    const { protectAction } = useAuthGuard()
     const { addAvatar, avatar } = useAvatar(setValue)
 
     const province = useWatch({ control, name: "province" })
@@ -47,7 +49,7 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
                 console.log(err.message);
                 toast.error(err.message)
             }
-        });
+        })
     };
 
     return (
@@ -133,7 +135,7 @@ export default function EditProfileForm({ theme, t }: { theme: string, t: TFunct
                 />
             </View>
             <ProgressButton
-                onPress={handleSubmit(onSubmit, onError)}
+                onPress={protectAction(handleSubmit(onSubmit, onError))}
                 isPending={isPending}
                 title={t("profile.updateInfo")}
                 progress={uploadProgress}

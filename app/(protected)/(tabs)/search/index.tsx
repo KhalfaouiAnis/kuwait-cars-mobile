@@ -26,9 +26,7 @@ export default function SearchScreen() {
         <Container header={<ProfileHeader title={t(`advancedSearch.chooseYourCar`)} />}>
             <View className="p-2 mx-1">
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {
-                        isRTL ? CategoryList.reverse() : CategoryList
-                    }
+                    {CategoryList}
                 </ScrollView>
                 <View className="mt-6 gap-y-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                     <SearchItem

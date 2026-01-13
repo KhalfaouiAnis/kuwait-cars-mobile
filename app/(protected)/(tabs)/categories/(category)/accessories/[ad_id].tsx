@@ -1,7 +1,7 @@
 import Container from "@/core/components/ui/container";
 import BackArrow from "@/core/components/ui/shared/back-arrow";
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
-import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
+import { useFlag, useToggleFavorite } from "@/core/services/ads/ad.mutations";
 import { useAdDetailQuery } from "@/core/services/ads/ad.queries";
 import useRecentlyViewedStore from "@/core/store/recently-viewed-ad.store";
 import { useLocalSearchParams } from "expo-router";
@@ -21,6 +21,7 @@ export default function AccessoriesAdDetails() {
     const { isRTL } = useUserPreferencesStore()
     const { protectAction } = useAuthGuard();
     const { mutate } = useToggleFavorite();
+    const { mutate: flagMutate } = useFlag()
     const { data: adDetail, isLoading, error } = useAdDetailQuery(ad_id);
 
     useEffect(() => {
@@ -40,7 +41,7 @@ export default function AccessoriesAdDetails() {
             <View style={{ direction: isRTL ? "rtl" : "ltr" }} className="flex-row items-center justify-between mb-2 mt-4 px-4">
                 <BackArrow />
                 <View className="flex-row items-center gap-x-3">
-                    <FlagButton onPress={() => { }} isFlagged={isFlagged} />
+                    <FlagButton onPress={() => protectAction(() => flagMutate(ad_id))} isFlagged={isFlagged} />
                     <ShareButton onPress={() => { }} />
                     <FavoriteButton disabled={!isDataReady} isFavorite={isFavorited} onPress={() => protectAction(() => mutate(ad_id))} />
                 </View>

@@ -3564,7 +3564,7 @@ export const MOTORCYCLES_FILTER_CONFIG: Record<string, FilterConfigItem> = {
     parentKey: null,
     showRegionHelper: false,
     showSearch: true,
-    options: flattenToBrands(CAR_BRAND_TYPES[0]),
+    options: flattenToBrands(CAR_BRAND_TYPES[1]),
   },
   year: {
     title: "year",

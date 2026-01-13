@@ -3,7 +3,7 @@ import { CloudinarySignRequestInterface, MediaType } from "@/core/types";
 import { MediaInterface } from "@/core/types/schema/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner-native";
-import { flag, toggleFavorite } from "./ad.service";
+import { flag, repostAd, softDeleteAd, toggleFavorite } from "./ad.service";
 
 export type UploadFileType = {
   file: MediaInterface;
@@ -85,6 +85,57 @@ export const useFlag = () => {
       toast.error("Could not flag the ad. Please try again.");
     },
 
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["ads"] });
+    },
+  });
+};
+
+export const useSoftDeletAd = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (adId: string) => softDeleteAd(adId),
+    onMutate: async (adId) => {
+      await queryClient.cancelQueries({ queryKey: ["ads"] });
+
+      const previousAds = queryClient.getQueryData(["ads"]);
+
+      queryClient.setQueryData(["ads"], (old: any) => {
+        if (!old) return old;
+        return {
+          ...old,
+          pages: old.pages.map((page: any) => ({
+            ...page,
+            data: page.data.filter((ad: any) => ad.id !== adId),
+          })),
+        };
+      });
+
+      return { previousAds };
+    },
+
+    onError: (err, adId, context) => {
+      if (context?.previousAds) {
+        queryClient.setQueryData(["ads"], context.previousAds);
+      }
+      toast.error("Could not delete the ad. Please try again.");
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["ads"] });
+    },
+  });
+};
+
+export const useRepostAd = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (adId: string) => repostAd(adId),
+    onError: () => {
+      toast.error("Could not delete the ad. Please try again.");
+    },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["ads"] });
     },

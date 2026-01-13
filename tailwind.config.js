@@ -12,7 +12,7 @@ module.exports = {
         secondary: {
           900: "#000000",
         },
-        success: "#10b981",
+        success: "#25D366",
         error: "#FF123D",
         darkish: "#1F1F1F",
         grayish: "#A8A8A8",

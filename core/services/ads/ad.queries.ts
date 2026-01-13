@@ -1,3 +1,4 @@
+import { ADS_PAGE_SIZE } from "@/core/constants";
 import {
   fetchAds,
   fetchBatchAds,
@@ -23,7 +24,7 @@ export const useAdsQuery = () => {
         filters: sanitizedFilters,
         sorting,
         cursor: pageParam as string | null as string,
-        limit: 10,
+        limit: ADS_PAGE_SIZE,
       });
     },
     initialPageParam: null as string | null as string,
@@ -32,19 +33,11 @@ export const useAdsQuery = () => {
   });
 };
 
-export const useMyAdsQuery = (tab: AdStatus) => {
-  return useInfiniteQuery({
-    queryKey: ["ads", "me", tab],
-    queryFn: ({ pageParam }) =>
-      fetchMyAds(
-        {
-          cursor: pageParam as string | null,
-        },
-        tab
-      ),
-    initialPageParam: null as string | null,
-    getNextPageParam: (lastPage) =>
-      lastPage.meta.hasNextPage ? lastPage.meta.nextCursor : null,
+export const useMyAdsQuery = (status: AdStatus) => {
+  return useQuery({
+    queryKey: ["ads", "me", status],
+    queryFn: () => fetchMyAds(status),
+    staleTime: 1000 * 60 * 10,
   });
 };
 
@@ -61,7 +54,7 @@ export const useRecentlyViewedQuery = () => {
 
   return useQuery({
     queryKey: ["ads", "recently-viewed", viewedIds],
-    queryFn: async () => fetchBatchAds(viewedIds),
+    queryFn: () => fetchBatchAds(viewedIds),
     enabled: viewedIds.length > 0,
     staleTime: 1000 * 60 * 10,
   });
