@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Animated, TouchableOpacity } from 'react-native';
 
-const Switch = ({ value, onValueChange }: { value: boolean, onValueChange: any }) => {
+const Switch = ({ value, onValueChange, isRTL }: { value: boolean, onValueChange: any, isRTL?: boolean }) => {
     const [isEnabled, setIsEnabled] = useState(value || false);
-    const translateX = new Animated.Value(isEnabled ? 20 : 0);
+    const translateX = new Animated.Value(isEnabled ? isRTL ? -20 : 20 : 0);
 
     const toggleSwitch = () => {
         const newValue = !isEnabled;
         setIsEnabled(newValue);
         onValueChange?.(newValue);
         Animated.timing(translateX, {
-            toValue: newValue ? 20 : 0,
+            toValue: newValue ? isRTL ? -20 : 20 : 0,
             duration: 200,
             useNativeDriver: true,
         }).start();

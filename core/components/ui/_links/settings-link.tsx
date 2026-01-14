@@ -6,19 +6,20 @@ import { Text, TouchableOpacity, View } from "react-native";
 interface Props {
     label: string;
     icon: ReactNode;
-    href?: any
-    isDark?: any
-    onPress?: () => void
+    href?: any;
+    isDark?: any;
+    isRtl?: boolean;
+    onPress?: () => void;
 }
 
-export function SettingsLink({ href, icon, label, isDark, onPress }: Props) {
+export function SettingsLink({ href, icon, label, isDark, isRtl, onPress }: Props) {
     if (onPress) {
         return (
             <TouchableOpacity onPress={onPress} className="flex-row items-center">
                 <View className="w-full flex-row items-center">
                     {icon}
                     <Text className="ms-2 me-2 text-black dark:text-white">{label}</Text>
-                    <Ionicons name='chevron-forward' size={20} color={isDark ? "white" : "black"} className="ms-auto" />
+                    <Ionicons name={isRtl ? 'chevron-back' : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} className="ms-auto" />
                 </View>
             </TouchableOpacity>
         )
@@ -28,7 +29,7 @@ export function SettingsLink({ href, icon, label, isDark, onPress }: Props) {
             <View className="w-full flex-row items-center">
                 {icon}
                 <Text className="ms-2 me-2 text-black dark:text-white">{label}</Text>
-                <Ionicons name='chevron-forward' size={20} color={isDark ? "white" : "black"} className="ms-auto" />
+                <Ionicons name={isRtl ? 'chevron-back' : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} className="ms-auto" />
             </View>
         </Link>
     )
