@@ -32,7 +32,7 @@ export default function TabLayout() {
 
     const isDark = theme === 'dark';
 
-    const protectionListeners = (route: "favorites" | "chat") => {
+    const protectionListeners = (route: "create" | "favorites" | "chat") => {
         return (
             ({ navigation }: { navigation: any }) => ({
                 tabPress: (e: EventArg<"tabPress", true, undefined>) => {
@@ -82,6 +82,7 @@ export default function TabLayout() {
                     ),
                     popToTopOnBlur: true
                 }}
+                listeners={protectionListeners("create")}
             />
             <Tabs.Screen
                 name="favorites"
