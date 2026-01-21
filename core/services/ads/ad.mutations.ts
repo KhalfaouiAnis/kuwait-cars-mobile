@@ -3,7 +3,13 @@ import { CloudinarySignRequestInterface, MediaType } from "@/core/types";
 import { MediaInterface } from "@/core/types/schema/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner-native";
-import { flag, repostAd, softDeleteAd, toggleFavorite } from "./ad.service";
+import {
+  flag,
+  incrementAdViews,
+  repostAd,
+  softDeleteAd,
+  toggleFavorite,
+} from "./ad.service";
 
 export type UploadFileType = {
   file: MediaInterface;
@@ -29,7 +35,7 @@ export const useToggleFavorite = () => {
           pages: old.pages.map((page: any) => ({
             ...page,
             data: page.data.map((ad: any) =>
-              ad.id === adId ? { ...ad, is_favorited: !ad.is_favorited } : ad
+              ad.id === adId ? { ...ad, is_favorited: !ad.is_favorited } : ad,
             ),
           })),
         };
@@ -69,7 +75,7 @@ export const useFlag = () => {
           pages: old.pages.map((page: any) => ({
             ...page,
             data: page.data.map((ad: any) =>
-              ad.id === adId ? { ...ad, is_flaged: !ad.is_flaged } : ad
+              ad.id === adId ? { ...ad, is_flaged: !ad.is_flaged } : ad,
             ),
           })),
         };
@@ -155,5 +161,12 @@ export const useAdMutation = () => {
     },
   });
 
+  return { ...mutation };
+};
+
+export const useIncrementAdViews = () => {
+  const mutation = useMutation({
+    mutationFn: incrementAdViews,
+  });
   return { ...mutation };
 };

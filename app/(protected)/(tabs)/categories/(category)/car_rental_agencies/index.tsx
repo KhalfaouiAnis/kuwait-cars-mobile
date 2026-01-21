@@ -8,37 +8,43 @@ import useSearchStore from "@/core/store/search.store";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { View } from 'react-native';
+import { View } from "react-native";
 
 export default function CarRentalAgenciesCategoryScreen() {
-    const { setExternalFilter, resetAll } = useSearchStore(state => state)
-    const { theme } = useUserPreferencesStore()
-    const isDark = theme !== "light"
-    const [view, setView] = useState<"vertical" | "horizontal">('vertical');
+  const { setExternalFilter, resetAll } = useSearchStore((state) => state);
+  const { theme } = useUserPreferencesStore();
+  const isDark = theme !== "light";
+  const [view, setView] = useState<"vertical" | "horizontal">("vertical");
 
-    useFocusEffect(
-        useCallback(() => {
-            setExternalFilter("ad_type", AD_TYPES.car_rental_agencies)
-            return resetAll
-        }, [setExternalFilter, resetAll])
-    );
+  useFocusEffect(
+    useCallback(() => {
+      setExternalFilter("ad_type", AD_TYPES.car_rental_agencies);
+      return resetAll;
+    }, [setExternalFilter, resetAll]),
+  );
 
-    return (
-        <Container header={
-            <View className="flex mb-2 mt-4 pl-0.5">
-                <MainHeader back={true} />
-                <MainFilters isDark={isDark} setView={setView} filterConfig={MOTORCYCLES_FILTER_CONFIG} />
-            </View>
-        }>
-            <View className="w-full pl-2.5 relative flex-1">
-                <AdsListing
-                    view={view}
-                    isDark={isDark}
-                />
-                <Link href="/create/used_cars" className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500">
-                    <Ionicons name="add" size={38} />
-                </Link>
-            </View>
-        </Container>
-    )
+  return (
+    <Container
+      header={
+        <View className="flex mb-2 mt-4 pl-0.5">
+          <MainHeader back={true} />
+          <MainFilters
+            isDark={isDark}
+            setView={setView}
+            filterConfig={MOTORCYCLES_FILTER_CONFIG}
+          />
+        </View>
+      }
+    >
+      <View className="w-full pl-2.5 relative flex-1">
+        <AdsListing view={view} isDark={isDark} />
+        <Link
+          href="/create"
+          className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500"
+        >
+          <Ionicons name="add" size={38} />
+        </Link>
+      </View>
+    </Container>
+  );
 }

@@ -1,9 +1,8 @@
 import AppleIcon from '@/assets/svg/apple';
-import { httpClient } from '@/core/api/httpClient';
 import { ACC_TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from '@/core/constants';
+import { handleAppleLoginRequest } from '@/core/services/authentication/oauth';
 import { authStore } from '@/core/store/auth.store';
 import { storage } from '@/core/store/storage';
-import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { useRouter } from 'expo-router';
 import { Alert, Platform, TouchableOpacity } from 'react-native';
 
@@ -14,18 +13,8 @@ export default function AppleButton({ onSuccess }: { onSuccess?: (user: any) => 
 
     const handlePress = async () => {
         try {
-            const appleAuthRequestResponse = await appleAuth.performRequest({
-                requestedOperation: appleAuth.Operation.LOGIN,
-                requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-            });
+            const { accessToken, refreshToken, user } = await handleAppleLoginRequest()
 
-            const { identityToken } = appleAuthRequestResponse;
-
-            if (!identityToken) throw new Error('No identity token');
-
-            const res = await httpClient.post('/auth/apple', { idToken: identityToken });
-
-            const { accessToken, refreshToken, user } = res.data
             storage.set(ACC_TOKEN_STORAGE_KEY, accessToken);
             storage.set(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
             authStore.setState({ user })

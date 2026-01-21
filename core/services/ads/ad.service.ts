@@ -28,7 +28,7 @@ export const fetchAds = async ({
 export const fetchBatchAds = async (ids: string[]) => {
   const { data } = await httpClient.post<AdvertisementInterface[]>(
     "/ads/batch-list",
-    { ids }
+    { ids },
   );
 
   return data?.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
@@ -41,10 +41,10 @@ export const getAdById = async (id: string) => {
 };
 
 export const fetchMyAds = async (
-  status: AdStatus
+  status: AdStatus,
 ): Promise<AdvertisementInterface[]> => {
   const { data } = await httpClient.get<AdvertisementInterface[]>(
-    `/ads/me/${status}`
+    `/ads/me/${status}`,
   );
 
   return data;
@@ -53,9 +53,8 @@ export const fetchMyAds = async (
 export const fetchMyFavoritedAds = async (): Promise<
   AdvertisementInterface[]
 > => {
-  const { data } = await httpClient.get<AdvertisementInterface[]>(
-    "/ads/me/favorite"
-  );
+  const { data } =
+    await httpClient.get<AdvertisementInterface[]>("/ads/me/favorite");
 
   return data;
 };
@@ -74,4 +73,8 @@ export const softDeleteAd = async (adId: string): Promise<void> => {
 
 export const repostAd = async (adId: string): Promise<void> => {
   await httpClient.patch(`/ads/${adId}/repost`);
+};
+
+export const incrementAdViews = async (adId: string): Promise<void> => {
+  await httpClient.post(`/ads/${adId}/view`);
 };

@@ -32,7 +32,7 @@ export enum UserRole {
   USER = "USER",
 }
 
-export type ThemeType = "light" | "dark" | "system"; 
+export type ThemeType = "light" | "dark" | "system";
 export type LanguageCode = "en" | "ar" | "fr" | "es" | "hi" | "ur";
 export type Language = { code: LanguageCode; name: string; flag: string };
 
@@ -144,6 +144,7 @@ export interface AdvertisementInterface {
 
   is_favorited?: boolean;
   is_flagged?: boolean;
+  views?: string;
 
   user?: User;
 }

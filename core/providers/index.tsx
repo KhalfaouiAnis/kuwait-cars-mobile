@@ -9,9 +9,11 @@ import { queryClient } from '@/core/api/react-query';
 import { QueryClientProvider } from '@tanstack/react-query';
 import i18n from '../i18n/i18n';
 import { useNavigationTheme } from '../lib/theme/use-navigation-theme';
+import useUserPreferencesStore from '../store/preferences.store';
 
 export const Providers = ({ children }: PropsWithChildren) => {
     const theme = useNavigationTheme();
+    const { isRTL } = useUserPreferencesStore()
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -24,7 +26,7 @@ export const Providers = ({ children }: PropsWithChildren) => {
                     </ThemeProvider>
                 </I18nextProvider>
             </SafeAreaProvider>
-            <Toaster />
+            <Toaster styles={{ toastContainer: { direction: isRTL ? "rtl" : "ltr" } }} />
         </GestureHandlerRootView>
     )
 }

@@ -6,7 +6,7 @@ import { Image, getFileSize } from "react-native-compressor";
 export const useAdPhotos = (
   setValue: any,
   getValue: any,
-  MAX_IMAGES?: number
+  MAX_IMAGES?: number,
 ) => {
   const [gallery, setGallery] = useState<any[]>(() => {
     const currentThumb = getValue("thumbnail");
@@ -17,13 +17,13 @@ export const useAdPhotos = (
   const addPhoto = async (
     fromCamera: boolean,
     forThumbnail: boolean,
-    multiple: boolean
+    multiple: boolean,
   ) => {
     try {
       const options: ImagePicker.ImagePickerOptions | undefined = {
         mediaTypes: ["images"],
         aspect: [4, 3],
-        allowsEditing: !multiple,
+        // allowsEditing: !multiple,
         quality: 0.8,
         allowsMultipleSelection: multiple,
         orderedSelection: multiple,

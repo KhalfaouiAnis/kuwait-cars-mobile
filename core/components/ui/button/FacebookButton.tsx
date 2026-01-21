@@ -1,11 +1,11 @@
 import FacebookIcon from '@/assets/svg/facebook';
-import { httpClient } from '@/core/api/httpClient';
 import { ACC_TOKEN_STORAGE_KEY, REFRESH_TOKEN_STORAGE_KEY } from '@/core/constants';
+import { handleFacebookLoginRequest } from '@/core/services/authentication/oauth';
 import { authStore } from '@/core/store/auth.store';
 import { storage } from '@/core/store/storage';
 import { useRouter } from 'expo-router';
 import { Alert, TouchableOpacity } from 'react-native';
-import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+import { LoginManager } from 'react-native-fbsdk-next';
 
 export default function FacebookButton({ onSuccess }: { onSuccess?: (user: any) => void }) {
     const router = useRouter();
@@ -18,12 +18,8 @@ export default function FacebookButton({ onSuccess }: { onSuccess?: (user: any) 
                 return;
             }
 
-            const data = await AccessToken.getCurrentAccessToken();
-            if (!data?.accessToken) throw new Error('No access token');
+            const { accessToken, refreshToken, user } = await handleFacebookLoginRequest()
 
-            const res = await httpClient.post('/auth/facebook', { idToken: data?.accessToken });
-
-            const { accessToken, refreshToken, user } = res.data
             storage.set(ACC_TOKEN_STORAGE_KEY, accessToken);
             storage.set(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
             authStore.setState({ user })

@@ -29,7 +29,7 @@ export const flattenToModels = (data: any) => {
       //   }))
       // );
       // }
-    })
+    }),
   );
 };
 
@@ -40,7 +40,7 @@ export const flattenToBrands = (data: any) => {
       label: brand.label,
       value: brand.value,
       regionId: region.label,
-    }))
+    })),
   );
 };
 
@@ -54,7 +54,7 @@ export const useFlattenModels = (data: any) => {
           value: model.value,
           regionId: region.label,
         }));
-      })
+      }),
     );
   }, [data?.regions]);
 };
@@ -67,7 +67,15 @@ export const useFlattenBrands = (data: any) => {
         label: brand.label,
         value: brand.value,
         regionId: region.label,
-      }))
+      })),
     );
   }, [data?.regions]);
+};
+
+export const formatViews = (views: string | number) => {
+  const num = typeof views === "string" ? parseInt(views, 10) : views;
+  return new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
+  }).format(num);
 };

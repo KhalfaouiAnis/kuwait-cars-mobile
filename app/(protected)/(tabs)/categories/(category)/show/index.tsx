@@ -1,44 +1,99 @@
-import { AdsListing } from "@/core/components/layout/ads/ad-listing";
-import { MainFilters } from "@/core/components/layout/ads/filters/main-filters";
+import ShowAdComponent from "@/core/components/layout/ads/show-car-ad";
 import MainHeader from "@/core/components/layout/header/main-header";
+import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-list";
 import Container from "@/core/components/ui/container";
-import { AD_TYPES, MOTORCYCLES_FILTER_CONFIG } from "@/core/constants/ad";
-import useUserPreferencesStore from "@/core/store/preferences.store";
+import { AD_TYPES } from "@/core/constants/ad";
+import { useAdsQuery } from "@/core/services/ads/ad.queries";
 import useSearchStore from "@/core/store/search.store";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
-import { View } from 'react-native';
+import { useCallback, useMemo, useRef, useState } from "react";
+import { ActivityIndicator, Dimensions, FlatList, View } from "react-native";
+
+const { height } = Dimensions.get("window");
 
 export default function ShowCarsCategoryScreen() {
-    const { setExternalFilter, resetAll } = useSearchStore(state => state)
-    const { theme } = useUserPreferencesStore()
-    const isDark = theme !== "light"
-    const [view, setView] = useState<"vertical" | "horizontal">('vertical');
+  const { setExternalFilter, resetAll } = useSearchStore((state) => state);
+  const [activeVerticalIndex, setActiveVerticalIndex] = useState(0);
 
-    useFocusEffect(
-        useCallback(() => {
-            setExternalFilter("ad_type", AD_TYPES.show)
-            return resetAll
-        }, [setExternalFilter, resetAll])
-    );
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    refetch,
+  } = useAdsQuery();
 
-    return (
-        <Container header={
-            <View className="flex mb-2 mt-4 pl-0.5">
-                <MainHeader back={true} />
-                <MainFilters isDark={isDark} setView={setView} filterConfig={MOTORCYCLES_FILTER_CONFIG} />
-            </View>
-        }>
-            <View className="w-full pl-2.5 relative flex-1">
-                <AdsListing
-                    view={view}
-                    isDark={isDark}
-                />
-                <Link href="/create/used_cars" className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500">
-                    <Ionicons name="add" size={38} />
-                </Link>
-            </View>
-        </Container>
-    )
+  const ads = useMemo(
+    () => data?.pages.flatMap((page) => page.data) ?? [],
+    [data?.pages],
+  );
+
+  const onViewableItemsChanged = useRef(
+    ({ viewableItems }: { viewableItems: any[] }) => {
+      if (viewableItems.length > 0) {
+        setActiveVerticalIndex(viewableItems[0].index);
+      }
+    },
+  ).current;
+
+  useFocusEffect(
+    useCallback(() => {
+      setExternalFilter("ad_type", AD_TYPES.show);
+      return resetAll;
+    }, [setExternalFilter, resetAll]),
+  );
+
+  if (isLoading) return <AdSkeletonList />;
+
+  return (
+    <Container backgroundColor="transparent">
+      <View className="relative">
+        <View className="w-full mb-2 mt-4 pl-0.5 absolute top-0 start-0 z-20">
+          <MainHeader back={true} />
+        </View>
+        <FlatList
+          data={ads}
+          pagingEnabled
+          onRefresh={refetch}
+          refreshing={isLoading}
+          snapToInterval={height}
+          decelerationRate="fast"
+          snapToAlignment="center"
+          nestedScrollEnabled
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item, index }) => (
+            <ShowAdComponent
+              ad={item}
+              isVisible={index === activeVerticalIndex}
+            />
+          )}
+          onEndReached={() =>
+            hasNextPage && !isFetchingNextPage && fetchNextPage()
+          }
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
+            minimumViewTime: 50,
+          }}
+          ListFooterComponent={
+            isFetchingNextPage ? (
+              <ActivityIndicator
+                size="small"
+                style={{ backgroundColor: "#FAED02" }}
+              />
+            ) : null
+          }
+        />
+        <Link
+          href="/create"
+          className="absolute end-2 bottom-4 z-20 p-2 rounded-full bg-primary-500"
+        >
+          <Ionicons name="add" size={38} />
+        </Link>
+      </View>
+    </Container>
+  );
 }

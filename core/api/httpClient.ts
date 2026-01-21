@@ -20,8 +20,11 @@ httpClient.interceptors.request.use(
       config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
 
+    // if (config.data instanceof FormData) {
+    //   config.headers["Content-Type"] = "multipart/form-data";
+    // }
     if (config.data instanceof FormData) {
-      config.headers["Content-Type"] = "multipart/form-data";
+      config.headers.delete("Content-Type");
     }
 
     return config;
