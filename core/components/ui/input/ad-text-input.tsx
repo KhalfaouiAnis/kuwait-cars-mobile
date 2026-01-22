@@ -1,3 +1,4 @@
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { boxShadow, cn } from '@/core/utils/cn';
 import { ReactNode } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
@@ -16,6 +17,7 @@ type AdTextInputProps<TForm extends FieldValues> = TextInputProps & {
 
 export default function AdTextInput<TForm extends FieldValues>({ control, name, label, error, icon, required, extraPadding, ...props }: AdTextInputProps<TForm>) {
     const { field: { onChange, value } } = useController({ control, name });
+    const { isRTL } = useUserPreferencesStore();
 
     return (
         <View >
@@ -38,6 +40,10 @@ export default function AdTextInput<TForm extends FieldValues>({ control, name, 
                         value={value}
                         numberOfLines={1}
                         onChangeText={onChange}
+                        style={{
+                            writingDirection: isRTL ? "rtl" : "ltr",
+                            textAlign: isRTL ? "right" : "left"
+                        }}
                         {...props}
                     />
                     {

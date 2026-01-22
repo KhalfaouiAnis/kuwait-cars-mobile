@@ -1,4 +1,5 @@
 import { useSpeechToForm } from '@/core/hooks/shared/use-speech';
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
 import { ReactNode } from "react";
@@ -17,6 +18,7 @@ type TextAreaInputProps<TForm extends FieldValues> = TextInputProps & {
 };
 
 export default function TextAreaSpeech<TForm extends FieldValues>({ control, name, error, icon, required, label, ...props }: TextAreaInputProps<TForm>) {
+    const { isRTL } = useUserPreferencesStore();
     const { t } = useTranslation("common")
     const {
         field: { onChange, value },
@@ -46,8 +48,10 @@ export default function TextAreaSpeech<TForm extends FieldValues>({ control, nam
                         onChangeText={onChange}
                         multiline={true}
                         style={{
+                            writingDirection: isRTL ? "rtl" : "ltr",
+                            textAlign: isRTL ? "right" : "left",
+                            textAlignVertical: "top",
                             height: 140,
-                            textAlignVertical: "top"
                         }}
                         {...props}
                     />

@@ -1,4 +1,6 @@
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
+import { DIMENSIONS } from "@/core/constants";
+import { boxShadow } from "@/core/utils/cn";
 import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -11,8 +13,16 @@ export default function PasswordResetConfirmationScreen() {
                 {t("passSuccessReset")}
             </Text>
             <View className="mt-32 px-4">
-                <TouchableOpacity className="bg-primary-500 py-3  rounded-lg items-center mt-20">
-                    <Text className="text-lg font-semibold text-secondary-900">{t("confirm")}</Text>
+                <TouchableOpacity
+                    className="bg-primary-500 py-3 rounded-full items-center mt-20"
+                    style={{
+                        boxShadow: boxShadow(4, 6, 20).button.boxShadow,
+                        width: DIMENSIONS.width / 2 + 20,
+                    }}
+                >
+                    <Text className="text-2xl font-inter-semibold text-center text-black">
+                        {t("confirm")}
+                    </Text>
                 </TouchableOpacity>
             </View>
         </FormWrapper>

@@ -4,18 +4,27 @@ import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable } from "react-native";
 import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    withSequence,
-    withSpring,
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withSpring,
 } from "react-native-reanimated";
 
 interface Props {
-  isFlagged: boolean;
   onPress: () => void;
+  isFlagged: boolean;
+  disabled?: boolean;
+  color?: string;
+  size?: number;
 }
 
-export const FlagButton = ({ isFlagged, onPress }: Props) => {
+export const FlagButton = ({
+  isFlagged,
+  onPress,
+  disabled,
+  color,
+  size = 22,
+}: Props) => {
   const { theme } = useUserPreferencesStore();
   const scale = useSharedValue(1);
 
@@ -41,13 +50,20 @@ export const FlagButton = ({ isFlagged, onPress }: Props) => {
     onPress();
   };
 
+  const iconColor = color ? color : theme !== "light" ? "white" : "black";
+
   return (
-    <Pressable onPress={handlePress} hitSlop={10} disabled={isFlagged}>
+    <Pressable
+      hitSlop={10}
+      onPress={handlePress}
+      disabled={disabled || isFlagged}
+      style={{ opacity: disabled || isFlagged ? 0.5 : 1 }}
+    >
       <Animated.View style={animatedStyle}>
         <Ionicons
+          size={size}
           name="flag-outline"
-          size={22}
-          color={isFlagged ? "#FF0909" : theme !== "light" ? "white" : "black"}
+          color={isFlagged ? "#FF0909" : iconColor}
         />
       </Animated.View>
     </Pressable>

@@ -1,9 +1,13 @@
 import { IMAGES } from "@/core/constants/images";
 import { useViewTracker } from "@/core/hooks/ad/useViewTracker";
-import { useIncrementAdViews } from "@/core/services/ads/ad.mutations";
+import {
+  useIncrementAdViews,
+  useToggleFavorite,
+} from "@/core/services/ads/ad.mutations";
+import useAuthStore from "@/core/store/auth.store";
 import { AdvertisementInterface } from "@/core/types";
 import { formatViews } from "@/core/utils";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { memo, useState } from "react";
 import {
@@ -15,6 +19,9 @@ import {
   Text,
   View,
 } from "react-native";
+import { FavoriteButton } from "../../ui/button/favorite-button";
+import { FlagButton } from "../../ui/button/flag-button";
+import { ShareButton } from "../../ui/button/share-button";
 import VideoPlayer from "../../ui/shared/video-player";
 
 const { width, height } = Dimensions.get("window");
@@ -27,6 +34,8 @@ const ShowAdComponent = memo(function Advertisement({
   isVisible: boolean;
 }) {
   const [activeHorizontalIndex, setActiveHorizontalIndex] = useState(0);
+  const { mutate: favorite } = useToggleFavorite();
+  const { isGuest } = useAuthStore();
   const { mutate: recordView } = useIncrementAdViews();
   useViewTracker(ad.id, isVisible, recordView);
 
@@ -35,6 +44,8 @@ const ShowAdComponent = memo(function Advertisement({
     const index = Math.round(offsetX / width);
     setActiveHorizontalIndex(index);
   };
+
+  console.log(ad.is_favorited);
 
   return (
     <View style={{ width, height, position: "relative" }}>
@@ -88,10 +99,27 @@ const ShowAdComponent = memo(function Advertisement({
       )}
 
       <View style={styles.rightSidebar}>
-        <Ionicons name="flag-outline" color="white" size={24} />
+        <FlagButton
+          isFlagged={ad.is_flagged ?? false}
+          onPress={() => {}}
+          disabled={isGuest}
+          color="white"
+          size={24}
+        />
         <Ionicons name="chatbox-ellipses-outline" color="white" size={24} />
-        <Ionicons name="star-outline" color="white" size={24} />
-        <Feather name="share-2" size={24} color="white" />
+        <FavoriteButton
+          isFavorite={ad.is_favorited ?? false}
+          onPress={() => favorite(ad.id)}
+          disabled={isGuest}
+          color="white"
+          size={24}
+        />
+        <ShareButton
+          onPress={() => {}}
+          disabled={isGuest}
+          color="white"
+          size={24}
+        />
         <View>
           <Ionicons name="eye-outline" color="white" size={22} />
           <Text className="text-white text-xs text-center">

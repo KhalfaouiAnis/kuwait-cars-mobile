@@ -1,5 +1,8 @@
+import { Dimensions } from "react-native";
 import { Language, ProvinceOption, SelectOption } from "../types";
 import { generateYears } from "../utils/date";
+
+export const DIMENSIONS = Dimensions.get("screen");
 
 export const PLATE_RECOGNIZER_API_URL =
   "https://api.platerecognizer.com/v1/plate-reader/";
@@ -20,8 +23,8 @@ export const SUPPORTED_LANGUAGES: Language[] = [
   { code: "en", name: "English", flag: "🇺🇸" },
   { code: "es", name: "Española", flag: "🇪🇸" },
   { code: "fr", name: "Français", flag: "🇫🇷" },
-  { code: "ur", name: "اردو", flag: "JO" },
-  { code: "hi", name: "हिंदी", flag: "🇮🇳" },
+  { code: "ur", name: "أردو", flag: "JO" },
+  { code: "hi", name: "भारतीय", flag: "🇮🇳" },
 ];
 
 export const RTL_LANGUAGES = ["ar", "ur"];

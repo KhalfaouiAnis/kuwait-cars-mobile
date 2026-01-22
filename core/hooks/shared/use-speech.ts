@@ -1,4 +1,4 @@
-import { currentLang } from "@/core/store/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import {
   ExpoSpeechRecognitionModule,
   ExpoSpeechRecognitionResultEvent,
@@ -6,6 +6,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 
 export const useSpeechToForm = (fieldName: string, formOnChange: any) => {
+  const { lang } = useUserPreferencesStore();
   const [isRecording, setIsRecording] = useState(false);
   const [activeField, setActiveField] = useState<string | null>(null);
 
@@ -22,13 +23,13 @@ export const useSpeechToForm = (fieldName: string, formOnChange: any) => {
       setIsRecording(false);
       setActiveField(null);
     },
-    [activeField, fieldName, formOnChange]
+    [activeField, fieldName, formOnChange],
   );
 
   useEffect(() => {
     const resultListener = ExpoSpeechRecognitionModule.addListener(
       "result",
-      handleResult
+      handleResult,
     );
     const errorListener = ExpoSpeechRecognitionModule.addListener(
       "error",
@@ -36,16 +37,15 @@ export const useSpeechToForm = (fieldName: string, formOnChange: any) => {
         console.log("Speech recognition error:", e);
         setIsRecording(false);
         setActiveField(null);
-      }
+      },
     );
     const startListener = ExpoSpeechRecognitionModule.addListener("start", () =>
-      setIsRecording(true)
+      setIsRecording(true),
     );
     const endListener = ExpoSpeechRecognitionModule.addListener("end", () =>
-      setIsRecording(false)
+      setIsRecording(false),
     );
 
-    // Request permissions once
     ExpoSpeechRecognitionModule.requestPermissionsAsync();
 
     return () => {
@@ -64,7 +64,7 @@ export const useSpeechToForm = (fieldName: string, formOnChange: any) => {
     setActiveField(fieldName);
     try {
       ExpoSpeechRecognitionModule.start({
-        lang: currentLang(),
+        lang,
         interimResults: false,
       });
     } catch (error) {

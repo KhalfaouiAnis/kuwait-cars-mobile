@@ -36,6 +36,10 @@ export default function InputWithIcon<TForm extends FieldValues>({ placeholder, 
                     placeholderTextColor="#A8A8A8"
                     onChangeText={onChange}
                     value={value as string}
+                    style={{
+                        writingDirection: isRTL ? "rtl" : "ltr",
+                        textAlign: isRTL ? "right" : "left"
+                    }}
                     {...props}
                     secureTextEntry={props.secureTextEntry && !showPassword}
                 />

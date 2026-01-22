@@ -40,7 +40,7 @@ export default function AdvertisementDetails({
           {images.slice(0, 2).map((image, index) => (
             <View
               key={index}
-              className="p-2 rounded-lg bg-white dark:bg-darkish border border-primary-500"
+              className="p-2 rounded-lg bg-white dark:bg-black border border-primary-500"
             >
               <Image
                 source={{ uri: image.transformed_url }}
@@ -187,7 +187,7 @@ export default function AdvertisementDetails({
               {t("adDetails.similarAds")}
             </Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent dark:border-primary-500 dark:bg-darkish me-4">
+              <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent dark:border-primary-500 dark:bg-black me-4">
                 <Image
                   source={IMAGES.CarChevrolet}
                   style={{ height: 80, width: 130, borderRadius: 8 }}
@@ -211,7 +211,7 @@ export default function AdvertisementDetails({
                   </View>
                 </View>
               </View>
-              <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent dark:border-primary-500 dark:bg-darkish me-4">
+              <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent dark:border-primary-500 dark:bg-black me-4">
                 <Image
                   source={IMAGES.CarChevrolet}
                   style={{ height: 80, width: 130, borderRadius: 8 }}
@@ -235,7 +235,7 @@ export default function AdvertisementDetails({
                   </View>
                 </View>
               </View>
-              <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent dark:border-primary-500 dark:bg-darkish me-4">
+              <View className="bg-white rounded-xl py-1 px-2 flex-row gap-x-2 items-center border border-transparent dark:border-primary-500 dark:bg-black me-4">
                 <Image
                   source={IMAGES.CarChevrolet}
                   style={{ height: 80, width: 130, borderRadius: 8 }}

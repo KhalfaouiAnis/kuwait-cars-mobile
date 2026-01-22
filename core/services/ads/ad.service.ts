@@ -54,7 +54,7 @@ export const fetchMyFavoritedAds = async (): Promise<
   AdvertisementInterface[]
 > => {
   const { data } =
-    await httpClient.get<AdvertisementInterface[]>("/ads/me/favorite");
+    await httpClient.get<AdvertisementInterface[]>("/ads/favorite");
 
   return data;
 };

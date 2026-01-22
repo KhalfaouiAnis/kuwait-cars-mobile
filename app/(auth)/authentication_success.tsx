@@ -1,5 +1,7 @@
 import SuccessIcon from "@/assets/svg/success";
 import Container from "@/core/components/ui/container";
+import { DIMENSIONS } from "@/core/constants";
+import { boxShadow } from "@/core/utils/cn";
 import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -16,8 +18,16 @@ export default function AuthenticationSuccessScreen() {
                 <Text className="mt-2 text-base text-center dark:text-white">{t("authSuccess")}</Text>
             </View>
             <View className="px-4 mt-52">
-                <TouchableOpacity className="bg-primary-500 py-3 mt-4 rounded-lg items-center">
-                    <Text className="text-lg font-inter-bold text-secondary-900">{t("updatePassword")}</Text>
+                <TouchableOpacity
+                    className="bg-primary-500 py-3 rounded-full items-center"
+                    style={{
+                        boxShadow: boxShadow(4, 6, 20).button.boxShadow,
+                        width: DIMENSIONS.width / 2 + 20,
+                    }}
+                >
+                    <Text className="text-2xl font-inter-semibold text-center text-black">
+                        {t("updatePassword")}
+                    </Text>
                 </TouchableOpacity>
             </View>
         </Container>

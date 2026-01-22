@@ -4,6 +4,6 @@
 
 @layer utilities {
   .bordered-box {
-    @apply border border-grayish bg-whitish dark:border-primary-500 dark:bg-darkish;
+    @apply border border-grayish bg-whitish dark:border-primary-500 dark:bg-black;
   }
 }

@@ -1,4 +1,5 @@
 import { useSpeechToForm } from '@/core/hooks/shared/use-speech';
+import useUserPreferencesStore from '@/core/store/preferences.store';
 import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
 import { ReactNode } from "react";
@@ -18,6 +19,8 @@ type AudioInputProps<TForm extends FieldValues> = TextInputProps & {
 
 export default function InputWithSpeech<TForm extends FieldValues>({ control, name, error, icon, required, label, ...props }: AudioInputProps<TForm>) {
     const { t } = useTranslation("common")
+    const { isRTL } = useUserPreferencesStore();
+
     const {
         field: { onChange, value },
     } = useController({
@@ -44,6 +47,10 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
                         value={value}
                         numberOfLines={1}
                         onChangeText={onChange}
+                        style={{
+                            writingDirection: isRTL ? "rtl" : "ltr",
+                            textAlign: isRTL ? "right" : "left"
+                        }}
                         {...props}
                     />
                     <View className='flex-row items-center'>

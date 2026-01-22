@@ -6,85 +6,100 @@ import useAuthStore from "@/core/store/auth.store";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { TFunction } from "i18next";
-import { ActivityIndicator, Pressable, Text, TouchableOpacity, View } from "react-native";
+import {
+    ActivityIndicator,
+    Pressable,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { toast } from "sonner-native";
 
 export default function ChangePasswordForm({ t }: { t: TFunction }) {
-    const { user } = useAuthStore()
-    const { protectAction } = useAuthGuard()
-    const { control, handleSubmit, onSubmit, isSubmitting, errors } = useUpdatePassword(user?.phone)
+  const { user } = useAuthStore();
+  const { protectAction } = useAuthGuard();
+  const { control, handleSubmit, onSubmit, isSubmitting, errors } =
+    useUpdatePassword(user?.phone);
 
-    const onError = () => {
-        if (Object.keys(errors).length > 0) {
-            Object.entries(errors).forEach(([_, error]) => {
-                if (error.message) {
-                    toast.error(`${error.message}`)
-                }
-            })
+  const onError = () => {
+    if (Object.keys(errors).length > 0) {
+      Object.entries(errors).forEach(([_, error]) => {
+        if (error.message) {
+          toast.error(`${error.message}`);
         }
-    };
-
-    const handleUpdate = () => {
-        protectAction(handleSubmit(onSubmit, onError))
+      });
     }
+  };
 
-    return (
-        <View className="flex-1 mt-2 bg-white dark:bg-darkish px-4 py-2 gap-y-8">
-            <View className="flex-1 flex-row border border-primary-500 rounded-lg items-center justify-between w-full px-4 py-1">
-                <View>
-                    <Text className="font-inter-semibold text-xl dark:text-white">{user?.fullname}</Text>
-                </View>
-                <View className="items-end">
-                    <View className="relative">
-                        <Image
-                            source={user?.avatar
-                                ? { uri: user?.avatar.original_url }
-                                : IMAGES.DefaultAvatar}
-                            style={{ width: 75, height: 75, borderRadius: 50 }}
-                            contentFit="cover"
-                        />
-                        <Pressable className="absolute -left-7 bottom-1 z-10 bg-white rounded-full p-2">
-                            <Ionicons name="camera-outline" size={24} />
-                        </Pressable>
-                    </View>
-                </View>
-            </View>
+  const handleUpdate = () => {
+    protectAction(handleSubmit(onSubmit, onError));
+  };
 
-            <View className="flex-1 py-2 mt-2 gap-y-12">
-                <InputWithIcon
-                    control={control}
-                    name="password"
-                    secureTextEntry
-                    label={t("profile.newPassword")}
-                    icon="lock-closed-outline"
-                    placeholder={t("profile.newPassword")}
-                    requiredMark
-                    endIcon="eye-outline"
-                    error={errors.password?.message}
-                />
-                <InputWithIcon
-                    control={control}
-                    name="confirmPassword"
-                    secureTextEntry
-                    label={t("profile.confirmPassword")}
-                    icon="lock-closed-outline"
-                    placeholder={t("profile.confirmNewPassword")}
-                    requiredMark
-                    endIcon="eye-outline"
-                    error={errors.password?.message}
-                />
-            </View>
-            <View className="flex-1 pt-12">
-                <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-lg items-center disabled:bg-yellow-200"
-                    onPress={handleUpdate}
-                    disabled={isSubmitting}
-                >
-                    <Text className="text-lg font-semibold text-secondary-900">
-                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("profile.updatePass")}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+  return (
+    <View className="flex-1 mt-2 bg-white dark:bg-black px-4 py-2 gap-y-8">
+      <View className="flex-1 flex-row border border-primary-500 rounded-lg items-center justify-between w-full px-4 py-1">
+        <View>
+          <Text className="font-inter-semibold text-xl dark:text-white">
+            {user?.fullname}
+          </Text>
         </View>
-    )
+        <View className="items-end">
+          <View className="relative">
+            <Image
+              source={
+                user?.avatar
+                  ? { uri: user?.avatar.original_url }
+                  : IMAGES.DefaultAvatar
+              }
+              style={{ width: 75, height: 75, borderRadius: 50 }}
+              contentFit="cover"
+            />
+            <Pressable className="absolute -left-7 bottom-1 z-10 bg-white rounded-full p-2">
+              <Ionicons name="camera-outline" size={24} />
+            </Pressable>
+          </View>
+        </View>
+      </View>
+
+      <View className="flex-1 py-2 mt-2 gap-y-12">
+        <InputWithIcon
+          control={control}
+          name="password"
+          secureTextEntry
+          label={t("profile.newPassword")}
+          icon="lock-closed-outline"
+          placeholder={t("profile.newPassword")}
+          requiredMark
+          endIcon="eye-outline"
+          error={errors.password?.message}
+        />
+        <InputWithIcon
+          control={control}
+          name="confirmPassword"
+          secureTextEntry
+          label={t("profile.confirmPassword")}
+          icon="lock-closed-outline"
+          placeholder={t("profile.confirmNewPassword")}
+          requiredMark
+          endIcon="eye-outline"
+          error={errors.password?.message}
+        />
+      </View>
+      <View className="flex-1 pt-12">
+        <TouchableOpacity
+          className="bg-primary-500 py-3 rounded-lg items-center disabled:bg-yellow-200"
+          onPress={handleUpdate}
+          disabled={isSubmitting}
+        >
+          <Text className="text-lg font-semibold text-secondary-900">
+            {isSubmitting ? (
+              <ActivityIndicator size="small" color="primary" />
+            ) : (
+              t("profile.updatePass")
+            )}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }

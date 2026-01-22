@@ -1,6 +1,8 @@
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
-import InputWithIcon from "@/core/components/ui/input/input-with-icon";
+import AuthTextInput from "@/core/components/ui/input/text/auth-input";
+import { DIMENSIONS } from "@/core/constants";
 import { useResetPassword } from "@/core/hooks/auth/useAuth";
+import { boxShadow } from "@/core/utils/cn";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
@@ -14,7 +16,7 @@ export default function ResetPasswordScreen() {
                 {t("createYourNewPassword")}
             </Text>
             <View className="pt-2 px-4 my-4 gap-y-4">
-                <InputWithIcon
+                <AuthTextInput
                     name="phone"
                     control={control}
                     icon="call-outline"
@@ -22,7 +24,7 @@ export default function ResetPasswordScreen() {
                     error={errors.phone?.message}
                     label={t("yourPhone")}
                 />
-                <InputWithIcon
+                <AuthTextInput
                     name="password"
                     control={control}
                     error={errors.password?.message}
@@ -31,7 +33,7 @@ export default function ResetPasswordScreen() {
                     icon="lock-closed-outline"
                     placeholder={t("createNewPassword")}
                 />
-                <InputWithIcon
+                <AuthTextInput
                     control={control}
                     name="confirmPassword"
                     error={errors.confirmPassword?.message}
@@ -42,11 +44,17 @@ export default function ResetPasswordScreen() {
                 />
             </View>
             <View className="px-4 pb-4">
-                <TouchableOpacity className="bg-primary-500 py-3 mt-4 rounded-lg items-center"
+                <TouchableOpacity
+                    className="bg-primary-500 py-3 rounded-full items-center mt-4"
+                    style={{
+                        boxShadow: boxShadow(4, 6, 20).button.boxShadow,
+                        width: DIMENSIONS.width / 2 + 20,
+                    }}
                     onPress={handleSubmit(onSubmit)}
-                    disabled={isSubmitting}>
-                    <Text className="text-lg font-semibold text-secondary-900">
-                        {isSubmitting ? <ActivityIndicator size="small" color="primary" /> : t("resetPassword")}
+                    disabled={isSubmitting}
+                >
+                    <Text className="text-2xl font-inter-semibold text-center text-black">
+                        {isSubmitting ? <ActivityIndicator size="small" color="#fff" /> : t("resetPassword")}
                     </Text>
                 </TouchableOpacity>
             </View>

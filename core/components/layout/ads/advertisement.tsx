@@ -1,17 +1,15 @@
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
 import useAuthStore from "@/core/store/auth.store";
-import useUserPreferencesStore, {
-    currentLang,
-} from "@/core/store/preferences.store";
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdvertisementInterface } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { formatSmartDate } from "@/core/utils/date";
 import { distanceToMyLocation } from "@/core/utils/location";
 import {
-    AntDesign,
-    Ionicons,
-    MaterialCommunityIcons,
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
@@ -38,7 +36,7 @@ const Advertisement = memo(function Advertisement({
   }>();
   const user = useAuthStore((state) => state.user);
   const { t } = useTranslation("common");
-  const { isRTL } = useUserPreferencesStore();
+  const { isRTL, lang } = useUserPreferencesStore();
   const { protectAction } = useAuthGuard();
   const { mutate } = useToggleFavorite();
 
@@ -184,7 +182,7 @@ const Advertisement = memo(function Advertisement({
         </View>
         <View className="flex-row items-center justify-between">
           <Text className="font-inter text-xs text-gray-400">
-            {formatSmartDate(data.created_at, currentLang())}
+            {formatSmartDate(data.created_at, lang)}
           </Text>
           {data.mileage && (
             <Text className="font-inter text-xs text-gray-400">{`${data.mileage} ${t(`unit.${data.mileage_unit}`)}`}</Text>
