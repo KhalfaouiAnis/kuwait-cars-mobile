@@ -57,7 +57,7 @@ const useAuthStore = create<AuthState>()(
             httpClient
               .get("/users/details")
               .then(({ data }) =>
-                set({ user: data, isReady: true, isGuest: false })
+                set({ user: data, isReady: true, isGuest: false }),
               )
               .catch(() => get().signOut());
           }
@@ -105,8 +105,8 @@ const useAuthStore = create<AuthState>()(
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated();
       },
-    }
-  )
+    },
+  ),
 );
 
 export const authStore = useAuthStore;

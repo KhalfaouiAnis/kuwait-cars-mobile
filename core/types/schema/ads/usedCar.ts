@@ -1,28 +1,23 @@
 import { z } from "zod";
 import {
-  AreaSchema,
-  BaseAdSchema,
-  LocationSchema,
-  ProvinceSchema,
+    AreaSchema,
+    BaseAdSchema,
+    LocationSchema,
+    ProvinceSchema,
 } from "../shared";
 
 export const UsedCarAdSchema = BaseAdSchema.extend({
-  price: z.coerce
-    .number({ message: "required" })
-    .min(0, { message: "required" }),
+  price: z.coerce.number().min(0),
   province: ProvinceSchema,
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
 
-  brand: z.string({ message: "required" }),
-  model: z.string({ message: "required" }),
+  brand: z.string().min(0),
+  model: z.string().min(0),
 
-  year: z.coerce
-    .number({ message: "required" })
-    .min(0)
-    .max(new Date().getFullYear()),
-  exterior_color: z.string({ message: "required" }),
-  mileage: z.coerce.number({ message: "required" }),
+  year: z.coerce.number().min(0).max(new Date().getFullYear()),
+  exterior_color: z.string().min(0),
+  mileage: z.coerce.number().min(0),
   mileage_unit: z.string().optional(),
 
   fuel_type: z.string().optional(),

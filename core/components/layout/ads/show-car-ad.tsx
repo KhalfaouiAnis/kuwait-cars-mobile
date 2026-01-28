@@ -1,3 +1,4 @@
+import { DIMENSIONS } from "@/core/constants";
 import { IMAGES } from "@/core/constants/images";
 import { useViewTracker } from "@/core/hooks/ad/useViewTracker";
 import {
@@ -8,10 +9,10 @@ import useAuthStore from "@/core/store/auth.store";
 import { AdvertisementInterface } from "@/core/types";
 import { formatViews } from "@/core/utils";
 import { Ionicons } from "@expo/vector-icons";
+import { useMappingHelper } from "@shopify/flash-list";
 import { Image } from "expo-image";
 import { memo, useState } from "react";
 import {
-  Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
@@ -24,7 +25,7 @@ import { FlagButton } from "../../ui/button/flag-button";
 import { ShareButton } from "../../ui/button/share-button";
 import VideoPlayer from "../../ui/shared/video-player";
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = DIMENSIONS
 
 const ShowAdComponent = memo(function Advertisement({
   ad,
@@ -35,8 +36,9 @@ const ShowAdComponent = memo(function Advertisement({
 }) {
   const [activeHorizontalIndex, setActiveHorizontalIndex] = useState(0);
   const { mutate: favorite } = useToggleFavorite();
-  const { isGuest } = useAuthStore();
+  const isGuest = useAuthStore(state => state.isGuest);
   const { mutate: recordView } = useIncrementAdViews();
+  const { getMappingKey } = useMappingHelper();
   useViewTracker(ad.id, isVisible, recordView);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -44,8 +46,6 @@ const ShowAdComponent = memo(function Advertisement({
     const index = Math.round(offsetX / width);
     setActiveHorizontalIndex(index);
   };
-
-  console.log(ad.is_favorited);
 
   return (
     <View style={{ width, height, position: "relative" }}>
@@ -72,13 +72,13 @@ const ShowAdComponent = memo(function Advertisement({
           pagingEnabled
           snapToInterval={width}
           decelerationRate="fast"
-          snapToAlignment="center"
+          snapToAlignment="start"
           scrollEventThrottle={16}
           onMomentumScrollEnd={handleScroll}
           showsHorizontalScrollIndicator={false}
         >
           {ad.media.map((item, index) => (
-            <View style={{ width, height }} key={`${item.public_id}__${index}`}>
+            <View style={{ width, height }} key={getMappingKey(item.public_id, index)}>
               {item.media_type === "VIDEO" ? (
                 <VideoPlayer
                   autoPlay
@@ -101,7 +101,7 @@ const ShowAdComponent = memo(function Advertisement({
       <View style={styles.rightSidebar}>
         <FlagButton
           isFlagged={ad.is_flagged ?? false}
-          onPress={() => {}}
+          onPress={() => { }}
           disabled={isGuest}
           color="white"
           size={24}
@@ -115,7 +115,7 @@ const ShowAdComponent = memo(function Advertisement({
           size={24}
         />
         <ShareButton
-          onPress={() => {}}
+          onPress={() => { }}
           disabled={isGuest}
           color="white"
           size={24}

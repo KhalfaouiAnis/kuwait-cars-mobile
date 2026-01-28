@@ -7,11 +7,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { TFunction } from "i18next";
 import {
-    ActivityIndicator,
-    Pressable,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { toast } from "sonner-native";
 
@@ -71,7 +71,7 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
           placeholder={t("profile.newPassword")}
           requiredMark
           endIcon="eye-outline"
-          error={errors.password?.message}
+          error={errors.password?.ref?.name}
         />
         <InputWithIcon
           control={control}
@@ -82,12 +82,12 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
           placeholder={t("profile.confirmNewPassword")}
           requiredMark
           endIcon="eye-outline"
-          error={errors.password?.message}
+          error={errors.password?.ref?.name}
         />
       </View>
       <View className="flex-1 pt-12">
         <TouchableOpacity
-          className="bg-primary-500 py-3 rounded-lg items-center disabled:bg-yellow-200"
+          className="bg-primary-500 py-3 rounded-3xl items-center disabled:bg-yellow-200"
           onPress={handleUpdate}
           disabled={isSubmitting}
         >

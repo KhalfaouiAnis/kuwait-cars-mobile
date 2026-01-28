@@ -11,13 +11,17 @@ type CloudinaryUploadResponse = {
 
 export const useUploadMedia = () => {
   const [fileProgress, setFileProgress] = useState<Record<number, number>>({});
+  const [currentBatchCount, setCurrentBatchCount] = useState(0);
 
   const upload = async (files: UploadFileType[]) => {
+    setFileProgress({});
+    setCurrentBatchCount(files.length);
+
     try {
       const uploadPromises = files.map(
         async (
           { file: { uri, type, name }, media_type, signingParams },
-          index
+          index,
         ) => {
           const { data: response } = await signCloudinaryUpload(signingParams);
 
@@ -48,10 +52,13 @@ export const useUploadMedia = () => {
             formData,
             {
               onUploadProgress: (ev) => {
-                const percent = Math.round((ev.loaded * 100) / (ev.total || 0));
+                const percent = Math.min(
+                  100,
+                  Math.round((ev.loaded * 100) / (ev.total || 1)),
+                );
                 setFileProgress((prev) => ({ ...prev, [index]: percent }));
               },
-            }
+            },
           );
 
           return {
@@ -60,7 +67,7 @@ export const useUploadMedia = () => {
             transformed_url: data.eager?.[0]?.secure_url,
             media_type,
           };
-        }
+        },
       );
 
       return Promise.all(uploadPromises);
@@ -70,13 +77,15 @@ export const useUploadMedia = () => {
     }
   };
 
-  const totalFiles = Object.keys(fileProgress).length;
   const totalProgress =
-    totalFiles > 0
+    currentBatchCount > 0
       ? Math.round(
-          Object.values(fileProgress).reduce((a, b) => a + b, 0) / totalFiles
+          Object.values(fileProgress).reduce((a, b) => a + b, 0) /
+            currentBatchCount,
         )
       : 0;
+
+  console.log({ totalProgress });
 
   return { upload, setFileProgress, totalProgress };
 };

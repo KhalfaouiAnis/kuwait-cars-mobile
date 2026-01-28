@@ -14,10 +14,11 @@ interface Props {
 
 export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) {
     const { t } = useTranslation("common")
+
     return (
         <View
-            className={`bg-whitish rounded-2xl p-6 relative mt-10 border ${isSelected ? 'border-error' : 'border-gray-100 dark:border-primary-500'}`}
             style={boxShadow(0, 5, 10).button}
+            className={`bg-whitish rounded-2xl p-6 relative mt-10 border ${isSelected ? 'border-error' : 'border-gray-100 dark:border-primary-500'}`}
         >
             <View className="absolute -top-[26px] -right-4 z-10">
                 <SubscriptionPlan price={plan.price} recColor={plan.id === "1" ? "#FF123D" : "#FAED02"} textColor={plan.id === "1" ? "white" : "black"} />

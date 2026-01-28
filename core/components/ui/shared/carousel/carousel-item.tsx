@@ -1,22 +1,24 @@
+import { DIMENSIONS } from "@/core/constants";
 import { AdvertisementMedia } from "@/core/types";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { ReactNode } from "react";
 import {
-    Dimensions,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { CarouselProps } from "../carousel";
 import VideoPlayer from "../video-player";
-
-const screenWidth = Dimensions.get("window").width;
-const containerWidth = screenWidth - 22;
-const containerHeight = 220;
 
 interface Props {
   item: AdvertisementMedia;
+  onItemPress?: ((item: AdvertisementMedia, index?: number) => void),
+  index?: number,
+  badge?: ReactNode,
+  showIndicators?: boolean,
+  currentIndex?: number,
+  totalItems: number,
 }
 
 export default function CarouselItem({
@@ -26,16 +28,12 @@ export default function CarouselItem({
   badge,
   showIndicators,
   currentIndex,
-  items,
-}: Partial<CarouselProps> & {
-  item: AdvertisementMedia;
-  index: number;
-  currentIndex: number;
-}) {
+  totalItems,
+}: Props) {
   return (
     <TouchableOpacity
       key={index}
-      className="w-full flex-1 items-center justify-center relative me-1 bg-transparent"
+      className="w-full flex-1 items-center justify-center relative bg-transparent"
       onPress={() => onItemPress?.(item, index)}
       activeOpacity={0.8}
     >
@@ -43,7 +41,7 @@ export default function CarouselItem({
         <View
           style={[
             styles.container,
-            { width: containerWidth, height: containerHeight },
+            { width: DIMENSIONS.width - 7, height: 230 },
           ]}
         >
           {item.media_type === "VIDEO" ? (
@@ -71,7 +69,7 @@ export default function CarouselItem({
               color="white"
             />
             <Text className="text-white text-xs ms-1">
-              {currentIndex + 1}/{items?.length}
+              {(currentIndex || 0) + 1}/{totalItems}
             </Text>
           </View>
         )}

@@ -1,3 +1,4 @@
+import { DIMENSIONS } from "@/core/constants";
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
 import useAuthStore from "@/core/store/auth.store";
@@ -47,11 +48,11 @@ const Advertisement = memo(function Advertisement({
       <Pressable
         style={boxShadow(0, 4, 4).button}
         onPress={() => router.push(path as any)}
-        className="w-svw mx-0.5 rounded-lg pt-0.5 pb-2 border border-primary-500 bg-transparent"
+        className="w-svw rounded-lg pt-0.5 pb-4 mx-0.5"
       >
         <Carousel items={data.media} />
         <View
-          className="mt-3 px-2 pb-2"
+          className="px-2.5"
           style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
           <View className="flex-1 flex-row items-center justify-between gap-2">
@@ -80,60 +81,63 @@ const Advertisement = memo(function Advertisement({
               <Text className="font-inter text-xs text-gray-400">{`${t(`unit.${data.mileage_unit}`)} ${data.mileage}`}</Text>
             )}
           </View>
-          <View className="flex-row items-center justify-between mt-2 gap-x-0.5">
-            <View className="flex-1 flex-row items-center">
-              {data.province && (
-                <Ionicons
-                  name="location-outline"
-                  size={22}
-                  color={isDark ? "white" : "black"}
-                />
-              )}
-              {data.province && (
-                <Text
-                  numberOfLines={1}
-                  className="flex-1 font-inter-medium text-base text-black dark:text-white"
-                >
-                  {t(`provinces.${data.province.province}`)}
-                </Text>
-              )}
-              <Text className="font-inter text-gray-400 ms-1">
-                {user && data.province && distanceToMyLocation(user, data)}{" "}
-                {data.province && t(`unit.KM`)}
-              </Text>
-            </View>
-            <View className="flex-row items-center gap-x-0.5">
-              {data.fuel_type && (
-                <MaterialCommunityIcons
-                  name="gas-station-outline"
-                  size={20}
-                  color={isDark ? "white" : "black"}
-                />
-              )}
-              <Text
-                numberOfLines={1}
-                className="font-inter text-sm text-black dark:text-white"
-              >
-                {data.fuel_type && t(`createAd.${data.fuel_type}`)}
-              </Text>
-            </View>
-            <View className="flex-row items-center gap-x-0.5">
-              {data.transmission && (
-                <AntDesign
-                  name="control"
-                  size={20}
-                  color={isDark ? "white" : "black"}
-                />
-              )}
-              {data.transmission && (
-                <Text
-                  numberOfLines={1}
-                  className="font-inter text-sm text-black dark:text-white"
-                >
-                  {t(data.transmission)}
-                </Text>
-              )}
-            </View>
+          <View className="flex-row items-center justify-between mt-2 gap-1">
+            {
+              data.province && (
+                <View className="flex-row items-center">
+                  <Ionicons
+                    name="location-outline"
+                    size={22}
+                    color={isDark ? "white" : "black"}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    className="font-inter-medium text-base text-black dark:text-white max-w-28"
+                  >
+                    {t(`provinces.${data.province.province}`)}
+                  </Text>
+                  <Text className="font-inter text-gray-400 ms-1">
+                    {user && distanceToMyLocation(user, data)}
+                    {t(`unit.KM`)?.toLowerCase()}
+                  </Text>
+                </View>
+              )
+            }
+            {
+              data.fuel_type && (
+                <View className="flex-row items-center gap-x-0.5">
+                  <MaterialCommunityIcons
+                    name="gas-station-outline"
+                    size={20}
+                    color={isDark ? "white" : "black"}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    className="font-inter text-sm text-black dark:text-white"
+                  >
+                    {t(`createAd.${data.fuel_type}`)}
+                  </Text>
+                </View>
+              )
+            }
+            {
+              data.transmission && (
+                <View className="flex-row items-center gap-x-0.5">
+                  <AntDesign
+                    name="control"
+                    size={20}
+                    color={isDark ? "white" : "black"}
+                  />
+                  <Text
+                    numberOfLines={1}
+                    className="font-inter text-sm text-black dark:text-white"
+                  >
+                    {t(data.transmission)}
+                  </Text>
+                </View>
+              )
+            }
             <FavoriteButton
               isFavorite={data.is_favorited || false}
               onPress={() => protectAction(() => mutate(data.id))}
@@ -145,22 +149,21 @@ const Advertisement = memo(function Advertisement({
   }
 
   return (
-    <View className="flex-row flex-1 rounded-lg border border-gray-200 bg-transparent">
-      <View className="w-1/3">
-        <Image
-          source={
-            data.media.find((media) => media.media_type === "THUMBNAIL")
-              ?.transformed_url
-          }
-          contentFit="cover"
-          style={{
-            width: "auto",
-            height: 110,
-            borderTopLeftRadius: 8,
-            borderBottomLeftRadius: 8,
-          }}
-        />
-      </View>
+    <View
+      style={[boxShadow(0, 4, 4).button, { borderWidth: 0.5 }]}
+      className="flex-row flex-1 rounded-lg border-[#CCC7C7] bg-transparent overflow-hidden mx-2 ms-1"
+    >
+      <Image
+        source={
+          data.media.find((media) => media.media_type === "THUMBNAIL")
+            ?.transformed_url
+        }
+        contentFit="fill"
+        style={{
+          width: DIMENSIONS.width / 3 + 40,
+          height: 120,
+        }}
+      />
       <View
         className="flex-1 w-full rounded-r-lg p-2 gap-y-2"
         style={{ direction: isRTL ? "rtl" : "ltr" }}
@@ -175,17 +178,15 @@ const Advertisement = memo(function Advertisement({
             </Text>
           )}
         </View>
-        <View>
-          <Text className="font-inter text-sm text-gray-400" numberOfLines={1}>
-            {data.description}
-          </Text>
-        </View>
+        <Text className="flex-1 font-inter text-sm text-gray-400" ellipsizeMode="tail" numberOfLines={1}>
+          {data.description}
+        </Text>
         <View className="flex-row items-center justify-between">
           <Text className="font-inter text-xs text-gray-400">
             {formatSmartDate(data.created_at, lang)}
           </Text>
           {data.mileage && (
-            <Text className="font-inter text-xs text-gray-400">{`${data.mileage} ${t(`unit.${data.mileage_unit}`)}`}</Text>
+            <Text className="font-inter text-xs text-gray-400">{`${data.mileage}${t(`unit.${data.mileage_unit}`).toLowerCase()}`}</Text>
           )}
         </View>
         <View className="flex-row items-center justify-between">
@@ -200,8 +201,8 @@ const Advertisement = memo(function Advertisement({
               {user &&
                 data.province &&
                 data.province?.province &&
-                distanceToMyLocation(user, data)}{" "}
-              {t(`unit.${data.mileage_unit}`)}
+                distanceToMyLocation(user, data)}
+              {t(`unit.${data.mileage_unit}`).toLowerCase()}
             </Text>
           </View>
           <View>

@@ -8,8 +8,7 @@ import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
 import { CommunAdInterface } from "@/core/types/schema/ads/commun";
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
-import { useEffect } from "react";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
@@ -26,10 +25,10 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
     const province = useWatch({ control, name: "province" })
     const Areas = PROVINCES.find(prov => prov.province === province?.province)?.areas || []
 
-    useEffect(() => {
+    useFocusEffect(() => {
         setValue?.("ad_type", ad_type as string)
         setValue?.("ad_category", ad_category as string)
-    }, [ad_type, ad_category, setValue])
+    })
 
     return (
         <ScrollView
@@ -84,7 +83,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
             <AdTextInput
                 control={control}
                 name="price"
-                error={errors.price?.message}
+                error={errors.price?.ref?.name}
                 placeholder={t("createAd.WriteYourPrice")}
                 extraPadding
                 required
@@ -97,7 +96,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                 name="title"
                 required
                 maxLength={30}
-                error={errors.title?.message}
+                error={errors.title?.ref?.name}
                 placeholder={t("createAd.WriteYourAdvertisementTitle")} />
             <TextAreaSpeech
                 control={control}
@@ -105,7 +104,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                 name="description"
                 maxLength={500}
                 required
-                error={errors.description?.message}
+                error={errors.description?.ref?.name}
                 placeholder={t("createAd.WriteYourAdvertisementDescription")}
             />
         </ScrollView>

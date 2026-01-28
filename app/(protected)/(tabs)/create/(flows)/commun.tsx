@@ -4,10 +4,12 @@ import PostAd from "@/core/components/forms/ads/commun/post-ad";
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
 import AddPhotos from "@/core/components/forms/ads/shared/shared-steps/add-photos";
 import AddVideo from "@/core/components/forms/ads/shared/shared-steps/add-video";
+import AdPublishSuccess from "@/core/components/forms/ads/shared/shared-steps/success";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useCommunAd } from "@/core/hooks/ad/flows/useCommunAd";
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
+import { initiatePayment } from "@/core/services/ads/ad.service";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
 import { TFunction } from "i18next";
@@ -32,15 +34,15 @@ const getStepTitle = (step: number, t: TFunction) => {
     }
 }
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 export default function NewAdScreen() {
-    const { control, errors, dirtyFields, totalProgress, trigger, reset, setValue, getValues, handleSubmit, onSubmit } = useCommunAd()
+    const { control, formState: { errors, dirtyFields, isSubmitting }, totalProgress, trigger, reset, setValue, getValues, handleSubmit, onSubmit } = useCommunAd()
+    const [showDialog, setShowDialog] = useState(false);
+    const [currentStep, setCurrentStep] = useState(1);
     const { theme } = useUserPreferencesStore()
     const { protectAction } = useAuthGuard();
     const { t } = useTranslation("common")
-    const [showDialog, setShowDialog] = useState(false);
-    const [currentStep, setCurrentStep] = useState(1);
 
     const handlePrevious = () => {
         if (currentStep === 1) {
@@ -57,13 +59,13 @@ export default function NewAdScreen() {
     const onError = (err: any) => {
         console.log(err);
 
-        if (Object.keys(errors).length > 0) {
-            Object.entries(errors).forEach(([_, error]) => {
+        if (Object.keys(err).length > 0) {
+            Object.entries(err).forEach(([_, error]) => {
                 if (Array.isArray(error) && error.length > 0) {
-                    toast.error(t(`validation.${error[0].message}`))
+                    toast.error(err[0].message)
                 }
-                if (error.message) {
-                    toast.error(t(`validation.${error.message}`))
+                if (err.message) {
+                    toast.error(err.message)
                 }
             })
         }
@@ -83,21 +85,32 @@ export default function NewAdScreen() {
             isValid = await trigger(["plan"])
         }
 
+        console.log({ isValid });
+        console.log({ errors });
+
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
                 if (Array.isArray(error) && error.length > 0) {
-                    toast.error(t(`validation.${error[0].message}`))
+                    toast.error(t(`validation.${error[0].ref?.name}`))
                 }
                 if (error.message) {
-                    toast.error(t(`validation.${error.message}`))
+                    toast.error(t(`validation.${error.ref?.name}`))
                 }
             })
         }
 
-        if (isValid && currentStep < TOTAL_STEPS) {
+        if (isValid && currentStep < TOTAL_STEPS - 1) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            protectAction(() => handleSubmit((data) => onSubmit(data), onError)());
+            protectAction(() => {
+                if (getValues("plan.type") === "FREE") {
+                    handleSubmit((data) => onSubmit({ ...data, is_free: true }).then(() => setCurrentStep(TOTAL_STEPS)), onError)();
+                    return;
+                }
+                initiatePayment({ amount: { currency: "KWD", value: getValues("plan.price") } }).then(res => {
+                    handleSubmit((data) => onSubmit({ ...data, is_free: true }).then(() => setCurrentStep(TOTAL_STEPS)), onError)()
+                })
+            });
         }
     }
 
@@ -133,15 +146,17 @@ export default function NewAdScreen() {
         setShowDialog(false)
     }
 
+    if (currentStep === TOTAL_STEPS) return <AdPublishSuccess />;
+
     return (
         <AdFormContainer title={getStepTitle(currentStep, t)} reset={handleReset} resetLabel={t("reset")} previous={handlePrevious}>
             {renderCurrentStep()}
             <View className="mt-auto mb-4 mx-2">
                 <ProgressButton
-                    progress={totalProgress}
-                    isPending={totalProgress > 0 || totalProgress === 100}
                     onPress={handleNext}
-                    title={currentStep === TOTAL_STEPS ? t("submit") : t("next")}
+                    progress={totalProgress}
+                    isPending={isSubmitting}
+                    title={currentStep === TOTAL_STEPS - 1 ? t("submit") : t("next")}
                 />
             </View>
             <LeaveDialog

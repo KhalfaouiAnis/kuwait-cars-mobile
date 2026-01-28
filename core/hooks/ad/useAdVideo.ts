@@ -6,7 +6,7 @@ import { Video, getFileSize } from "react-native-compressor";
 export const useAdVideo = (
   setValue: any,
   getValue: any,
-  maxRecordingDuration?: number
+  maxRecordingDuration?: number,
 ) => {
   const [video, setVideo] = useState<any>(() => getValue("video"));
   const [loading, setLoading] = useState(false);
@@ -56,8 +56,8 @@ export const useAdVideo = (
   };
 
   return {
-    loading,
     video,
+    loading,
     addVideo,
     removeVideo,
   };

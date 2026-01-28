@@ -8,7 +8,6 @@ import {
   SparePartAdSchema,
 } from "@/core/types/schema/ads/sparePart";
 import { isAxiosError } from "axios";
-import { useRouter } from "expo-router";
 import { toast } from "sonner-native";
 import { useUploadMedia } from "../../shared/use-upload-media";
 import { useFormHook } from "../../use-form-hook";
@@ -16,17 +15,8 @@ import { useFormHook } from "../../use-form-hook";
 export function useSparePartAd() {
   const { totalProgress, setFileProgress, upload } = useUploadMedia();
   const { mutateAsync } = useAdMutation();
-  const router = useRouter();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isSubmitting, isDirty, dirtyFields },
-    trigger,
-    reset,
-    setValue,
-    getValues,
-  } = useFormHook(SparePartAdSchema, {
+  const form = useFormHook(SparePartAdSchema, {
     defaultValues: {
       title: undefined,
       description: undefined,
@@ -67,7 +57,7 @@ export function useSparePartAd() {
             file: image,
             media_type: "IMAGE",
             signingParams: { mediaType: "image" },
-          })
+          }),
         );
       }
 
@@ -89,13 +79,11 @@ export function useSparePartAd() {
           onError(error) {
             toast.error(error.message);
           },
-          onSuccess() {
-            router.replace("/create/success");
-          },
+          onSuccess() {},
           onSettled() {
             setFileProgress({});
           },
-        }
+        },
       );
     } catch (error) {
       if (isAxiosError(error)) {
@@ -107,17 +95,8 @@ export function useSparePartAd() {
   };
 
   return {
-    errors,
-    control,
-    isDirty,
-    dirtyFields,
-    isSubmitting,
-    totalProgress,
-    handleSubmit,
-    getValues,
-    setValue,
+    ...form,
     onSubmit,
-    trigger,
-    reset,
+    totalProgress,
   };
 }

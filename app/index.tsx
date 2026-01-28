@@ -34,8 +34,8 @@ export default function Index() {
     <TouchableOpacity
       style={
         currentLang === item.code
-          ? { ...styles.buttonSelected }
-          : { ...styles.button }
+          ? { ...styles.buttonSelected, boxShadow: theme !== "light" ? styles.button.boxShadow : undefined }
+          : { ...styles.button, boxShadow: theme !== "light" ? undefined : styles.button.boxShadow }
       }
       className={cn(
         "flex-row items-center justify-between px-5 py-1.5 my-1.5 rounded-full border border-grayish bg-white dark:bg-darkish",
@@ -83,6 +83,8 @@ export default function Index() {
 const styles = StyleSheet.create({
   button: {
     width: DIMENSIONS.width - 80,
+    borderColor: "#A8A8A8",
+    borderWidth: 1,
     boxShadow: [
       {
         offsetX: 4,
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   },
   buttonSelected: {
     width: DIMENSIONS.width - 80,
-    borderColor: "#000000",
+    borderColor: "#A8A8A8",
     borderWidth: 1,
     boxShadow: [
       {

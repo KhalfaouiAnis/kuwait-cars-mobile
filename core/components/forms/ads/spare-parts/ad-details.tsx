@@ -28,7 +28,7 @@ export default function AdDetails({ control, errors, setValue, getValue }: AdFor
                         name="additional_number"
                         keyboardType="numeric"
                         extraPadding
-                        error={errors.additional_number?.message}
+                        error={errors.additional_number?.ref?.name}
                         placeholder={t("createAd.AddAdditionalNumber")} />
                     {
                         !showSecondNumber && (
@@ -47,7 +47,7 @@ export default function AdDetails({ control, errors, setValue, getValue }: AdFor
                         readOnly={!showSecondNumber}
                         keyboardType="numeric"
                         extraPadding
-                        error={errors.additional_number?.message}
+                        error={errors.additional_number?.ref?.name}
                         placeholder={t("createAd.AddAdditionalNumber")} />
                 </View>
 

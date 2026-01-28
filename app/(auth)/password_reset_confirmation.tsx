@@ -12,9 +12,9 @@ export default function PasswordResetConfirmationScreen() {
             <Text className="mt-6 text-base text-center dark:text-white px-4">
                 {t("passSuccessReset")}
             </Text>
-            <View className="mt-32 px-4">
+            <View className="mt-32 px-4 items-center">
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-full items-center mt-20"
+                    className="bg-primary-500 py-3 rounded-3xl items-center mt-20"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,

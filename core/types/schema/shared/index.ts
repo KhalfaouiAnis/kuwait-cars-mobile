@@ -9,7 +9,7 @@ import { UsedCarAdInterface } from "../ads/usedCar";
 export type AdCategory = (typeof Ad_CATEGORIES)[number];
 
 export const SubscriptionPlanSchema = z.object({
-  type: z.string({ required_error: "required" }),
+  type: z.string(),
   title: z.string(),
   price: z.coerce.number(),
   expires_in: z.coerce.number(),
@@ -42,7 +42,7 @@ export const VideoSchema = z.object(
     duration: z.coerce.number().optional(),
     size: z.coerce.number().optional(),
   },
-  { message: "Video File validation failed" }
+  { message: "Video File validation failed" },
 );
 
 export const createFileSchema = (customMessage?: string) =>
@@ -54,20 +54,20 @@ export const createFileSchema = (customMessage?: string) =>
       id: z.string().optional(),
       size: z.coerce.number().optional(),
     },
-    { message: customMessage || "Image File validation failed" }
+    { message: customMessage || "Image File validation failed" },
   );
 
 export const MultiFileSchema = (customMessage?: string) =>
   z.array(createFileSchema(customMessage));
 
 export const BaseAdSchema = z.object({
-  ad_type: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]], {
-    message: "required",
-  }),
+  ad_type: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]]),
   ad_category: z.string().optional(),
-  title: z.string({ message: "required" }),
-  description: z.string({ message: "required" }),
+  title: z.string().min(3),
+  description: z.string().min(3),
   plan: SubscriptionPlanSchema,
+  is_paid: z.boolean().optional(),
+  is_free: z.boolean().optional(),
   thumbnail: createFileSchema("required"),
   images: MultiFileSchema("Image must be valid file under 5MB").optional(),
   video: VideoSchema.nullish(),
@@ -89,6 +89,36 @@ export const MediaSchema = z.object({
   id: z.string().optional(),
   duration: z.coerce.number().optional(),
   size: z.coerce.number().optional(),
+});
+
+export const PaymentObjectSchema = z.object({
+  amount: z.object({
+    currency: z.enum(["KWD"]),
+    value: z.coerce.number(),
+  }),
+  language: z.enum(["en", "ar"]).optional(),
+  urls: z.object({ successUrl: z.string(), errorUrl: z.string() }).optional(),
+  customer: z.optional(
+    z.object({
+      fullName: z.string().optional(),
+      phoneNumber: z.string().optional(),
+    }),
+  ),
+  description: z.string().optional(),
+  order: z
+    .object({
+      ref: z.string().optional(),
+      placedAt: z.date(),
+      products: z.array(
+        z.object({
+          nameEn: z.string(),
+          nameAr: z.string(),
+          qty: z.coerce.number(),
+          price: z.coerce.number(),
+        }),
+      ),
+    })
+    .optional(),
 });
 
 interface Mark {
@@ -114,6 +144,7 @@ interface Category {
 export type DataItem = Category;
 
 export type SubscriptionPlanType = z.infer<typeof SubscriptionPlanSchema>;
+export type PaymentObjectInterface = z.infer<typeof PaymentObjectSchema>;
 export type LocationInterface = z.infer<typeof LocationSchema>;
 export type ProvinceInterface = z.infer<typeof ProvinceSchema>;
 export type AreaInterface = z.infer<typeof AreaSchema>;

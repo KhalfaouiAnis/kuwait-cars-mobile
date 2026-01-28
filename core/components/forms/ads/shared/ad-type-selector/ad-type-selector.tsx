@@ -3,15 +3,15 @@ import { DataItem } from "@/core/types/schema/shared";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-    Modal,
-    Pressable,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type AdTypeSelectorProps = {
@@ -33,7 +33,7 @@ export default function AdTypeSelector({
   const [showModal, setShowModal] = useState(false);
   const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
 
-  const toggleExpand = (path: string) => {
+  const toggleExpand = useCallback((path: string) => {
     const newExpanded = new Set(expandedPaths);
     if (newExpanded.has(path)) {
       newExpanded.delete(path);
@@ -41,9 +41,9 @@ export default function AdTypeSelector({
       newExpanded.add(path);
     }
     setExpandedPaths(newExpanded);
-  };
+  }, [expandedPaths])
 
-  const renderItem = (
+  const renderItem = useCallback((
     item: any,
     level: number,
     path: string[],
@@ -144,13 +144,15 @@ export default function AdTypeSelector({
             </View>
           ))}
       </>
-    );
-  };
+    )
+  }, [expandedPaths, isRTL, t, toggleExpand])
 
   const handleSelect = (value: any) => {
     onChange(value);
     setShowModal(false);
   };
+
+  const keyExtractor = useCallback((_: any, index: number) => index.toString(), [])
 
   return (
     <Pressable
@@ -175,15 +177,14 @@ export default function AdTypeSelector({
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => {}}
+              onPress={() => { }}
               className="bg-white dark:bg-black pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-4"
             >
               <FlashList
                 data={data}
-                nestedScrollEnabled
+                keyExtractor={keyExtractor}
                 showsVerticalScrollIndicator={false}
                 contentContainerClassName="pb-6 px-1.5"
-                keyExtractor={(_, index) => index.toString()}
                 renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
               />
             </TouchableOpacity>

@@ -5,6 +5,9 @@ import {
   AdvertisementInterface,
   PaginatedResponse,
 } from "@/core/types";
+import { PaymentObjectInterface } from "@/core/types/schema/shared";
+import openPaymentPage from "@/core/utils/payment";
+import { toast } from "sonner-native";
 
 export const fetchAds = async ({
   filters,
@@ -77,4 +80,27 @@ export const repostAd = async (adId: string): Promise<void> => {
 
 export const incrementAdViews = async (adId: string): Promise<void> => {
   await httpClient.post(`/ads/${adId}/view`);
+};
+
+export const initiatePayment = async (payload: PaymentObjectInterface) => {
+  try {
+    const { data } = await httpClient.post("/ads/initiate-payment", {
+      ...payload,
+      amount: {
+        currency: "KWD",
+        value: payload.amount.value,
+      },
+      urls: {
+        successUrl:
+          "https://walrus-app-hz53d.ondigitalocean.app/api/v1/payment/success",
+        errorUrl:
+          "https://walrus-app-hz53d.ondigitalocean.app/api/v1/payment/failure",
+      },
+    });
+
+    await openPaymentPage(data);
+  } catch (error) {
+    console.log(error);
+    toast.error("Payment failed.");
+  }
 };

@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
-    "scheme": "xcars",
+    "scheme": "x-car",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -31,6 +31,7 @@
       "hardwareAccelerated": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.aniskhalfaoui.kuwaitcars",
+      "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBrYZrom9xF_auXAO9bo4Hhadj-AWu_Gvk"
@@ -81,11 +82,12 @@
           }
         }
       ],
-      "expo-video",
       "react-native-fbsdk-next",
-      "expo-localization",
       "expo-speech-recognition",
       "react-native-compressor",
+      "expo-notifications",
+      "expo-localization",
+      "expo-video",
       "expo-audio"
     ],
     "experiments": {

@@ -9,6 +9,7 @@ import {
   FieldValues,
   useController,
 } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 
 type InputProps<TForm extends FieldValues> = TextInputProps & {
@@ -38,6 +39,7 @@ export default function AuthTextInput<TForm extends FieldValues>({
   ...props
 }: InputProps<TForm>) {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation("common")
   const {
     field: { onChange, value },
   } = useController({ control, name });
@@ -52,7 +54,7 @@ export default function AuthTextInput<TForm extends FieldValues>({
       )}
       <View
         className={cn("flex-row items-center", {
-          "border-grayish border p-2 pe-2 rounded-full": bordered,
+          "border-grayish border p-2 pe-2 rounded-3xl": bordered,
         })}
         style={{
           boxShadow: boxShadow(4, 6, 20).button.boxShadow,
@@ -86,26 +88,28 @@ export default function AuthTextInput<TForm extends FieldValues>({
 
           }}
         />
-        {endIcon && (
-          <Pressable
-            hitSlop={6}
-            className="me-2"
-            onPress={() => setShowPassword((prevState) => !prevState)}
-          >
-            <Ionicons
-              name={showPassword ? "eye-off-outline" : endIcon}
-              size={22}
-              color={error ? "#D80027" : "#677185"}
-            />
-          </Pressable>
-        )}
-        {requiredMark && (
-          <View>
-            <Text className="text-error self-end px-2">*</Text>
-          </View>
-        )}
+        <View className="flex-row mx-2 gap-4 items-center">
+          {endIcon && (
+            <Pressable
+              hitSlop={6}
+              onPress={() => setShowPassword((prevState) => !prevState)}
+            >
+              <Ionicons
+                name={showPassword ? "eye-off-outline" : endIcon}
+                size={22}
+                color={error ? "#D80027" : "#677185"}
+              />
+            </Pressable>
+          )}
+          {requiredMark && (
+            <View>
+              <Text className="text-error">*</Text>
+            </View>
+          )}
+        </View>
+
       </View>
-      {error && <Text className="text-error text-sm ms-2 pt-2">{error}</Text>}
+      {error && <Text className="text-error text-sm ms-2 pt-2">{t(`validation.${error}`)}</Text>}
     </View>
   );
 }

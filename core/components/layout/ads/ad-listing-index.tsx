@@ -1,0 +1,50 @@
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
+import useUserPreferencesStore from "@/core/store/preferences.store";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useState } from "react";
+import { TouchableOpacity, View } from "react-native";
+import Container from "../../ui/container";
+import MainHeader from "../header/main-header";
+import { AdsListing } from "./ad-listing";
+import { MainFilters } from "./filters/main-filters";
+
+interface Props {
+    filterConfig: any
+}
+
+export default function AdCategoryIndex({ filterConfig }: Props) {
+    const { theme } = useUserPreferencesStore();
+    const { protectAction } = useAuthGuard()
+    const isDark = theme !== "light";
+    const [view, setView] = useState<"vertical" | "horizontal">("vertical");
+
+    const handleNavigate = () => {
+        protectAction(() => router.push("/create"))
+    }
+
+    return (
+        <Container
+            header={
+                <View className="flex mb-2 mt-4 pl-0.5">
+                    <MainHeader back={true} />
+                    <MainFilters
+                        isDark={isDark}
+                        setView={setView}
+                        filterConfig={filterConfig}
+                    />
+                </View>
+            }
+        >
+            <View className="px-0.5 relative flex-1">
+                <AdsListing view={view} isDark={isDark} />
+                <TouchableOpacity
+                    className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500"
+                    onPress={handleNavigate}
+                >
+                    <Ionicons name="add" size={38} />
+                </TouchableOpacity>
+            </View>
+        </Container>
+    )
+}

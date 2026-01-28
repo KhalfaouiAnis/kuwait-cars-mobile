@@ -4,12 +4,12 @@ import { z } from "zod";
 
 export function useFormHook<T extends z.ZodType<any, any>>(
   schema: T,
-  options?: UseFormProps<z.infer<T>>
+  options?: UseFormProps<z.infer<T>>,
 ): UseFormReturn<z.infer<T>> {
   const form = useForm<z.infer<T>>({
     resolver: zodResolver(schema),
-    mode: "onBlur",
-    ...options
+    mode: "onChange",
+    ...options,
   });
 
   return form;

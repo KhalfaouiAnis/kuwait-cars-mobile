@@ -3,21 +3,21 @@ import { AreaOption, ProvinceArea } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { clsx } from "clsx";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useCallback, useState } from "react";
 import {
-    Control,
-    FieldPath,
-    FieldValues,
-    useController,
+  Control,
+  FieldPath,
+  FieldValues,
+  useController,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
-    FlatList,
-    Modal,
-    Pressable,
-    Text,
-    TouchableWithoutFeedback,
-    View,
+  FlatList,
+  Modal,
+  Pressable,
+  Text,
+  TouchableWithoutFeedback,
+  View
 } from "react-native";
 
 type AreaSelectorProps<TForm extends FieldValues> = {
@@ -55,13 +55,17 @@ export default function AreaSelector<TForm extends FieldValues>({
         { label: t("areas." + option.area), value: option?.area },
         value?.area,
       )}
-    </Pressable>
-  );
+    </Pressable>)
 
   const handleSelect = (option: AreaOption) => {
     onChange(option);
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
+
+  const renderItem = ({ item }: { item: AreaOption }) => (
+    renderSelectOption(item, handleSelect)
+  )
+  const keyExtractor = useCallback((item: AreaOption) => item.area, []);
 
   return (
     <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
@@ -103,21 +107,19 @@ export default function AreaSelector<TForm extends FieldValues>({
         </View>
       </Pressable>
       <Modal
+        transparent
         visible={showModal}
         animationType="fade"
-        transparent
         onRequestClose={() => setShowModal(false)}
       >
         <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
           <View className="flex-1 justify-center items-center bg-black/50">
-            <View className="dark:bg-black border bg-transparent border-transparent -max-h-screen-safe-offset-8 w-80 overflow-hidden">
+            <View className="dark:bg-black flex-1 my-20 border bg-transparent border-transparent w-2/3 overflow-hidden">
               <FlatList
                 data={options}
-                keyExtractor={(item) => item?.area}
+                renderItem={renderItem}
+                keyExtractor={keyExtractor}
                 showsVerticalScrollIndicator={false}
-                renderItem={({ item }) =>
-                  renderSelectOption(item, handleSelect)
-                }
               />
             </View>
           </View>

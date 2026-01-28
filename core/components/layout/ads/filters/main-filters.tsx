@@ -39,7 +39,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
         contentContainerClassName="pe-2"
       >
         <Pressable>
-          <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-black">
+          <View className="ml-2 border border-[#EFEFEF] p-2 rounded-3xl flex-row items-center dark:bg-black">
             <Ionicons
               name="filter"
               size={16}
@@ -53,7 +53,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
         </Pressable>
         {Object.entries(filterConfig).map(([key, config]) => (
           <Pressable key={key} onPress={() => handleOpen(key as any)}>
-            <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-black">
+            <View className="ml-2 border border-[#EFEFEF] p-2 rounded-3xl flex-row items-center dark:bg-black">
               <Text className="ms-2 text-black dark:text-white">
                 {t(`advancedSearch.${config.title}`)}
               </Text>
@@ -67,7 +67,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
           </Pressable>
         ))}
         <Pressable onPress={() => handleOpen("price")}>
-          <View className="ml-2 border border-[#EFEFEF] p-2 rounded-lg flex-row items-center dark:bg-black">
+          <View className="ml-2 border border-[#EFEFEF] p-2 rounded-3xl flex-row items-center dark:bg-black">
             <Text className="ms-2 text-black dark:text-white">
               {t("advancedSearch.price")}
             </Text>
@@ -82,7 +82,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
       </ScrollView>
       <View className="flex-row items-center mt-2 gap-x-2 px-2">
         <Pressable
-          className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2 dark:bg-black"
+          className="border border-[#EFEFEF] p-2 rounded-3xl flex-row items-center gap-x-2 dark:bg-black"
           onPress={() =>
             setView((prevState) =>
               prevState === "horizontal" ? "vertical" : "horizontal",
@@ -97,7 +97,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
           <Text className="text-black dark:text-white">{t("changeView")}</Text>
         </Pressable>
         <Pressable
-          className="border border-[#EFEFEF] p-2 rounded-lg flex-row items-center gap-x-2 dark:bg-black"
+          className="border border-[#EFEFEF] p-2 rounded-3xl flex-row items-center gap-x-2 dark:bg-black"
           onPress={() => handleOpen("sorting")}
         >
           <MaterialCommunityIcons

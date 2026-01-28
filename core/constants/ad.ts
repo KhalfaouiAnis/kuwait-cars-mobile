@@ -2,12 +2,6 @@ import { FilterState } from "@/core/store/search.store";
 import { CAR_COLORS, YEARS } from ".";
 import { flattenToBrands, flattenToModels } from "../utils";
 
-export enum SUBSCRIPTION_TYPES {
-  GOLDEN = "GOLDEN",
-  DIAMOND = "DIAMOND",
-  RUBY = "RUBY",
-}
-
 export const AD_TYPES = {
   used_cars: "used_cars",
   new_cars: "new_cars",
@@ -3336,6 +3330,12 @@ export const CAR_BRAND_TYPES = [
   },
 ];
 
+export enum SUBSCRIPTION_TYPES {
+  FREE = "FREE",
+  GOLDEN = "GOLDEN",
+  RUBY = "RUBY",
+}
+
 export type SubscriptionDetail = {
   id: string;
   adTypes: string[];
@@ -3346,131 +3346,68 @@ export type SubscriptionDetail = {
   features: string[];
 };
 
+const REST_ADTYPES_PLAN = Ad_CATEGORIES.filter(
+  (type) =>
+    ![
+      AD_TYPES.used_cars,
+      AD_TYPES.classic_cars,
+      AD_TYPES.motorcycles,
+      AD_TYPES.show,
+    ].includes(type),
+);
+
 export const SUBSCRIPTION_PLANS = [
   {
     id: "1",
-    adTypes: [AD_TYPES.used_cars, AD_TYPES.motorcycles, AD_TYPES.classic_cars],
-    type: SUBSCRIPTION_TYPES.GOLDEN,
-    expires_in: 35,
-    title: "Golden",
+    adTypes: REST_ADTYPES_PLAN,
+    type: SUBSCRIPTION_TYPES.FREE,
+    expires_in: 39,
+    title: "Free",
     price: 0,
     features: [
       "Only Ad images will be shared.",
-      "Share on Instagram - TikTok - Facebook",
       "Video only available on upper plans.",
     ],
   },
   {
     id: "2",
-    adTypes: [AD_TYPES.used_cars, AD_TYPES.classic_cars],
-    type: SUBSCRIPTION_TYPES.DIAMOND,
-    expires_in: 45,
-    title: "Diamond",
-    price: 2,
+    adTypes: REST_ADTYPES_PLAN,
+    type: SUBSCRIPTION_TYPES.GOLDEN,
+    expires_in: 50,
+    title: "Golden",
+    price: 3,
     features: [
       "Share images + video",
-      "Share on Instagram - TikTok - Facebook",
-      "Automated share for 10 days",
-      "Diamond badge",
+      "Share on Facebook",
+      "Fixed ad for 10 days",
+      "Weekly upload",
+      "additionnal support",
+      "golder badge",
     ],
   },
   {
     id: "3",
-    adTypes: [AD_TYPES.used_cars, AD_TYPES.classic_cars],
+    adTypes: REST_ADTYPES_PLAN,
     type: SUBSCRIPTION_TYPES.RUBY,
     expires_in: 50,
     title: "Ruby",
-    price: 2.5,
+    price: 4,
     features: [
       "Share images + video",
-      "Share on Instagram - TikTok - Facebook",
-      "Ad fixed for 24h",
+      "Share on Facebook",
+      "Fixed ad for 10 days",
       "Weekly upload",
-      "Additional support on social media",
-      "Ruby badge",
+      "additionnal support",
+      "golder badge",
     ],
   },
+
   {
     id: "4",
-    adTypes: [AD_TYPES.motorcycles],
-    type: SUBSCRIPTION_TYPES.DIAMOND,
-    expires_in: 40,
-    title: "Diamond",
-    price: 2.5,
-    features: [
-      "Share images + video",
-      "Share on Instagram - TikTok - Facebook",
-      "Automated share for 10 days",
-      "Diamond badge",
-    ],
-  },
-  {
-    id: "5",
-    adTypes: [AD_TYPES.motorcycles],
-    type: SUBSCRIPTION_TYPES.RUBY,
-    expires_in: 45,
-    title: "Ruby",
-    price: 3.5,
-    features: [
-      "Share images + video",
-      "Share on Instagram - TikTok - Facebook",
-      "Ad fixed for 24h",
-      "Weekly upload",
-      "Additional support on social media",
-      "Ruby badge",
-    ],
-  },
-  {
-    id: "6",
-    adTypes: [AD_TYPES.show],
-    type: SUBSCRIPTION_TYPES.GOLDEN,
-    expires_in: 55,
-    title: "Golden",
-    price: 0,
-    features: [
-      "Share images",
-      "Share only first 15s of a video",
-      "Share on Instagram - TikTok - Facebook.",
-    ],
-  },
-  {
-    id: "7",
-    adTypes: [AD_TYPES.show],
-    type: SUBSCRIPTION_TYPES.DIAMOND,
-    expires_in: 110,
-    title: "Diamond",
-    price: 6,
-    features: [
-      "Share images",
-      "Share only first 30s of a video",
-      "Share on Instagram - TikTok - Facebook.",
-      "Automated sharing for 10 days",
-      "Diamond badge",
-    ],
-  },
-  {
-    id: "8",
-    adTypes: [AD_TYPES.show],
-    type: SUBSCRIPTION_TYPES.RUBY,
-    expires_in: 170,
-    title: "Ruby",
-    price: 9,
-    features: [
-      "Share images",
-      "Share only first 40s of a video",
-      "Share on Instagram - TikTok - Facebook.",
-      "Ad fixed for 24h",
-      "Weekly upload",
-      "Additional support on social media",
-      "Ruby badge",
-    ],
-  },
-  {
-    id: "9",
-    adTypes: [AD_TYPES.repair_garages],
-    type: SUBSCRIPTION_TYPES.GOLDEN,
-    expires_in: 40,
-    title: "Golden",
+    adTypes: [AD_TYPES.used_cars, AD_TYPES.classic_cars],
+    type: SUBSCRIPTION_TYPES.FREE,
+    expires_in: 39,
+    title: "Free",
     price: 0,
     features: [
       "Only Ad images will be shared.",
@@ -3478,33 +3415,125 @@ export const SUBSCRIPTION_PLANS = [
     ],
   },
   {
-    id: "10",
-    adTypes: [AD_TYPES.repair_garages],
-    type: SUBSCRIPTION_TYPES.DIAMOND,
+    id: "5",
+    adTypes: [AD_TYPES.used_cars, AD_TYPES.classic_cars],
+    type: SUBSCRIPTION_TYPES.GOLDEN,
     expires_in: 45,
-    title: "Diamond",
-    price: 2,
+    title: "Golden",
+    price: 3,
     features: [
       "Share images + video",
       "Share on Facebook",
-      "Automated share for 10 days",
-      "Diamond badge",
+      "Fixed ad for 10 days",
+      "Weekly upload",
+      "additionnal support",
+      "golder badge",
+    ],
+  },
+  {
+    id: "6",
+    adTypes: [AD_TYPES.used_cars, AD_TYPES.classic_cars],
+    type: SUBSCRIPTION_TYPES.RUBY,
+    expires_in: 50,
+    title: "Ruby",
+    price: 5,
+    features: [
+      "Share images + video",
+      "Share on Facebook",
+      "Fixed ad for 10 days",
+      "Weekly upload",
+      "additionnal support",
+      "golder badge",
+    ],
+  },
+
+  {
+    id: "7",
+    adTypes: [AD_TYPES.show],
+    type: SUBSCRIPTION_TYPES.FREE,
+    expires_in: 39,
+    title: "Free",
+    price: 0,
+    features: [
+      "Only Ad images will be shared.",
+      "Video only available on upper plans.",
+    ],
+  },
+  {
+    id: "8",
+    adTypes: [AD_TYPES.show],
+    type: SUBSCRIPTION_TYPES.GOLDEN,
+    expires_in: 90,
+    title: "Golden",
+    price: 6,
+    features: [
+      "Share images + video",
+      "Share on Facebook",
+      "Fixed ad for 10 days",
+      "Weekly upload",
+      "additionnal support",
+      "golder badge",
+    ],
+  },
+  {
+    id: "9",
+    adTypes: [AD_TYPES.show],
+    type: SUBSCRIPTION_TYPES.RUBY,
+    expires_in: 140,
+    title: "Ruby",
+    price: 9,
+    features: [
+      "Share images + video",
+      "Share on Facebook",
+      "Fixed ad for 10 days",
+      "Weekly upload",
+      "additionnal support",
+      "golder badge",
+    ],
+  },
+
+  {
+    id: "10",
+    adTypes: [AD_TYPES.motorcycles],
+    type: SUBSCRIPTION_TYPES.FREE,
+    expires_in: 39,
+    title: "Free",
+    price: 0,
+    features: [
+      "Only Ad images will be shared.",
+      "Video only available on upper plans.",
     ],
   },
   {
     id: "11",
-    adTypes: [AD_TYPES.repair_garages],
-    type: SUBSCRIPTION_TYPES.RUBY,
-    expires_in: 50,
-    title: "Ruby",
+    adTypes: [AD_TYPES.motorcycles],
+    type: SUBSCRIPTION_TYPES.GOLDEN,
+    expires_in: 45,
+    title: "Golden",
     price: 2.5,
     features: [
       "Share images + video",
-      "Share on Instagram - TikTok - Facebook",
-      "Ad fixed for 24h",
+      "Share on Facebook",
+      "Fixed ad for 10 days",
       "Weekly upload",
-      "Additional support on social media",
-      "Ruby badge",
+      "additionnal support",
+      "golder badge",
+    ],
+  },
+  {
+    id: "12",
+    adTypes: [AD_TYPES.motorcycles],
+    type: SUBSCRIPTION_TYPES.RUBY,
+    expires_in: 50,
+    title: "Ruby",
+    price: 3.5,
+    features: [
+      "Share images + video",
+      "Share on Facebook",
+      "Fixed ad for 10 days",
+      "Weekly upload",
+      "additionnal support",
+      "golder badge",
     ],
   },
 ];

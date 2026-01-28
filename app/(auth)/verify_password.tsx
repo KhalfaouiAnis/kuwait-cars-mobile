@@ -1,5 +1,5 @@
+import OTPVerificationInput from "@/core/components/base/otp-verification-input";
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
-import VerificationCode from "@/core/components/ui/input/verification-code";
 import { DIMENSIONS } from "@/core/constants";
 import { boxShadow } from "@/core/utils/cn";
 import { useTranslation } from "react-i18next";
@@ -16,16 +16,16 @@ export default function VerifyPasswordResetCodeScreen() {
             <Text className="mt-1 text-base text-center dark:text-white">
                 {t("enter5Digit")}
             </Text>
-            <View className="pt-20 px-4">
-                <VerificationCode numberOfElements={5} />
+            <View className="pt-20 px-4 items-center">
+                <OTPVerificationInput numberOfElements={5} onComplete={()=>{}} />
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-full items-center mt-20"
+                    className="bg-primary-500 py-3 rounded-3xl items-center mt-20"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,
                     }}
                 >
-                    <Text className="text-2xl font-inter-semibold text-center text-black">{t("verifyCode")}</Text>
+                    <Text className="text-xl font-inter-semibold text-center text-black">{t("verifyCode")}</Text>
                 </TouchableOpacity>
             </View>
         </FormWrapper>

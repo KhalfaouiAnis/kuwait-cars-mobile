@@ -21,13 +21,13 @@ export default function ResetPasswordScreen() {
                     control={control}
                     icon="call-outline"
                     placeholder={t("phoneNumber")}
-                    error={errors.phone?.message}
+                    error={errors.phone?.ref?.name}
                     label={t("yourPhone")}
                 />
                 <AuthTextInput
                     name="password"
                     control={control}
-                    error={errors.password?.message}
+                    error={errors.password?.ref?.name}
                     label={t("newPassword")}
                     endIcon="eye-outline"
                     icon="lock-closed-outline"
@@ -36,16 +36,16 @@ export default function ResetPasswordScreen() {
                 <AuthTextInput
                     control={control}
                     name="confirmPassword"
-                    error={errors.confirmPassword?.message}
+                    error={errors.confirmPassword?.ref?.name}
                     label={t("confirmPassword")}
                     endIcon="eye-outline"
                     icon="lock-closed-outline"
                     placeholder={t("confirmNewPassword")}
                 />
             </View>
-            <View className="px-4 pb-4">
+            <View className="px-4 pb-4 items-center">
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-full items-center mt-4"
+                    className="bg-primary-500 py-3 rounded-3xl items-center mt-4"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,
@@ -53,7 +53,7 @@ export default function ResetPasswordScreen() {
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
                 >
-                    <Text className="text-2xl font-inter-semibold text-center text-black">
+                    <Text className="text-xl font-inter-semibold text-center text-black">
                         {isSubmitting ? <ActivityIndicator size="small" color="#fff" /> : t("resetPassword")}
                     </Text>
                 </TouchableOpacity>

@@ -20,7 +20,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<ShowCarAdInt
                 name="title"
                 required
                 maxLength={30}
-                error={errors.title?.message}
+                error={errors.title?.ref?.name}
                 placeholder={t("createAd.WriteYourAdvertisementTitle")}
             />
             <TextAreaSpeech
@@ -29,7 +29,7 @@ export default function PostAd({ control, errors }: AdFormStepProps<ShowCarAdInt
                 name="description"
                 maxLength={500}
                 required
-                error={errors.description?.message}
+                error={errors.description?.ref?.name}
                 placeholder={t("createAd.WriteYourAdvertisementDescription")}
             />
         </ScrollView>

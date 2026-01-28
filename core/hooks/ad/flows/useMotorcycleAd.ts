@@ -8,7 +8,6 @@ import {
   MotorcycleAdSchema,
 } from "@/core/types/schema/ads/motorcycle";
 import { isAxiosError } from "axios";
-import { router } from "expo-router";
 import { toast } from "sonner-native";
 import { useUploadMedia } from "../../shared/use-upload-media";
 import { useFormHook } from "../../use-form-hook";
@@ -17,15 +16,7 @@ export function useMotorcycleAd() {
   const { totalProgress, setFileProgress, upload } = useUploadMedia();
   const { mutateAsync } = useAdMutation();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isDirty, dirtyFields },
-    trigger,
-    reset,
-    setValue,
-    getValues,
-  } = useFormHook(MotorcycleAdSchema, {
+  const form = useFormHook(MotorcycleAdSchema, {
     defaultValues: {
       ad_type: "motorcycles",
       ad_category: "sport",
@@ -68,7 +59,7 @@ export function useMotorcycleAd() {
             file: image,
             media_type: "IMAGE",
             signingParams: { mediaType: "image" },
-          })
+          }),
         );
       }
 
@@ -90,13 +81,11 @@ export function useMotorcycleAd() {
           onError(error) {
             toast.error(error.message);
           },
-          onSuccess() {
-            router.replace("/create/success");
-          },
+          onSuccess() {},
           onSettled() {
             setFileProgress({});
           },
-        }
+        },
       );
     } catch (error) {
       if (isAxiosError(error)) {
@@ -108,16 +97,8 @@ export function useMotorcycleAd() {
   };
 
   return {
-    errors,
-    isDirty,
-    control,
-    dirtyFields,
-    totalProgress,
-    handleSubmit,
-    getValues,
-    setValue,
+    ...form,
     onSubmit,
-    trigger,
-    reset,
+    totalProgress,
   };
 }

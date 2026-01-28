@@ -9,9 +9,12 @@ import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
+import { DIMENSIONS } from "@/core/constants";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { FieldValues } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
+const { width } = DIMENSIONS
 
 export default function AddVideo<T extends FieldValues>({ setValue, getValue, onSkip }: AdFormStepProps<T>) {
     const { video, loading, addVideo, removeVideo } = useAdVideo(setValue, getValue)
@@ -74,16 +77,17 @@ export default function AddVideo<T extends FieldValues>({ setValue, getValue, on
 
             {
                 video && video?.uri && (
-                    <View>
-                        <View className="relative w-full pr-2">
-                            <VideoPlayer source={video.uri} />
-                            <TouchableOpacity
-                                onPress={removeVideo}
-                                className="absolute -top-3 -right-0 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
-                            >
-                                <Ionicons name="close" size={26} color="white" />
-                            </TouchableOpacity>
-                        </View>
+                    <View
+                        className="relative pr-2 flex-1 mx-auto"
+                        style={{ width: width - 40, height: 230 }}
+                    >
+                        <VideoPlayer source={video.uri} />
+                        <TouchableOpacity
+                            onPress={removeVideo}
+                            className="absolute -top-3 -right-0 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
+                        >
+                            <Ionicons name="close" size={26} color="white" />
+                        </TouchableOpacity>
                     </View>
                 )
             }

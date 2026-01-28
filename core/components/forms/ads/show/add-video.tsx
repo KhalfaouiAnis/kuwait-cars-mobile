@@ -1,20 +1,22 @@
-import VideoPlayer from "@/core/components/ui/shared/video-player";
-import { useAdVideo } from "@/core/hooks/ad/useAdVideo";
-import { AdFormStepProps, SoundEffectTypes } from "@/core/types";
-import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from 'expo-image-picker';
-import { useEffect, useState } from "react";
-import { Alert, Modal, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-
 import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
 import AudioPlayer from "@/core/components/ui/shared/audio-player";
+import VideoPlayer from "@/core/components/ui/shared/video-player";
+import { DIMENSIONS } from "@/core/constants";
 import { SOUND_EFFECTS } from "@/core/constants/audio";
+import { useAdVideo } from "@/core/hooks/ad/useAdVideo";
 import useUserPreferencesStore from "@/core/store/preferences.store";
+import { AdFormStepProps, SoundEffectTypes } from "@/core/types";
 import { ShowCarAdInterface } from "@/core/types/schema/ads/showCar";
+import { Ionicons } from "@expo/vector-icons";
 import { clsx } from "clsx";
+import * as ImagePicker from 'expo-image-picker';
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Alert, Modal, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+
+const { width } = DIMENSIONS
 
 function soundSource(sound_effect: SoundEffectTypes) {
     if (sound_effect === 'mute') return;
@@ -104,7 +106,10 @@ export default function AddVideo({ setValue, getValue, onSkip }: AdFormStepProps
                     <View className="gap-y-8">
                         <View>
                             <Text className="text-xl font-inter-bold mb-2">{t("createAd.addVideoSoundEffect")}</Text>
-                            <View className="relative w-full pr-2">
+                            <View
+                                className="relative pr-2"
+                                style={{ width: width - 40, height: 230 }}
+                            >
                                 <VideoPlayer source={video.uri} />
                                 <TouchableOpacity
                                     onPress={removeVideo}

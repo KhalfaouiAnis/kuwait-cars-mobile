@@ -5,19 +5,19 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { clsx } from "clsx";
 import React, { ReactNode, useState } from "react";
 import {
-    Control,
-    FieldPath,
-    FieldValues,
-    useController,
+  Control,
+  FieldPath,
+  FieldValues,
+  useController,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
-    FlatList,
-    Modal,
-    Pressable,
-    Text,
-    TouchableWithoutFeedback,
-    View,
+  FlatList,
+  Modal,
+  Pressable,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 
 type ProvinceSelectorProps<TForm extends FieldValues> = {

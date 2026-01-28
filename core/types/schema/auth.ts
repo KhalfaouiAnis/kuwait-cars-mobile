@@ -11,19 +11,13 @@ export const PasswordSchema = z.object({
 });
 
 export const LoginSchema = z.object({
-  phone: z
-    .string()
-    .min(6, "Please enter a valid phone number")
-    .max(15, "Please enter a valid phone number"),
-  password: z.string().min(6, "Password is required"),
+  phone: z.string({ message: "phone" }).min(6).max(15),
+  password: z.string({ message: "password" }).min(6, "Password is required"),
 });
 
 export const SignupSchema = z.object({
   fullname: z.string().min(3, "Name must be at least 3 characters"),
-  phone: z
-  .string()
-  .min(6, "Please enter a valid phone number")
-  .max(15, "Please enter a valid phone number"),
+  phone: z.string().min(6).max(15),
   password: z.string().min(6, "Password must be at least 6 characters"),
   email: z.string().email("Please enter a valid email").optional(),
   role: z.optional(z.nativeEnum(UserRole)),

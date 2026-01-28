@@ -22,8 +22,7 @@ export default function OTPVerificationScreen() {
             <Text className="mt-6 text-base text-center text-error">
                 {phone}
             </Text>
-            <View className="pt-8 px-4">
-                {/* <VerificationCode numberOfElements={4} onComplete={async (otp) => verifyOtp(phone as string, otp)} /> */}
+            <View className="pt-8 px-4 items-center">
                 <OTPVerificationInput numberOfElements={4} onComplete={async (otp) => verifyOtp(phone as string, otp)} />
                 <View className="mt-8">
                     <ResendOTPTimer
@@ -32,7 +31,7 @@ export default function OTPVerificationScreen() {
                 </View>
                 <Text className="mt-4 text-base text-center dark:text-white">{t("doNotSendOTP")} <Text className="text-primary-500">{t("sendOTP")}</Text></Text>
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-full items-center mt-12"
+                    className="bg-primary-500 py-3 rounded-3xl items-center mt-12"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,

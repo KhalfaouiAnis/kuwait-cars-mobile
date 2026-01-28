@@ -17,9 +17,9 @@ export default function AuthenticationSuccessScreen() {
                 <Text className="text-2xl text-center font-inter-bold dark:text-white">{t("success")}</Text>
                 <Text className="mt-2 text-base text-center dark:text-white">{t("authSuccess")}</Text>
             </View>
-            <View className="px-4 mt-52">
+            <View className="px-4 mt-52 items-center">
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-full items-center"
+                    className="bg-primary-500 py-3 rounded-3xl items-center"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,

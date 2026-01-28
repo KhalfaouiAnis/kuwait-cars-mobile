@@ -50,7 +50,7 @@ export const ResendOTPTimer = ({ onResend }: { onResend: () => void }) => {
                     setOtpTargetTime(60);
                 }}
             >
-                <Text>
+                <Text className="dark:text-grayish">
                     {canResend ? t("ResendViaWhatsApp") : `${t("ResendIn")} ${secondsRemaining}${t("s")}`}
                 </Text>
             </Pressable>

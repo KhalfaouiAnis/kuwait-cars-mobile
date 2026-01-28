@@ -59,7 +59,7 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                         isRTL={isRTL}
                         isDark={isDark}
                         renderOption={(option, selected) => renderOption(option, selected as string)}
-                        error={errors.year?.message}
+                        error={errors.year?.ref?.name}
                         placeholder={t("year")}
                     />
                 </View>
@@ -73,7 +73,7 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                         isDark={isDark}
                         isRTL={isRTL}
                         renderOption={(option, selected) => renderOption(option, selected as string)}
-                        error={errors.exterior_color?.message}
+                        error={errors.exterior_color?.ref?.name}
                         placeholder={t("createAd.exteriorColor")}
                     />
                 </View>
@@ -83,7 +83,7 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                             control={control}
                             name="mileage"
                             required
-                            error={errors.mileage?.message}
+                            error={errors.mileage?.ref?.name}
                             placeholder={t("createAd.Mileage")}
                             keyboardType="number-pad"
                         />

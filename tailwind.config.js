@@ -14,7 +14,7 @@ module.exports = {
         },
         success: "#25D366",
         error: "#FF123D",
-        darkish: "#1F1F1F",
+        darkish: "#1B1B1B",
         grayish: "#A8A8A8",
         whitish: "#FBFBFB",
       },

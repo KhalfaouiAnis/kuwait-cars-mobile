@@ -1,0 +1,97 @@
+{
+  "project_info": {
+    "project_number": "178960235551",
+    "project_id": "vue-music-ead58",
+    "storage_bucket": "vue-music-ead58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178960235551:android:cab04e811d7fd58780a92a",
+        "android_client_info": {
+          "package_name": "com.aniskhalfaoui.holidays"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178960235551-k6si57eefsilbbsnhvqub4s5f58gvcl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkcbUs9LZU5m8iXq7FjjycWX8kuywzJ-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178960235551-k6si57eefsilbbsnhvqub4s5f58gvcl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178960235551:android:84dabc60d75cbca280a92a",
+        "android_client_info": {
+          "package_name": "com.aniskhalfaoui.kuwaitcars"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178960235551-k6si57eefsilbbsnhvqub4s5f58gvcl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkcbUs9LZU5m8iXq7FjjycWX8kuywzJ-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178960235551-k6si57eefsilbbsnhvqub4s5f58gvcl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178960235551:android:5ad3c814ad3d673280a92a",
+        "android_client_info": {
+          "package_name": "com.daimlertss.basepush.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178960235551-k6si57eefsilbbsnhvqub4s5f58gvcl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkcbUs9LZU5m8iXq7FjjycWX8kuywzJ-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178960235551-k6si57eefsilbbsnhvqub4s5f58gvcl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

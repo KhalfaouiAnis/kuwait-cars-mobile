@@ -21,13 +21,13 @@ export default function FormWrapper({
           <AppLogo size={160} />
         </View>
         <View
-          className="w-full pt-5 mt-5 bg-white rounded-t-[36px]"
+          className="w-full pt-5 mt-5 bg-white dark:bg-darkish rounded-t-[36px]"
           style={boxShadow(2, 2, 20, 0, "rgb(183 183 183 / 0.5)").button}
         >
           <View className="items-center justify-center w-full">
-            <Text className="font-inter-semibold text-2xl">{title}</Text>
+            <Text className="font-inter-semibold text-2xl dark:text-white">{title}</Text>
           </View>
-          <View className="bg-white rounded-t-[30px] h-full">{children}</View>
+          <View className="rounded-t-[30px] h-full">{children}</View>
         </View>
       </ScrollView>
     </Container>

@@ -37,6 +37,12 @@ export default function TabLayout() {
             ({ navigation }: { navigation: any }) => ({
                 tabPress: (e: EventArg<"tabPress", true, undefined>) => {
                     e.preventDefault();
+                    if (route === "create") {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'index' }],
+                        });
+                    }
                     protectAction(() => {
                         navigation.navigate(route);
                     });
@@ -80,19 +86,19 @@ export default function TabLayout() {
                             <Ionicons color="black" size={38} name='add-outline' style={{ backgroundColor: "transparent" }} />
                         </View>
                     ),
-                    popToTopOnBlur: true
+                    popToTopOnBlur: true,
                 }}
                 listeners={protectionListeners("create")}
-            />
-            <Tabs.Screen
-                name="favorites"
-                options={{ tabBarIcon: ({ color }) => <TabIconButton name="star-outline" color={color} isDark={isDark} /> }}
-                listeners={protectionListeners("favorites")}
             />
             <Tabs.Screen
                 name="chat"
                 options={{ tabBarIcon: ({ color }) => <TabIconButton name="chatbox-ellipses-outline" color={color} isDark={isDark} /> }}
                 listeners={protectionListeners("chat")}
+            />
+            <Tabs.Screen
+                name="favorites"
+                options={{ tabBarIcon: ({ color }) => <TabIconButton name="star-outline" color={color} isDark={isDark} /> }}
+                listeners={protectionListeners("favorites")}
             />
         </Tabs>
     );

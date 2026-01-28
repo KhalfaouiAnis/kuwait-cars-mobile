@@ -5,10 +5,12 @@ import PostAd from "@/core/components/forms/ads/motorcycles/post-ad";
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
 import AddPhotos from "@/core/components/forms/ads/shared/shared-steps/add-photos";
 import AddVideo from "@/core/components/forms/ads/shared/shared-steps/add-video";
+import AdPublishSuccess from "@/core/components/forms/ads/shared/shared-steps/success";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useMotorcycleAd } from "@/core/hooks/ad/flows/useMotorcycleAd";
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
+import { initiatePayment } from "@/core/services/ads/ad.service";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { router } from "expo-router";
 import { TFunction } from "i18next";
@@ -33,10 +35,10 @@ const getStepTitle = (step: number, t: TFunction) => {
     }
 }
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 export default function NewAdScreen() {
-    const { control, errors, trigger, reset, setValue, getValues, dirtyFields, handleSubmit, onSubmit, totalProgress } = useMotorcycleAd();
+    const { control, formState: { errors, dirtyFields }, trigger, reset, setValue, getValues, handleSubmit, onSubmit, totalProgress } = useMotorcycleAd();
     const { theme } = useUserPreferencesStore()
     const { protectAction } = useAuthGuard();
     const { t } = useTranslation("common")
@@ -89,18 +91,30 @@ export default function NewAdScreen() {
         if (Object.keys(errors).length > 0) {
             Object.entries(errors).forEach(([_, error]) => {
                 if (Array.isArray(error) && error.length > 0) {
-                    toast.error(t(`validation.${error[0].message}`))
+                    toast.error(t(`validation.${error[0].ref.name}`))
                 }
-                if (error.message) {
-                    toast.error(t(`validation.${error.message}`))
+                if (error.ref) {
+                    toast.error(t(`validation.${error.ref.name}`))
                 }
             })
         }
 
-        if (isValid && currentStep < TOTAL_STEPS) {
+        if (isValid && currentStep < TOTAL_STEPS- 1) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
-            protectAction(() => handleSubmit((data) => onSubmit(data), onError)());
+            protectAction(() => {
+                if (getValues("plan.type") === "FREE") {
+                    handleSubmit((data) => onSubmit({ ...data, is_free: true }), onError)().then(() => {
+                        setCurrentStep(TOTAL_STEPS)
+                    })
+                    return;
+                }
+                initiatePayment({ amount: { currency: "KWD", value: getValues("plan.price") } }).then(res => {
+                    handleSubmit((data) => onSubmit({ ...data, is_paid: true }), onError)().then(() => {
+                        setCurrentStep(TOTAL_STEPS)
+                    })
+                })
+            });
         }
     }
 
@@ -138,6 +152,8 @@ export default function NewAdScreen() {
         setShowDialog(false)
     }
 
+    if (currentStep === TOTAL_STEPS) return <AdPublishSuccess />;
+
     return (
         <AdFormContainer title={getStepTitle(currentStep, t)} resetLabel={t("reset")} reset={handleReset} previous={handlePrevious}>
             {renderCurrentStep()}
@@ -146,7 +162,7 @@ export default function NewAdScreen() {
                     progress={totalProgress}
                     isPending={totalProgress > 0 || totalProgress === 100}
                     onPress={handleNext}
-                    title={currentStep === TOTAL_STEPS ? t("submit") : t("next")}
+                    title={currentStep === TOTAL_STEPS - 1 ? t("submit") : t("next")}
                 />
             </View>
             <LeaveDialog

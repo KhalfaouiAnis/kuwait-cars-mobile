@@ -1,8 +1,9 @@
 import { EmptyState } from "@/core/components/ui/shared/empty-state";
 import { useAdsQuery } from "@/core/services/ads/ad.queries";
 import { AdvertisementInterface } from "@/core/types";
-import React, { useMemo } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import React, { useCallback, useMemo } from "react";
+import { ActivityIndicator, View } from "react-native";
 import { AdSkeletonList } from "../skeletons/ad-skeleton-list";
 import Advertisement from "./advertisement";
 
@@ -12,6 +13,13 @@ interface Props {
 }
 
 export const AdsListing = ({ view, isDark }: Props) => {
+  // const flashListRef = useRef<FlashListRef<AdvertisementInterface>>();
+
+  // // Basic benchmark setup
+  // useBenchmark(flashListRef, (result) => {
+  //   console.log("Benchmark complete:", result.formattedString);
+  // });
+
   const {
     data,
     fetchNextPage,
@@ -26,34 +34,39 @@ export const AdsListing = ({ view, isDark }: Props) => {
     [data?.pages],
   );
 
+  const renderItem = useCallback(({ item }: { item: AdvertisementInterface }) => (
+    <Advertisement data={item} view={view} isDark={isDark} />
+  ), [isDark, view]);
+
+  const ItemSeparator = useCallback(() => (
+    <View style={{ height: 12 }} />
+  ), []);
+
+  const keyExtractor = useCallback((item: AdvertisementInterface) => item.id.toString(), []);
+
   if (isLoading) return <AdSkeletonList />;
 
-  const renderItem = ({ item }: { item: AdvertisementInterface }) => (
-    <View className="mb-4 me-2">
-      <Advertisement data={item} view={view} isDark={isDark} />
-    </View>
-  );
-
   return (
-    <FlatList
+    <FlashList
       data={ads}
       pagingEnabled
+      // ref={flashListRef}
       onRefresh={refetch}
+      snapToInterval={330}
       refreshing={isLoading}
       renderItem={renderItem}
       decelerationRate="fast"
-      snapToAlignment="center"
-      className="bg-transparent"
+      snapToAlignment="start"
       onEndReachedThreshold={0.9}
-      removeClippedSubviews={false}
-      keyExtractor={(item) => item.id}
+      keyExtractor={keyExtractor}
       showsVerticalScrollIndicator={false}
+      ItemSeparatorComponent={ItemSeparator}
       ListEmptyComponent={<EmptyState showReset={false} />}
       onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
       contentContainerStyle={
         ads.length === 0
           ? { flex: 1 }
-          : { paddingBottom: 50, position: "relative", zIndex: 2 }
+          : { paddingBottom: 50 }
       }
       ListFooterComponent={
         isFetchingNextPage ? (

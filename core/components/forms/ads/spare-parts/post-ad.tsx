@@ -81,7 +81,7 @@ export default function PostAd({ control, setValue, errors, isDark }: AdFormStep
             <AdTextInput
                 control={control}
                 name="price"
-                error={errors.price?.message}
+                error={errors.price?.ref?.name}
                 placeholder={t("createAd.WriteYourPrice")}
                 required
                 label={t("createAd.Price")}
@@ -94,7 +94,7 @@ export default function PostAd({ control, setValue, errors, isDark }: AdFormStep
                 name="title"
                 required
                 maxLength={30}
-                error={errors.title?.message}
+                error={errors.title?.ref?.name}
                 placeholder={t("createAd.WriteYourAdvertisementTitle")}
             />
             <TextAreaSpeech
@@ -103,7 +103,7 @@ export default function PostAd({ control, setValue, errors, isDark }: AdFormStep
                 name="description"
                 maxLength={500}
                 required
-                error={errors.description?.message}
+                error={errors.description?.ref?.name}
                 placeholder={t("createAd.WriteYourAdvertisementDescription")}
             />
         </ScrollView>

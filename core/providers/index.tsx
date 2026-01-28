@@ -12,6 +12,7 @@ import { useNavigationTheme } from '../lib/theme/use-navigation-theme';
 import useUserPreferencesStore from '../store/preferences.store';
 
 export const Providers = ({ children }: PropsWithChildren) => {
+    // useForegroundNotifications()
     const theme = useNavigationTheme();
     const { isRTL } = useUserPreferencesStore()
 

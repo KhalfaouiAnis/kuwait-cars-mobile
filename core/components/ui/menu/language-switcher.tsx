@@ -80,11 +80,11 @@ export default function LanguageSwitcher({
               end: isRTL ? undefined : dropdownPos.left,
               opacity: isMeasured ? 1 : 0
             }}
-            className="absolute bg-white p-4 dark:bg-black rounded-lg flex-1">
+            className="absolute bg-white p-4 dark:bg-darkish rounded-lg flex-1">
             <FlatList
+              contentContainerClassName="gap-y-4 px-4"
               keyExtractor={(item) => item.code}
               data={SUPPORTED_LANGUAGES}
-              contentContainerClassName="gap-y-4 px-4"
               renderItem={renderItem}
             />
           </View>

@@ -16,7 +16,7 @@ export function AuthLink({ href, label }: Props) {
           boxShadow: boxShadow(4, 6, 20).button.boxShadow,
           width: DIMENSIONS.width - 60,
         }}
-        className="py-5 rounded-full border border-grayish"
+        className="h-[55px] items-center justify-center rounded-3xl border border-grayish"
       >
         <Text className="font-inter-semibold text-center text-xl dark:text-white">
           {label}

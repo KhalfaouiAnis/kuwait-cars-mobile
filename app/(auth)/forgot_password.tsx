@@ -27,7 +27,7 @@ export default function ForgotPasswordScreen() {
                 <AuthTextInput
                     control={control}
                     name="phone"
-                    error={errors.phone?.message}
+                    error={errors.phone?.ref?.name}
                     keyboardType="phone-pad"
                     customIcon={<Ionicons name="logo-whatsapp" size={20} color="#25D366" className="ms-2" />}
                     placeholder={t("enterWhatsappNumber")}
@@ -36,12 +36,12 @@ export default function ForgotPasswordScreen() {
                 <AuthTextInput
                     control={control}
                     name="email"
-                    error={errors.email?.message}
+                    error={errors.email?.ref?.name}
                     icon="mail-outline"
                     placeholder={t("enterEmail")}
                 />
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-full items-center mt-20"
+                    className="bg-primary-500 py-3 rounded-3xl items-center mt-20"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,
@@ -49,7 +49,7 @@ export default function ForgotPasswordScreen() {
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
                 >
-                    <Text className="text-2xl font-inter-semibold text-center text-black">
+                    <Text className="text-xl font-inter-semibold text-center text-black">
                         {isSubmitting ? <ActivityIndicator size="small" color="#fff" /> : t("resetPassword")}
                     </Text>
                 </TouchableOpacity>

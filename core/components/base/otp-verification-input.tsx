@@ -1,4 +1,3 @@
-import { boxShadow } from '@/core/utils/cn';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -58,11 +57,12 @@ const styles = StyleSheet.create({
   cell: {
     width: 45,
     height: 45,
-    borderWidth: 2,
-    borderColor: '#FFF900',
+    borderWidth: 1.5,
+    borderColor: '#000000',
+    backgroundColor: "#F6F6F6",
+    borderRadius: 999,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 8,
-    ...boxShadow(0, 4, 4).button,
+    marginHorizontal: 4,
   },
 });

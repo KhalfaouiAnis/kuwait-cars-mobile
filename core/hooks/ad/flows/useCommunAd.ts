@@ -8,7 +8,6 @@ import {
   CommunAdSchema,
 } from "@/core/types/schema/ads/commun";
 import { isAxiosError } from "axios";
-import { useRouter } from "expo-router";
 import { toast } from "sonner-native";
 import { useUploadMedia } from "../../shared/use-upload-media";
 import { useFormHook } from "../../use-form-hook";
@@ -16,17 +15,8 @@ import { useFormHook } from "../../use-form-hook";
 export function useCommunAd() {
   const { totalProgress, setFileProgress, upload } = useUploadMedia();
   const { mutateAsync } = useAdMutation();
-  const router = useRouter();
 
-  const {
-    control,
-    formState: { errors, isDirty, dirtyFields },
-    handleSubmit,
-    trigger,
-    reset,
-    setValue,
-    getValues,
-  } = useFormHook(CommunAdSchema, {
+  const form = useFormHook(CommunAdSchema, {
     defaultValues: {
       title: "",
       description: "",
@@ -66,7 +56,7 @@ export function useCommunAd() {
             file: image,
             media_type: "IMAGE",
             signingParams: { mediaType: "image" },
-          })
+          }),
         );
       }
 
@@ -88,13 +78,11 @@ export function useCommunAd() {
           onError(error) {
             toast.error(error.message);
           },
-          onSuccess() {
-            router.replace("/create/success");
-          },
+          onSuccess() {},
           onSettled() {
             setFileProgress({});
           },
-        }
+        },
       );
     } catch (error) {
       if (isAxiosError(error)) {
@@ -106,16 +94,8 @@ export function useCommunAd() {
   };
 
   return {
-    errors,
-    control,
-    isDirty,
-    dirtyFields,
-    totalProgress,
-    setValue,
-    getValues,
-    handleSubmit,
+    ...form,
     onSubmit,
-    trigger,
-    reset,
+    totalProgress,
   };
 }

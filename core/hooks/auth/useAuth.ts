@@ -58,6 +58,7 @@ export function useSignUp() {
       password: "",
       fullname: "",
       phone: "",
+      province: undefined,
     },
   });
 

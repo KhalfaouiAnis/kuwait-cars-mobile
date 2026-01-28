@@ -4,6 +4,7 @@ import { TokenService } from "../services/token-manager";
 
 export const httpClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL + "/api/v1",
+  // baseURL: "https://walrus-app-hz53d.ondigitalocean.app" + "/api/v1",
 });
 
 let onUnauthorized: () => void = () => {};
@@ -29,7 +30,7 @@ httpClient.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 httpClient.interceptors.response.use(
@@ -50,7 +51,7 @@ httpClient.interceptors.response.use(
         }
         const { data } = await axios.post(
           process.env.EXPO_PUBLIC_API_URL + "/api/v1/auth/refresh",
-          { refreshToken }
+          { refreshToken },
         );
 
         TokenService.setAccessToken(data.accessToken);
@@ -67,11 +68,11 @@ httpClient.interceptors.response.use(
       data.errors.forEach(
         ({ path, message }: { path: string; message: string }) => {
           toast.error(path, { description: message });
-        }
+        },
       );
     } else {
       toast.error(data?.message || "An unexpected error occurred");
     }
     return Promise.reject(error);
-  }
+  },
 );

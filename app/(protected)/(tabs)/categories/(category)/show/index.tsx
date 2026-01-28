@@ -3,18 +3,20 @@ import MainHeader from "@/core/components/layout/header/main-header";
 import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-list";
 import Container from "@/core/components/ui/container";
 import { AD_TYPES } from "@/core/constants/ad";
+import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useAdsQuery } from "@/core/services/ads/ad.queries";
 import useSearchStore from "@/core/store/search.store";
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { ActivityIndicator, Dimensions, FlatList, View } from "react-native";
+import { ActivityIndicator, Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 
 const { height } = Dimensions.get("window");
 
 export default function ShowCarsCategoryScreen() {
-  const { setExternalFilter, resetAll } = useSearchStore((state) => state);
+  const setExternalFilter = useSearchStore(state => state.setExternalFilter)
   const [activeVerticalIndex, setActiveVerticalIndex] = useState(0);
+  const { protectAction } = useAuthGuard()
 
   const {
     data,
@@ -41,9 +43,13 @@ export default function ShowCarsCategoryScreen() {
   useFocusEffect(
     useCallback(() => {
       setExternalFilter("ad_type", AD_TYPES.show);
-      return resetAll;
-    }, [setExternalFilter, resetAll]),
+      setExternalFilter("ad_category", undefined);
+    }, [setExternalFilter]),
   );
+
+  const handleNavigate = () => {
+    protectAction(() => router.push("/create"))
+  }
 
   if (isLoading) return <AdSkeletonList />;
 
@@ -87,12 +93,12 @@ export default function ShowCarsCategoryScreen() {
             ) : null
           }
         />
-        <Link
-          href="/create"
-          className="absolute end-2 bottom-4 z-20 p-2 rounded-full bg-primary-500"
+        <TouchableOpacity
+          className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500"
+          onPress={handleNavigate}
         >
           <Ionicons name="add" size={38} />
-        </Link>
+        </TouchableOpacity>
       </View>
     </Container>
   );

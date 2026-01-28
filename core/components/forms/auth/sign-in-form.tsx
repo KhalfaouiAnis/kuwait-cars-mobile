@@ -20,14 +20,14 @@ export default function SignInForm() {
           icon="call-outline"
           placeholder={t("phoneNumber")}
           keyboardType="phone-pad"
-          error={errors.phone?.message}
+          error={errors.phone?.ref?.name}
         />
         <AuthTextInput
           icon="lock-closed-outline"
           placeholder={t("password")}
           endIcon="eye-outline"
           name="password"
-          error={errors.password?.message}
+          error={errors.password?.ref?.name}
           secureTextEntry
           control={control}
         />
@@ -35,12 +35,12 @@ export default function SignInForm() {
       <View className="flex-row items-center justify-between mt-8 px-4">
         <View className="flex-row items-center gap-x-1">
           <Checkbox checked={false} size={28} />
-          <Text className="text-base text-black dark:text-white">
+          <Text className="text-base text-black dark:text-grayish">
             {t("rememberMe")}
           </Text>
         </View>
         <Link href={"/(auth)/forgot_password"} className="items-center">
-          <Text className="text-sm font-inter-semibold text-grayish dark:text-white">
+          <Text className="text-sm font-inter-semibold text-grayish dark:text-grayish">
             {t("passwordForgotten")}
           </Text>
         </Link>
@@ -50,7 +50,7 @@ export default function SignInForm() {
           boxShadow: boxShadow(4, 6, 20).button.boxShadow,
           width: DIMENSIONS.width / 2 + 20,
         }}
-        className="bg-primary-500 py-3 rounded-full self-center mt-20"
+        className="bg-primary-500 py-3 rounded-3xl self-center mt-20"
         onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
       >
@@ -63,9 +63,9 @@ export default function SignInForm() {
         </Text>
       </TouchableOpacity>
       <Link href={"/(auth)/signup"} className="items-center mt-4">
-        <Text className="text-base text-center dark:text-white">
+        <Text className="text-base text-center dark:text-grayish">
           {t("dontHaveAccount")}{" "}
-          <Text className="font-inter-semibold text-grayish dark:text-white">
+          <Text className="font-inter-semibold text-grayish">
             {t("signUp")}
           </Text>
         </Text>

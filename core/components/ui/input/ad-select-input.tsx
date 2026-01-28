@@ -4,19 +4,19 @@ import { Ionicons } from "@expo/vector-icons";
 import { clsx } from "clsx";
 import React, { ReactNode, useState } from "react";
 import {
-    Control,
-    FieldPath,
-    FieldValues,
-    useController,
+  Control,
+  FieldPath,
+  FieldValues,
+  useController,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
-    FlatList,
-    Modal,
-    Pressable,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Modal,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type SelectInputProps<TForm extends FieldValues> = {
@@ -39,7 +39,6 @@ type SelectInputProps<TForm extends FieldValues> = {
 };
 
 export default function AdSelectInput<TForm extends FieldValues>({
-  onChangeText,
   control,
   name,
   error,

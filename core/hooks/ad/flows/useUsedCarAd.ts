@@ -8,7 +8,6 @@ import {
   UsedCarAdSchema,
 } from "@/core/types/schema/ads/usedCar";
 import { isAxiosError } from "axios";
-import { router } from "expo-router";
 import { toast } from "sonner-native";
 import { useUploadMedia } from "../../shared/use-upload-media";
 import { useFormHook } from "../../use-form-hook";
@@ -17,15 +16,7 @@ export function useUsedCarAd() {
   const { totalProgress, setFileProgress, upload } = useUploadMedia();
   const { mutateAsync } = useAdMutation();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isDirty, dirtyFields },
-    trigger,
-    reset,
-    setValue,
-    getValues,
-  } = useFormHook(UsedCarAdSchema, {
+  const form = useFormHook(UsedCarAdSchema, {
     defaultValues: {
       title: "",
       description: "",
@@ -44,7 +35,7 @@ export function useUsedCarAd() {
 
   const onSubmit = async (payload: UsedCarAdInterface) => {
     try {
-      const { thumbnail, images, video, ...restData } = payload;
+      const { thumbnail, images, video, plan, ...restData } = payload;
       const media: UploadFileType[] = [
         {
           file: thumbnail,
@@ -54,6 +45,8 @@ export function useUsedCarAd() {
       ];
 
       if (video) {
+        if (plan) {
+        }
         media.push({
           file: video,
           media_type: "VIDEO",
@@ -67,7 +60,7 @@ export function useUsedCarAd() {
             file: image,
             media_type: "IMAGE",
             signingParams: { mediaType: "image" },
-          })
+          }),
         );
       }
 
@@ -89,13 +82,11 @@ export function useUsedCarAd() {
           onError(error) {
             toast.error(error.message);
           },
-          onSuccess() {
-            router.navigate("/create/success");
-          },
+          onSuccess() {},
           onSettled() {
             setFileProgress({});
           },
-        }
+        },
       );
     } catch (error) {
       if (isAxiosError(error)) {
@@ -107,16 +98,8 @@ export function useUsedCarAd() {
   };
 
   return {
-    control,
-    setValue,
-    getValues,
-    handleSubmit,
+    ...form,
     onSubmit,
-    errors,
-    dirtyFields,
-    isDirty,
-    trigger,
-    reset,
     totalProgress,
   };
 }

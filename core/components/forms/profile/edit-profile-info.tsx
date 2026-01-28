@@ -10,7 +10,7 @@ import { UpdateProfileInterface } from "@/core/types/schema/user";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { TFunction } from "i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useWatch } from "react-hook-form";
 import { Pressable, Text, View } from "react-native";
 import { toast } from "sonner-native";
@@ -40,15 +40,14 @@ export default function EditProfileForm({
   const { addAvatar, avatar } = useAvatar(setValue);
 
   const province = useWatch({ control, name: "province" });
-  const Areas =
-    PROVINCES.find((prov) => prov.province === province?.province)?.areas || [];
+  const Areas = useMemo(() => PROVINCES.find((prov) => prov.province === province?.province)?.areas, [province?.province])
 
   const onError = (errors: any) => {
     console.log("Validation failed:", errors);
   };
 
   const onSubmit = (data: UpdateProfileInterface) => {
-    mutate(data, {
+    protectAction(() => mutate(data, {
       onSuccess: () => {
         toast.success("Profile updated successfully");
       },
@@ -56,7 +55,7 @@ export default function EditProfileForm({
         console.log(err.message);
         toast.error(err.message);
       },
-    });
+    }))
   };
 
   return (
@@ -106,12 +105,12 @@ export default function EditProfileForm({
           control={control}
           name="phone"
           label={t("profile.phoneNumber")}
-          error={errors.phone?.message}
+          error={errors.phone?.ref?.name}
         />
         <InputWithIcon
           icon="mail-outline"
           placeholder={t("profile.yourEmail")}
-          error={errors.email?.message}
+          error={errors.email?.ref?.name}
           control={control}
           name="email"
           label={t("profile.yourEmail")}
@@ -130,7 +129,7 @@ export default function EditProfileForm({
         <AreaSelector
           control={control}
           name="area"
-          options={Areas}
+          options={Areas || []}
           renderOption={(option, selected) =>
             renderProvinceAreaOption(option, selected)
           }
@@ -148,7 +147,7 @@ export default function EditProfileForm({
         />
       </View>
       <ProgressButton
-        onPress={protectAction(handleSubmit(onSubmit, onError))}
+        onPress={handleSubmit(onSubmit, onError)}
         isPending={isPending}
         title={t("profile.updateInfo")}
         progress={uploadProgress}

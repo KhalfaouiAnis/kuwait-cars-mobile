@@ -29,7 +29,7 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue }: 
                         name="additional_number"
                         keyboardType="numeric"
                         extraPadding
-                        error={errors.additional_number?.message}
+                        error={errors.additional_number?.ref?.name}
                         placeholder={t("createAd.AddAdditionalNumber")}
                     />
                     {
@@ -49,7 +49,7 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue }: 
                         readOnly={(!showSecondNumber)}
                         keyboardType="numeric"
                         extraPadding
-                        error={errors.additional_number?.message}
+                        error={errors.additional_number?.ref?.name}
                         placeholder={t("createAd.AddAdditionalNumber")}
                     />
                 </View>
