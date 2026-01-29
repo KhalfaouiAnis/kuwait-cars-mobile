@@ -1,24 +1,22 @@
-import { DIMENSIONS } from "@/core/constants";
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
 import useAuthStore from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdvertisementInterface } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
-import { formatSmartDate } from "@/core/utils/date";
 import { distanceToMyLocation } from "@/core/utils/location";
 import {
   AntDesign,
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import { FavoriteButton } from "../../ui/button/favorite-button";
 import Carousel from "../../ui/shared/carousel";
+import HorizontalAdvertisementView from "./horizontal-advertisement-view";
 
 interface Props {
   data: AdvertisementInterface;
@@ -37,7 +35,7 @@ const Advertisement = memo(function Advertisement({
   }>();
   const user = useAuthStore((state) => state.user);
   const { t } = useTranslation("common");
-  const { isRTL, lang } = useUserPreferencesStore();
+  const { isRTL } = useUserPreferencesStore();
   const { protectAction } = useAuthGuard();
   const { mutate } = useToggleFavorite();
 
@@ -78,7 +76,7 @@ const Advertisement = memo(function Advertisement({
               {data.description}
             </Text>
             {data.mileage && (
-              <Text className="font-inter text-xs text-gray-400">{`${t(`unit.${data.mileage_unit}`)} ${data.mileage}`}</Text>
+              <Text className="font-inter text-xs text-gray-400">{`${t(`unit.${data.mileage_unit || "KM"}`)} ${data.mileage}`}</Text>
             )}
           </View>
           <View className="flex-row items-center justify-between mt-2 gap-1">
@@ -149,72 +147,7 @@ const Advertisement = memo(function Advertisement({
   }
 
   return (
-    <View
-      style={[boxShadow(0, 4, 4).button, { borderWidth: 0.5 }]}
-      className="flex-row flex-1 rounded-lg border-[#CCC7C7] bg-transparent overflow-hidden mx-2 ms-1"
-    >
-      <Image
-        source={
-          data.media.find((media) => media.media_type === "THUMBNAIL")
-            ?.transformed_url
-        }
-        contentFit="fill"
-        style={{
-          width: DIMENSIONS.width / 3 + 40,
-          height: 120,
-        }}
-      />
-      <View
-        className="flex-1 w-full rounded-r-lg p-2 gap-y-2"
-        style={{ direction: isRTL ? "rtl" : "ltr" }}
-      >
-        <View className="flex-row items-center justify-between">
-          <Text className="font-inter-semibold text-lg text-black dark:text-white">
-            {data.title}
-          </Text>
-          {data.year && (
-            <Text className="font-inter-semibold text-black dark:text-white">
-              {data.year}
-            </Text>
-          )}
-        </View>
-        <Text className="flex-1 font-inter text-sm text-gray-400" ellipsizeMode="tail" numberOfLines={1}>
-          {data.description}
-        </Text>
-        <View className="flex-row items-center justify-between">
-          <Text className="font-inter text-xs text-gray-400">
-            {formatSmartDate(data.created_at, lang)}
-          </Text>
-          {data.mileage && (
-            <Text className="font-inter text-xs text-gray-400">{`${data.mileage}${t(`unit.${data.mileage_unit}`).toLowerCase()}`}</Text>
-          )}
-        </View>
-        <View className="flex-row items-center justify-between">
-          <View className="flex-row items-center">
-            <Ionicons name="location-outline" size={14} />
-            {data.province && (
-              <Text className="font-inter-medium text-sm text-black dark:text-white">
-                {t(`provinces.${data.province?.province}`)}
-              </Text>
-            )}
-            <Text className="font-inter text-gray-400 ms-1 text-sm">
-              {user &&
-                data.province &&
-                data.province?.province &&
-                distanceToMyLocation(user, data)}
-              {t(`unit.${data.mileage_unit}`).toLowerCase()}
-            </Text>
-          </View>
-          <View>
-            {data.price && (
-              <Text className="font-inter-medium text-sm text-black dark:text-white">
-                ${data.price}
-              </Text>
-            )}
-          </View>
-        </View>
-      </View>
-    </View>
+    <HorizontalAdvertisementView data={data} />
   );
 });
 

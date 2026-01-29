@@ -8,7 +8,7 @@ export function useFormHook<T extends z.ZodType<any, any>>(
 ): UseFormReturn<z.infer<T>> {
   const form = useForm<z.infer<T>>({
     resolver: zodResolver(schema),
-    mode: "onChange",
+    mode: "onTouched",
     ...options,
   });
 

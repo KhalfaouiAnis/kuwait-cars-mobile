@@ -4,19 +4,19 @@ import Container from "@/core/components/ui/container";
 import { Ad_CATEGORIES } from "@/core/constants/ad";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import useAdvancedSearchStore from "@/core/store/search.store";
+import { boxShadow } from "@/core/utils/cn";
 import {
-    AntDesign,
-    Ionicons,
-    MaterialCommunityIcons,
-    Octicons,
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+  Octicons,
 } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import {
-    Pressable,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
 
 export default function SearchScreen() {
@@ -47,27 +47,14 @@ export default function SearchScreen() {
     <Container
       header={<ProfileHeader title={t(`advancedSearch.chooseYourCar`)} />}
     >
-      <View className="p-2 mx-1">
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <View className="p-2 mx-1 flex-1 mt-4">
+        {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {CategoryList}
-        </ScrollView>
+        </ScrollView> */}
         <View
-          className="mt-6 gap-y-4"
+          className="mt-6 gap-8 items-center flex-1"
           style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
-          <SearchItem
-            content={<></>}
-            label={t(`advancedSearch.location`)}
-            isDark={isDark}
-            isRTL={isRTL}
-            icon={
-              <Octicons
-                name="location"
-                size={20}
-                color={isDark ? "white" : "black"}
-              />
-            }
-          />
           <SearchItem
             content={<></>}
             label={t(`advancedSearch.brand_model`)}
@@ -78,6 +65,19 @@ export default function SearchScreen() {
                 name="car-sport"
                 size={20}
                 color={isDark ? "white" : "gray"}
+              />
+            }
+          />
+          <SearchItem
+            content={<></>}
+            label={t(`advancedSearch.model_year`)}
+            isDark={isDark}
+            isRTL={isRTL}
+            icon={
+              <Ionicons
+                name="calendar"
+                size={20}
+                color={isDark ? "white" : "black"}
               />
             }
           />
@@ -96,13 +96,13 @@ export default function SearchScreen() {
           />
           <SearchItem
             content={<></>}
-            label={t(`advancedSearch.model_year`)}
+            label={t(`advancedSearch.location`)}
             isDark={isDark}
             isRTL={isRTL}
             icon={
-              <Ionicons
-                name="calendar"
+              <Octicons
                 size={20}
+                name="location"
                 color={isDark ? "white" : "black"}
               />
             }
@@ -133,9 +133,18 @@ export default function SearchScreen() {
               />
             }
           />
-          <TouchableOpacity className="rounded-lg bg-primary-500 py-4 mx-2 mt-6 px-12">
+          <TouchableOpacity
+            className="bg-primary-500 flex-row justify-center rounded-3xl items-center mt-auto mb-20"
+            style={{
+              boxShadow: boxShadow(4, 6, 20).button.boxShadow,
+              width: 250,
+              height: 50,
+            }}
+          >
+            <Ionicons className="" name="search-outline" size={20} />
             <Text className="text-center font-inter-semibold">
-              {t(`advancedSearch.offersFound`, { OffersCount: 200 })}
+              {/* {t(`advancedSearch.offersFound`, { OffersCount: 200 })} */}
+              show  offers  1234...
             </Text>
           </TouchableOpacity>
         </View>

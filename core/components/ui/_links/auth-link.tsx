@@ -14,11 +14,11 @@ export function AuthLink({ href, label }: Props) {
       <TouchableOpacity
         style={{
           boxShadow: boxShadow(4, 6, 20).button.boxShadow,
-          width: DIMENSIONS.width - 60,
+          width: DIMENSIONS.width - 80,
         }}
         className="h-[55px] items-center justify-center rounded-3xl border border-grayish"
       >
-        <Text className="font-inter-semibold text-center text-xl dark:text-white">
+        <Text className="font-inter-semibold text-center text-lg dark:text-white">
           {label}
         </Text>
       </TouchableOpacity>

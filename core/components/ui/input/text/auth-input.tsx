@@ -54,7 +54,7 @@ export default function AuthTextInput<TForm extends FieldValues>({
       )}
       <View
         className={cn("flex-row items-center", {
-          "border-grayish border p-2 pe-2 rounded-3xl": bordered,
+          "border-grayish dark:border-[#46464640] dark:bg-[#1B1B1B80] border p-2 pe-2 rounded-3xl": bordered,
         })}
         style={{
           boxShadow: boxShadow(4, 6, 20).button.boxShadow,
@@ -74,7 +74,7 @@ export default function AuthTextInput<TForm extends FieldValues>({
         <TextInput
           className={cn(
             "flex-1 overflow-hidden text-[#333] dark:text-white text-base ms-4",
-            { "text-error": error },
+            { "text-error dark:text-error": error },
           )}
           placeholder={placeholder}
           placeholderTextColor="#A8A8A8"

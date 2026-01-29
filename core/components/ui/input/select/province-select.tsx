@@ -84,7 +84,7 @@ export default function ProvinceSelect<TForm extends FieldValues>({
       <Pressable
         onPress={() => setShowModal(true)}
         className={clsx(
-          "flex-row items-center py-5 ps-3  justify-between rounded-3xl border border-grayish bg-transparent",
+          "flex-row items-center py-5 ps-3 dark:border-[#46464640] dark:bg-[#1B1B1B80] justify-between rounded-3xl border border-grayish bg-transparent",
           {
             "border-error": error,
           },

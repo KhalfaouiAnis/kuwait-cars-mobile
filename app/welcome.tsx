@@ -55,14 +55,14 @@ export default function Index() {
           <TouchableOpacity
             style={{
               boxShadow: boxShadow(4, 6, 20).button.boxShadow,
-              width: DIMENSIONS.width - 60,
+              width: DIMENSIONS.width - 80,
             }}
             className="h-[55px] items-center justify-center rounded-3xl border border-grayish"
             onPress={handleGuestSession}
           >
             <Text
-              className="font-inter-semibold text-center text-xl dark:text-white"
-              style={{ width: DIMENSIONS.width - 60 }}
+              className="font-inter-semibold text-center text-lg dark:text-white"
+              style={{ width: DIMENSIONS.width - 80 }}
             >
               {t("asAGuest")}
             </Text>
@@ -70,7 +70,7 @@ export default function Index() {
           <TouchableOpacity
             className="-mt-3"
             onPress={handleGuestSession}
-            style={{ width: DIMENSIONS.width - 60, direction: isRTL ? "rtl" : "ltr" }}
+            style={{ width: DIMENSIONS.width - 80, direction: isRTL ? "rtl" : "ltr" }}
           >
             <Text className="font-normal text-sm self-end mr-3 dark:text-white">
               {t("skip")}{" "}

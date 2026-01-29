@@ -17,10 +17,10 @@ interface TabButtonProps {
 
 const TabIconButton = memo(function TabIconButton({ name, color, isDark }: TabButtonProps) {
     return (
-        <Ionicons name={name as any} size={24} color={color}
+        <Ionicons name={name as any} size={30} color={color}
             style={{
-                display: "flex", alignItems: 'center', justifyContent: 'center',
-                backgroundColor: isDark ? "#1F1F1F" : "#FFFFFF", borderRadius: 50, padding: 12
+                backgroundColor: isDark ? "#1B1B1B" : "#FFFFFF", height: 43, width: 41.77, borderRadius: 20,
+                textAlign: 'center', verticalAlign: "middle"
             }}
         />
     )
@@ -63,10 +63,11 @@ export default function TabLayout() {
                 name="categories"
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Feather name="home" size={24} color={color}
+                        <Feather name="home" size={30} color={color}
                             style={{
-                                display: "flex", alignItems: 'center', justifyContent: 'center',
-                                backgroundColor: isDark ? "#1F1F1F" : "#FFFFFF", borderRadius: 50, padding: 12
+                                backgroundColor: isDark ? "#1B1B1B" : "#FFFFFF",
+                                height: 43, width: 41.77, borderRadius: 20,
+                                textAlign: 'center', verticalAlign: "middle"
                             }}
                         />
                     ),
@@ -82,8 +83,8 @@ export default function TabLayout() {
                     tabBarIcon: () => (
                         <View
                             className='items-center justify-center bg-primary-500'
-                            style={{ width: 58, height: 58, borderRadius: 50 }}>
-                            <Ionicons color="black" size={38} name='add-outline' style={{ backgroundColor: "transparent" }} />
+                            style={{ width: 49, height: 49, borderRadius: 50 }}>
+                            <Ionicons color="black" size={40} name='add-outline' style={{ backgroundColor: "transparent" }} />
                         </View>
                     ),
                     popToTopOnBlur: true,

@@ -15,7 +15,7 @@ export default function FavoritesScreen() {
 
     return (
         <Container header={<MainHeader drawer back={false} />}>
-            <View className="w-full px-2 mt-6">
+            <View className="w-full mt-6">
                 <View className="flex-row items-center justify-center mb-6">
                     <Text className="font-inter-bold text-center text-3xl text-black dark:text-white">{t("profile.myFavories")}</Text>
                 </View>
@@ -29,7 +29,6 @@ export default function FavoritesScreen() {
                             </View>}
                             contentContainerStyle={{ paddingBottom: 180 }}
                             showsVerticalScrollIndicator={false}
-                            className="bg-transparent me-2"
                             removeClippedSubviews={false}
                             ListEmptyComponent={!isLoading ? <EmptyState showReset={false} title="" description="noFavoritedAds" /> : null}
                         />

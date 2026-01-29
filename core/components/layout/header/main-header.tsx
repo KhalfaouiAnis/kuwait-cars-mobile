@@ -20,11 +20,11 @@ const MainHeader = ({
   return (
     <View
       style={{ direction: isRTL ? "rtl" : "ltr" }}
-      className={`mt-1 h-16 flex-row items-center justify-center mx-2`}
+      className={`mt-1 h-16 flex-row items-center justify-center mx-4`}
     >
       {back && <BackArrow />}
       {drawer && <ProfileDrawer />}
-      <View className="flex-1 flex-row items-center justify-between rounded-3xl border border-grayish px-2 mx-2 bg-transparent dark:bg-black">
+      <View className="flex-1 flex-row items-center justify-between rounded-[20px] border border-grayish px-4 mx-4 bg-transparent dark:bg-black">
         <View className="flex-row items-center gap-x-2 flex-1">
           <Ionicons
             name="search-outline"
@@ -50,7 +50,7 @@ const MainHeader = ({
           />
         </View>
       </View>
-      <View className="ms-2 relative">
+      <View className="ms-1 relative">
         <MaterialCommunityIcons
           name="bell-ring-outline"
           size={24}

@@ -22,24 +22,26 @@ export default function NewCategoryLink({
     <Link href={{ pathname: href, params }} asChild>
       <Pressable
         className={`items-center justify-center ${fullWidth ? "w-[100px]" : "w-[100px]"} 
-           border border-transparent rounded-xl bg-white dark:bg-black dark:border-darkish`}
+           border border-transparent rounded-xl bg-transparent`}
       >
-        <View style={[boxShadow(4, 6, 14).button, { borderRadius: 30, width: 100 }]} className="p-1 justify-center items-center bg-white dark:bg-black">
+        <View
+          style={[boxShadow(4, 6, 14).button, { borderRadius: 30, width: 90, height: 70 }]}
+          className="p-1 justify-center items-center bg-white dark:bg-darkish dark:border-[#46464640] border border-transparent">
           <Image
             source={image}
             style={{
-              width: 90,
-              height: 70,
+              width: 64,
+              height: 60,
               borderRadius: 30,
               backgroundColor: "transparent",
             }}
             contentFit="cover"
           />
         </View>
-        <View className="justify-center mt-2">
+        <View className="justify-center mt-3">
           <Text
-            className="font-inter text-center text-black dark:text-white text-sm"
             numberOfLines={2}
+            className="font-inter text-center text-black dark:text-white text-xs"
           >
             {label}
           </Text>

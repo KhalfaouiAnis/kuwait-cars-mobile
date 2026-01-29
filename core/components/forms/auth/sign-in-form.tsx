@@ -49,8 +49,9 @@ export default function SignInForm() {
         style={{
           boxShadow: boxShadow(4, 6, 20).button.boxShadow,
           width: DIMENSIONS.width / 2 + 20,
+          height: 50,
         }}
-        className="bg-primary-500 py-3 rounded-3xl self-center mt-20"
+        className="bg-primary-500 items-center justify-center rounded-3xl self-center mt-20"
         onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
       >

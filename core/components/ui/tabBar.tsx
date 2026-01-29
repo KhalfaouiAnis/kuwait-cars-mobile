@@ -42,8 +42,9 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
             style={[
                 styles.container,
                 {
-                    bottom: bottom + 12,
-                    backgroundColor: isDark ? '#444444A6' : '#E6E1E1',
+                    bottom: bottom + 6,
+                    height: 49,
+                    backgroundColor: isDark ? 'rgb(0 0 0 / 0.5)' : 'rgb(230 225 225 / 0.7)',
                 },
             ]}
             pointerEvents="box-none"
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        borderRadius: 35,
+        borderRadius: 20,
         overflow: 'hidden',
     },
     tabButton: {

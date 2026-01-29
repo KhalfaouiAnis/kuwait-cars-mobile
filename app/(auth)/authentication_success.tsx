@@ -19,10 +19,11 @@ export default function AuthenticationSuccessScreen() {
             </View>
             <View className="px-4 mt-52 items-center">
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-3xl items-center"
+                    className="bg-primary-500 justify-center rounded-3xl items-center"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,
+                        height: 50,
                     }}
                 >
                     <Text className="text-2xl font-inter-semibold text-center text-black">

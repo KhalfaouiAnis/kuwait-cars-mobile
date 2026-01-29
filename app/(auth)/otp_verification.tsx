@@ -31,10 +31,11 @@ export default function OTPVerificationScreen() {
                 </View>
                 <Text className="mt-4 text-base text-center dark:text-white">{t("doNotSendOTP")} <Text className="text-primary-500">{t("sendOTP")}</Text></Text>
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-3xl items-center mt-12"
+                    className="bg-primary-500 justify-center rounded-3xl items-center mt-12"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,
+                        height: 50,
                     }}
                 >
                     <Text className="text-2xl font-inter-semibold text-center text-black disabled:text-gray-100">

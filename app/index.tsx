@@ -34,12 +34,13 @@ export default function Index() {
     <TouchableOpacity
       style={
         currentLang === item.code
-          ? { ...styles.buttonSelected, boxShadow: theme !== "light" ? styles.button.boxShadow : undefined }
-          : { ...styles.button, boxShadow: theme !== "light" ? undefined : styles.button.boxShadow }
+          ? [{ ...styles.buttonSelected, boxShadow: theme !== "light" ? styles.button.boxShadow: styles.buttonSelected.boxShadow }]
+          : [{ ...styles.button, boxShadow: theme !== "light" ? undefined : styles.button.boxShadow }]
       }
       className={cn(
-        "flex-row items-center justify-between px-5 py-1.5 my-1.5 rounded-full border border-grayish bg-white dark:bg-darkish",
-        {},
+        "flex-row items-center justify-between px-5 h-[55px] my-1.5 rounded-3xl border border-grayish bg-white dark:border-[#46464640]",
+        { "dark:bg-[#1B1B1B29]": currentLang === item.code },
+        { "dark:bg-darkish": currentLang !== item.code },
       )}
       onPress={() => handleSelect(item)}
     >
@@ -82,9 +83,7 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   button: {
-    width: DIMENSIONS.width - 80,
-    borderColor: "#A8A8A8",
-    borderWidth: 1,
+    width: DIMENSIONS.width - 100,
     boxShadow: [
       {
         offsetX: 4,
@@ -96,9 +95,7 @@ const styles = StyleSheet.create({
     ],
   },
   buttonSelected: {
-    width: DIMENSIONS.width - 80,
-    borderColor: "#A8A8A8",
-    borderWidth: 1,
+    width: DIMENSIONS.width - 100,
     boxShadow: [
       {
         offsetX: 7,

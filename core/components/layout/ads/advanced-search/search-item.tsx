@@ -1,6 +1,5 @@
 import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
-import { clsx } from 'clsx';
 import React, { ReactNode, useState } from 'react';
 import { Modal, Pressable, Text, TouchableWithoutFeedback, View } from 'react-native';
 
@@ -16,11 +15,18 @@ export default function SearchItem({ content, label, icon, isDark, isRTL }: Sear
     const [showModal, setShowModal] = useState(false);
 
     return (
-        <View className="w-full">
+        <View className="w-full items-center">
             <Pressable
-                style={boxShadow().button}
+                style={{
+                    boxShadow: boxShadow().button.boxShadow,
+                    borderRadius: 20,
+                    height: 48,
+                    width: 300,
+                    paddingHorizontal: 10,
+                    flexDirection: "row",
+                    alignItems: "center"
+                }}
                 onPress={() => setShowModal(true)}
-                className={clsx('flex-row items-center px-2 py-4 dark:border dark:border-primary-500')}
             >
                 <View className='items-center me-4 ms-4'>
                     {icon}

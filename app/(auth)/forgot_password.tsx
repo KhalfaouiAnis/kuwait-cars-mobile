@@ -41,10 +41,11 @@ export default function ForgotPasswordScreen() {
                     placeholder={t("enterEmail")}
                 />
                 <TouchableOpacity
-                    className="bg-primary-500 py-3 rounded-3xl items-center mt-20"
+                    className="bg-primary-500 justify-center rounded-3xl items-center mt-20"
                     style={{
                         boxShadow: boxShadow(4, 6, 20).button.boxShadow,
                         width: DIMENSIONS.width / 2 + 20,
+                        height: 50,
                     }}
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
