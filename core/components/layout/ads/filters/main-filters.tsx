@@ -1,6 +1,6 @@
 import AppModal from "@/core/components/ui/dialog/modal";
-import { FilterConfigItem } from "@/core/constants/ad";
 import useSearchStore, { CombinedFilterKeys } from "@/core/store/search.store";
+import { FilterConfigItem } from "@/core/types";
 import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { Dispatch, SetStateAction, useState } from "react";

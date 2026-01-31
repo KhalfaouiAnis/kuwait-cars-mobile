@@ -1,6 +1,7 @@
+import { DIMENSIONS } from '@/core/constants';
 import { boxShadow } from '@/core/utils/cn';
 import React, { ReactNode } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface SelectedAdTypeProps {
     label: string,
@@ -9,15 +10,26 @@ interface SelectedAdTypeProps {
 
 export default function SelectedAdType({ label, icon }: SelectedAdTypeProps) {
     return (
-        <View className='flex-row items-center gap-2 p-3 bordered-box'
-            style={boxShadow().button}
+        <View
+            style={styles.wrapper}
+            className='flex-row items-center self-center gap-2 ps-6  border border-grayish'
         >
             <View className='items-center justify-center'>
                 {icon}
             </View>
-            <Text className={"text-gray-400 dark:text-gray-100"}>
+            <Text className="font-inter dark:text-gray-100">
                 {label}
             </Text>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        height: 45,
+        borderRadius: 20,
+        ...boxShadow().button,
+        backgroundColor: "#D9D9D9",
+        width: DIMENSIONS.width - 60,
+    }
+});

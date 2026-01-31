@@ -53,7 +53,7 @@ export default function AddVideo<T extends FieldValues>({ setValue, getValue, on
             </View>
             {
                 !video?.uri && (
-                    <View className="gap-y-8">
+                    <View className="gap-y-5">
                         <View className="gap-y-2">
                             <Text className="font-inter-semibold text-3xl text-center dark:text-white">{t("createAd.AttractMoreBuyers")}</Text>
                             <Text className="text-center dark:text-white" numberOfLines={2}>

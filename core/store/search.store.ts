@@ -11,6 +11,9 @@ export type MultiFilterKeys =
   | "brand"
   | "model"
   | "year"
+  | "engine"
+  | "transmission"
+  | "location"
   | "exterior_color";
 export type SingleFilterKeys = "ad_type" | "ad_category" | "mileage" | "price";
 
@@ -21,17 +24,15 @@ export type SortingItem = {
 
 export type CombinedFilterKeys = MultiFilterKeys & SingleFilterKeys;
 
-const FILTER_DEPENDENCIES: Record<string, string[]> = {
-  brand: [],
-  model: [],
-};
-
 export interface FilterState {
   ad_type?: string | null;
   ad_category?: string | null;
   brand?: string[];
   model?: string[];
   year?: string[];
+  engine?: string[];
+  transmission?: string[];
+  location?: string[];
   exterior_color?: string[];
   mileage?: [number, number];
   price?: [number, number];
@@ -62,16 +63,16 @@ const initialFilters: FilterState = {
 interface SearchActions {
   setSorting: (
     field: "price" | "created_at",
-    direction: "asc" | "desc"
+    direction: "asc" | "desc",
   ) => void;
   setExternalFilter: <K extends keyof FilterState>(
     key: K,
-    value: FilterState[K]
+    value: FilterState[K],
   ) => void;
   toggleDraftMultiFilter: (key: MultiFilterKeys, value: string) => void;
   setDraftFilter: <K extends keyof FilterState>(
     key: K,
-    value: FilterState[K]
+    value: FilterState[K],
   ) => void;
   resetDraftFilter: (key: keyof FilterState) => void;
 

@@ -1,33 +1,35 @@
+import { DIMENSIONS } from '@/core/constants';
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { boxShadow, cn } from '@/core/utils/cn';
 import { ReactNode } from 'react';
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
-import { Text, TextInput, TextInputProps, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
 
 type AdTextInputProps<TForm extends FieldValues> = TextInputProps & {
     name: FieldPath<TForm>;
     control: Control<TForm>;
-    label?: string;
+    extraPadding?: boolean
+    fullWidth?: boolean;
     required?: boolean;
     icon?: ReactNode,
+    label?: string;
     value?: string;
     error?: string;
-    extraPadding?: boolean
 };
 
-export default function AdTextInput<TForm extends FieldValues>({ control, name, label, error, icon, required, extraPadding, ...props }: AdTextInputProps<TForm>) {
+export default function AdTextInput<TForm extends FieldValues>({ control, name, label, error, icon, required, extraPadding, fullWidth = true, ...props }: AdTextInputProps<TForm>) {
     const { field: { onChange, value } } = useController({ control, name });
     const { isRTL } = useUserPreferencesStore();
 
     return (
-        <View >
-            {label && <Text className="text-base font-semibold mb-1 dark:text-white">{label}</Text>}
+        <View>
+            {label && <Text className="text-base font-semibold mb-1 ms-5 dark:text-white">{label}</Text>}
             <View
-                className={cn('flex-row items-center justify-between bordered-box', {
+                className={cn('flex-row items-center self-center justify-between border border-grayish', {
                     "px-3 py-1": !extraPadding,
                     "p-3": extraPadding,
                 })}
-                style={boxShadow().button}
+                style={[styles.wrapper, { width: fullWidth ? DIMENSIONS.width - 60 : undefined }]}
             >
                 {
                     icon && <View className='ms-2 items-center'>
@@ -37,9 +39,9 @@ export default function AdTextInput<TForm extends FieldValues>({ control, name, 
                 <View className='me-3 flex-1 flex-row items-center justify-between'>
                     <TextInput
                         className="text-[#333] dark:text-white flex-1"
-                        value={value}
-                        numberOfLines={1}
                         onChangeText={onChange}
+                        numberOfLines={1}
+                        value={value}
                         style={{
                             writingDirection: isRTL ? "rtl" : "ltr",
                             textAlign: isRTL ? "right" : "left"
@@ -54,3 +56,11 @@ export default function AdTextInput<TForm extends FieldValues>({ control, name, 
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        height: 60,
+        borderRadius: 20,
+        ...boxShadow().button,
+    }
+});

@@ -1,6 +1,7 @@
 import AdSelectInput from "@/core/components/ui/input/ad-select-input";
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
+import UnitSelector from "@/core/components/ui/menu/unit-selector";
 import { YEARS } from "@/core/constants";
 import useColors from "@/core/hooks/ad/useColors";
 import useUserPreferencesStore from "@/core/store/preferences.store";
@@ -13,7 +14,6 @@ import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 import { renderOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
-import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
 export default function AdDetails({ control, errors, setValue, isDark }: AdFormStepProps<MotorcycleAdInterface>) {
     const { ad_type, ad_category, brand } = useLocalSearchParams()

@@ -40,7 +40,7 @@ export default function ProfileScreen() {
       <View className="flex-1 mt-2 bg-white dark:bg-black px-4 py-2">
         <View className="flex-row justify-between w-full border border-primary-500 rounded-lg px-4 pt-1 pb-3">
           <View>
-            <Text className="font-inter-bold text-xl text-black dark:text-white">
+            <Text className="font-inter-semibold text-xl dark:text-white">
               {user?.fullname}
             </Text>
             <Text className="my-2 font-inter text-black dark:text-white">
@@ -57,7 +57,7 @@ export default function ProfileScreen() {
               </Text>
             </View>
           </View>
-          <View className="items-end">
+          <View className="items-end flex-1">
             <View className="relative">
               <Image
                 source={
@@ -74,10 +74,10 @@ export default function ProfileScreen() {
             </View>
             <TouchableOpacity
               onPress={handleEditProfile}
-              className="bg-primary-500 rounded-lg w-full mt-4"
+              className="bg-primary-500 rounded-lg mt-4"
             >
               <View className="flex-row px-3 py-2 items-center justify-center gap-1">
-                <Text className="font-inter-semibold text-sm">
+                <Text className="font-inter-medium text-sm">
                   {t("profile.editProfile")}
                 </Text>
                 <Feather name="edit-3" size={16} color="black" />

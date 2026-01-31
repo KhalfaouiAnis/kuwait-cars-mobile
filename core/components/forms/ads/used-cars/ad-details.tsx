@@ -1,6 +1,7 @@
 import AdSelectInput from "@/core/components/ui/input/ad-select-input";
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import RadioGroup from "@/core/components/ui/input/radio-group";
+import UnitSelector from "@/core/components/ui/menu/unit-selector";
 import { YEARS } from "@/core/constants";
 import useColors from "@/core/hooks/ad/useColors";
 import useUserPreferencesStore from "@/core/store/preferences.store";
@@ -13,7 +14,6 @@ import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 import { renderOption } from "../../../ui/shared/render-option";
 import SelectedAdType from "../shared/ad-type-selector/selected-ad-type";
-import UnitSelector from "../shared/ad-type-selector/unit-selector";
 
 export default function AdDetails({ control, errors, setValue, isDark }: AdFormStepProps<UsedCarAdInterface>) {
     const CAR_COLORS = useColors()
@@ -32,14 +32,14 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
         <ScrollView
             className="flex-1 px-2"
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 10 }}
+            contentContainerStyle={{ paddingBottom: 40 }}
         >
             <View className="flex-row items-center justify-center w-full">
                 <View className="border border-primary-500 w-2/5" />
-                <Text className="px-2 text-error font-inter-medium text-lg">{t("createAd.requiredInformation")}</Text>
+                <Text className="px-2 text-error font-inter text-lg">{t("createAd.requiredInformation")}</Text>
                 <View className="border border-primary-500 w-2/5" />
             </View>
-            <View className="gap-y-4 mt-2" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+            <View className="gap-y-5 mt-2" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <View>
                     <View className="flex-row items-center justify-between">
                         <Text className="font-semibold mb-2 dark:text-white">{t("createAd.whatAreYouSelling")}</Text>
@@ -47,20 +47,20 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                     </View>
                     <SelectedAdType
                         label={`${tBrands(brand)}-${tBrands(model)}`}
-                        icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
+                        icon={<Ionicons name="car-sport-outline" color="black" size={20} />}
                     />
                 </View>
                 <View>
                     <AdSelectInput
-                        control={control}
-                        name="year"
-                        options={YEARS}
                         required
+                        name="year"
                         isRTL={isRTL}
                         isDark={isDark}
-                        renderOption={(option, selected) => renderOption(option, selected as string)}
-                        error={errors.year?.ref?.name}
+                        options={YEARS}
+                        control={control}
                         placeholder={t("year")}
+                        error={errors.year?.ref?.name}
+                        renderOption={(option, selected) => renderOption(option, selected as string)}
                     />
                 </View>
                 <View>
@@ -77,12 +77,13 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                         placeholder={t("createAd.exteriorColor")}
                     />
                 </View>
-                <View className="flex-row gap-3 items-center">
+                <View className="flex-row gap-4 items-center mx-5">
                     <View className="flex-1">
                         <AdTextInput
-                            control={control}
-                            name="mileage"
                             required
+                            name="mileage"
+                            control={control}
+                            fullWidth={false}
                             error={errors.mileage?.ref?.name}
                             placeholder={t("createAd.Mileage")}
                             keyboardType="number-pad"
@@ -94,9 +95,9 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                 </View>
             </View>
             <View className="flex-row items-center justify-center w-full mt-6">
-                <View className="border border-primary-500 w-2/5" />
+                <View className="mx-2 border w-2/5" />
                 <Text className="px-2 font-inter-medium text-lg dark:text-white">{t("createAd.optionalInformation")}</Text>
-                <View className="border border-primary-500 w-2/5" />
+                <View className="mx-2 border w-2/5" />
             </View>
             <View className="gap-y-4 py-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <RadioGroup
@@ -112,7 +113,9 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                     ]}
                 />
                 <RadioGroup
+                    square
                     name="cylinders"
+                    borderRadius={5}
                     control={control}
                     label={t("createAd.Cylinders")}
                     options={[
@@ -126,16 +129,18 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                     ]}
                 />
                 <RadioGroup
-                    name="transmission"
                     control={control}
+                    borderRadius={30}
+                    name="transmission"
                     label={t("transmission")}
                     bordered
                     fullWidth
                     options={[{ id: "auto", label: t("Auto"), value: "Auto" }, { id: "manual", label: t("Manual"), value: "Manual" }]}
                 />
                 <RadioGroup
-                    name="under_warranty"
                     control={control}
+                    borderRadius={30}
+                    name="under_warranty"
                     label={t("createAd.underWarranty")}
                     fullWidth
                     bordered
@@ -144,6 +149,7 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                 <RadioGroup
                     name="roof"
                     control={control}
+                    borderRadius={20}
                     label={t("createAd.roof")}
                     options={[
                         { id: "Sunroof", label: t("createAd.Sunroof"), value: "Sunroof" },

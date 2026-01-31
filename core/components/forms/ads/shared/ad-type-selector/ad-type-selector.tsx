@@ -1,3 +1,4 @@
+import { DIMENSIONS } from "@/core/constants";
 import { AD_TYPES } from "@/core/constants/ad";
 import { DataItem } from "@/core/types/schema/shared";
 import { boxShadow } from "@/core/utils/cn";
@@ -61,7 +62,7 @@ export default function AdTypeSelector({
       return (
         <TouchableOpacity
           style={styles.selectButton}
-          className={`flex-row items-center my-1.5 p-3 py-4 dark:border-primary-500 dark:border ms-${level * 6}`}
+          className="flex-row items-center self-center my-1.5 px-5"
           onPress={() => {
             if (AD_TYPES.used_cars === path[0]) {
               const [brand, model] = item.value.split("/");
@@ -94,14 +95,13 @@ export default function AdTypeSelector({
           }}
         >
           <Ionicons name={item?.icon} size={20} color="gray" />
-          <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">
+          <Text className="flex-1 text-center text-sm font-semibold">
             {t(item.label)}
           </Text>
           <Ionicons
             className="justify-start"
             name={isRTL ? "chevron-back" : "chevron-forward"}
-            size={16}
-            color="gray"
+            size={20}
           />
         </TouchableOpacity>
       );
@@ -110,12 +110,12 @@ export default function AdTypeSelector({
     return (
       <>
         <TouchableOpacity
-          style={[styles.selectButton]}
-          className="flex-row items-center my-1.5 p-3 py-4 dark:border-primary-500 dark:border rounded-sm"
+          style={[styles.selectButton, {backgroundColor: level === 0 && isExpanded ? "#D9D9D9" : undefined}]}
+          className="flex-row self-center items-center my-1.5 px-5"
           onPress={() => hasChildren && toggleExpand(itemPath)}
         >
           <Ionicons name={item?.icon} size={20} color="gray" />
-          <Text className="flex-1 text-sm font-semibold ms-3 dark:text-grayish">
+          <Text className="flex-1 text-center text-sm font-semibold">
             {t(item.label)}
           </Text>
           <Ionicons
@@ -126,15 +126,14 @@ export default function AdTypeSelector({
                   ? "chevron-back"
                   : "chevron-forward"
             }
-            size={16}
-            color="gray"
+            size={20}
             style={{ marginStart: level + 6 }}
           />
         </TouchableOpacity>
         {isExpanded &&
           hasChildren &&
           children.map((child: any, idx: number) => (
-            <View style={{ marginStart: level + 10 }} key={idx}>
+            <View style={{ marginStart: level + 26 }} key={idx}>
               {renderItem(
                 child,
                 level + 1,
@@ -158,59 +157,58 @@ export default function AdTypeSelector({
     <Pressable
       style={styles.wrapper}
       onPress={() => setShowModal(true)}
-      className={"flex-row items-center justify-between bordered-box p-3"}
+      className={"relative items-center self-center justify-center border border-grayish"}
     >
-      <View>
-        <Text className={"text-[#333] dark:text-white"} pointerEvents="none">
-          {selectedValue ? t(selectedValue) : placeholder}
-        </Text>
-        <Modal
-          visible={showModal}
-          animationType="slide"
-          transparent={false}
-          onRequestClose={() => setShowModal(false)}
-        >
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => setShowModal(false)}
-            className="flex-1 justify-end bg-black/20"
-          >
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => { }}
-              className="bg-white dark:bg-black pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-4"
-            >
-              <FlashList
-                data={data}
-                keyExtractor={keyExtractor}
-                showsVerticalScrollIndicator={false}
-                contentContainerClassName="pb-6 px-1.5"
-                renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
-              />
-            </TouchableOpacity>
-          </TouchableOpacity>
-        </Modal>
-      </View>
-      <View className="ms-auto flex-row items-end">
-        <View>
-          <Text className="text-error">*</Text>
-        </View>
+      <Text className={"text-grayish text-center dark:text-white"} pointerEvents="none">
+        {selectedValue ? t(selectedValue) : placeholder}
+      </Text>
+      <View className="flex-row items-center absolute end-2.5">
         <Ionicons
           name={isRTL ? "chevron-back" : "chevron-forward"}
-          color="gray"
-          size={20}
+          size={22}
         />
+        <Text className="text-error">*</Text>
       </View>
+      <Modal
+        visible={showModal}
+        animationType="slide"
+        transparent={false}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => setShowModal(false)}
+          className="flex-1 justify-end bg-black/20"
+        >
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => { }}
+            className="bg-white dark:bg-black pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-4"
+          >
+            <FlashList
+              data={data}
+              keyExtractor={keyExtractor}
+              showsVerticalScrollIndicator={false}
+              contentContainerClassName="pb-6 px-6"
+              renderItem={({ item }) => renderItem(item, 0, [], handleSelect)}
+            />
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: 70,
+    height: 45,
+    borderRadius: 20,
     ...boxShadow().button,
+    width: DIMENSIONS.width - 60,
   },
   selectButton: {
+    height: 45,
+    borderRadius: 20,
     ...boxShadow(0, 4, 4).button,
   },
 });

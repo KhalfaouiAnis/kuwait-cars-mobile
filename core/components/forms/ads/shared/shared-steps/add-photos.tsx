@@ -45,25 +45,27 @@ export default function AddPhotos<T extends FieldValues>({ setValue, getValue }:
                         <View className="rounded-full bg-primary-500 w-1/2 h-3" />
                     </View>
                 </View>
-                <View className="gap-y-8">
+                <View className="gap-y-5">
                     {
-                        thumbnail?.uri ? (<View style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                            <Text className="text-xl font-inter-bold mb-1 dark:text-white">
-                                {t("createAd.addPhotos")}<Text className="text-error">*</Text>
-                            </Text>
-                            <View className="relative mr-2 mb-2" style={{ marginTop: isRTL ? 10 : 0 }}>
-                                <Image source={{ uri: thumbnail.uri }} style={{ width: "auto", height: 200, borderRadius: 8 }} contentFit="fill" />
-                                <TouchableOpacity
-                                    className="absolute z-50 -top-3 -right-1 bg-red-500 rounded-full w-8 h-8 justify-center items-center"
-                                    onPress={() => removePhoto(thumbnail.id)}
-                                >
-                                    <Ionicons name="close" size={24} color="white" className='border rounded-full border-white' />
-                                </TouchableOpacity>
+                        thumbnail?.uri ? (
+                            <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
+                                <Text className="text-xl font-inter-bold mb-1 dark:text-white">
+                                    {t("createAd.addPhotos")}<Text className="text-error">*</Text>
+                                </Text>
+                                <View className="relative mr-2 mb-2" style={{ marginTop: isRTL ? 10 : 0 }}>
+                                    <Image source={{ uri: thumbnail.uri }} style={{ width: "auto", height: 200, borderRadius: 8 }} contentFit="cover" />
+                                    <TouchableOpacity
+                                        className="absolute z-50 -top-4 right-4 bg-red-500 rounded-full w-8 h-8 justify-center items-center border border-white"
+                                        onPress={() => removePhoto(thumbnail.id)}
+                                    >
+                                        <Ionicons name="close" size={24} color="white" className='border rounded-full border-white' />
+                                    </TouchableOpacity>
+                                </View>
+                                <Text className="ml-auto mr-4 font-semibold dark:text-white">
+                                    {t("createAd.pickedXOofY", { pickedCount: gallery.length, totalCount: MAX_IMAGES })}
+                                </Text>
                             </View>
-                            <Text className="ml-auto mr-4 font-semibold dark:text-white">
-                                {t("createAd.pickedXOofY", { pickedCount: gallery.length, totalCount: MAX_IMAGES })}
-                            </Text>
-                        </View>) : (
+                        ) : (
                             <View>
                                 <View className="gap-y-6">
                                     <Text className="font-inter-semibold text-center text-3xl dark:text-white">{t("createAd.goodPicturesSellFaster")}</Text>
@@ -83,9 +85,9 @@ export default function AddPhotos<T extends FieldValues>({ setValue, getValue }:
                     }
                     {gallery?.length < MAX_IMAGES && (
                         <View className="flex-row items-center justify-center">
-                            <View className="border border-gray-300 w-2/5" />
-                            <Text className="px-2 dark:text-white">{t("or")}</Text>
-                            <View className="border border-gray-300 w-2/5" />
+                            <View className="border border-gray-100 w-2/5" />
+                            <Text className="px-2 dark:text-white text-error">{t("or")}</Text>
+                            <View className="border border-gray-100 w-2/5" />
                         </View>
                     )}
                     {gallery?.length < MAX_IMAGES && <PickFromGallerySM label={t("createAd.openGallery")} addMedia={() => addPhoto(false, false, true)} />}
@@ -95,9 +97,9 @@ export default function AddPhotos<T extends FieldValues>({ setValue, getValue }:
                     {
                         gallery?.length > 0 && <ImageGallery
                             data={gallery}
-                            mainImageLabel={t("createAd.MainPhoto")}
                             removePhoto={removePhoto}
                             setAsThumbnail={setAsThumbnail}
+                            mainImageLabel={t("createAd.MainPhoto")}
                         />
                     }
                 </View>

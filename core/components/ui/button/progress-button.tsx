@@ -1,3 +1,4 @@
+import { boxShadow } from '@/core/utils/cn';
 import React from 'react';
 import { ActivityIndicator, Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -24,7 +25,7 @@ export const ProgressButton = ({ onPress, isPending, progress, title }: Props) =
             onPress={onPress}
             disabled={isPending}
             style={styles.button}
-            className='disabled:bg-yellow-200'
+            className="py-3 rounded-lg bg-primary-500 disabled:bg-yellow-200"
         >
             {
                 progress === 100 ? (
@@ -55,15 +56,12 @@ export const ProgressButton = ({ onPress, isPending, progress, title }: Props) =
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#FAED02',
-        height: 50,
-        borderRadius: 8,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-        borderWidth: 1,
-        borderColor: 'transparent',
+        height: 45,
+        width: 200,
+        alignItems: "center",
+        borderRadius: 15,
+        justifyContent: "center",
+        ...boxShadow(4, 6, 20).button
     },
     progressContainer: {
         position: 'absolute',

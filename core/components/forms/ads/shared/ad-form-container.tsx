@@ -26,7 +26,7 @@ export default function AdFormContainer({ children, reset, resetLabel, previous,
         <Container>
             <View style={{ direction: isRTL ? "rtl" : "ltr" }} className='mt-1 flex flex-row items-center justify-between px-2'>
                 <BackArrow navigate={handlePrevious} />
-                <Text className='font-inter-semibold text-2xl text-center dark:text-white'>{title}</Text>
+                <Text className='font-inter-medium text-2xl text-center dark:text-white'>{title}</Text>
                 <Pressable onPress={reset}>
                     <Text className="text-error">{resetLabel}</Text>
                 </Pressable>

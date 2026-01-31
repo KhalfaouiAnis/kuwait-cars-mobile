@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
-const IMAGE_WIDTH = 94;
+const IMAGE_WIDTH = 100;
 const IMAGE_HEIGHT = 94;
 
 interface ImageGalleryProps {
@@ -32,7 +32,7 @@ export default function ImageGallery({ data, mainImageLabel, removePhoto, setAsT
                             {
                                 index === 0 && (
                                     <View className='absolute -top-4 me-4 z-30'>
-                                        <Text className='text-xs text-grayish font-inter-semibold'>{mainImageLabel}</Text>
+                                        <Text className='text-xs text-grayish font-inter-medium'>{mainImageLabel}</Text>
                                     </View>
                                 )
                             }
@@ -41,15 +41,15 @@ export default function ImageGallery({ data, mainImageLabel, removePhoto, setAsT
                                     <View
                                         style={{
                                             ...StyleSheet.absoluteFillObject,
-                                            borderWidth: 1.5,
-                                            borderColor: 'red',
+                                            borderWidth: 1,
+                                            borderColor: '#25D366',
                                             borderRadius: 8,
                                         }}
                                     />
                                 )
                             }
                             <TouchableOpacity
-                                className="absolute -top-3 -right-2 bg-red-500 rounded-full w-7 h-7 justify-center items-center"
+                                className="absolute -top-4 -right-1 bg-red-500 rounded-full w-7 h-7 justify-center items-center border border-white"
                                 onPress={() => removePhoto(item.id)}
                             >
                                 <Ionicons name="close" size={20} color="white" className='border rounded-full border-white' />

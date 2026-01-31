@@ -1,5 +1,5 @@
-import { FilterState } from "@/core/store/search.store";
 import { CAR_COLORS, YEARS } from ".";
+import { FilterConfigItem, FilterOption, SUBSCRIPTION_TYPES } from "../types";
 import { flattenToBrands, flattenToModels } from "../utils";
 
 export const AD_TYPES = {
@@ -3330,22 +3330,6 @@ export const CAR_BRAND_TYPES = [
   },
 ];
 
-export enum SUBSCRIPTION_TYPES {
-  FREE = "FREE",
-  GOLDEN = "GOLDEN",
-  RUBY = "RUBY",
-}
-
-export type SubscriptionDetail = {
-  id: string;
-  adTypes: string[];
-  type: SUBSCRIPTION_TYPES | string;
-  expires_in: number;
-  title: string;
-  price: number;
-  features: string[];
-};
-
 const REST_ADTYPES_PLAN = Ad_CATEGORIES.filter(
   (type) =>
     ![
@@ -3538,28 +3522,12 @@ export const SUBSCRIPTION_PLANS = [
   },
 ];
 
-export interface FilterOption {
-  id: string;
-  label: string;
-  value: string;
-  parentId?: string;
-  regionId?: string;
-}
-
-export type FilterConfigItem = {
-  title: string;
-  options: FilterOption[];
-  parentKey: keyof FilterState | null;
-  showRegionHelper: boolean;
-  showSearch: boolean;
-};
-
 export const USED_CARS_FILTER_CONFIG: Record<string, FilterConfigItem> = {
   brand: {
     title: "brand",
+    showSearch: true,
     parentKey: "region",
     showRegionHelper: true,
-    showSearch: true,
     options: flattenToBrands(CAR_BRAND_TYPES[0]),
   },
   model: {
@@ -3573,30 +3541,6 @@ export const USED_CARS_FILTER_CONFIG: Record<string, FilterConfigItem> = {
   year: {
     title: "year",
     // parentKey: "model" as keyof FilterState,
-    parentKey: null,
-    showRegionHelper: false,
-    showSearch: true,
-    options: YEARS as FilterOption[],
-  },
-  exterior_color: {
-    title: "color",
-    showRegionHelper: false,
-    showSearch: true,
-    parentKey: null,
-    options: CAR_COLORS as FilterOption[],
-  },
-} as const;
-
-export const MOTORCYCLES_FILTER_CONFIG: Record<string, FilterConfigItem> = {
-  brand: {
-    title: "brand",
-    parentKey: null,
-    showRegionHelper: false,
-    showSearch: true,
-    options: flattenToBrands(CAR_BRAND_TYPES[1]),
-  },
-  year: {
-    title: "year",
     parentKey: null,
     showRegionHelper: false,
     showSearch: true,

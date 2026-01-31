@@ -1,3 +1,4 @@
+import { DIMENSIONS } from "@/core/constants";
 import { SelectOption } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,6 +15,7 @@ import {
   FlatList,
   Modal,
   Pressable,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -75,33 +77,27 @@ export default function AdSelectInput<TForm extends FieldValues>({
   }
 
   return (
-    <Pressable onPress={() => setShowModal(true)}>
-      <View
-        className={clsx("flex-row items-center bordered-box min-h-14", {
-          "border-error": error,
-        })}
-        style={boxShadow().button}
-      >
-        <View className="items-center me-2">{icon}</View>
-        <View>
-          <Text
-            className={`${value ? "text-[#333]" : "text-gray-400"} dark:text-white`}
-          >
-            {displayLabel()}
-          </Text>
-        </View>
-        <View className="ms-auto flex-row items-end">
-          {required && (
-            <View>
-              <Text className="text-error">*</Text>
-            </View>
-          )}
-          <Ionicons
-            name={isRTL ? "chevron-back" : "chevron-forward"}
-            size={20}
-            color={isDark ? "white" : "black"}
-          />
-        </View>
+    <Pressable
+      style={styles.wrapper}
+      onPress={() => setShowModal(true)}
+      className={clsx("relative items-center self-center justify-center border border-grayish", {
+        "border-error": error,
+      })}
+    >
+      <Text className={`${value ? "text-black" : "text-gray-400"} dark:text-white`}>
+        {displayLabel()}
+      </Text>
+      <View className="flex-row items-center absolute end-2.5">
+        {required && (
+          <View>
+            <Text className="text-error">*</Text>
+          </View>
+        )}
+        <Ionicons
+          name={isRTL ? "chevron-back" : "chevron-forward"}
+          size={20}
+          color={isDark ? "white" : "black"}
+        />
       </View>
       <Modal
         transparent
@@ -116,7 +112,7 @@ export default function AdSelectInput<TForm extends FieldValues>({
         >
           <TouchableOpacity
             activeOpacity={1}
-            onPress={() => {}}
+            onPress={() => { }}
             className="bg-white dark:bg-black pt-6 mb-10 rounded-t-3xl p-4 w-full -max-h-screen-safe-or-80 min-h-0"
           >
             <FlatList
@@ -132,3 +128,12 @@ export default function AdSelectInput<TForm extends FieldValues>({
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    height: 60,
+    borderRadius: 20,
+    ...boxShadow().button,
+    width: DIMENSIONS.width - 60,
+  }
+});

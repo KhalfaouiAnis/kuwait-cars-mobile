@@ -31,10 +31,14 @@ export default function Checkbox({
     }, [checked])
 
     return (
-        <TouchableOpacity onPress={handlePress} activeOpacity={0.7} disabled={disabled}>
+        <TouchableOpacity
+            activeOpacity={0.7}
+            disabled={disabled}
+            onPress={handlePress}
+        >
             <MaterialCommunityIcons
                 size={size}
-                color={isChecked ? "#FAED02" : theme !== "light" ? "white" : "black"}
+                color={isChecked ? "#D9D9D9" : theme !== "light" ? "white" : "black"}
                 name={isChecked ? "checkbox-marked" : "checkbox-blank-outline"}
             />
         </TouchableOpacity>

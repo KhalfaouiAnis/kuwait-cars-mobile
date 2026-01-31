@@ -1,6 +1,6 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import AreaSelector from "@/core/components/ui/input/area-selector";
-import ProvinceSelector from "@/core/components/ui/input/province-selector";
+import AreaSelector from "@/core/components/ui/input/select/area-selector";
+import ProvinceSelect from "@/core/components/ui/input/select/province-select";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { PROVINCES } from "@/core/constants";
@@ -38,13 +38,13 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                     <Text className="text-sm text-gray-300">{t("adCategories.used_cars")}</Text>
                 </View>
                 <SelectedAdType
-                    label={`${tBrands(brand)}-${tBrands(model)}`}
+                    label={`${tBrands(brand)} - ${tBrands(model)}`}
                     icon={<Ionicons name="car-sport-outline" color="gray" size={20} />}
                 />
             </View>
+            <Text className="font-semibold dark:text-white">{t("createAd.WhereIsYourListing")}</Text>
             <View>
-                <Text className="font-semibold dark:text-white mb-1">{t("createAd.WhereIsYourListing")}</Text>
-                <ProvinceSelector
+                <ProvinceSelect
                     control={control}
                     name="province"
                     required
@@ -61,7 +61,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                     renderOption={(option, selected) => renderProvinceAreaOption(option, selected)}
                     placeholder={t("area")}
                 />
-                <View><Text className="text-center text-grayish my-1">{t("or")}</Text></View>
+                <Text className="text-center text-grayish my-2">{t("or")}</Text>
                 <LocationPicker
                     control={control}
                     errors={errors}
@@ -71,7 +71,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                 />
             </View>
             {province?.latitude &&
-                (<View className="my-2 w-full h-32 rounded-lg" pointerEvents="none">
+                (<View className="my-2 px-5 w-full h-32 rounded-lg" pointerEvents="none">
                     <StaticMapPreview lat={province.latitude} lng={province.longitude} />
                 </View>)
             }

@@ -1,3 +1,4 @@
+import { DIMENSIONS } from '@/core/constants';
 import { useSpeechToForm } from '@/core/hooks/shared/use-speech';
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { boxShadow } from '@/core/utils/cn';
@@ -31,7 +32,7 @@ export default function TextAreaSpeech<TForm extends FieldValues>({ control, nam
 
     return (
         <View>
-            {label && <Text className="text-base font-semibold mb-1 dark:text-white">{label}</Text>}
+            {label && <Text className="text-base ms-5 font-semibold mb-1 dark:text-white">{label}</Text>}
             <View className='flex-row items-center justify-between p-3 bordered-box'
                 style={[styles.container, boxShadow().button]}
             >
@@ -71,7 +72,7 @@ export default function TextAreaSpeech<TForm extends FieldValues>({ control, nam
             </View>
             {
                 props.maxLength && (
-                    <Text className='ms-auto mt-1 text-sm text-gray-300'>{t("textLeft", { count: props.maxLength - (value?.toString().length || 0) })}</Text>
+                    <Text className='ms-auto me-4 mt-1 text-sm text-gray-300'>{t("textLeft", { count: props.maxLength - (value?.toString().length || 0) })}</Text>
                 )
             }
         </View>
@@ -81,10 +82,14 @@ export default function TextAreaSpeech<TForm extends FieldValues>({ control, nam
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        alignSelf: "center",
         alignItems: 'center',
         paddingHorizontal: 10,
+        borderRadius: 10,
+        ...boxShadow().button,
+        width: DIMENSIONS.width - 60,
     },
     suffixIcon: {
-        marginStart: 8,
+        marginStart: 4,
     },
 });

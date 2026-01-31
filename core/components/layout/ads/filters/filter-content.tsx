@@ -1,5 +1,6 @@
-import { FilterConfigItem, FilterConfigKey } from '@/core/constants/ad';
+import { FilterConfigKey } from '@/core/constants/ad';
 import useSearchStore, { MultiFilterKeys } from '@/core/store/search.store';
+import { FilterConfigItem } from '@/core/types';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -18,26 +19,9 @@ export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: Fil
         let list = [...config.options.map(item => ({
             ...item,
             label: t(activeKey === "exterior_color" ? `colors.${item.label}` : `${item.label}`),
-            value: activeKey === "model" ? item.value.split("/")?.[1] : item.value ,
+            value: activeKey === "model" ? item.value.split("/")?.[1] : item.value,
             regionId: item.regionId && t(item.regionId),
         }))];
-
-        console.log(list[0]);
-
-
-        // if (config.parentKey) {
-        //     const pKey = config.parentKey as keyof FilterState;
-        //     const parentSelections = draftFilters[pKey];
-
-        //     if (Array.isArray(parentSelections)) {
-        //         const activeSelections = parentSelections as string[];
-        //         if (activeSelections.length > 0) {
-        //             list = list.filter(opt =>
-        //                 opt.parentId && activeSelections.includes(opt.parentId)
-        //             );
-        //         }
-        //     }
-        // }
 
         if (config.showRegionHelper && draftFilters.region && draftFilters?.region?.length > 0) {
             if (draftFilters.region?.includes(t("All"))) return list;

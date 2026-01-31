@@ -35,7 +35,7 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue }: 
                     {
                         (!showSecondNumber) && (
                             <TouchableOpacity
-                                className="absolute top-3.5 end-2 rounded-full bg-primary-500 p-2"
+                                className="absolute top-3.5 end-10 rounded-full bg-primary-500 p-2"
                                 onPress={() => setShowSecondNumber(true)}>
                                 <Ionicons name="add" size={24} />
                             </TouchableOpacity>
@@ -66,7 +66,7 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue }: 
                     <Text className="text-sm text-gray-300 mt-1.5">{t("createAd.hideVehicleLicensePlateForUploadedImages")}</Text>
                 </View>
 
-                <View className="mt-4 gap-y-4">
+                <View className="mt-4 gap-y-6">
                     <WhatsappContact label={t("createAd.ContactViaWhatsApp")} getValue={getValue} setValue={setValue} />
                     <ReceiveCall label={t("createAd.ReceiveCalls")} getValue={getValue} setValue={setValue} />
                     <XCarCall label={t("createAd.ReceiveCallViaXCar")} getValue={getValue} setValue={setValue} />

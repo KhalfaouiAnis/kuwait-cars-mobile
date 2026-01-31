@@ -1,6 +1,7 @@
+import { DIMENSIONS } from '@/core/constants';
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { AdFormStepProps } from '@/core/types';
-import { boxShadow, cn } from '@/core/utils/cn';
+import { boxShadow } from '@/core/utils/cn';
 import { Ionicons, Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { useWatch } from 'react-hook-form';
@@ -24,11 +25,12 @@ export default function LocationPicker({ setValue, isDark, control, label, prima
         <View className="w-full" style={{ direction: isRTL ? "rtl" : "ltr" }}>
             <Pressable
                 onPress={showMap}
-                style={primary ? undefined : boxShadow().button}
-                className={cn('flex-row items-center p-4 justify-between', {
-                    "border-primary-500 rounded-lg border": primary,
-                    "bordered-box": !primary
-                })}
+                className="flex-row items-center self-center p-4 justify-between border border-grayish rounded-3xl"
+                style={{
+                    boxShadow: boxShadow().button.boxShadow,
+                    width: DIMENSIONS.width - 60,
+                    height: 60
+                }}
             >
                 <View className='flex-row gap-2 items-center'>
                     <Octicons name="location" size={20} color={isDark ? "white" : "black"} />

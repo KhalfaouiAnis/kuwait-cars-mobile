@@ -1,5 +1,5 @@
 import { boxShadow, cn } from "@/core/utils/cn";
-import { Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface RadioButtonProps {
   label: string;
@@ -7,23 +7,27 @@ interface RadioButtonProps {
   onPress: () => void;
   disabled?: boolean;
   fullWidth?: boolean;
+  borderRadius?: number
+  square?: boolean
 }
 
 export default function RadioButton({
   label,
   selected,
   onPress,
+  square,
   disabled,
   fullWidth = false,
+  borderRadius = 15,
 }: RadioButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
-      style={boxShadow().button}
-      className={cn("min-w-[34px] p-3 px-4 dark:bg-black border", {
-        "bg-primary-500 border-error": selected,
-        "bg-white border-[#e7e7e7] dark:border-primary-500": !selected,
+      style={[styles.wrapper, { borderRadius, width: square ? 40 : undefined }]}
+      className={cn("p-3  border border-grayish", {
+        "bg-[#D9D9D9]": selected,
+        "bg-white": !selected,
         "flex-1": fullWidth,
       })}
     >
@@ -36,3 +40,10 @@ export default function RadioButton({
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    height: 40,
+    ...boxShadow().button,
+  }
+});

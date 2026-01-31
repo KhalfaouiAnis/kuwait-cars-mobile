@@ -1,27 +1,25 @@
 import MoneySign from "@/assets/svg/plan-money-sign";
 import SubscriptionPlan from "@/assets/svg/subscription-plan";
-import { SubscriptionDetail } from "@/core/constants/ad";
+import { SubscriptionDetail } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { AntDesign } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
-    plan: SubscriptionDetail,
     isSelected: boolean,
+    plan: SubscriptionDetail,
     onSelect: (plan: SubscriptionDetail) => void
 }
 
 export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) {
-    const { t } = useTranslation("common")
-
     return (
-        <View
+        <TouchableOpacity
+            onPress={() => onSelect(plan)}
             style={boxShadow(0, 5, 10).button}
-            className={`bg-whitish rounded-2xl p-6 relative mt-10 border ${isSelected ? 'border-error' : 'border-gray-100 dark:border-primary-500'}`}
+            className={`bg-whitish rounded-2xl p-6 relative mt-10 border ${isSelected ? 'border-[#25D366]' : 'border-gray-100 dark:border-primary-500'}`}
         >
             <View className="absolute -top-[26px] -right-4 z-10">
-                <SubscriptionPlan price={plan.price} recColor={plan.id === "1" ? "#FF123D" : "#FAED02"} textColor={plan.id === "1" ? "white" : "black"} />
+                <SubscriptionPlan price={plan.price} recColor={plan.price === 0 ? "#D9D9D9" : "#FFF12E"} textColor={"black"} />
             </View>
             <View className="flex-row items-start justify-between">
                 <View className="flex-row gap-3 items-center">
@@ -41,13 +39,6 @@ export default function SubscriptionCard({ plan, isSelected, onSelect }: Props) 
                     </View>
                 ))}
             </View>
-            <TouchableOpacity className="mt-4 ms-8 bg-primary-500 py-2 items-center justify-center rounded-3xl"
-                onPress={() => onSelect(plan)}
-            >
-                <Text className="font-inter-semibold text-lg dark:text-white">
-                    {t("createAd.ChooseThisPlan")}
-                </Text>
-            </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
     )
 }

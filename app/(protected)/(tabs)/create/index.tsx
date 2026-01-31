@@ -3,10 +3,11 @@ import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
 import { AD_TYPES, CAR_BRAND_TYPES } from "@/core/constants/ad";
 import useUserPreferencesStore from "@/core/store/preferences.store";
+import { boxShadow } from "@/core/utils/cn";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function NewAdScreen() {
   const { t } = useTranslation("common");
@@ -31,7 +32,7 @@ export default function NewAdScreen() {
     <Container header={<ProfileHeader title={t("createAd.steps.postAd")} />}>
       <View className="p-4 mx-1 flex-1 dark:bg-black">
         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
-          <Text className="font-semibold mb-2 dark:text-white">
+          <Text className="font-semibold mb-4 dark:text-white">
             {t("createAd.whatAreYouSelling")}
           </Text>
           <AdTypeSelector
@@ -42,9 +43,10 @@ export default function NewAdScreen() {
             isRTL={isRTL}
           />
         </View>
-        <View className="mt-auto mb-4">
+        <View className="mt-auto mb-4 items-center">
           <TouchableOpacity
-            className="py-3 w-full rounded-lg bg-primary-500 disabled:bg-yellow-200"
+            className="py-3 rounded-lg bg-primary-500 disabled:bg-yellow-200"
+            style={styles.nextButton}
             onPress={handleNavigate}
             disabled={!adType}
           >
@@ -70,3 +72,13 @@ function getPathname(ad_type: string) {
     return "/create/" + ad_type;
   return "/create/commun";
 }
+
+const styles = StyleSheet.create({
+  nextButton: {
+    height: 45,
+    width: 200,
+    alignItems: "center",
+    justifyContent: "center",
+    ...boxShadow(4, 6, 20).button
+  }
+})

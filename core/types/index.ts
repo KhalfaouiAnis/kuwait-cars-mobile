@@ -1,3 +1,4 @@
+import { FilterState } from "@/core/store/search.store";
 import {
   Control,
   FieldErrors,
@@ -6,12 +7,43 @@ import {
   UseFormSetError,
   UseFormSetValue,
 } from "react-hook-form";
-import { SUBSCRIPTION_TYPES } from "../constants/ad";
 import {
   AreaInterface,
   LocationInterface,
   ProvinceInterface,
 } from "./schema/shared";
+
+export enum SUBSCRIPTION_TYPES {
+  FREE = "FREE",
+  GOLDEN = "GOLDEN",
+  RUBY = "RUBY",
+}
+
+export type SubscriptionDetail = {
+  id: string;
+  adTypes: string[];
+  type: SUBSCRIPTION_TYPES | string;
+  expires_in: number;
+  title: string;
+  price: number;
+  features: string[];
+};
+
+export interface FilterOption {
+  id: string;
+  label: string;
+  value: string;
+  parentId?: string;
+  regionId?: string;
+}
+
+export type FilterConfigItem = {
+  title: string;
+  options: FilterOption[];
+  parentKey: keyof FilterState | null;
+  showRegionHelper: boolean;
+  showSearch: boolean;
+};
 
 export interface User {
   id: string;
