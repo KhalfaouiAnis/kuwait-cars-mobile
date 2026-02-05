@@ -7,6 +7,8 @@ export const DIMENSIONS = Dimensions.get("screen");
 export const PLATE_RECOGNIZER_API_URL =
   "https://api.platerecognizer.com/v1/plate-reader/";
 export const ADS_PAGE_SIZE = 4;
+export const MAX_DRAFTS_COUNT =
+  Number(process.env.EXPO_PUBLIC_MAX_DRAFTS_COUNT) || 2;
 
 export const APP_STORAGE_KEY = "KC_APP_STORAGE_KEY";
 export const AUTH_STORAGE_KEY = "KC_AUTH_STORAGE";
@@ -31,46 +33,6 @@ export const RTL_LANGUAGES = ["ar", "ur"];
 
 export const COUNTRIES = [
   { name: "Kuwait", cca2: "KW", callingCode: ["965"], flag: "🇰🇼" },
-];
-
-export const SUBSCRIPTION_PLANS = [
-  {
-    id: "1",
-    adTypes: [],
-    description: "Free plan",
-    title: "Basic",
-    price: "$0",
-    features: [
-      "3 user request",
-      "10 downloads per day",
-      "Daily content updates",
-      "Fully editable files",
-    ],
-  },
-  {
-    id: "2",
-    description: "Premium plan",
-    title: "Premium",
-    price: "$4",
-    features: [
-      "3 user request",
-      "10 downloads per day",
-      "Daily content updates",
-      "Fully editable files",
-    ],
-  },
-  {
-    id: "3",
-    description: "Premium plus plan",
-    title: "Premium Plus",
-    price: "$10",
-    features: [
-      "3 user request",
-      "10 downloads per day",
-      "Daily content updates",
-      "Fully editable files",
-    ],
-  },
 ];
 
 export const HIDE_TABBAR_ROUTES: string[] = ["/create"];

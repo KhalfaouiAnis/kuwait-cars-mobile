@@ -57,12 +57,12 @@ const Advertisement = memo(function Advertisement({
             <Text
               numberOfLines={1}
               ellipsizeMode="tail"
-              className="flex-1 font-inter-semibold text-lg text-black dark:text-white"
+              className="flex-1 font-inter-medium text-lg text-black dark:text-white"
             >
               {data.title} {data.year}
             </Text>
             {data.price && (
-              <Text className="font-inter-semibold text-black dark:text-white">
+              <Text className="font-inter-medium text-black dark:text-white">
                 ${data.price}
               </Text>
             )}
@@ -91,7 +91,7 @@ const Advertisement = memo(function Advertisement({
                   <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    className="font-inter-medium text-base text-black dark:text-white max-w-28"
+                    className="font-inter text-base text-black dark:text-white max-w-28"
                   >
                     {t(`provinces.${data.province.province}`)}
                   </Text>

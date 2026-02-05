@@ -84,7 +84,7 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
   const swipeableRef = useRef<any>(null);
   const user = useAuthStore((state) => state.user);
   const { t } = useTranslation("common");
-  const { isRTL, lang } = useUserPreferencesStore();
+  const { isRTL, lang, theme } = useUserPreferencesStore();
   const { protectAction } = useAuthGuard();
   const { mutate } = useToggleFavorite();
 
@@ -125,11 +125,11 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
           style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
           <View className="flex-row items-center justify-between">
-            <Text className="font-inter-semibold text-lg text-black dark:text-white">
+            <Text className="font-inter-medium text-lg text-black dark:text-white">
               {data.title}
             </Text>
             {data.year && (
-              <Text className="font-inter-semibold text-black dark:text-white">
+              <Text className="font-inter-medium text-black dark:text-white">
                 {data.year}
               </Text>
             )}
@@ -147,9 +147,9 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
           </View>
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center">
-              <Ionicons name="location-outline" size={14} />
+              <Ionicons name="location-outline" color={theme !== "light" ? "white" : "black"} size={14} />
               {data.province && (
-                <Text className="font-inter-medium text-sm text-black dark:text-white">
+                <Text className="font-inter text-sm text-black dark:text-white">
                   {t(`provinces.${data.province?.province}`)}
                 </Text>
               )}
@@ -163,7 +163,7 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
             </View>
             <View>
               {data.price && (
-                <Text className="font-inter-medium text-sm text-black dark:text-white">
+                <Text className="font-inter text-sm text-black dark:text-white">
                   ${data.price}
                 </Text>
               )}

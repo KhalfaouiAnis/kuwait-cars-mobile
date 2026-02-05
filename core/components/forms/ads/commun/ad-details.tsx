@@ -31,11 +31,12 @@ export default function AdDetails({ control, errors, setValue, getValue }: AdFor
                         keyboardType="numeric"
                         extraPadding
                         error={errors.additional_number?.ref?.name}
-                        placeholder={t("createAd.AddAdditionalNumber")} />
+                        placeholder={t("createAd.AddAdditionalNumber")}
+                    />
                     {
-                        !showSecondNumber && (
+                        (!showSecondNumber) && (
                             <TouchableOpacity
-                                className="absolute top-3.5 end-2 rounded-full bg-primary-500 p-2"
+                                className="absolute top-3.5 end-10 rounded-full bg-primary-500 p-2"
                                 onPress={() => setShowSecondNumber(true)}>
                                 <Ionicons name="add" size={24} />
                             </TouchableOpacity>

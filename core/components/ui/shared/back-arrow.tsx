@@ -12,7 +12,7 @@ export default function BackArrow({ navigate }: { navigate?: any }) {
 
     return (
         <Pressable hitSlop={10} onPress={onBack}>
-            <Ionicons name={isRTL ? "chevron-forward" : "chevron-back"} size={24} color={theme !== "light" ? "white" : "black"} />
+            <Ionicons name={isRTL ? "chevron-forward" : "chevron-back"} size={24} color={theme !== "light" ? "#ffffffb3" : "black"} />
         </Pressable>
     )
 }

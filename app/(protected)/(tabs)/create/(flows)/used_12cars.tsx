@@ -164,7 +164,7 @@ export default function UsedCarAdScreen() {
     return (
         <AdFormContainer title={getStepTitle(currentStep, t)} resetLabel={t("reset")} reset={handleReset} previous={handlePrevious}>
             {renderCurrentStep()}
-            <View className="mb-8 pt-3 bg-transparent self-center">
+            <View className="mb-4 self-center">
                 <ProgressButton
                     onPress={handleNext}
                     progress={totalProgress}

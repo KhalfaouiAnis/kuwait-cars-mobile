@@ -24,19 +24,19 @@ import {
 type AreaSelectorProps<TForm extends FieldValues> = {
   name: FieldPath<TForm>;
   control: Control<TForm>;
-  renderOption: (option: ProvinceArea, selected?: string) => ReactNode;
+  renderProvinceAreaOption: (option: ProvinceArea, selected?: string) => ReactNode;
   options: AreaOption[];
   placeholder?: string;
   error?: string;
   label?: string;
 };
 
-export default function AreaSelector<TForm extends FieldValues>({
+export default function AreaSelect<TForm extends FieldValues>({
   control,
   name,
   error,
   options,
-  renderOption,
+  renderProvinceAreaOption,
   label,
   placeholder,
 }: AreaSelectorProps<TForm>) {
@@ -50,7 +50,7 @@ export default function AreaSelector<TForm extends FieldValues>({
 
   const renderSelectOption = (option: AreaOption, handleSelect: any) => (
     <Pressable onPress={() => handleSelect(option)}>
-      {renderOption(
+      {renderProvinceAreaOption(
         { label: t("areas." + option.area), value: option?.area },
         value?.area,
       )}
@@ -111,15 +111,14 @@ export default function AreaSelector<TForm extends FieldValues>({
         onRequestClose={() => setShowModal(false)}
       >
         <TouchableWithoutFeedback onPress={() => setShowModal(false)}>
-          <View className="flex-1 justify-center items-center bg-black/50">
-            <View className="dark:bg-black flex-1 my-20 border bg-transparent border-transparent w-2/3 overflow-hidden">
-              <FlatList
-                data={options}
-                renderItem={renderItem}
-                keyExtractor={keyExtractor}
-                showsVerticalScrollIndicator={false}
-              />
-            </View>
+          <View className="dark:bg-black flex-1  justify-center items-center bg-black/30  border border-transparent pb-safe pt-safe overflow-hidden">
+            {options.length > 0 && <FlatList
+              data={options}
+              renderItem={renderItem}
+              keyExtractor={keyExtractor}
+              showsVerticalScrollIndicator={false}
+              contentContainerClassName="gap-4 bg-white p-4 mb-safe rounded-xl"
+            />}
           </View>
         </TouchableWithoutFeedback>
       </Modal>

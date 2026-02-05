@@ -5,6 +5,7 @@ import AdDetails from "@/core/components/forms/ads/show/ad-details";
 import AddVideo from "@/core/components/forms/ads/show/add-video";
 import ChoosePlan from "@/core/components/forms/ads/show/choose-plan";
 import PostAd from "@/core/components/forms/ads/show/post-ad";
+import Preview from "@/core/components/forms/ads/show/preview";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useShowCarAd } from "@/core/hooks/ad/flows/useShowCarAd";
@@ -29,12 +30,14 @@ const getStepTitle = (step: number, t: TFunction) => {
             return t("createAd.steps.addedDetails")
         case 5:
             return t("createAd.steps.ChoosePlans")
+        case 6:
+            return t("createAd.steps.preview")
         default:
             return ""
     }
 }
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 export default function NewAdScreen() {
     const { control, formState: { errors, dirtyFields }, totalProgress, trigger, reset, setValue, getValues, handleSubmit, onSubmit } = useShowCarAd()
@@ -96,7 +99,7 @@ export default function NewAdScreen() {
             })
         }
 
-        if (isValid && currentStep < TOTAL_STEPS- 1) {
+        if (isValid && currentStep < TOTAL_STEPS - 1) {
             setCurrentStep((prev) => prev + 1);
         } else if (isValid) {
             protectAction(() => {
@@ -127,6 +130,8 @@ export default function NewAdScreen() {
                 return <AdDetails control={control} errors={errors} setValue={setValue} getValue={getValues} isDark={theme !== "light"} />;
             case 5:
                 return <ChoosePlan setValue={setValue} getValue={getValues} control={control} errors={errors} isDark={theme !== "light"} />;
+            case 6:
+                return <Preview getValue={getValues} control={control} errors={errors} />
             default:
                 return null;
         }

@@ -54,13 +54,13 @@ export default function AdDetailsStep2({ control, errors, setValue, getValue }: 
                     />
                 </View>
 
-                <View className="mt-4">
+                <View className="mt-4 px-4">
                     <RadioGroup
-                        name="hide_license_plate"
                         bordered
-                        control={control}
-                        label={t("createAd.Hidevehiclelicenseplate")}
                         fullWidth
+                        control={control}
+                        name="hide_license_plate"
+                        label={t("createAd.Hidevehiclelicenseplate")}
                         options={[{ id: "Yes", label: t("yes"), value: true }, { id: "No", label: t("no"), value: false }]}
                     />
                     <Text className="text-sm text-gray-300 mt-1.5">{t("createAd.hideVehicleLicensePlateForUploadedImages")}</Text>

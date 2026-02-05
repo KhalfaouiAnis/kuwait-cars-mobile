@@ -28,7 +28,7 @@ export function useSparePartAd() {
       xcar_calls: true,
       xcar_chat: true,
       hide_license_plate: false,
-      ad_type: "spare_parts",
+      ad_type: "parts_accessories",
     },
   });
 

@@ -12,10 +12,8 @@ export const renderProvinceAreaOption = (option: ProvinceArea, selected?: string
     </View>
 )
 
-export const renderOption = (option: SelectOption, selected?: string | boolean) => {
+export const renderOption = (option: SelectOption, isSelected?: boolean) => {
     const isRTL = preferencesStore?.getState().isRTL
-    const isSelected = (typeof selected === "boolean" && selected) || option.value === selected
-
     return (
         <View className="flex-row items-center py-3 my-2.5 mx-8 px-4" style={[styles.wrapper, { direction: isRTL ? "rtl" : "ltr" }]}>
             <View className='flex-1 ms-2'>

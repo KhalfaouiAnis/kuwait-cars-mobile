@@ -10,7 +10,7 @@ export function ProfileDrawer() {
 
     return (
         <Pressable onPress={openProfile} hitSlop={6}>
-            <MaterialIcons name="sort" size={28} color={theme !== "light" ? "white" : "black"} />
+            <MaterialIcons name="sort" size={28} color={theme !== "light" ? "#ffffffb3" : "black"} />
         </Pressable>
     )
 }

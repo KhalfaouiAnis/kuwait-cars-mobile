@@ -151,7 +151,7 @@ export default function NewAdScreen() {
     return (
         <AdFormContainer title={getStepTitle(currentStep, t)} reset={handleReset} resetLabel={t("reset")} previous={handlePrevious}>
             {renderCurrentStep()}
-            <View className="mt-auto mb-4 mx-2">
+            <View className="mb-4 self-center">
                 <ProgressButton
                     onPress={handleNext}
                     progress={totalProgress}

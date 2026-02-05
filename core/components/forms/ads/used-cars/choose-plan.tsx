@@ -1,5 +1,5 @@
-import { SUBSCRIPTION_PLANS, SubscriptionDetail } from "@/core/constants/ad";
-import { AdFormStepProps } from "@/core/types";
+import { SUBSCRIPTION_PLANS } from "@/core/constants/ad";
+import { AdFormStepProps, SubscriptionDetail } from "@/core/types";
 import { UsedCarAdInterface } from "@/core/types/schema/ads/usedCar";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";

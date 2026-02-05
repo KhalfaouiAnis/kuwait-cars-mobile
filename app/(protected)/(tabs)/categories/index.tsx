@@ -45,16 +45,13 @@ export default function CategoriesScreen() {
                         <NewCategoryLink href={`/categories/${AD_TYPES.home_services}/`} params={{ ad_type: AD_TYPES.home_services }} image={IMAGES.BrakesCategory} label={t("adCategories.home_services")} />
                         <NewCategoryLink href={`/categories/${AD_TYPES.damaged_cars}/`} params={{ ad_type: AD_TYPES.damaged_cars }} image={IMAGES.BrakesCategory} label={t("adCategories.damaged_cars")} />
 
-                        <NewCategoryLink href={`/categories/${AD_TYPES.accessories}/`} params={{ ad_type: AD_TYPES.accessories }} image={IMAGES.BrakesCategory} label={t("adCategories.accessories")} />
+                        <NewCategoryLink href={`/categories/${AD_TYPES.parts_accessories}/`} params={{ ad_type: AD_TYPES.parts_accessories }} image={IMAGES.BrakesCategory} label={t("adCategories.parts_accessories")} />
                         <NewCategoryLink href={`/categories/${AD_TYPES.logistics}/`} params={{ ad_type: AD_TYPES.logistics }} image={IMAGES.BrakesCategory} label={t("adCategories.logistics")} />
                         <NewCategoryLink href={`/categories/${AD_TYPES.rims_and_tires}/`} params={{ ad_type: AD_TYPES.rims_and_tires }} image={IMAGES.BrakesCategory} label={t("adCategories.rims_and_tires")} />
 
                         <NewCategoryLink href="/categories/other/" params={{ ad_type: AD_TYPES.Other }} image={IMAGES.BrakesCategory} label={t("adCategories.Other")} />
                         <NewCategoryLink href={`/categories/${AD_TYPES.repair_garages}/`} params={{ ad_type: AD_TYPES.repair_garages }} image={IMAGES.BrakesCategory} label={t("adCategories.repair_garages")} />
-                        <NewCategoryLink href={`/categories/${AD_TYPES.spare_parts}/`} params={{ ad_type: AD_TYPES.spare_parts }} image={IMAGES.BrakesCategory} label={t("adCategories.spare_parts")} />
-
-                        {/* <NewCategoryLink href={`/categories/${AD_TYPES.show}/`} params={{ ad_type: AD_TYPES.show }} image={IMAGES.BMW3SeriesE46Category} label={t("adCategories.show")} /> */}
-
+                        <NewCategoryLink href={`/categories/${AD_TYPES.transport_delivery}/`} params={{ ad_type: AD_TYPES.transport_delivery }} image={IMAGES.BrakesCategory} label={t("adCategories.transport_delivery")} />
                     </View>
                     <View
                         className="items-center mx-auto justify-center my-8 rounded-[15px] dark:border-[#46464640] dark:bg-white"

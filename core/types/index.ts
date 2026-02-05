@@ -70,6 +70,12 @@ export type Language = { code: LanguageCode; name: string; flag: string };
 
 export type TimerMode = "countdown" | "elapsed";
 
+export type GlobalSelectOption = {
+  id: string;
+  label: string;
+  value: any;
+};
+
 export type SelectOption = {
   id: string;
   label: string;
@@ -179,6 +185,14 @@ export interface AdvertisementInterface {
   views?: string;
 
   user?: User;
+}
+
+export interface AdDraftInterface {
+  id: string;
+  content: any;
+  user_id: string;
+  ad_type?: string;
+  step_index: number;
 }
 
 export interface AdSearchParams {

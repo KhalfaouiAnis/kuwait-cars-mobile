@@ -1,6 +1,6 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import AreaSelector from "@/core/components/ui/input/area-selector";
-import ProvinceSelector from "@/core/components/ui/input/province-selector";
+import AreaSelect from "@/core/components/ui/input/select/area-selector";
+import ProvinceSelect from "@/core/components/ui/input/select/province-select";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { PROVINCES } from "@/core/constants";
@@ -49,7 +49,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
             </View>
             <View>
                 <Text className="font-semibold dark:text-white mb-1">{t("createAd.WhereIsYourListing")}</Text>
-                <ProvinceSelector
+                <ProvinceSelect
                     control={control}
                     name="province"
                     required
@@ -59,7 +59,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                 />
             </View>
             <View className="mt-4">
-                <AreaSelector
+                <AreaSelect
                     control={control}
                     name="area"
                     options={Areas}

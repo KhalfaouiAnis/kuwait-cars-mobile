@@ -15,7 +15,7 @@ import { FlagButton } from "@/core/components/ui/button/flag-button";
 import { ShareButton } from "@/core/components/ui/button/share-button";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 
-export default function AccessoriesAdDetails() {
+export default function TransportDeliveryAdDetails() {
     const { ad_id } = useLocalSearchParams<{ ad_id: string }>();
     const addView = useRecentlyViewedStore((state) => state.addView);
     const { isRTL } = useUserPreferencesStore()

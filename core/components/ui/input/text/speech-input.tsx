@@ -3,25 +3,17 @@ import { useSpeechToForm } from '@/core/hooks/shared/use-speech';
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
-import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { BaseTextInputProps } from '../..';
 
-type AudioInputProps<TForm extends FieldValues> = TextInputProps & {
-    name: FieldPath<TForm>;
-    control: Control<TForm>;
-    required?: boolean;
-    value?: string;
-    error?: string;
-    label?: string;
-};
-
-export default function InputWithSpeech<TForm extends FieldValues>({ control, name, error, required, label, ...props }: AudioInputProps<TForm>) {
+export default function InputWithSpeech<TForm extends FieldValues>({ control, name, required, label, ...props }: BaseTextInputProps<TForm>) {
     const { t } = useTranslation("common")
     const { isRTL } = useUserPreferencesStore();
 
     const {
-        field: { onChange, value },
+        field: { onChange, value }, fieldState: { error }
     } = useController({
         control,
         name,

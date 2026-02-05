@@ -1,6 +1,4 @@
-import { CAR_COLORS, YEARS } from ".";
-import { FilterConfigItem, FilterOption, SUBSCRIPTION_TYPES } from "../types";
-import { flattenToBrands, flattenToModels } from "../utils";
+import { SUBSCRIPTION_TYPES } from "../types";
 
 export const AD_TYPES = {
   used_cars: "used_cars",
@@ -9,13 +7,13 @@ export const AD_TYPES = {
   classic_cars: "classic_cars",
   show: "show",
   car_rental_agencies: "car_rental_agencies",
-  spare_parts: "spare_parts",
+  parts_accessories: "parts_accessories",
   home_services: "home_services",
   damaged_cars: "damaged_cars",
-  accessories: "accessories",
   logistics: "logistics",
   rims_and_tires: "rims_and_tires",
   repair_garages: "repair_garages",
+  transport_delivery: "transport_delivery",
   Other: "Other",
 };
 
@@ -25,13 +23,13 @@ export const Ad_CATEGORIES = [
   "classic_cars",
   "show",
   "car_rental_agencies",
-  "spare_parts",
+  "parts_accessories",
   "home_services",
   "damaged_cars",
-  "accessories",
   "logistics",
   "rims_and_tires",
   "repair_garages",
+  "transport_delivery",
   "Other",
 ];
 
@@ -3234,8 +3232,8 @@ export const CAR_BRAND_TYPES = [
     label: AD_TYPES.car_rental_agencies,
   },
   {
-    value: AD_TYPES.spare_parts,
-    label: AD_TYPES.spare_parts,
+    value: AD_TYPES.parts_accessories,
+    label: AD_TYPES.parts_accessories,
     icon: "car-sport-outline",
     regions: [
       {
@@ -3304,11 +3302,6 @@ export const CAR_BRAND_TYPES = [
     label: AD_TYPES.damaged_cars,
   },
   {
-    value: AD_TYPES.accessories,
-    icon: "car-sport-outline",
-    label: AD_TYPES.accessories,
-  },
-  {
     value: AD_TYPES.logistics,
     icon: "car-sport-outline",
     label: AD_TYPES.logistics,
@@ -3322,6 +3315,11 @@ export const CAR_BRAND_TYPES = [
     value: AD_TYPES.repair_garages,
     icon: "car-sport-outline",
     label: AD_TYPES.repair_garages,
+  },
+  {
+    value: AD_TYPES.transport_delivery,
+    icon: "car-sport-outline",
+    label: AD_TYPES.transport_delivery,
   },
   {
     value: AD_TYPES.Other,
@@ -3521,38 +3519,3 @@ export const SUBSCRIPTION_PLANS = [
     ],
   },
 ];
-
-export const USED_CARS_FILTER_CONFIG: Record<string, FilterConfigItem> = {
-  brand: {
-    title: "brand",
-    showSearch: true,
-    parentKey: "region",
-    showRegionHelper: true,
-    options: flattenToBrands(CAR_BRAND_TYPES[0]),
-  },
-  model: {
-    title: "model",
-    // parentKey: "brand" as keyof FilterState,
-    parentKey: null,
-    showRegionHelper: false,
-    showSearch: true,
-    options: flattenToModels(CAR_BRAND_TYPES[0]),
-  },
-  year: {
-    title: "year",
-    // parentKey: "model" as keyof FilterState,
-    parentKey: null,
-    showRegionHelper: false,
-    showSearch: true,
-    options: YEARS as FilterOption[],
-  },
-  exterior_color: {
-    title: "color",
-    showRegionHelper: false,
-    showSearch: true,
-    parentKey: null,
-    options: CAR_COLORS as FilterOption[],
-  },
-} as const;
-
-export type FilterConfigKey = keyof typeof USED_CARS_FILTER_CONFIG;

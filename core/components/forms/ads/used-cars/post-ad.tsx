@@ -1,5 +1,5 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
-import AreaSelector from "@/core/components/ui/input/select/area-selector";
+import AreaSelect from "@/core/components/ui/input/select/area-selector";
 import ProvinceSelect from "@/core/components/ui/input/select/province-select";
 import InputWithSpeech from "@/core/components/ui/input/text/speech-input";
 import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
@@ -54,7 +54,7 @@ export default function PostAd({ control, errors, isDark, setValue }: AdFormStep
                 />
             </View>
             <View className="mt-4">
-                <AreaSelector
+                <AreaSelect
                     control={control}
                     name="area"
                     options={Areas}

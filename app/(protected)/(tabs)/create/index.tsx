@@ -1,10 +1,10 @@
 import AdTypeSelector from "@/core/components/forms/ads/shared/ad-type-selector/ad-type-selector";
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
-import { AD_TYPES, CAR_BRAND_TYPES } from "@/core/constants/ad";
+import { CAR_BRAND_TYPES } from "@/core/constants/ad";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { boxShadow } from "@/core/utils/cn";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -12,21 +12,33 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function NewAdScreen() {
   const { t } = useTranslation("common");
   const { isRTL } = useUserPreferencesStore();
+  // const { data: serverDrafts } = useAdDraftsQuery();
 
   const [adType, setAdType] = useState<{ ad_type: string; params: any } | null>(
     null,
   );
+
   const router = useRouter();
 
   const handleNavigate = () => {
     if (!adType) return;
-
+    // if (serverDrafts && serverDrafts.length >= MAX_DRAFTS_COUNT) {
+    //   Alert.alert("Limit Reached", "You can only have 5 drafts. Delete one to continue.");
+    //   return;
+    // }
+    //   API to create new draft
+    //   initializeSession({
+    //   id: newId,
+    //   category: cat,
+    //   stepIndex: 0,
+    //   content: {},
+    //   updatedAt: Date.now()
+    // });
     const { ad_type, params } = adType;
-
-    const pathname = getPathname(ad_type);
-
-    router.navigate({ pathname: pathname as any, params: { ...params, ad_type } });
+    router.navigate({ pathname: `/create/${ad_type}` as any, params });
   };
+
+  useFocusEffect(() => { setAdType(null) })
 
   return (
     <Container header={<ProfileHeader title={t("createAd.steps.postAd")} />}>
@@ -58,19 +70,6 @@ export default function NewAdScreen() {
       </View>
     </Container>
   );
-}
-
-function getPathname(ad_type: string) {
-  if (
-    [
-      AD_TYPES.used_cars,
-      AD_TYPES.motorcycles,
-      AD_TYPES.spare_parts,
-      AD_TYPES.show,
-    ].includes(ad_type)
-  )
-    return "/create/" + ad_type;
-  return "/create/commun";
 }
 
 const styles = StyleSheet.create({

@@ -26,7 +26,7 @@ type SelectInputProps<TForm extends FieldValues> = {
   control: Control<TForm>;
   renderOption: (
     option: SelectOption,
-    selected?: string | number | boolean,
+    selected?: boolean,
   ) => ReactNode;
   options: SelectOption[];
   onChangeText?: (text: string) => void;
@@ -34,7 +34,6 @@ type SelectInputProps<TForm extends FieldValues> = {
   defaultValue?: string;
   required?: boolean;
   error?: string;
-  icon?: ReactNode;
   isDark?: boolean;
   isRTL?: boolean;
   translatedValue?: boolean;
@@ -47,7 +46,6 @@ export default function AdSelectInput<TForm extends FieldValues>({
   options,
   renderOption,
   required,
-  icon,
   isDark,
   isRTL,
   translatedValue,
@@ -80,7 +78,7 @@ export default function AdSelectInput<TForm extends FieldValues>({
     <Pressable
       style={styles.wrapper}
       onPress={() => setShowModal(true)}
-      className={clsx("relative items-center self-center justify-center border border-grayish", {
+      className={clsx("relative items-center self-center justify-center border-[0.5px] border-grayish", {
         "border-error": error,
       })}
     >

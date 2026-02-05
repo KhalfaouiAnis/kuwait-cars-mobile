@@ -60,7 +60,7 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                         control={control}
                         placeholder={t("year")}
                         error={errors.year?.ref?.name}
-                        renderOption={(option, selected) => renderOption(option, selected as string)}
+                        renderOption={(option, selected) => renderOption(option, selected)}
                     />
                 </View>
                 <View>
@@ -72,7 +72,7 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                         required
                         isDark={isDark}
                         isRTL={isRTL}
-                        renderOption={(option, selected) => renderOption(option, selected as string)}
+                        renderOption={(option, selected) => renderOption(option, selected)}
                         error={errors.exterior_color?.ref?.name}
                         placeholder={t("createAd.exteriorColor")}
                     />

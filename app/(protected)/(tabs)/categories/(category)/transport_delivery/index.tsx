@@ -5,14 +5,14 @@ import useSearchStore from "@/core/store/search.store";
 import { useFocusEffect } from "expo-router";
 import { useCallback } from "react";
 
-export default function SparePartsCategoryScreen() {
-  const setExternalFilter = useSearchStore(state => state.setExternalFilter)
-  const filterConfig = useMotorcyclesFilterConfig()
+export default function TransportDeliveryCategoryScreen() {
+  const setExternalFilter = useSearchStore((state) => state.setExternalFilter);
+  const filterConfig = useMotorcyclesFilterConfig();
 
   useFocusEffect(
     useCallback(() => {
-      setExternalFilter("ad_type", AD_TYPES.spare_parts);
-      setExternalFilter("ad_category", undefined)
+      setExternalFilter("ad_type", AD_TYPES.transport_delivery);
+      setExternalFilter("ad_category", undefined);
     }, [setExternalFilter]),
   );
 

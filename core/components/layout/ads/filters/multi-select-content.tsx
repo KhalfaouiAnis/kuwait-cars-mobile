@@ -20,7 +20,6 @@ export const MultiSelectContent = ({ filterKey, options }: Props) => {
 
         return (
             <TouchableOpacity
-                className="flex-row items-center my-1"
                 onPress={() => toggleMultiFilter(filterKey, item.value)}
             >
                 {renderOption(item, isSelected)}

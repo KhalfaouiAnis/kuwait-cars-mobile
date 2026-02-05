@@ -32,10 +32,10 @@ export default function LocationPicker({ setValue, isDark, control, label, prima
                     height: 60
                 }}
             >
-                <View className='flex-row gap-2 items-center'>
+                <View className='flex-row gap-4 items-center'>
                     <Octicons name="location" size={20} color={isDark ? "white" : "black"} />
                     <Text
-                        className="text-[#333] dark:text-white overflow-hidden"
+                        className={`${location?.latitude ? "text-[#333] dark:text-white overflow-hidden": "text-gray-400"}`}
                         pointerEvents="none"
                     >
                         {location?.latitude ? Number(location.latitude).toFixed(5) : label}

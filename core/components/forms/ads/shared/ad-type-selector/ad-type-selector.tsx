@@ -76,9 +76,9 @@ export default function AdTypeSelector({
                 ad_type: AD_TYPES.motorcycles,
                 params: { ad_category, brand, label: t(item.label) },
               });
-            } else if (AD_TYPES.spare_parts === path[0]) {
+            } else if (AD_TYPES.parts_accessories === path[0]) {
               handleSelect({
-                ad_type: AD_TYPES.spare_parts,
+                ad_type: AD_TYPES.parts_accessories,
                 params: { regison: item.value, label: t(item.label) },
               });
             } else if (AD_TYPES.home_services === path[0]) {
@@ -95,7 +95,7 @@ export default function AdTypeSelector({
           }}
         >
           <Ionicons name={item?.icon} size={20} color="gray" />
-          <Text className="flex-1 text-center text-sm font-semibold">
+          <Text className="flex-1 ms-4 text-sm font-semibold">
             {t(item.label)}
           </Text>
           <Ionicons
@@ -115,7 +115,7 @@ export default function AdTypeSelector({
           onPress={() => hasChildren && toggleExpand(itemPath)}
         >
           <Ionicons name={item?.icon} size={20} color="gray" />
-          <Text className="flex-1 text-center text-sm font-semibold">
+          <Text className="flex-1 ms-4 text-sm font-semibold">
             {t(item.label)}
           </Text>
           <Ionicons
@@ -157,9 +157,9 @@ export default function AdTypeSelector({
     <Pressable
       style={styles.wrapper}
       onPress={() => setShowModal(true)}
-      className={"relative items-center self-center justify-center border border-grayish"}
+      className={"relative self-center justify-center border-grayish"}
     >
-      <Text className={"text-grayish text-center dark:text-white"} pointerEvents="none">
+      <Text className="text-grayish dark:text-white ms-4" pointerEvents="none">
         {selectedValue ? t(selectedValue) : placeholder}
       </Text>
       <View className="flex-row items-center absolute end-2.5">
@@ -202,6 +202,7 @@ export default function AdTypeSelector({
 const styles = StyleSheet.create({
   wrapper: {
     height: 45,
+    borderWidth: 0.5,
     borderRadius: 20,
     ...boxShadow().button,
     width: DIMENSIONS.width - 60,

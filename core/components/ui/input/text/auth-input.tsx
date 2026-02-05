@@ -4,17 +4,14 @@ import { boxShadow, cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
 import { ReactNode, useState } from "react";
 import {
-  Control,
-  FieldPath,
   FieldValues,
   useController,
+  UseControllerProps,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Pressable, Text, TextInput, TextInputProps, View } from "react-native";
 
-type InputProps<TForm extends FieldValues> = TextInputProps & {
-  name: FieldPath<TForm>;
-  control: Control<TForm>;
+interface InputProps<TForm extends FieldValues> extends UseControllerProps<TForm> {
   placeholder: string;
   icon?: keyof typeof Ionicons.glyphMap;
   customIcon?: ReactNode;
@@ -22,22 +19,20 @@ type InputProps<TForm extends FieldValues> = TextInputProps & {
   label?: string;
   error?: string;
   endIcon?: keyof typeof Ionicons.glyphMap;
-  bordered?: boolean;
-};
+}
 
 export default function AuthTextInput<TForm extends FieldValues>({
   placeholder,
   icon,
   label,
   endIcon,
-  bordered = true,
   requiredMark,
   control,
   name,
   error,
   customIcon,
   ...props
-}: InputProps<TForm>) {
+}: InputProps<TForm> & TextInputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation("common")
   const {
@@ -53,12 +48,11 @@ export default function AuthTextInput<TForm extends FieldValues>({
         </Text>
       )}
       <View
-        className={cn("flex-row items-center", {
-          "border-grayish dark:border-[#46464640] dark:bg-[#1B1B1B80] border p-2 pe-2 rounded-3xl": bordered,
-        })}
+        className="flex-row items-center border-grayish dark:border-[#46464640] dark:bg-[#1B1B1B80] p-2 pe-2 rounded-3xl"
         style={{
           boxShadow: boxShadow(4, 6, 20).button.boxShadow,
           width: DIMENSIONS.width - 60,
+          borderWidth: 0.5,
         }}
       >
         {customIcon ? (

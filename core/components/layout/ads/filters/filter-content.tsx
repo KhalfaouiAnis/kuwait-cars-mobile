@@ -1,5 +1,4 @@
-import { FilterConfigKey } from '@/core/constants/ad';
-import useSearchStore, { MultiFilterKeys } from '@/core/store/search.store';
+import useSearchStore, { CombinedFilterKeys } from '@/core/store/search.store';
 import { FilterConfigItem } from '@/core/types';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +6,7 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { MultiSelectContent } from './multi-select-content';
 import SearchField from './search-field';
 
-export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: FilterConfigKey, filterConfig: Record<string, FilterConfigItem> }) => {
+export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: CombinedFilterKeys, filterConfig: Record<string, FilterConfigItem> }) => {
     const { t } = useTranslation("car_categories")
 
     const config = filterConfig[activeKey];
@@ -62,7 +61,7 @@ export const SmartFilterContent = ({ activeKey, filterConfig }: { activeKey: Fil
                 <SearchField searchQuery={draftFilters.q} setSearchQuery={(value) => setDraftFilter("q", value)} />
             )}
             <MultiSelectContent
-                filterKey={activeKey as MultiFilterKeys}
+                filterKey={activeKey}
                 options={filteredOptions}
             />
         </View>

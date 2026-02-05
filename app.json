@@ -14,11 +14,16 @@
         "FacebookAppID": "1277409807481340",
         "FacebookClientToken": "your-client-token",
         "FacebookDisplayName": "Xcars",
-        "LSApplicationQueriesSchemes": ["fbapi", "fb-messenger-api"],
+        "LSApplicationQueriesSchemes": [
+          "fbapi",
+          "fb-messenger-api"
+        ],
         "NSFaceIDUsageDescription": "Your app uses Apple Sign-In for secure login."
       },
       "entitlements": {
-        "com.apple.developer.applesignin": ["Default"]
+        "com.apple.developer.applesignin": [
+          "Default"
+        ]
       },
       "config": {
         "googleMapsApiKey": "AIzaSyBrYZrom9xF_auXAO9bo4Hhadj-AWu_Gvk"
@@ -88,7 +93,8 @@
       "expo-notifications",
       "expo-localization",
       "expo-video",
-      "expo-audio"
+      "expo-audio",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

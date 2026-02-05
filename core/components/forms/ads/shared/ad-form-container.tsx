@@ -15,11 +15,14 @@ interface FormContainerProps {
 
 export default function AdFormContainer({ children, reset, resetLabel, previous, title }: FormContainerProps) {
     const { isRTL } = useUserPreferencesStore()
+
     const handlePrevious = () => {
-        const result = previous()
-        if (result === "route") {
+        const result = previous();
             router.canGoBack() && router.back()
-        }
+        
+        // if (result === "route") {
+        //     router.canGoBack() && router.back()
+        // }
     }
 
     return (

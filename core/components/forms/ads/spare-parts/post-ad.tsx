@@ -38,7 +38,7 @@ export default function PostAd({ control, setValue, errors, isDark }: AdFormStep
             <View className="mb-2">
                 <View className="flex-row items-center justify-between">
                     <Text className="font-semibold mb-2 dark:text-white">{t("createAd.whatAreYouSelling")}</Text>
-                    <Text className="text-sm text-gray-300">{t("adCategories.spare_parts")}</Text>
+                    <Text className="text-sm text-gray-300">{t("adCategories.parts_accessories")}</Text>
                 </View>
                 <SelectedAdType
                     label={label}

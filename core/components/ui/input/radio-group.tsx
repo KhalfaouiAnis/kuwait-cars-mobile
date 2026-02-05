@@ -1,23 +1,11 @@
-import { SelectOption } from '@/core/types';
 import { boxShadow, cn } from '@/core/utils/cn';
 import React from 'react';
-import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
 import { Text, View } from 'react-native';
+import { BaseRadioInputProps } from '..';
 import RadioButton from '../button/radio-button';
 
-type RadioGroupProps<TForm extends FieldValues> = {
-    control: Control<TForm>;
-    name: FieldPath<TForm>;
-    options: SelectOption[]
-    label?: string;
-    disabled?: boolean;
-    fullWidth?: boolean
-    bordered?: boolean
-    borderRadius?: number
-    square?: boolean
-}
-
-export default function RadioGroup<TForm extends FieldValues>({ control, name, options, label, disabled, fullWidth, bordered, borderRadius, square }: RadioGroupProps<TForm>) {
+export default function RadioGroup<TForm extends FieldValues>({ control, name, options, label, disabled, fullWidth, bordered, borderRadius, square }: BaseRadioInputProps<TForm>) {
     const { field: { onChange, value } } = useController({ control, name });
 
     return (

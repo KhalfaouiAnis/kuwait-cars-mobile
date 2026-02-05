@@ -24,12 +24,12 @@ const MainHeader = ({
     >
       {back && <BackArrow />}
       {drawer && <ProfileDrawer />}
-      <View className="flex-1 flex-row items-center justify-between rounded-[20px] border border-grayish px-4 mx-4 bg-transparent dark:bg-black">
+      <View className="flex-1 flex-row items-center justify-between rounded-[20px] border border-grayish px-4 mx-4 bg-transparent dark:bg-darkish">
         <View className="flex-row items-center gap-x-2 flex-1">
           <Ionicons
             name="search-outline"
             size={18}
-            color={theme !== "light" ? "white" : "black"}
+            color={theme !== "light" ? "#ffffffb3" : "black"}
           />
           <TextInput
             placeholder={`${t("search")}...`}
@@ -41,12 +41,12 @@ const MainHeader = ({
           <Ionicons
             name="mic-outline"
             size={24}
-            color={theme !== "light" ? "white" : "black"}
+            color={theme !== "light" ? "#ffffffb3" : "black"}
           />
           <Ionicons
             name="camera-outline"
             size={24}
-            color={theme !== "light" ? "white" : "black"}
+            color={theme !== "light" ? "#ffffffb3" : "black"}
           />
         </View>
       </View>
@@ -54,7 +54,7 @@ const MainHeader = ({
         <MaterialCommunityIcons
           name="bell-ring-outline"
           size={24}
-          color={theme !== "light" ? "white" : "black"}
+          color={theme !== "light" ? "#ffffffb3" : "black"}
         />
         {unreadCount > 0 && (
           <View className="absolute -top-1 -end-1 bg-error rounded-full h-5 w-5 flex items-center justify-center border border-white">

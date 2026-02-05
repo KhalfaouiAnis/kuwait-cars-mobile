@@ -1,3 +1,4 @@
+import { DIMENSIONS } from "@/core/constants";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
@@ -27,7 +28,7 @@ const UNIT_OPTIONS = [
 
 export default function UnitSelector<TForm extends FieldValues>({ control, name, onSelect }: UnitSelectorProps<TForm>) {
   const { field: { onChange, value } } = useController({ control, name });
-  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0 });
+  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, right: 0 });
   const [isMeasured, setIsMeasured] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { isRTL } = useUserPreferencesStore();
@@ -53,7 +54,7 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
   const openDropdown = () => {
     setIsMeasured(false);
     iconRef.current && iconRef.current.measure((x, y, width, height, pageX, pageY) => {
-      setDropdownPos({ top: pageY + height + 20, left: 38 });
+      setDropdownPos({ top: pageY + height + 20, left: DIMENSIONS.width - 320, right: DIMENSIONS.width - 114 });
       setIsMeasured(true);
       setIsOpen(true);
     });
@@ -87,7 +88,7 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
           <View
             style={{
               top: dropdownPos.top,
-              start: isRTL ? dropdownPos.left : undefined,
+              start: isRTL ? dropdownPos.right : undefined,
               end: isRTL ? undefined : dropdownPos.left,
               opacity: isMeasured ? 1 : 0
             }}

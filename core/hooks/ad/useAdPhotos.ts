@@ -23,7 +23,6 @@ export const useAdPhotos = (
       const options: ImagePicker.ImagePickerOptions | undefined = {
         mediaTypes: ["images"],
         aspect: [4, 3],
-        // allowsEditing: !multiple,
         quality: 0.8,
         allowsMultipleSelection: multiple,
         orderedSelection: multiple,
