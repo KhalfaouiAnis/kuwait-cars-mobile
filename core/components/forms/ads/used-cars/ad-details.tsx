@@ -95,15 +95,15 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                 </View>
             </View>
             <View className="flex-row items-center justify-center w-full mt-6">
-                <View className="mx-2 border w-2/5" />
+                <View className="mx-2 border w-2/5 border-[#A3A2A2]" />
                 <Text className="px-2 font-inter-medium text-lg dark:text-white">{t("createAd.optionalInformation")}</Text>
-                <View className="mx-2 border w-2/5" />
+                <View className="mx-2 border w-2/5 border-[#A3A2A2]" />
             </View>
             <View className="gap-y-4 py-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <RadioGroup
                     name="fuel_type"
-                    control={control}
                     label={t("createAd.fuelType")}
+                    control={control}
                     fullWidth
                     options={[
                         { id: "Petrol", label: t("createAd.Petrol"), value: "Petrol" },
@@ -113,8 +113,8 @@ export default function AdDetails({ control, errors, setValue, isDark }: AdFormS
                     ]}
                 />
                 <RadioGroup
-                    square
                     name="cylinders"
+                    square
                     borderRadius={5}
                     control={control}
                     label={t("createAd.Cylinders")}

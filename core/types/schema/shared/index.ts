@@ -1,10 +1,5 @@
 import { Ad_CATEGORIES } from "@/core/constants/ad";
 import { z } from "zod";
-import { CommunAdInterface } from "../ads/commun";
-import { MotorcycleAdInterface } from "../ads/motorcycle";
-import { ShowCarAdInterface } from "../ads/showCar";
-import { SparePartAdInterface } from "../ads/sparePart";
-import { UsedCarAdInterface } from "../ads/usedCar";
 
 export type AdCategory = (typeof Ad_CATEGORIES)[number];
 
@@ -57,8 +52,23 @@ export const createFileSchema = (customMessage?: string) =>
     { message: customMessage || "Image File validation failed" },
   );
 
-export const MultiFileSchema = (customMessage?: string) =>
-  z.array(createFileSchema(customMessage));
+export const AdMediaAssetSchema = z
+  .object({
+    id: z.string(),
+    uri: z.string().optional(),
+    type: z.string().optional(),
+    name: z.string().optional(),
+    duration: z.coerce.number().optional(),
+    size: z.coerce.number().optional(),
+    remoteUrl: z.string().url().optional(),
+    publicId: z.string().optional(),
+    mediaType: z.enum(["THUMBNAIL", "IMAGE", "VIDEO"]),
+    status: z.enum(["pending", "uploading", "completed", "error"]),
+  })
+  .refine((data) => data.uri || data.remoteUrl, {
+    message: "Asset must have either a local URI or a remote URL",
+    path: ["uri"],
+  });
 
 export const BaseAdSchema = z.object({
   ad_type: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]]),
@@ -68,8 +78,8 @@ export const BaseAdSchema = z.object({
   plan: SubscriptionPlanSchema,
   is_paid: z.boolean().optional(),
   is_free: z.boolean().optional(),
-  thumbnail: createFileSchema("required"),
-  images: MultiFileSchema("Image must be valid file under 5MB").optional(),
+  thumbnail: AdMediaAssetSchema,
+  images: z.array(AdMediaAssetSchema).optional(),
   video: VideoSchema.nullish(),
 
   additional_number: z.string().optional(),
@@ -90,6 +100,8 @@ export const MediaSchema = z.object({
   duration: z.coerce.number().optional(),
   size: z.coerce.number().optional(),
 });
+
+export type AdMediaAsset = z.infer<typeof AdMediaAssetSchema>;
 
 export const PaymentObjectSchema = z.object({
   amount: z.object({
@@ -150,10 +162,3 @@ export type ProvinceInterface = z.infer<typeof ProvinceSchema>;
 export type AreaInterface = z.infer<typeof AreaSchema>;
 export type BaseAdInterface = z.infer<typeof BaseAdSchema>;
 export type MediaInterface = z.infer<typeof MediaSchema>;
-
-export type AdvretisementFormData =
-  | UsedCarAdInterface
-  | SparePartAdInterface
-  | ShowCarAdInterface
-  | MotorcycleAdInterface
-  | CommunAdInterface;

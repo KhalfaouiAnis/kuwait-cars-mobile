@@ -6,7 +6,7 @@ import { hideLisencePlate } from "@/core/services/cloud/lisence-plate";
 import {
   SparePartAdInterface,
   SparePartAdSchema,
-} from "@/core/types/schema/ads/sparePart";
+} from "@/core/types/schema/ads/partAccessories";
 import { isAxiosError } from "axios";
 import { toast } from "sonner-native";
 import { useUploadMedia } from "../../shared/use-upload-media";

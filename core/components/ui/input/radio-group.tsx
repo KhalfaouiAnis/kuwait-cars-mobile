@@ -10,7 +10,7 @@ export default function RadioGroup<TForm extends FieldValues>({ control, name, o
 
     return (
         <View className='flex-1'>
-            {label && <Text className="text-base font-semibold mb-2 dark:text-white">{label}</Text>}
+            {label && <Text className="text-base font-semibold mb-2 dark:text-white text-blue">{label}</Text>}
             <View
                 className={cn('flex-row gap-3 flex-wrap', { "border border-grayish rounded-[20px] p-0.5 px-1.5 dark:border-primary-500": bordered })}
                 style={bordered ? boxShadow().button : undefined}

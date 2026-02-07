@@ -1,19 +1,19 @@
 import AdFormContainer from "@/core/components/forms/ads/shared/ad-form-container";
-import { DynamicStepRenderer } from "@/core/components/forms/ads/shared/step-renderer";
-import { FLOW_CONFIGS } from "@/core/components/ui";
+import StepViewRenderer from "@/core/components/forms/ads/shared/step-renderer";
+import { AdStepKey, FLOW_CONFIGS, STEP_FIELD_REGISTRY } from "@/core/components/ui";
 import { ProgressButton } from "@/core/components/ui/button/progress-button";
 import LeaveDialog from "@/core/components/ui/dialog/leave-confirm-dialog";
 import { useAdDraftStore } from "@/core/store/ad-draft.store";
-import { StepKey, StepSchemas } from "@/core/types/schema/shared/commun";
+import { AD_MASTER_SCHEMA_KEY, AD_MASTER_SCHEMAS } from "@/core/types/schema/ads";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router, useLocalSearchParams } from "expo-router";
 import { TFunction } from "i18next";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
-const getStepTitle = (step: StepKey, t: TFunction) => {
+const getStepTitle = (step: AdStepKey, t: TFunction) => {
     switch (step) {
         case "basic_info":
             return t("createAd.steps.addedDetails")
@@ -29,15 +29,19 @@ const getStepTitle = (step: StepKey, t: TFunction) => {
     }
 }
 
-export default function CreateAdScreen() {
-    const { ad_type } = useLocalSearchParams<{ ad_type: string }>();
-    const flowKey = FLOW_CONFIGS[ad_type] ? ad_type : 'commun';
+export default function CreateAdScreenMasterController() {
+    const { ad_type } = useLocalSearchParams<{ ad_type: AD_MASTER_SCHEMA_KEY }>();
+    const flow = FLOW_CONFIGS[ad_type] || FLOW_CONFIGS['common']
     const [showDialog, setShowDialog] = useState(false);
     const { t } = useTranslation("common")
 
     const { drafts, updateDraft, setStep, clearDraft } = useAdDraftStore();
     const currentDraft = drafts[ad_type] || { data: {}, currentStepIndex: 0 };
-    const stepKey = FLOW_CONFIGS[flowKey][currentDraft.currentStepIndex];
+    const flowKey = FLOW_CONFIGS[ad_type] ? ad_type : 'common';
+    const currentStepKey = flow[currentDraft.currentStepIndex];
+
+    console.log(currentDraft.currentStepIndex);
+    
 
     //       const { activeId, drafts, updateActiveContent, saveStep } = useDraftStore();
     //   const currentDraft = drafts[activeId!];
@@ -64,24 +68,21 @@ export default function CreateAdScreen() {
     //   };
 
 
-    const { control, reset, formState: { errors, dirtyFields }, handleSubmit } = useForm({
-        resolver: zodResolver(StepSchemas[stepKey] as any),
+    const methods = useForm({
+        resolver: zodResolver(AD_MASTER_SCHEMAS[flowKey]),
         defaultValues: currentDraft.data,
-        mode: "onSubmit",
+        mode: "onTouched",
     });
 
     const handleReset = () => {
-        console.log(currentDraft.currentStepIndex);
-
-        reset()
+        methods.reset()
         setStep(ad_type, 0)
         clearDraft(ad_type)
     }
 
     const handlePrevious = () => {
-        if (currentDraft.currentStepIndex === 1) {
-            if (Object.keys(dirtyFields).length > 0) {
-
+        if (currentDraft.currentStepIndex === 0) {
+            if (Object.keys(methods.formState.dirtyFields).length > 0) {
                 setShowDialog(true)
                 return "invalid-form";
             }
@@ -93,32 +94,36 @@ export default function CreateAdScreen() {
         return "steps"
     }
 
-    const onNext = async (data: any) => {
-        try {
-            let finalData = { ...data };
+    const onNext = async () => {
+        const currentStepFields = Object.keys(STEP_FIELD_REGISTRY[currentStepKey]);
+        
+        const isStepValid = await methods.trigger(currentStepFields);
+        console.log(currentStepFields);
+        console.log({isStepValid});
 
-            // 1. Check if we are on a media step
-            if (stepKey === 'media' && data.images) {
-                // 2. Identify which images are local (need upload) vs already uploaded
-                const uploadPromises = data.images.map(async (uri: string) => {
-                    if (uri.startsWith('http')) return uri; // Already uploaded
+        if (isStepValid) {
+            // 3. Sync the WHOLE form state to Zustand/MMKV
+            const formData = methods.getValues();
+            updateDraft(ad_type, formData);
+            // goToNextStep();
+            try {
+                // 1. Check if we are on a media step
+                if (currentStepKey === 'media') {
+                }
 
-                    // const compressed = await compressImage(uri);
-                    // return await uploadToCloudinary(compressed);
-                });
+                if (currentDraft.currentStepIndex < flow.length - 1) {
+                    setStep(ad_type, currentDraft.currentStepIndex + 1);
+                } else {
+                    // If it's the last step, trigger the Payment/Submit flow
+                    console.log(formData);
+                }
 
-                finalData.images = await Promise.all(uploadPromises);
+            } catch (error) {
+                console.log(error);
+                // Alert.alert("Upload Failed", "Could not save media. Please try again.");
             }
-
-            // 3. Persist everything to Zustand/MMKV at once
-            updateDraft(ad_type, finalData);
-            setStep(ad_type, currentDraft.currentStepIndex + 1);
-
-        } catch (error) {
-            // Alert.alert("Upload Failed", "Could not save media. Please try again.");
-        } finally {
-            // setLoading(false);
         }
+
     };
 
     const handleBack = () => {
@@ -143,7 +148,7 @@ export default function CreateAdScreen() {
 
     const handleLeave = () => {
         setShowDialog(false)
-        reset()
+        methods.reset()
         router.canGoBack() && router.back()
     }
 
@@ -152,17 +157,18 @@ export default function CreateAdScreen() {
     }
 
     return (
-        <AdFormContainer title={getStepTitle(stepKey, t)} resetLabel={t("reset")} reset={handleReset} previous={handlePrevious}>
-            <DynamicStepRenderer
-                stepKey={stepKey}
-                control={control}
-            />
+        <AdFormContainer title={getStepTitle(currentStepKey, t)} resetLabel={t("reset")} reset={handleReset} previous={handlePrevious}>
+            <FormProvider {...methods}>
+                <StepViewRenderer
+                    stepKey={currentStepKey}
+                />
+            </FormProvider>
             <View className="mb-4 self-center">
                 <ProgressButton
-                    onPress={onNext}
                     progress={50}
                     isPending={false}
-                    title={stepKey === "choose_plan" ? t("submit") : t("next")}
+                    onPress={onNext}
+                    title={currentStepKey === "choose_plan" ? t("submit") : t("next")}
                 />
             </View>
             <LeaveDialog

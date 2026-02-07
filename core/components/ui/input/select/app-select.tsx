@@ -67,8 +67,8 @@ export default function AppSelect<TForm extends FieldValues, O>({
     const currentDisplayLabel = useMemo(() => {
         if (translatedValue && value) return t(`colors.${value}`);
 
-        return adapter.getLabel(value)
-    }, [value, translatedValue, adapter, t]);
+        return adapter.getLabel(value) ?? t(placeholder||"")
+    }, [value, translatedValue, adapter, placeholder, t]);
 
     return (
         <Pressable
@@ -79,7 +79,7 @@ export default function AppSelect<TForm extends FieldValues, O>({
             })}
         >
             <Text className={`${value ? "text-black" : "text-gray-400"} dark:text-white`}>
-                {currentDisplayLabel || placeholder}
+                {currentDisplayLabel}
             </Text>
             <View className="flex-row items-center absolute end-2.5">
                 {required && (

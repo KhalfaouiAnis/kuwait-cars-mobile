@@ -90,6 +90,7 @@ export const initiatePayment = async (payload: PaymentObjectInterface) => {
         currency: "KWD",
         value: payload.amount.value,
       },
+      // add ad_type as query params and untercept it in the backend
       urls: {
         successUrl:
           "https://walrus-app-hz53d.ondigitalocean.app/api/v1/payment/success",

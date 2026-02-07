@@ -9,11 +9,12 @@ const IMAGE_HEIGHT = 94;
 interface ImageGalleryProps {
     data: any[];
     mainImageLabel: string
-    removePhoto: (id: string) => void
-    setAsThumbnail: (id: string) => void
+    removePhoto: (id: number) => void
+    setAsThumbnail: (id: number) => void
 }
 
 export default function ImageGallery({ data, mainImageLabel, removePhoto, setAsThumbnail }: ImageGalleryProps) {
+    
     return (
         <View className='flex-row flex-wrap gap-3.5'>
             {
@@ -21,11 +22,11 @@ export default function ImageGallery({ data, mainImageLabel, removePhoto, setAsT
                     <Animated.View key={item.id} layout={LinearTransition.springify().damping(70).stiffness(500)}>
                         <TouchableOpacity
                             className="items-center justify-center relative rounded-lg my-1"
+                            onPress={() => setAsThumbnail(index)}
                             activeOpacity={0.8}
-                            onPress={() => setAsThumbnail(item.id)}
                         >
                             <Image
-                                source={{ uri: item.uri }}
+                                source={{ uri: item.uri || item.remoteUrl }}
                                 style={{ width: IMAGE_WIDTH, height: IMAGE_HEIGHT, borderRadius: 8 }}
                                 contentFit='fill'
                             />
@@ -50,7 +51,7 @@ export default function ImageGallery({ data, mainImageLabel, removePhoto, setAsT
                             }
                             <TouchableOpacity
                                 className="absolute -top-4 -right-1 bg-red-500 rounded-full w-7 h-7 justify-center items-center border border-white"
-                                onPress={() => removePhoto(item.id)}
+                                onPress={() => removePhoto(index)}
                             >
                                 <Ionicons name="close" size={20} color="white" className='border rounded-full border-white' />
                             </TouchableOpacity>

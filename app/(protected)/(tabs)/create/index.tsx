@@ -44,7 +44,7 @@ export default function NewAdScreen() {
     <Container header={<ProfileHeader title={t("createAd.steps.postAd")} />}>
       <View className="p-4 mx-1 flex-1 dark:bg-black">
         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
-          <Text className="font-semibold mb-4 dark:text-white">
+          <Text className="font-semibold mb-4 dark:text-white text-blue">
             {t("createAd.whatAreYouSelling")}
           </Text>
           <AdTypeSelector

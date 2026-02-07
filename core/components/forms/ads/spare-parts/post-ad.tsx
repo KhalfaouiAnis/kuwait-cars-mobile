@@ -6,7 +6,7 @@ import TextAreaSpeech from "@/core/components/ui/input/text/text-area-speech";
 import { PROVINCES } from "@/core/constants";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
-import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
+import { SparePartAdInterface } from "@/core/types/schema/ads/partAccessories";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";

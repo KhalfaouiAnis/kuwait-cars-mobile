@@ -18,7 +18,6 @@ import {
 type UnitSelectorProps<TForm extends FieldValues> = {
   control: Control<TForm>;
   name: FieldPath<TForm>;
-  onSelect?: (code: string) => void;
 }
 
 const UNIT_OPTIONS = [
@@ -26,7 +25,7 @@ const UNIT_OPTIONS = [
   { value: 'ML' },
 ];
 
-export default function UnitSelector<TForm extends FieldValues>({ control, name, onSelect }: UnitSelectorProps<TForm>) {
+export default function UnitSelector<TForm extends FieldValues>({ control, name }: UnitSelectorProps<TForm>) {
   const { field: { onChange, value } } = useController({ control, name });
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, right: 0 });
   const [isMeasured, setIsMeasured] = useState(false);
@@ -38,7 +37,6 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name,
   const handleSelect = (unit: string) => {
     setIsOpen(false);
     onChange(unit)
-    onSelect?.(unit);
   };
 
   const renderItem = ({ item: { value } }: { item: { value: string } }) => (

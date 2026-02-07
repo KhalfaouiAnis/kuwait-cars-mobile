@@ -1,14 +1,8 @@
-import { STEP_FIELD_REGISTRY, STEP_VIEWS } from "@/core/components/ui";
-import { StepKey } from "@/core/types/schema/shared/commun";
-import { Control, FieldValues } from "react-hook-form";
+import { AdStepKey, STEP_FIELD_REGISTRY, STEP_VIEWS } from "@/core/components/ui";
+import { memo } from "react";
 import { ScrollView } from "react-native";
 
-interface DynamicStepProps<T extends FieldValues> {
-    stepKey: StepKey;
-    control: Control<T>;
-}
-
-export const DynamicStepRenderer = <T extends FieldValues>({ stepKey, control }: DynamicStepProps<T>) => {
+const StepViewRendererInternal = ({ stepKey }: { stepKey: AdStepKey }) => {
     const ViewComponent = STEP_VIEWS[stepKey];
     const stepFields = STEP_FIELD_REGISTRY[stepKey];
 
@@ -20,10 +14,14 @@ export const DynamicStepRenderer = <T extends FieldValues>({ stepKey, control }:
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 40 }}
         >
-            <ViewComponent
-                control={control}
-                fields={stepFields}
-            />
+            <ViewComponent fields={stepFields} />
         </ScrollView>
     );
 };
+
+const StepViewRenderer = memo(
+    StepViewRendererInternal,
+    (prev, next) => prev.stepKey === next.stepKey
+) as (props: { stepKey: AdStepKey }) => React.ReactElement;
+
+export default StepViewRenderer

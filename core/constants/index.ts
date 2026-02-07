@@ -736,3 +736,8 @@ export const OVERALL_MAX_PRICE = 99000;
 
 export const OVERALL_MIN_MILEAGE = 0;
 export const OVERALL_MAX_MILEAGE = 99000;
+
+export const UNIT_OPTIONS = [
+  { id: "KM", label: "KM", value: "KM" },
+  { id: "ML", label: "ML", value: "ML" },
+];

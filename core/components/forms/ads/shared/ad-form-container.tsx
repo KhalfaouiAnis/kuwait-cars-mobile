@@ -18,11 +18,9 @@ export default function AdFormContainer({ children, reset, resetLabel, previous,
 
     const handlePrevious = () => {
         const result = previous();
+        if (result === "route") {
             router.canGoBack() && router.back()
-        
-        // if (result === "route") {
-        //     router.canGoBack() && router.back()
-        // }
+        }
     }
 
     return (

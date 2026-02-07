@@ -3,13 +3,15 @@ import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdvertisementInterface } from "@/core/types";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import SelectedAdType from "../ad-type-selector/selected-ad-type";
 import StepField from "../step-field";
 
-export default function DetailedInfo({ control, fields }: BaseStepViewProps<AdvertisementInterface>) {
+export default function DetailedInfo({ fields }: BaseStepViewProps<AdvertisementInterface>) {
     const { model, brand } = useLocalSearchParams()
+    const { control } = useFormContext()
     const { t } = useTranslation("common")
     const { t: tBrands } = useTranslation("car_categories")
     const { isRTL } = useUserPreferencesStore()

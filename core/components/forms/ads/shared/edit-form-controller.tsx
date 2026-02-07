@@ -1,24 +1,24 @@
 import { FLOW_CONFIGS } from "@/core/components/ui";
-import { StepSchemas } from "@/core/types/schema/shared/commun";
+import { AD_MASTER_SCHEMA_KEY, AD_MASTER_SCHEMAS } from "@/core/types/schema/ads";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, View } from "react-native";
-import { DynamicStepRenderer } from "./step-renderer";
+import StepViewRenderer from "./step-renderer";
 
 interface Props {
-    ad_type: string,
+    ad_type: AD_MASTER_SCHEMA_KEY,
     initialData: any,
     adId: string
 }
 
 const EditFormController = ({ ad_type, initialData, adId }: Props) => {
-    const flowKey = FLOW_CONFIGS[ad_type] ? ad_type : 'COMMUN';
+    const flowKey = FLOW_CONFIGS[ad_type] ? ad_type : 'common';
     const [stepIndex, setStepIndex] = useState(0);
     const stepKey = FLOW_CONFIGS[flowKey][stepIndex];
 
     const { control, handleSubmit } = useForm({
-        resolver: zodResolver(StepSchemas[stepKey] as any),
+        resolver: zodResolver(AD_MASTER_SCHEMAS[ad_type] as any),
         defaultValues: initialData,
     });
 
@@ -35,7 +35,7 @@ const EditFormController = ({ ad_type, initialData, adId }: Props) => {
 
     return (
         <View>
-            <DynamicStepRenderer stepKey={stepKey} control={control} />
+            <StepViewRenderer stepKey={stepKey} control={control} />
             <Button title="Save Changes" onPress={handleSubmit(onNext)} />
         </View>
     );

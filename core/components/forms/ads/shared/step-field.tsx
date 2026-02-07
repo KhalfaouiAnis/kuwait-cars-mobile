@@ -1,13 +1,13 @@
 import { FIELD_COMPONENTS, FieldBlueprint } from "@/core/components/ui";
+import { memo } from "react";
 import { Control, FieldValues } from "react-hook-form";
-import { View } from "react-native";
 
 interface FieldProps<T extends FieldValues> {
     config: FieldBlueprint<T>;
     control: Control<T>;
 }
 
-const StepField = <T extends FieldValues>({ config, control, ...rest }: FieldProps<T>) => {
+const StepFieldInternal = <T extends FieldValues>({ config, control }: FieldProps<T>) => {
     const Component = FIELD_COMPONENTS[config.type] as React.ComponentType<any>;
 
     if (!Component) {
@@ -16,13 +16,15 @@ const StepField = <T extends FieldValues>({ config, control, ...rest }: FieldPro
     }
 
     return (
-        <View {...rest}>
-            <Component
-                {...(config as any)}
-                control={control}
-            />
-        </View>
+        <Component
+            {...(config as any)}
+            control={control}
+        />
     );
-};
+}
+
+const StepField = memo(StepFieldInternal) as <T extends FieldValues>(
+  props: FieldProps<T>
+) => React.ReactElement;
 
 export default StepField

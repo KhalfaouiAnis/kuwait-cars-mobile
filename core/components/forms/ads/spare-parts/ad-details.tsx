@@ -1,7 +1,7 @@
 import AdTextInput from "@/core/components/ui/input/ad-text-input";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdFormStepProps } from "@/core/types";
-import { SparePartAdInterface } from "@/core/types/schema/ads/sparePart";
+import { SparePartAdInterface } from "@/core/types/schema/ads/partAccessories";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
