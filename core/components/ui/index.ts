@@ -1,18 +1,19 @@
 import { CAR_COLORS, PROVINCES, UNIT_OPTIONS, YEARS } from "@/core/constants";
+import { SUBSCRIPTION_PLANS } from "@/core/constants/ad";
 import {
   GlobalSelectOption,
   SelectOption,
   SubscriptionDetail,
 } from "@/core/types";
-import {
-  AD_MASTER_SCHEMA_KEY
-} from "@/core/types/schema/ads";
+import { AD_MASTER_SCHEMA_KEY } from "@/core/types/schema/ads";
 import { SelectAdapters } from "@/core/utils/select-adapters";
 import { ReactNode } from "react";
 import { Control, FieldValues, Path } from "react-hook-form";
 import { TextInputProps } from "react-native";
 import BasicInfo from "../forms/ads/shared/steps/basic-info";
 import GalleryPicker from "../forms/ads/shared/steps/gallery-picker";
+import AdMedia from "../forms/ads/shared/steps/media";
+import PlanSelection from "../forms/ads/shared/steps/plan-selection";
 import RadioGroup from "./input/radio-group";
 import AppSelect from "./input/select/app-select";
 import AreaSelect from "./input/select/area-select";
@@ -46,9 +47,14 @@ export interface BaseTextInputProps<T extends FieldValues>
   fullWidth?: boolean;
 }
 
-export interface PlanSelectorProps<T extends FieldValues>
-  extends TextInputProps, BaseInputProps<T> {
+export interface PlanSelectorProps<T extends FieldValues> {
   plans: SubscriptionDetail[];
+  name: Path<T>;
+}
+
+export interface MediaSelectorProps {
+  name: string;
+  maxImages?: number;
 }
 
 export interface BaseRadioInputProps<T extends FieldValues>
@@ -86,6 +92,7 @@ export interface BaseUnitSelectorInputProps<
 export const FIELD_COMPONENTS = {
   areaselect: AreaSelect,
   plan: PlanSelector,
+  media: GalleryPicker,
   select: AppSelect,
   radio: RadioGroup,
   text: BaseTextInput,
@@ -101,13 +108,15 @@ export type TFieldConfig<T extends FieldValues> =
   | ({ type: "select" } & BaseSelectInputProps<T, any>)
   | ({ type: "radio" } & BaseRadioInputProps<T>)
   | ({ type: "plan" } & PlanSelectorProps<T>)
-  | ({ type: "unitSelector" } & BaseUnitSelectorInputProps<T>);
+  | ({ type: "unitSelector" } & BaseUnitSelectorInputProps<T>)
+  | ({ type: "media" } & MediaSelectorProps);
 
 export type FieldBlueprint<T extends FieldValues> =
   | ({ type: "text" } & Blueprint<BaseTextInputProps<T>>)
   | ({ type: "select" } & Blueprint<BaseSelectInputProps<T>>)
   | ({ type: "radio" } & Blueprint<BaseRadioInputProps<T>>)
   | ({ type: "plan" } & Blueprint<PlanSelectorProps<T>>)
+  | ({ type: "media" } & Blueprint<MediaSelectorProps>)
   | ({ type: "unitSelector" } & Blueprint<BaseUnitSelectorInputProps<T>>);
 
 export type StepFieldKeysRegistry = Record<
@@ -129,7 +138,7 @@ const STEP_FIELD_KEYS: StepFieldKeysRegistry = {
       "under_warranty",
       "roof",
     ],
-    media: ["media_collection"],
+    media: ["media"],
     video: ["video"],
     detailed_info: [
       "province",
@@ -162,7 +171,7 @@ const STEP_FIELD_KEYS: StepFieldKeysRegistry = {
       "under_warranty",
       "roof",
     ],
-    media: ["media_collection"],
+    media: ["media"],
     video: ["video"],
     detailed_info: [
       "province",
@@ -192,7 +201,7 @@ const STEP_FIELD_KEYS: StepFieldKeysRegistry = {
       "title",
       "description",
     ],
-    media: ["media_collection"],
+    media: ["media"],
     video: ["video"],
     detailed_info_2: [
       "additional_number",
@@ -206,7 +215,7 @@ const STEP_FIELD_KEYS: StepFieldKeysRegistry = {
   },
   show: {
     detailed_info: ["hide_license_plate", "title", "description"],
-    media: ["media_collection"],
+    media: ["media"],
     video: ["video"],
     detailed_info_2: [
       "additional_number",
@@ -226,7 +235,7 @@ const STEP_FIELD_KEYS: StepFieldKeysRegistry = {
       "title",
       "description",
     ],
-    media: ["media_collection"],
+    media: ["media"],
     video: ["video"],
     detailed_info_2: ["additional_number", "contact_whatsapp"],
     choose_plan: ["plan"],
@@ -235,30 +244,30 @@ const STEP_FIELD_KEYS: StepFieldKeysRegistry = {
 
 export const FLOW_CONFIGS: Record<AD_MASTER_SCHEMA_KEY, AdStepKey[]> = {
   used_cars: [
+    "choose_plan",
     "basic_info",
     "media",
     "video",
     "detailed_info",
     "detailed_info_2",
-    "choose_plan",
   ],
   motorcycles: [
+    "choose_plan",
     "basic_info",
     "media",
     "video",
     "detailed_info",
     "detailed_info_2",
-    "choose_plan",
   ],
   part_accessories: [
+    "choose_plan",
     "detailed_info",
     "media",
     "video",
     "detailed_info_2",
-    "choose_plan",
   ],
-  show: ["detailed_info", "media", "video", "detailed_info_2", "choose_plan"],
-  common: ["detailed_info", "media", "video", "detailed_info_2", "choose_plan"],
+  show: ["choose_plan", "detailed_info", "media", "video", "detailed_info_2"],
+  common: ["choose_plan", "detailed_info", "media", "video", "detailed_info_2"],
 } as const;
 
 export type StepFieldRegistry<T extends FieldValues> = Record<
@@ -267,6 +276,13 @@ export type StepFieldRegistry<T extends FieldValues> = Record<
 >;
 
 export const STEP_FIELD_REGISTRY: StepFieldRegistry<any> = {
+  choose_plan: {
+    plan: {
+      type: "plan",
+      name: "plan",
+      plans: SUBSCRIPTION_PLANS,
+    },
+  },
   basic_info: {
     year: {
       required: true,
@@ -370,14 +386,16 @@ export const STEP_FIELD_REGISTRY: StepFieldRegistry<any> = {
       label: "createAd.roof",
       borderRadius: 20,
       options: [
-        { id: "Petrol", label: "createAd.Petrol", value: "Petrol" },
-        { id: "Diesel", label: "createAd.Diesel", value: "Diesel" },
-        { id: "Electric", label: "createAd.Electric", value: "Electric" },
-        { id: "Hybrid", label: "createAd.Hybrid", value: "Hybrid" },
+        { id: "Sunroof", label: "createAd.Sunroof", value: "Sunroof" },
+        { id: "Panoramic", label: "createAd.Panoramic", value: "Panoramic" },
+        {
+          id: "Convertible Roof",
+          label: "createAd.ConvertibleRoof",
+          value: "ConvertibleRoof",
+        },
       ],
     },
   },
-  choose_plan: {},
   detailed_info: {
     province: {
       name: "province",
@@ -397,7 +415,13 @@ export const STEP_FIELD_REGISTRY: StepFieldRegistry<any> = {
     },
   },
   detailed_info_2: {},
-  media: {},
+  media: {
+    media: {
+      name: "media",
+      type: "media",
+      maxImages: 6,
+    },
+  },
   video: {},
 };
 
@@ -406,10 +430,10 @@ export interface BaseStepViewProps<T extends FieldValues> {
 }
 
 export const STEP_VIEWS: Record<AdStepKey, React.FC<any>> = {
+  media: AdMedia,
+  choose_plan: PlanSelection,
   basic_info: BasicInfo,
-  media: GalleryPicker,
   video: MediaUploader,
   detailed_info: MediaUploader,
-  choose_plan: MediaUploader,
   detailed_info_2: MediaUploader,
 };

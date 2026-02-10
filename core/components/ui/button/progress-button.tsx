@@ -1,6 +1,6 @@
 import { boxShadow } from '@/core/utils/cn';
 import React from 'react';
-import { ActivityIndicator, Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface Props {
     onPress: any;
@@ -27,15 +27,16 @@ export const ProgressButton = ({ onPress, isPending, progress, title }: Props) =
             style={styles.button}
             className="py-3 rounded-lg bg-primary-500 disabled:bg-yellow-200"
         >
-            {
-                progress === 100 ? (
+            <Text className='text-center text-lg font-inter-semibold'>{isPending ? <ActivityIndicator size="small" color="black" /> : title}</Text>
+            {/* {
+                progress > 0 && progress < 100 ? (
                     <ActivityIndicator size="small" color="black" />
                 ) : (
                     <Text className='text-center text-lg font-inter-semibold'>{isPending ? `${progress}%` : title}</Text>
                 )
-            }
+            } */}
 
-            {progress > 0 && (
+            {/* {progress > 0 && (
                 <View style={styles.progressContainer}>
                     <Animated.View
                         style={[
@@ -49,7 +50,7 @@ export const ProgressButton = ({ onPress, isPending, progress, title }: Props) =
                         ]}
                     />
                 </View>
-            )}
+            )} */}
         </TouchableOpacity>
     );
 };

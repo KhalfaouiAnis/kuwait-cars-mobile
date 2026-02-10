@@ -1,11 +1,11 @@
 import {
-  UploadFileType,
-  useAdMutation,
+    UploadFileType,
+    useAdMutation,
 } from "@/core/services/ads/ad.mutations";
 import { hideLisencePlate } from "@/core/services/cloud/lisence-plate";
 import {
-  UsedCarAdInterface,
-  UsedCarAdSchema,
+    UsedCarAdInterface,
+    UsedCarAdSchema,
 } from "@/core/types/schema/ads/usedCar";
 import { isAxiosError } from "axios";
 import { toast } from "sonner-native";
@@ -35,7 +35,7 @@ export function useUsedCarAd() {
 
   const onSubmit = async (payload: UsedCarAdInterface) => {
     try {
-      const { thumbnail, images, video, plan, ...restData } = payload;
+      const { thumbnail, images, video, ...restData } = payload;
       const media: UploadFileType[] = [
         {
           file: thumbnail,
@@ -44,15 +44,13 @@ export function useUsedCarAd() {
         },
       ];
 
-      if (video) {
-        if (plan) {
-        }
-        media.push({
-          file: video,
-          media_type: "VIDEO",
-          signingParams: { mediaType: "video" },
-        });
-      }
+      // if (video) {
+      //   media.push({
+      //     file: video,
+      //     media_type: "VIDEO",
+      //     signingParams: { mediaType: "video" },
+      //   });
+      // }
 
       if (images) {
         images.forEach((image) =>

@@ -39,9 +39,9 @@ export const useMediaUploader = (
           id: asset.assetId || generateId(),
           type: asset.mimeType,
           uri: compressedUri,
+          name: asset.fileName || generateId(),
           size: Number(compressedSize),
-          status: "pending",
-          mediaType: fields.length === 0 ? "THUMBNAIL" : "IMAGE",
+          media_type: fields.length === 0 ? "THUMBNAIL" : "IMAGE",
         };
         append(newAsset);
       });
@@ -55,8 +55,8 @@ export const useMediaUploader = (
     // move(index, 0);
 
     // We don't even need a loop. Just update the two specific indices.
-    update(0, { ...fields[index], mediaType: "THUMBNAIL" });
-    update(index, { ...fields[0], mediaType: "IMAGE" });
+    update(0, { ...fields[index], media_type: "THUMBNAIL" });
+    update(index, { ...fields[0], media_type: "IMAGE" });
   };
 
   return {

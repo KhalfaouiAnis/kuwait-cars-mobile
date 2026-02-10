@@ -58,14 +58,14 @@ export const AdMediaAssetSchema = z
     uri: z.string().optional(),
     type: z.string().optional(),
     name: z.string().optional(),
-    duration: z.coerce.number().optional(),
+    public_id: z.string().optional(),
     size: z.coerce.number().optional(),
-    remoteUrl: z.string().url().optional(),
-    publicId: z.string().optional(),
-    mediaType: z.enum(["THUMBNAIL", "IMAGE", "VIDEO"]),
-    status: z.enum(["pending", "uploading", "completed", "error"]),
+    duration: z.coerce.number().optional(),
+    original_url: z.string().url().optional(),
+    transformed_url: z.string().url().optional(),
+    media_type: z.enum(["THUMBNAIL", "IMAGE", "VIDEO"]),
   })
-  .refine((data) => data.uri || data.remoteUrl, {
+  .refine((data) => data.uri || data.original_url, {
     message: "Asset must have either a local URI or a remote URL",
     path: ["uri"],
   });
@@ -78,8 +78,9 @@ export const BaseAdSchema = z.object({
   plan: SubscriptionPlanSchema,
   is_paid: z.boolean().optional(),
   is_free: z.boolean().optional(),
-  thumbnail: AdMediaAssetSchema,
-  images: z.array(AdMediaAssetSchema).optional(),
+  // thumbnail: AdMediaAssetSchema,
+  // images: z.array(AdMediaAssetSchema).optional(),
+  media: z.array(AdMediaAssetSchema).min(1),
   video: VideoSchema.nullish(),
 
   additional_number: z.string().optional(),
@@ -90,6 +91,12 @@ export const BaseAdSchema = z.object({
   xcar_calls: z.coerce.boolean().optional(),
   xcar_chat: z.coerce.boolean().optional(),
   hide_license_plate: z.coerce.boolean().optional().default(false),
+});
+
+export const AdDraftInputSchema = z.object({
+  ad_type: z.string(),
+  step_index: z.coerce.number().int().min(0),
+  content: z.record(z.string(), z.any()),
 });
 
 export const MediaSchema = z.object({
@@ -160,5 +167,15 @@ export type PaymentObjectInterface = z.infer<typeof PaymentObjectSchema>;
 export type LocationInterface = z.infer<typeof LocationSchema>;
 export type ProvinceInterface = z.infer<typeof ProvinceSchema>;
 export type AreaInterface = z.infer<typeof AreaSchema>;
-export type BaseAdInterface = z.infer<typeof BaseAdSchema>;
 export type MediaInterface = z.infer<typeof MediaSchema>;
+
+export type BaseAdInterface = z.infer<typeof BaseAdSchema>;
+
+export type AdDraftInput = z.infer<typeof AdDraftInputSchema>;
+export interface AdDraftInterface {
+  id: string;
+  content: any;
+  ad_type: string;
+  step_index: number;
+  updated_at: number;
+}

@@ -1,19 +1,18 @@
 import { httpClient } from "@/core/api/httpClient";
-import { CloudinarySignRequestInterface, MediaType } from "@/core/types";
-import { MediaInterface } from "@/core/types/schema/shared";
+import { CloudinarySignRequestInterface } from "@/core/types";
+import { AdMediaAsset } from "@/core/types/schema/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner-native";
 import {
-  flag,
-  incrementAdViews,
-  repostAd,
-  softDeleteAd,
-  toggleFavorite,
+    flag,
+    incrementAdViews,
+    repostAd,
+    softDeleteAd,
+    toggleFavorite,
 } from "./ad.service";
 
 export type UploadFileType = {
-  file: MediaInterface;
-  media_type: MediaType;
+  file: AdMediaAsset;
   signingParams: CloudinarySignRequestInterface;
 };
 

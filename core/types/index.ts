@@ -187,14 +187,6 @@ export interface AdvertisementInterface {
   user?: User;
 }
 
-export interface AdDraftInterface {
-  id: string;
-  content: any;
-  user_id: string;
-  ad_type?: string;
-  step_index: number;
-}
-
 export interface AdSearchParams {
   filters?: Record<string, any>;
   sorting?: { field: string; direction: "asc" | "desc" };

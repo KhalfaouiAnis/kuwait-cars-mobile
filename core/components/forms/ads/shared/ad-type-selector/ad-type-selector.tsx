@@ -17,17 +17,19 @@ import {
 
 type AdTypeSelectorProps = {
   onChange: (value: { ad_type: string; params: any } | null) => void;
-  data: DataItem[];
-  isRTL: boolean;
   selectedValue?: string;
   placeholder?: string;
+  data: DataItem[];
+  isActive: boolean
+  isRTL: boolean;
 };
 
 export default function AdTypeSelector({
-  data,
-  onChange,
-  placeholder,
   selectedValue,
+  placeholder,
+  onChange,
+  isActive,
+  data,
   isRTL,
 }: AdTypeSelectorProps) {
   const { t } = useTranslation("car_categories");
@@ -110,7 +112,7 @@ export default function AdTypeSelector({
     return (
       <>
         <TouchableOpacity
-          style={[styles.selectButton, {backgroundColor: level === 0 && isExpanded ? "#D9D9D9" : undefined}]}
+          style={[styles.selectButton, { backgroundColor: level === 0 && isExpanded ? "#D9D9D9" : undefined }]}
           className="flex-row self-center items-center my-1.5 px-5"
           onPress={() => hasChildren && toggleExpand(itemPath)}
         >
@@ -153,13 +155,15 @@ export default function AdTypeSelector({
 
   const keyExtractor = useCallback((_: any, index: number) => index.toString(), [])
 
+  const openModal = () => isActive && setShowModal(true)
+
   return (
     <Pressable
+      onPress={openModal}
       style={styles.wrapper}
-      onPress={() => setShowModal(true)}
-      className={"relative self-center justify-center border-grayish"}
+      className={`relative self-center justify-center border-grayish ${!isActive ? "bg-grayish" : "bg-transparent"}`}
     >
-      <Text className="text-grayish dark:text-white ms-4" pointerEvents="none">
+      <Text className="text-gray-700 dark:text-white ms-4" pointerEvents="none">
         {selectedValue ? t(selectedValue) : placeholder}
       </Text>
       <View className="flex-row items-center absolute end-2.5">
@@ -171,8 +175,8 @@ export default function AdTypeSelector({
       </View>
       <Modal
         visible={showModal}
-        animationType="slide"
         transparent={false}
+        animationType="slide"
         onRequestClose={() => setShowModal(false)}
       >
         <TouchableOpacity

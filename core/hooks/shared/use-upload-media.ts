@@ -2,6 +2,7 @@ import { UploadFileType } from "@/core/services/ads/ad.mutations";
 import { signCloudinaryUpload } from "@/core/services/cloud/cloudinary";
 import axios from "axios";
 import { useState } from "react";
+import { Platform } from "react-native";
 
 type CloudinaryUploadResponse = {
   public_id: string;
@@ -19,18 +20,18 @@ export const useUploadMedia = () => {
 
     try {
       const uploadPromises = files.map(
-        async (
-          { file: { uri, type, name }, media_type, signingParams },
-          index,
-        ) => {
+        async ({ file, signingParams }, index) => {
           const { data: response } = await signCloudinaryUpload(signingParams);
 
           const formData = new FormData();
 
           formData.append("file", {
-            uri: uri,
-            type: type,
-            name: name,
+            uri:
+              Platform.OS === "android"
+                ? file.uri
+                : file.uri?.replace("file://", ""),
+            type: file.type,
+            name: file.name,
           } as any);
 
           formData.append("api_key", response.apiKey);
@@ -47,10 +48,14 @@ export const useUploadMedia = () => {
             formData.append("invalidate", true as any);
           }
 
-          const { data } = await axios.postForm<CloudinaryUploadResponse>(
+          const { data } = await axios.post<CloudinaryUploadResponse>(
             response.uploadUrl,
             formData,
             {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+              transformRequest: (data) => data,
               onUploadProgress: (ev) => {
                 const percent = Math.min(
                   100,
@@ -62,10 +67,10 @@ export const useUploadMedia = () => {
           );
 
           return {
+            ...file,
             public_id: data.public_id,
             original_url: data.secure_url,
             transformed_url: data.eager?.[0]?.secure_url,
-            media_type,
           };
         },
       );
@@ -84,8 +89,6 @@ export const useUploadMedia = () => {
             currentBatchCount,
         )
       : 0;
-
-  console.log({ totalProgress });
 
   return { upload, setFileProgress, totalProgress };
 };

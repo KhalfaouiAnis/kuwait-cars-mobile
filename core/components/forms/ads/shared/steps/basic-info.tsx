@@ -2,7 +2,7 @@ import { BaseStepViewProps } from "@/core/components/ui";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
-import { FieldValues, useFormContext } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import SelectedAdType from "../ad-type-selector/selected-ad-type";
@@ -10,7 +10,6 @@ import StepField from "../step-field";
 
 export default function BasicInfo<T extends FieldValues>({ fields }: BaseStepViewProps<T>) {
     const { model, brand, ad_type } = useLocalSearchParams()
-    const { control } = useFormContext()
     const { t } = useTranslation("common")
     const { t: tBrands } = useTranslation("car_categories")
     const { isRTL } = useUserPreferencesStore()
@@ -33,18 +32,18 @@ export default function BasicInfo<T extends FieldValues>({ fields }: BaseStepVie
                         icon={<Ionicons name="car-sport-outline" color="black" size={20} />}
                     />
                 </View>
-                    <StepField config={fields.year!} control={control} />
-                    <StepField config={fields.exterior_color!} control={control} />
+                    <StepField config={fields.year!} />
+                    <StepField config={fields.exterior_color!} />
                 <View className="flex-row gap-4 items-center mx-5">
                     <View className="flex-1">
-                        <StepField control={control} config={fields.mileage!} />
+                        <StepField config={fields.mileage!} />
                     </View>
                     <View className="flex-shrink">
-                        <StepField control={control} config={fields.mileage_unit!} />
+                        <StepField config={fields.mileage_unit!} />
                     </View>
                 </View>
                 <View className="mt-4 px-4">
-                    <StepField control={control} config={fields.hide_license_plate!} />
+                    <StepField config={fields.hide_license_plate!} />
                     <Text className="text-sm text-gray-300 mt-1.5">{t("createAd.hideVehicleLicensePlateForUploadedImages")}</Text>
                 </View>
             </View>
@@ -54,11 +53,11 @@ export default function BasicInfo<T extends FieldValues>({ fields }: BaseStepVie
                 <View className="mx-2 border w-2/5" />
             </View>
             <View className="gap-y-4 py-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                <StepField control={control} config={fields.fuel_type!} />
-                <StepField control={control} config={fields.cylinders!} />
-                <StepField control={control} config={fields.transmission!} />
-                <StepField control={control} config={fields.under_warranty!} />
-                <StepField control={control} config={fields.roof!} />
+                <StepField config={fields.fuel_type!} />
+                <StepField config={fields.cylinders!} />
+                <StepField config={fields.transmission!} />
+                <StepField config={fields.under_warranty!} />
+                <StepField config={fields.roof!} />
             </View>
         </>
     )

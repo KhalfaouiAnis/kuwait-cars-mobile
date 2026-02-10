@@ -1,30 +1,24 @@
 import { FIELD_COMPONENTS, FieldBlueprint } from "@/core/components/ui";
 import { memo } from "react";
-import { Control, FieldValues } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 
 interface FieldProps<T extends FieldValues> {
     config: FieldBlueprint<T>;
-    control: Control<T>;
 }
 
-const StepFieldInternal = <T extends FieldValues>({ config, control }: FieldProps<T>) => {
-    const Component = FIELD_COMPONENTS[config.type] as React.ComponentType<any>;
+const StepFieldInternal = <T extends FieldValues>({ config }: FieldProps<T>) => {
+    const Component = FIELD_COMPONENTS[config?.type] as React.ComponentType<any>;
 
     if (!Component) {
-        console.warn(`Component for type "${config.type}" not found.`);
+        console.warn(`Component for type "${config?.type}" not found.`);
         return null;
     }
 
-    return (
-        <Component
-            {...(config as any)}
-            control={control}
-        />
-    );
+    return (<Component {...config} />);
 }
 
 const StepField = memo(StepFieldInternal) as <T extends FieldValues>(
-  props: FieldProps<T>
+    props: FieldProps<T>
 ) => React.ReactElement;
 
 export default StepField

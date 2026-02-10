@@ -1,3 +1,4 @@
+import { MediaSelectorProps } from "@/core/components/ui";
 import PickFromGallery from "@/core/components/ui/button/media/open-gallery";
 import PickFromGallerySM from "@/core/components/ui/button/media/open-gallery-sm";
 import TakePhotoButton from "@/core/components/ui/button/media/take-photo";
@@ -14,14 +15,11 @@ import ImageGallery from "../image-gallery";
 
 const MAX_IMAGES = 6;
 
-export default function GalleryPicker({ maxImages = MAX_IMAGES }: { control: any, maxImages?: number }) {
+export default function GalleryPicker({ name, maxImages = MAX_IMAGES }: MediaSelectorProps) {
     const { control } = useFormContext()
     const { t } = useTranslation("common")
     const { isRTL } = useUserPreferencesStore()
-    const { fields, append, remove, move, update } = useFieldArray({
-        control,
-        name: "media_collection",
-    });
+    const { fields, append, remove, move, update } = useFieldArray({ control, name });
 
     const { pickImages, setThumbnail } = useMediaUploader(
         maxImages,
