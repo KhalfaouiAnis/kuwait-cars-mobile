@@ -4,39 +4,58 @@ import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
 import { CAR_BRAND_TYPES } from "@/core/constants/ad";
 import { useAdDraftMutations } from "@/core/services/ads/ad.drafts.mutations";
-import { useAdDraftStore } from "@/core/store/adDrafts.store";
+import { canCreateNewDrafts, useAdDraftStore } from "@/core/store/adDrafts.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { boxShadow } from "@/core/utils/cn";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { toast } from "sonner-native";
 
 export default function NewAdScreen() {
+  const router = useRouter();
   const { t } = useTranslation("common");
-  const { createAdDraft: { mutate: createDraft, isPending } } = useAdDraftMutations();
+  const [visible, setVisible] = useState(false)
   const { isRTL } = useUserPreferencesStore();
-  const { canCreateNewDraft, initializeSession } = useAdDraftStore()
-
+  const { initializeSession, drafts } = useAdDraftStore();
+  const canCreate = useAdDraftStore(canCreateNewDrafts);
+  const { createAdDraft: { mutate: createDraft, isPending } } = useAdDraftMutations();
   const [adType, setAdType] = useState<{ ad_type: string; params: any } | null>(
     null,
   );
 
-  const router = useRouter();
-
   const handleNavigate = async () => {
-    if (!adType || !canCreateNewDraft()) {
+    if (!canCreate) {
+      setVisible(true);
       return;
     }
-    createDraft({ ad_type: adType.ad_type, content: {}, step_index: 0 }, {
+    if (!adType) {
+      return;
+    }
+    createDraft({
+      ad_type: adType.ad_type, content: {
+        ad_type: adType.ad_type,
+        title: "",
+        description: "",
+        media: [],
+        brand: adType.params?.brand,
+        model: adType.params?.model,
+        ad_category: adType.params?.ad_category
+      }, step_index: 0
+    }, {
       onSuccess(data) {
         initializeSession({
           id: data.id,
-          ad_type: data.ad_type,
+          content: {
+            ad_type: adType.ad_type,
+            brand: adType.params?.brand,
+            model: adType.params?.model,
+            ad_category: adType.params?.ad_category,
+          },
           step_index: 0,
-          content: {},
-          updated_at: Date.now()
+          ad_type: data.ad_type,
+          updated_at: Date.now(),
         });
         router.navigate({ pathname: `/create/${adType.ad_type}` as any, params: adType.params });
       },
@@ -46,26 +65,47 @@ export default function NewAdScreen() {
     });
   };
 
+  useFocusEffect(() => {
+    setAdType(null)
+    // if (!canCreate) {
+    //   setVisible(true);
+    // }
+  })
+
   return (
     <Container header={<ProfileHeader title={t("createAd.steps.postAd")} />}>
       <View className="p-4 mx-1 flex-1 dark:bg-black">
         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
-          <Text className="font-semibold mb-4 ms-4 dark:text-white text-blue">
+          <Text className="font-inter mb-1 ms-4 dark:text-white text-blue">
             {t("createAd.whatAreYouSelling")}
           </Text>
           <AdTypeSelector
             placeholder={t("createAd.selectYourCategory")}
             selectedValue={adType?.params.label}
-            isActive={canCreateNewDraft()}
             data={CAR_BRAND_TYPES}
+            isActive={canCreate}
             onChange={setAdType}
             isRTL={isRTL}
           />
         </View>
-        <View className="mt-auto mb-4 items-center">
+        <View className="mt-auto mb-4 items-center gap-6">
+          {
+            Object.keys(drafts).length > 0 && (
+              <TouchableOpacity
+                className="py-3 rounded-lg bg-primary-500 disabled:bg-grayish"
+                style={styles.nextButton}
+                onPress={() => setVisible(true)}
+              >
+                <Text className="text-center text-xl font-inter-semibold">
+                  My drafts
+                </Text>
+              </TouchableOpacity>
+            )
+          }
+
           <TouchableOpacity
             className="py-3 rounded-lg bg-primary-500 disabled:bg-grayish"
-            disabled={!adType?.ad_type || !canCreateNewDraft()}
+            disabled={!canCreate || !adType}
             style={styles.nextButton}
             onPress={handleNavigate}
           >
@@ -75,7 +115,7 @@ export default function NewAdScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      {!canCreateNewDraft() && (<AdDraftsModal visible={!canCreateNewDraft()} />)}
+      <AdDraftsModal visible={visible} onClose={() => setVisible(false)} />
     </Container>
   );
 }

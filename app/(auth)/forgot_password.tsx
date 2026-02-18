@@ -1,5 +1,5 @@
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
-import AuthTextInput from "@/core/components/ui/input/text/auth-input";
+import BaseTextInput from "@/core/components/ui/input/text/base-text-input";
 import { DIMENSIONS } from "@/core/constants";
 import { useFormHook } from "@/core/hooks/use-form-hook";
 import { RequestResetPasswordInterface, RequestResetPasswordSchema } from "@/core/types/schema/auth";
@@ -24,21 +24,19 @@ export default function ForgotPasswordScreen() {
                 {t("emailToResetPassword")}
             </Text>
             <View className="py-6 px-4 items-center">
-                <AuthTextInput
-                    control={control}
+                <BaseTextInput
                     name="phone"
-                    error={errors.phone?.ref?.name}
+                    control={control}
                     keyboardType="phone-pad"
+                    translatedPlaceholder={t("enterWhatsappNumber")}
                     customIcon={<Ionicons name="logo-whatsapp" size={20} color="#25D366" className="ms-2" />}
-                    placeholder={t("enterWhatsappNumber")}
                 />
                 <Text className="my-2 text-gray-400 text-base text-center">{t("or")}</Text>
-                <AuthTextInput
-                    control={control}
+                <BaseTextInput
                     name="email"
-                    error={errors.email?.ref?.name}
+                    control={control}
                     icon="mail-outline"
-                    placeholder={t("enterEmail")}
+                    translatedPlaceholder={t("enterEmail")}
                 />
                 <TouchableOpacity
                     className="bg-primary-500 justify-center rounded-3xl items-center mt-20"
@@ -50,7 +48,7 @@ export default function ForgotPasswordScreen() {
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
                 >
-                    <Text className="text-xl font-inter-semibold text-center text-black">
+                    <Text className="text-lg font-inter-semibold text-center text-black">
                         {isSubmitting ? <ActivityIndicator size="small" color="#fff" /> : t("resetPassword")}
                     </Text>
                 </TouchableOpacity>

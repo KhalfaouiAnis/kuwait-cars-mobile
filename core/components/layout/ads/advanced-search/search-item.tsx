@@ -1,3 +1,4 @@
+import { DIMENSIONS } from '@/core/constants';
 import { boxShadow } from '@/core/utils/cn';
 import { Ionicons } from '@expo/vector-icons';
 import React, { memo } from 'react';
@@ -17,14 +18,13 @@ const SearchItem = memo(({ label, icon, family, isDark, isRTL, onPress }: Search
     <Pressable
         style={{
             height: 48,
-            width: 300,
+            width: DIMENSIONS.width - 80,
             borderRadius: 20,
             flexDirection: "row",
             alignItems: "center",
             paddingHorizontal: 10,
             boxShadow: boxShadow().button.boxShadow
         }}
-        className="w-full items-center"
         onPress={onPress}
     >
         <View className='items-center me-4 ms-4'>

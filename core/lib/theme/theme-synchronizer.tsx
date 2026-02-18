@@ -1,15 +1,14 @@
-import useUserPreferencesStore from '@/core/store/preferences.store';
-import { useColorScheme } from 'nativewind';
+import { useTheme } from '@react-navigation/native';
+import { useColorScheme as useNativeWind } from 'nativewind';
 import { useEffect } from 'react';
 
 export const ThemeSynchronizer = () => {
-    const storeTheme = useUserPreferencesStore((state) => state.theme);
-
-    const { setColorScheme } = useColorScheme();
+    const { setColorScheme } = useNativeWind();
+    const { dark } = useTheme();
 
     useEffect(() => {
-        setColorScheme(storeTheme);
-    }, [storeTheme, setColorScheme]);
+        setColorScheme(dark ? 'dark' : 'light');
+    }, [dark, setColorScheme]);
 
     return null;
 };

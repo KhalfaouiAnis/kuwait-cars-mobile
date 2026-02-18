@@ -1,9 +1,9 @@
 import { z } from "zod";
 import {
-    AreaSchema,
-    BaseAdSchema,
-    LocationSchema,
-    ProvinceSchema,
+  AreaSchema,
+  BaseAdSchema,
+  LocationSchema,
+  ProvinceSchema,
 } from "../shared";
 
 export const UsedCarAdSchema = BaseAdSchema.extend({
@@ -11,10 +11,6 @@ export const UsedCarAdSchema = BaseAdSchema.extend({
   province: ProvinceSchema,
   area: AreaSchema.optional(),
   location: LocationSchema.optional(),
-
-  brand: z.string().min(0),
-  model: z.string().min(0),
-
   year: z.coerce.number().min(0).max(new Date().getFullYear()),
   exterior_color: z.string().min(0),
   mileage: z.coerce.number().min(0),

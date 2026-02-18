@@ -4,12 +4,10 @@ import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-l
 import Container from "@/core/components/ui/container";
 import { EmptyState } from "@/core/components/ui/shared/empty-state";
 import { useMyFavoritedAdsQuery } from "@/core/services/ads/ad.queries";
-import useUserPreferencesStore from "@/core/store/preferences.store";
 import { useTranslation } from "react-i18next";
 import { FlatList, Text, View } from 'react-native';
 
 export default function FavoritesScreen() {
-    const { theme } = useUserPreferencesStore()
     const { t } = useTranslation("common")
     const { data, isLoading } = useMyFavoritedAdsQuery();
 
@@ -25,7 +23,7 @@ export default function FavoritesScreen() {
                             data={data}
                             keyExtractor={item => item.id}
                             renderItem={({ item }) => <View className="mb-2 me-1">
-                                <Advertisement data={item} view="vertical" isDark={theme !== "light"} />
+                                <Advertisement data={item} view="vertical" />
                             </View>}
                             contentContainerStyle={{ paddingBottom: 180 }}
                             showsVerticalScrollIndicator={false}

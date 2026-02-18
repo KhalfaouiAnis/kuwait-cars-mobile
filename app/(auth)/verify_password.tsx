@@ -26,7 +26,7 @@ export default function VerifyPasswordResetCodeScreen() {
                         height: 50,
                     }}
                 >
-                    <Text className="text-xl font-inter-semibold text-center text-black">{t("verifyCode")}</Text>
+                    <Text className="text-lg font-inter-semibold text-center text-black">{t("verifyCode")}</Text>
                 </TouchableOpacity>
             </View>
         </FormWrapper>

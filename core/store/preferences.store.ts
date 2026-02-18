@@ -20,7 +20,7 @@ const useUserPreferencesStore = create<UserPreferencesState>()(
   persist(
     (set) => ({
       lang: "ar",
-      theme: "light",
+      theme: "system",
       isI18nReady: false,
       isRTL: false,
       toggleTheme: () => {

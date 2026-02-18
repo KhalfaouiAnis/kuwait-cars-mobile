@@ -9,11 +9,12 @@ interface DraftState {
   activeId: string | null;
 
   initializeSession: (draft: AdDraftInterface) => void;
+  syncWithServer: (serverDrafts: AdDraftInterface[]) => void;
   updateActiveDraftContent: (data: any) => void;
+  setActiveDraft: (id: string | null) => void;
   saveStep: (step_index: number) => void;
   removeDraft: (id: string) => void;
   clearAllDrafts: () => void;
-  canCreateNewDraft: () => boolean;
 }
 
 export const useAdDraftStore = create<DraftState>()(
@@ -21,7 +22,9 @@ export const useAdDraftStore = create<DraftState>()(
     (set, get) => ({
       drafts: {},
       activeId: null,
-      initializeSession: (draft) =>
+      initializeSession: (draft) => {
+        const { drafts } = get();
+        if (Object.keys(drafts).length >= MAX_DRAFTS_COUNT) return;
         set((state) => ({
           activeId: draft.id,
           drafts: {
@@ -34,7 +37,21 @@ export const useAdDraftStore = create<DraftState>()(
               updated_at: new Date(draft.updated_at).getTime(),
             },
           },
-        })),
+        }));
+      },
+      syncWithServer: (serverDrafts) => {
+        const mappedDrafts = serverDrafts.reduce(
+          (acc, draft) => {
+            acc[draft.id] = draft;
+            return acc;
+          },
+          {} as Record<string, AdDraftInterface>,
+        );
+        set({
+          drafts: mappedDrafts,
+          activeId: mappedDrafts[get().activeId!] ? get().activeId : null,
+        });
+      },
       updateActiveDraftContent: (data) =>
         set((state) => {
           if (!state.activeId) return state;
@@ -60,6 +77,9 @@ export const useAdDraftStore = create<DraftState>()(
             },
           };
         }),
+      setActiveDraft: (id: string | null) => {
+        set({ activeId: id });
+      },
       removeDraft: (id) =>
         set((state) => {
           const newDrafts = { ...state.drafts };
@@ -72,9 +92,6 @@ export const useAdDraftStore = create<DraftState>()(
       clearAllDrafts: async () => {
         set({ drafts: {}, activeId: null });
       },
-      canCreateNewDraft: () => {
-        return Object.keys(get().drafts).length < Number(MAX_DRAFTS_COUNT);
-      },
     }),
     {
       name: "ad-drafts",
@@ -82,3 +99,9 @@ export const useAdDraftStore = create<DraftState>()(
     },
   ),
 );
+
+export const canCreateNewDrafts = (state: DraftState) => {
+  const drafts = Object.values(state.drafts);
+  const newDraftsCount = drafts.filter((d) => !d.edit_ad_id).length;
+  return newDraftsCount < MAX_DRAFTS_COUNT;
+};

@@ -16,6 +16,14 @@ export const createNewAdDraft = async (payload: AdDraftInput) => {
   return data;
 };
 
+export const promoteAd = async (id: string) => {
+  const { data } = await httpClient.post<AdDraftInterface>(
+    `/ads/drafts/promote/${id}`,
+  );
+
+  return data;
+};
+
 export const updateAdDraft = async (id: string, payload: AdDraftInput) => {
   const { data } = await httpClient.put<AdDraftInterface>(
     `/ads/drafts/${id}`,

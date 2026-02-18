@@ -81,7 +81,7 @@ export default function AdTypeSelector({
             } else if (AD_TYPES.parts_accessories === path[0]) {
               handleSelect({
                 ad_type: AD_TYPES.parts_accessories,
-                params: { regison: item.value, label: t(item.label) },
+                params: { ad_category: item.value, label: t(item.label) },
               });
             } else if (AD_TYPES.home_services === path[0]) {
               handleSelect({
@@ -205,7 +205,7 @@ export default function AdTypeSelector({
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: 45,
+    height: 50,
     borderWidth: 0.5,
     borderRadius: 20,
     ...boxShadow().button,

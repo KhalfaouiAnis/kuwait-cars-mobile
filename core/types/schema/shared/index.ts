@@ -28,30 +28,6 @@ export const ProvinceSchema = z.object({
   longitude: z.coerce.number(),
 });
 
-export const VideoSchema = z.object(
-  {
-    uri: z.string().url().or(z.string().startsWith("file://")),
-    type: z.string().optional(),
-    name: z.string().optional(),
-    id: z.string().optional(),
-    duration: z.coerce.number().optional(),
-    size: z.coerce.number().optional(),
-  },
-  { message: "Video File validation failed" },
-);
-
-export const createFileSchema = (customMessage?: string) =>
-  z.object(
-    {
-      uri: z.string().url().or(z.string().startsWith("file://")),
-      type: z.string().optional(),
-      name: z.string().optional(),
-      id: z.string().optional(),
-      size: z.coerce.number().optional(),
-    },
-    { message: customMessage || "Image File validation failed" },
-  );
-
 export const AdMediaAssetSchema = z
   .object({
     id: z.string(),
@@ -62,6 +38,7 @@ export const AdMediaAssetSchema = z
     size: z.coerce.number().optional(),
     duration: z.coerce.number().optional(),
     original_url: z.string().url().optional(),
+    is_blurred: z.coerce.boolean().optional(),
     transformed_url: z.string().url().optional(),
     media_type: z.enum(["THUMBNAIL", "IMAGE", "VIDEO"]),
   })
@@ -72,16 +49,16 @@ export const AdMediaAssetSchema = z
 
 export const BaseAdSchema = z.object({
   ad_type: z.enum(Ad_CATEGORIES as [AdCategory, ...AdCategory[]]),
-  ad_category: z.string().optional(),
   title: z.string().min(3),
   description: z.string().min(3),
   plan: SubscriptionPlanSchema,
+  ad_category: z.string().optional(),
+  brand: z.string().optional(),
+  model: z.string().optional(),
   is_paid: z.boolean().optional(),
   is_free: z.boolean().optional(),
-  // thumbnail: AdMediaAssetSchema,
-  // images: z.array(AdMediaAssetSchema).optional(),
   media: z.array(AdMediaAssetSchema).min(1),
-  video: VideoSchema.nullish(),
+  video: AdMediaAssetSchema.nullish(),
 
   additional_number: z.string().optional(),
   second_additional_number: z.string().optional(),
@@ -95,17 +72,8 @@ export const BaseAdSchema = z.object({
 
 export const AdDraftInputSchema = z.object({
   ad_type: z.string(),
-  step_index: z.coerce.number().int().min(0),
   content: z.record(z.string(), z.any()),
-});
-
-export const MediaSchema = z.object({
-  uri: z.string().url().or(z.string().startsWith("file://")),
-  type: z.string().optional(),
-  name: z.string().optional(),
-  id: z.string().optional(),
-  duration: z.coerce.number().optional(),
-  size: z.coerce.number().optional(),
+  step_index: z.coerce.number().int().min(0),
 });
 
 export type AdMediaAsset = z.infer<typeof AdMediaAssetSchema>;
@@ -167,13 +135,13 @@ export type PaymentObjectInterface = z.infer<typeof PaymentObjectSchema>;
 export type LocationInterface = z.infer<typeof LocationSchema>;
 export type ProvinceInterface = z.infer<typeof ProvinceSchema>;
 export type AreaInterface = z.infer<typeof AreaSchema>;
-export type MediaInterface = z.infer<typeof MediaSchema>;
 
 export type BaseAdInterface = z.infer<typeof BaseAdSchema>;
 
 export type AdDraftInput = z.infer<typeof AdDraftInputSchema>;
 export interface AdDraftInterface {
   id: string;
+  edit_ad_id?: string;
   content: any;
   ad_type: string;
   step_index: number;

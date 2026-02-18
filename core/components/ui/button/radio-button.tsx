@@ -1,4 +1,5 @@
 import { boxShadow, cn } from "@/core/utils/cn";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface RadioButtonProps {
@@ -20,6 +21,7 @@ export default function RadioButton({
   fullWidth = false,
   borderRadius = 15,
 }: RadioButtonProps) {
+  const { t } = useTranslation("common")
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -35,7 +37,7 @@ export default function RadioButton({
         className="text-center font-semibold dark:text-white"
         numberOfLines={1}
       >
-        {label}
+        {t(label)}
       </Text>
     </TouchableOpacity>
   );

@@ -26,7 +26,7 @@ export default function AuthenticationSuccessScreen() {
                         height: 50,
                     }}
                 >
-                    <Text className="text-2xl font-inter-semibold text-center text-black">
+                    <Text className="text-lg font-inter-semibold text-center text-black">
                         {t("updatePassword")}
                     </Text>
                 </TouchableOpacity>

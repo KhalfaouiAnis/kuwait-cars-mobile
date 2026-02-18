@@ -1,8 +1,7 @@
 import TabBar from '@/core/components/ui/tabBar';
 import { useAuthGuard } from '@/core/hooks/use-auth-guard';
-import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Feather, Ionicons } from '@expo/vector-icons';
-import { EventArg } from '@react-navigation/native';
+import { EventArg, useTheme } from '@react-navigation/native';
 import { Tabs } from 'expo-router';
 import { memo } from 'react';
 import { View } from 'react-native';
@@ -12,14 +11,14 @@ export const unstable_settings = {
 };
 
 interface TabButtonProps {
-    name: string, color: string, isDark: boolean
+    name: string, color: string, dark: boolean
 }
 
-const TabIconButton = memo(function TabIconButton({ name, color, isDark }: TabButtonProps) {
+const TabIconButton = memo(function TabIconButton({ name, color, dark }: TabButtonProps) {
     return (
         <Ionicons name={name as any} size={30} color={color}
             style={{
-                backgroundColor: isDark ? "#1B1B1B" : "#FFFFFF", height: 43, width: 41.77, borderRadius: 20,
+                backgroundColor: dark ? "#1B1B1B" : "#FFFFFF", height: 43, width: 41.77, borderRadius: 20,
                 textAlign: 'center', verticalAlign: "middle"
             }}
         />
@@ -27,10 +26,8 @@ const TabIconButton = memo(function TabIconButton({ name, color, isDark }: TabBu
 });
 
 export default function TabLayout() {
-    const { theme } = useUserPreferencesStore()
     const { protectAction } = useAuthGuard();
-
-    const isDark = theme === 'dark';
+    const { dark } = useTheme()
 
     const protectionListeners = (route: "create" | "favorites" | "chat") => {
         return (
@@ -65,7 +62,7 @@ export default function TabLayout() {
                     tabBarIcon: ({ color }) => (
                         <Feather name="home" size={30} color={color}
                             style={{
-                                backgroundColor: isDark ? "#1B1B1B" : "#FFFFFF",
+                                backgroundColor: dark ? "#1B1B1B" : "#FFFFFF",
                                 height: 43, width: 41.77, borderRadius: 20,
                                 textAlign: 'center', verticalAlign: "middle"
                             }}
@@ -75,7 +72,7 @@ export default function TabLayout() {
             />
             <Tabs.Screen
                 name="search"
-                options={{ tabBarIcon: ({ color }) => <TabIconButton name="search-outline" color={color} isDark={isDark} /> }}
+                options={{ tabBarIcon: ({ color }) => <TabIconButton name="search-outline" color={color} dark={dark} /> }}
             />
             <Tabs.Screen
                 name="create"
@@ -93,12 +90,12 @@ export default function TabLayout() {
             />
             <Tabs.Screen
                 name="chat"
-                options={{ tabBarIcon: ({ color }) => <TabIconButton name="chatbox-ellipses-outline" color={color} isDark={isDark} /> }}
+                options={{ tabBarIcon: ({ color }) => <TabIconButton name="chatbox-ellipses-outline" color={color} dark={dark} /> }}
                 listeners={protectionListeners("chat")}
             />
             <Tabs.Screen
                 name="favorites"
-                options={{ tabBarIcon: ({ color }) => <TabIconButton name="star-outline" color={color} isDark={isDark} /> }}
+                options={{ tabBarIcon: ({ color }) => <TabIconButton name="star-outline" color={color} dark={dark} /> }}
                 listeners={protectionListeners("favorites")}
             />
         </Tabs>

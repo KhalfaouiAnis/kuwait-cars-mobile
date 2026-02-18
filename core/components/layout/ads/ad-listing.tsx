@@ -9,17 +9,9 @@ import Advertisement from "./advertisement";
 
 interface Props {
   view: "vertical" | "horizontal";
-  isDark?: boolean;
 }
 
-export const AdsListing = ({ view, isDark }: Props) => {
-  // const flashListRef = useRef<FlashListRef<AdvertisementInterface>>();
-
-  // // Basic benchmark setup
-  // useBenchmark(flashListRef, (result) => {
-  //   console.log("Benchmark complete:", result.formattedString);
-  // });
-
+export const AdsListing = ({ view }: Props) => {
   const {
     data,
     fetchNextPage,
@@ -35,8 +27,8 @@ export const AdsListing = ({ view, isDark }: Props) => {
   );
 
   const renderItem = useCallback(({ item }: { item: AdvertisementInterface }) => (
-    <Advertisement data={item} view={view} isDark={isDark} />
-  ), [isDark, view]);
+    <Advertisement data={item} view={view} />
+  ), [view]);
 
   const ItemSeparator = useCallback(() => (
     <View style={{ height: 12 }} />

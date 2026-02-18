@@ -13,6 +13,7 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -25,7 +26,8 @@ export default function ProfileScreen() {
   const { protectAction } = useAuthGuard();
   const { signOut, user } = useAuthStore();
   const [notifications, setNotifications] = useState(true);
-  const { theme, toggleTheme, isRTL } = useUserPreferencesStore();
+  const { toggleTheme, isRTL } = useUserPreferencesStore();
+  const { dark } = useTheme()
 
   const handleEditProfile = () => {
     protectAction(() => router.navigate("/profile-edit"));
@@ -34,7 +36,7 @@ export default function ProfileScreen() {
   return (
     <Container
       scrollable
-      backgroundColor={theme !== "light" ? "black" : "#FAED02"}
+      backgroundColor={dark ? "black" : "#FAED02"}
       header={<ProfileHeader title={t("profile.profile")} />}
     >
       <View className="flex-1 mt-2 bg-white dark:bg-black px-4 py-2">
@@ -77,7 +79,7 @@ export default function ProfileScreen() {
               className="bg-primary-500 rounded-lg mt-4"
             >
               <View className="flex-row px-3 py-2 items-center justify-center gap-1">
-                <Text className="font-inter-medium text-sm">
+                <Text className="font-inter-medium text-sm text-center" numberOfLines={1} ellipsizeMode="tail">
                   {t("profile.editProfile")}
                 </Text>
                 <Feather name="edit-3" size={16} color="black" />
@@ -91,105 +93,97 @@ export default function ProfileScreen() {
           className="flex-1 py-2 px-4 mt-4 border bg-white dark:bg-black border-primary-500 rounded-lg gap-y-6"
         >
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             href={"/change-password"}
             icon={
               <Feather
                 name="key"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.changePassword")}
           />
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             onPress={() => protectAction(() => router.navigate("/my-ads"))}
             icon={
               <MaterialCommunityIcons
                 name="text-box-multiple-outline"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.myAds")}
           />
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             href={"/profile"}
             icon={
               <MaterialCommunityIcons
                 name="text-box-multiple-outline"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.officeShowroomServices")}
           />
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             href={"/profile"}
             icon={
               <MaterialCommunityIcons
                 name="text-box-multiple-outline"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.advertisingPhotographyServices")}
           />
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             onPress={() => protectAction(() => router.navigate("/profile"))}
             icon={
               <Ionicons
                 name="card"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.myPayments")}
           />
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             href={"/recently-viewed"}
             icon={
               <Ionicons
                 name="eye-outline"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.recentlyViewed")}
           />
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             href={"/general-condition"}
             icon={
               <AntDesign
                 name="exclamation-circle"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.generalCondition")}
           />
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             href={"/change-language"}
             icon={
               <Ionicons
                 name="language-outline"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.language")}
@@ -199,7 +193,7 @@ export default function ProfileScreen() {
             <MaterialCommunityIcons
               name="bell-ring-outline"
               size={24}
-              color={theme !== "light" ? "white" : "black"}
+              color={dark ? "white" : "black"}
             />
             <Text className="ms-2 me-auto text-black dark:text-white">
               {t("profile.notification")}
@@ -214,40 +208,38 @@ export default function ProfileScreen() {
             <MaterialIcons
               name="dark-mode"
               size={24}
-              color={theme !== "light" ? "white" : "black"}
+              color={dark ? "white" : "black"}
             />
             <Text className="ms-2 me-auto text-black dark:text-white">
               {t("profile.darkMode")}
             </Text>
             <Switch
-              value={theme !== "light"}
+              value={dark}
               onValueChange={toggleTheme}
               isRTL={isRTL}
             />
           </View>
 
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             href={"/profile"}
             icon={
               <Ionicons
                 name="call-outline"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.contactCustomerService")}
           />
           <SettingsLink
-            isDark={theme !== "light"}
             isRtl={isRTL}
             onPress={signOut}
             icon={
               <Ionicons
                 name="log-out-outline"
                 size={24}
-                color={theme !== "light" ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
             }
             label={t("profile.logout")}

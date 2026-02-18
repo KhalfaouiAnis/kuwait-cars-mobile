@@ -81,8 +81,8 @@ export default function SearchHistory({ onNewSearch }: Props) {
             >
                 <View className="gap-4 mx-8">
                     <View className="flex-row items-center gap-2 ms-4">
-                        <Ionicons name="search-outline" color="#A8A8A8" size={20} />
-                        <Text className="text-grayish">Recent search</Text>
+                        <Ionicons name="search-outline" color="#1F51FF" size={20} />
+                        <Text className="text-blue">Recent search</Text>
                     </View>
                     <View
                         style={{
@@ -98,10 +98,10 @@ export default function SearchHistory({ onNewSearch }: Props) {
                             <Ionicons name="car-sport-outline" size={20} />
                             <Text className="text-center">mercedes-bens</Text>
                         </View>
-                        <Text className="text-center text-grayish">searching again</Text>
+                        <Text className="text-center text-orange">searching again</Text>
                     </View>
                 </View>
-                <Text className="text-grayish ms-12 mt-12">Highlighted ads</Text>
+                <Text className="text-blue ms-12 mt-12">Highlighted ads</Text>
                 <FlatList
                     data={ads}
                     horizontal

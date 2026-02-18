@@ -6,7 +6,6 @@ import {
   PaginatedResponse,
 } from "@/core/types";
 import { PaymentObjectInterface } from "@/core/types/schema/shared";
-import openPaymentPage from "@/core/utils/payment";
 import { toast } from "sonner-native";
 
 export const fetchAds = async ({
@@ -62,6 +61,14 @@ export const fetchMyFavoritedAds = async (): Promise<
   return data;
 };
 
+export const editAd = async (ad: AdvertisementInterface) => {
+  const { data } = await httpClient.post(`/api/v1/drafts/${ad.id}`, {
+    content: ad,
+    ad_type: ad.ad_type,
+  });
+  return data;
+};
+
 export const toggleFavorite = async (adId: string): Promise<void> => {
   await httpClient.post(`/ads/${adId}/toggle-favorite`);
 };
@@ -82,24 +89,24 @@ export const incrementAdViews = async (adId: string): Promise<void> => {
   await httpClient.post(`/ads/${adId}/view`);
 };
 
-export const initiatePayment = async (payload: PaymentObjectInterface) => {
+export const initiatePayment = async (
+  payload: PaymentObjectInterface,
+  adType: string,
+  draftId: string,
+) => {
   try {
-    const { data } = await httpClient.post("/ads/initiate-payment", {
-      ...payload,
-      amount: {
-        currency: "KWD",
-        value: payload.amount.value,
+    const { data: paymentUrl } = await httpClient.post(
+      "/ads/initiate-payment",
+      {
+        ...payload,
+        urls: {
+          errorUrl: `https://walrus-app-hz53d.ondigitalocean.app/api/v1/payment/failure?adType=${adType}&draftId=${draftId}`,
+          successUrl: `https://walrus-app-hz53d.ondigitalocean.app/api/v1/payment/success?adType=${adType}&draftId=${draftId}`,
+        },
       },
-      // add ad_type as query params and untercept it in the backend
-      urls: {
-        successUrl:
-          "https://walrus-app-hz53d.ondigitalocean.app/api/v1/payment/success",
-        errorUrl:
-          "https://walrus-app-hz53d.ondigitalocean.app/api/v1/payment/failure",
-      },
-    });
+    );
 
-    await openPaymentPage(data);
+    return paymentUrl;
   } catch (error) {
     console.log(error);
     toast.error("Payment failed.");

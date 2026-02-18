@@ -5,6 +5,7 @@ import { IMAGES } from "@/core/constants/images";
 import useAuthStore from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { useRef, useState } from "react";
@@ -129,10 +130,9 @@ export default function ChatScreen() {
     const swipeableRef = useRef<any>(null);
     const { user } = useAuthStore();
     const [show, setShow] = useState<boolean>(false)
-    const { theme, isRTL } = useUserPreferencesStore()
+    const { isRTL } = useUserPreferencesStore()
+    const { dark } = useTheme()
     const { t } = useTranslation("common")
-
-    const isDark = theme !== "light"
 
     const renderItem = ({ item }: {
         item: {
@@ -185,14 +185,14 @@ export default function ChatScreen() {
                 <View className="my-4 mx-2 flex-row items-center justify-between" >
                     <ProfileDrawer />
                     <View className="flex-row items-center ps-2 flex-1 h-12 overflow-hidden text-[#333] text-base border rounded-lg border-primary-500 me-1">
-                        <Ionicons name="search-outline" size={24} color={isDark ? "white" : "black"} />
+                        <Ionicons name="search-outline" size={24} color={dark ? "white" : "black"} />
                         <TextInput
                             placeholder={`${t("search")}...`}
                             className="flex-1"
                             autoCapitalize="none"
                         />
                     </View>
-                    <MaterialCommunityIcons name="bell-ring-outline" size={24} color={isDark ? "white" : "black"} className="me-1" />
+                    <MaterialCommunityIcons name="bell-ring-outline" size={24} color={dark ? "white" : "black"} className="me-1" />
                     <View className="rounded-full h-10 w-10">
                         <Image
                             source={user?.avatar

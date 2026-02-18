@@ -3,8 +3,8 @@ import useUserPreferencesStore from "@/core/store/preferences.store";
 import { GlobalSelectOption } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
-import { clsx } from "clsx";
-import React, { useMemo, useState } from "react";
+import { useTheme } from "@react-navigation/native";
+import React, { useCallback, useMemo, useState } from "react";
 import {
     FieldValues,
     useController,
@@ -20,7 +20,7 @@ import {
     View,
 } from "react-native";
 import { BaseSelectInputProps } from "../..";
-import Checkbox from "../checkbox";
+import Checkbox from "../checkbox/checkbox";
 
 export default function AppSelect<TForm extends FieldValues, O>({
     control,
@@ -32,8 +32,8 @@ export default function AppSelect<TForm extends FieldValues, O>({
     placeholder,
 }: BaseSelectInputProps<TForm, O>) {
     const [showModal, setShowModal] = useState(false);
-    const { isRTL, theme } = useUserPreferencesStore()
-    const isDark = theme !== "light"
+    const { isRTL } = useUserPreferencesStore()
+    const { dark } = useTheme()
     const { t } = useTranslation("common");
     const {
         field: { onChange, value }, fieldState: { error }
@@ -64,19 +64,19 @@ export default function AppSelect<TForm extends FieldValues, O>({
         setShowModal(false);
     };
 
+    const keyExtractor = useCallback((item: GlobalSelectOption) => item.id, []);
+
     const currentDisplayLabel = useMemo(() => {
         if (translatedValue && value) return t(`colors.${value}`);
 
-        return adapter.getLabel(value) ?? t(placeholder||"")
+        return adapter.getLabel(value) ?? t(placeholder || "")
     }, [value, translatedValue, adapter, placeholder, t]);
 
     return (
         <Pressable
-            style={styles.wrapper}
+            style={[styles.wrapper, { borderColor: error ? "#FF123D" : "#A8A8A8" }]}
             onPress={() => setShowModal(true)}
-            className={clsx("relative ps-6 self-center justify-center border-[0.5px] border-grayish", {
-                "border-error": error,
-            })}
+            className="relative ps-6 self-center justify-center border-[0.5px]"
         >
             <Text className={`${value ? "text-black" : "text-gray-400"} dark:text-white`}>
                 {currentDisplayLabel}
@@ -90,7 +90,7 @@ export default function AppSelect<TForm extends FieldValues, O>({
                 <Ionicons
                     name={isRTL ? "chevron-back" : "chevron-forward"}
                     size={20}
-                    color={isDark ? "white" : "black"}
+                    color={dark ? "white" : "black"}
                 />
             </View>
             <Modal
@@ -111,10 +111,10 @@ export default function AppSelect<TForm extends FieldValues, O>({
                     >
                         <FlatList
                             data={normalizedOptions}
-                            keyExtractor={(item) => item.id as string}
+                            keyExtractor={keyExtractor}
                             showsVerticalScrollIndicator={false}
-                            renderItem={({ item }) => renderSelectOption(item, handleSelect)}
                             contentContainerClassName="pb-4 px-1.5 gap-y-2"
+                            renderItem={({ item }) => renderSelectOption(item, handleSelect)}
                         />
                     </TouchableOpacity>
                 </TouchableOpacity>
@@ -134,5 +134,13 @@ const styles = StyleSheet.create({
         height: 45,
         borderRadius: 15,
         ...boxShadow(0, 4, 4).button,
+    },
+    province: {
+        width: 120,
+        height: 30,
+        borderRadius: 12,
+        alignItems: "center",
+        justifyContent: "center",
+        ...boxShadow(0, 4, 9).button,
     }
 });

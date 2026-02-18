@@ -13,9 +13,9 @@ export const SelectAdapters = {
   },
   fromObject: (key: string) => ({
     map: (item: any): GlobalSelectOption => ({
-      id: item.id,
-      label: item.label,
-      value: item.value,
+      id: item[key],
+      label: item[key],
+      value: item,
     }),
     isSelected: (currentValue: any, itemValue: any) =>
       currentValue?.[key] === itemValue?.[key],

@@ -3,6 +3,7 @@ import useUserPreferencesStore from "@/core/store/preferences.store";
 import { GlobalSelectOption } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { clsx } from "clsx";
 import React, { useEffect, useMemo, useState } from "react";
 import {
@@ -22,7 +23,7 @@ import {
     View,
 } from "react-native";
 import { BaseSelectInputProps } from "../..";
-import Checkbox from "../checkbox";
+import Checkbox from "../checkbox/checkbox";
 
 export default function AreaSelect<TForm extends FieldValues>({
     control,
@@ -32,8 +33,8 @@ export default function AreaSelect<TForm extends FieldValues>({
     placeholder,
 }: BaseSelectInputProps<TForm>) {
     const [showModal, setShowModal] = useState(false);
-    const { isRTL, theme } = useUserPreferencesStore()
-    const isDark = theme !== "light"
+    const { isRTL } = useUserPreferencesStore()
+    const { dark } = useTheme()
     const { t } = useTranslation("common");
     const selectedProvince = useWatch({
         control,
@@ -93,8 +94,8 @@ export default function AreaSelect<TForm extends FieldValues>({
             <View className="flex-row items-center absolute end-2.5">
                 <Ionicons
                     name={isRTL ? "chevron-back" : "chevron-forward"}
+                    color={dark ? "white" : "black"}
                     size={20}
-                    color={isDark ? "white" : "black"}
                 />
             </View>
             <Modal

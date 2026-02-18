@@ -1,7 +1,7 @@
 import Flag from "@/assets/svg/flag";
 import ProfileHeader from "@/core/components/layout/header/profile-header";
 import Container from "@/core/components/ui/container";
-import Checkbox from "@/core/components/ui/input/checkbox";
+import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
 import { SUPPORTED_LANGUAGES } from "@/core/constants";
 import i18n from "@/core/i18n/i18n";
 import useUserPreferencesStore from "@/core/store/preferences.store";
@@ -21,8 +21,8 @@ export default function ChangeLanguageScreen() {
   const renderItem = (item: Language) => (
     <TouchableOpacity
       key={item.code}
-      className="flex-row items-center justify-between w-64 px-4 py-2 mt-4 rounded-lg bg-white border-b-2 border-r border-gray-200"
       onPress={() => handleSelect(item)}
+      className="flex-row items-center justify-between w-64 px-4 py-2 mt-4 rounded-lg bg-white border-b-2 border-r border-gray-200"
     >
       <Flag name={item.code} />
       <Text className="text-base text-gray-900 font-medium">{item.name}</Text>
@@ -35,8 +35,8 @@ export default function ChangeLanguageScreen() {
 
   return (
     <Container header={<ProfileHeader title={t("chooseLang")} />}>
-      <View className="items-center rounded-lg border border-primary-500 m-2 dark:bg-black">
-        <ScrollView showsVerticalScrollIndicator={false} className="my-6">
+      <View className="items-center m-2 dark:bg-black">
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="gap-2" className="my-10">
           {SUPPORTED_LANGUAGES.map((lang) => renderItem(lang))}
         </ScrollView>
       </View>

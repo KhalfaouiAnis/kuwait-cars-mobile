@@ -1,14 +1,14 @@
 import { z } from "zod";
 import {
+  AdMediaAssetSchema,
   AreaSchema,
-  createFileSchema,
   LocationSchema,
   ProvinceSchema,
 } from "./shared";
 
 export const ExistingAvatarSchema = z.object({
   id: z.string().optional(),
-  public_id: z.string({ message: "public_id" }),
+  public_id: z.string(),
   original_url: z.string(),
   media_type: z.string(),
   transformed_url: z.string().optional(),
@@ -26,12 +26,7 @@ export const UpdateProfileSchema = z.object({
   province: ProvinceSchema,
   area: AreaSchema.nullish(),
   location: LocationSchema.nullish(),
-  avatar: z
-    .union([
-      createFileSchema("Please choose a valid profile image"),
-      ExistingAvatarSchema,
-    ])
-    .nullish(),
+  avatar: AdMediaAssetSchema.nullish(),
 });
 
 export type UpdateProfileInterface = z.infer<typeof UpdateProfileSchema>;

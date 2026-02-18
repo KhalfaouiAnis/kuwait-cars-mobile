@@ -3,6 +3,7 @@ import { signCloudinaryUpload } from "@/core/services/cloud/cloudinary";
 import axios from "axios";
 import { useState } from "react";
 import { Platform } from "react-native";
+import { toast } from "sonner-native";
 
 type CloudinaryUploadResponse = {
   public_id: string;
@@ -11,12 +12,11 @@ type CloudinaryUploadResponse = {
 };
 
 export const useUploadMedia = () => {
-  const [fileProgress, setFileProgress] = useState<Record<number, number>>({});
-  const [currentBatchCount, setCurrentBatchCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const upload = async (files: UploadFileType[]) => {
-    setFileProgress({});
-    setCurrentBatchCount(files.length);
+    toast.info("Uploading media, please wait!");
+    setLoading(true);
 
     try {
       const uploadPromises = files.map(
@@ -56,13 +56,13 @@ export const useUploadMedia = () => {
                 "Content-Type": "multipart/form-data",
               },
               transformRequest: (data) => data,
-              onUploadProgress: (ev) => {
-                const percent = Math.min(
-                  100,
-                  Math.round((ev.loaded * 100) / (ev.total || 1)),
-                );
-                setFileProgress((prev) => ({ ...prev, [index]: percent }));
-              },
+              // onUploadProgress: (ev) => {
+              //   const percent = Math.min(
+              //     100,
+              //     Math.round((ev.loaded * 100) / (ev.total || 1)),
+              //   );
+              //   setFileProgress((prev) => ({ ...prev, [index]: percent }));
+              // },
             },
           );
 
@@ -82,13 +82,13 @@ export const useUploadMedia = () => {
     }
   };
 
-  const totalProgress =
-    currentBatchCount > 0
-      ? Math.round(
-          Object.values(fileProgress).reduce((a, b) => a + b, 0) /
-            currentBatchCount,
-        )
-      : 0;
+  // const totalProgress =
+  //   currentBatchCount > 0
+  //     ? Math.round(
+  //         Object.values(fileProgress).reduce((a, b) => a + b, 0) /
+  //           currentBatchCount,
+  //       )
+  //     : 0;
 
-  return { upload, setFileProgress, totalProgress };
+  return { upload, loading, setLoading };
 };

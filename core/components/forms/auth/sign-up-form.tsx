@@ -1,4 +1,4 @@
-import Checkbox from "@/core/components/ui/input/checkbox";
+import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
 import { DIMENSIONS, PROVINCES } from "@/core/constants";
 import { useSignUp } from "@/core/hooks/auth/useAuth";
 import useUserPreferencesStore from "@/core/store/preferences.store";
@@ -7,7 +7,7 @@ import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import ProvinceSelect from "../../ui/input/select/province-select";
-import AuthTextInput from "../../ui/input/text/auth-input";
+import BaseTextInput from "../../ui/input/text/base-text-input";
 import { renderProvinceAreaOption } from "../../ui/shared/render-option";
 
 export default function SignUpForm() {
@@ -18,32 +18,30 @@ export default function SignUpForm() {
   return (
     <View className="pt-8 px-4 pb-10">
       <View className="gap-6 items-center">
-        <AuthTextInput
+        <BaseTextInput
           control={control}
           name="fullname"
           icon="person-outline"
-          placeholder={t("yourName")}
-          requiredMark
-          error={errors.fullname?.ref?.name}
+          translatedPlaceholder={t("yourName")}
+          required
         />
-        <AuthTextInput
+        <BaseTextInput
           control={control}
           name="phone"
           keyboardType="phone-pad"
           icon="call-outline"
-          placeholder={t("phoneNumber")}
-          requiredMark
-          error={errors.phone?.ref?.name}
+          translatedPlaceholder={t("phoneNumber")}
+          maxLength={8}
+          required
         />
-        <AuthTextInput
+        <BaseTextInput
           control={control}
           name="password"
           secureTextEntry
           icon="lock-closed-outline"
-          placeholder={t("yourPass")}
-          requiredMark
+          translatedPlaceholder={t("password")}
+          required
           endIcon="eye-outline"
-          error={errors.password?.ref?.name}
         />
         <ProvinceSelect
           control={control}
@@ -56,13 +54,12 @@ export default function SignUpForm() {
           placeholder={t("yourProvince")}
           error={errors.province?.ref?.name}
         />
-        <AuthTextInput
-          control={control}
+        <BaseTextInput
           name="email"
+          control={control}
           icon="mail-outline"
           keyboardType="email-address"
-          placeholder={t("yourEmail")}
-          error={errors.email?.ref?.name}
+          translatedPlaceholder={t("yourEmail")}
         />
       </View>
       <View className="flex-row items-center gap-x-1 mt-4 ms-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
@@ -78,11 +75,11 @@ export default function SignUpForm() {
           width: DIMENSIONS.width / 2 + 20,
           height: 50,
         }}
-        className="bg-primary-500 items-center justify-center rounded-3xl self-center mt-4"
-        onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
+        onPress={handleSubmit(onSubmit)}
+        className="bg-primary-500 items-center justify-center rounded-3xl self-center mt-4"
       >
-        <Text className="text-2xl font-inter-semibold text-center text-black">
+        <Text className="text-lg font-inter-semibold text-center text-black">
           {isSubmitting ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (

@@ -56,7 +56,7 @@ export default function ShowCarsCategoryScreen() {
   return (
     <Container backgroundColor="transparent">
       <View className="relative">
-        <View className="w-full mb-2 mt-4 pl-0.5 absolute top-0 start-0 z-20">
+        <View className="w-full mb-2 mt-2 pl-0.5 absolute top-0 start-0 z-20">
           <MainHeader back={true} />
         </View>
         <FlatList

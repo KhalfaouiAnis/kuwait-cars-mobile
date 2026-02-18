@@ -4,11 +4,12 @@ import { AdMediaAsset } from "@/core/types/schema/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner-native";
 import {
-    flag,
-    incrementAdViews,
-    repostAd,
-    softDeleteAd,
-    toggleFavorite,
+  editAd,
+  flag,
+  incrementAdViews,
+  repostAd,
+  softDeleteAd,
+  toggleFavorite,
 } from "./ad.service";
 
 export type UploadFileType = {
@@ -168,4 +169,12 @@ export const useIncrementAdViews = () => {
     mutationFn: incrementAdViews,
   });
   return { ...mutation };
+};
+
+export const useAdMutations = () => {
+  const useEditAd = useMutation({
+    mutationFn: editAd,
+  });
+
+  return { useEditAd };
 };

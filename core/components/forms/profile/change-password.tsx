@@ -1,4 +1,4 @@
-import InputWithIcon from "@/core/components/ui/input/input-with-icon";
+import { DIMENSIONS } from "@/core/constants";
 import { IMAGES } from "@/core/constants/images";
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useUpdatePassword } from "@/core/hooks/user/use-profile";
@@ -14,6 +14,7 @@ import {
   View,
 } from "react-native";
 import { toast } from "sonner-native";
+import BaseTextInput from "../../ui/input/text/base-text-input";
 
 export default function ChangePasswordForm({ t }: { t: TFunction }) {
   const { user } = useAuthStore();
@@ -37,7 +38,7 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
 
   return (
     <View className="flex-1 mt-2 bg-white dark:bg-black px-4 py-2 gap-y-8">
-      <View className="flex-1 flex-row border border-primary-500 rounded-lg items-center justify-between w-full px-4 py-1">
+      <View className="flex-1 flex-row items-center justify-between w-full px-4 py-1">
         <View>
           <Text className="font-inter-semibold text-xl dark:text-white">
             {user?.fullname}
@@ -61,35 +62,34 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
         </View>
       </View>
 
-      <View className="flex-1 py-2 mt-2 gap-y-12">
-        <InputWithIcon
+      <View className="flex-1 items-center mt-2 gap-y-6">
+        <BaseTextInput
           control={control}
           name="password"
           secureTextEntry
-          label={t("profile.newPassword")}
+          translatedLabel={t("profile.newPassword")}
           icon="lock-closed-outline"
-          placeholder={t("profile.newPassword")}
-          requiredMark
+          translatedPlaceholder={t("profile.newPassword")}
           endIcon="eye-outline"
-          error={errors.password?.ref?.name}
+          required
         />
-        <InputWithIcon
+        <BaseTextInput
           control={control}
           name="confirmPassword"
           secureTextEntry
-          label={t("profile.confirmPassword")}
+          translatedLabel={t("profile.confirmPassword")}
           icon="lock-closed-outline"
-          placeholder={t("profile.confirmNewPassword")}
-          requiredMark
+          translatedPlaceholder={t("profile.confirmNewPassword")}
           endIcon="eye-outline"
-          error={errors.password?.ref?.name}
+          required
         />
       </View>
-      <View className="flex-1 pt-12">
+      <View className="flex-1 items-center pt-12">
         <TouchableOpacity
           className="bg-primary-500 py-3 rounded-3xl items-center disabled:bg-yellow-200"
           onPress={handleUpdate}
           disabled={isSubmitting}
+          style={{width: DIMENSIONS.width - 80}}
         >
           <Text className="text-lg font-semibold text-secondary-900">
             {isSubmitting ? (

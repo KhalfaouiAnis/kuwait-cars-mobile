@@ -1,10 +1,11 @@
-import { AdStepKey, STEP_FIELD_REGISTRY, STEP_VIEWS } from "@/core/components/ui";
+import { AdStepKey, STEP_FIELD_CONFIGURATION, STEP_VIEWS } from "@/core/components/ui";
+import { AD_MASTER_SCHEMA_KEY } from "@/core/types/schema/ads";
 import { memo } from "react";
 import { ScrollView } from "react-native";
 
-const StepViewRendererInternal = ({ stepKey }: { stepKey: AdStepKey }) => {
+const StepViewRendererInternal = ({ stepKey, adType }: { stepKey: AdStepKey, adType: AD_MASTER_SCHEMA_KEY }) => {
     const ViewComponent = STEP_VIEWS[stepKey];
-    const stepFields = STEP_FIELD_REGISTRY[stepKey];
+    const stepFields = STEP_FIELD_CONFIGURATION[adType][stepKey];
 
     if (!ViewComponent) return null;
 
@@ -21,7 +22,7 @@ const StepViewRendererInternal = ({ stepKey }: { stepKey: AdStepKey }) => {
 
 const StepViewRenderer = memo(
     StepViewRendererInternal,
-    (prev, next) => prev.stepKey === next.stepKey
-) as (props: { stepKey: AdStepKey }) => React.ReactElement;
+    (prev, next) => prev.stepKey === next.stepKey && prev.adType === next.adType
+) as (props: { stepKey: AdStepKey, adType: AD_MASTER_SCHEMA_KEY }) => React.ReactElement;
 
 export default StepViewRenderer

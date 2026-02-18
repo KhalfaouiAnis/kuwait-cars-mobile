@@ -10,6 +10,7 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { router, useLocalSearchParams } from "expo-router";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,13 +22,11 @@ import HorizontalAdvertisementView from "./horizontal-advertisement-view";
 interface Props {
   data: AdvertisementInterface;
   view: "vertical" | "horizontal";
-  isDark?: boolean;
 }
 
 const Advertisement = memo(function Advertisement({
   data,
   view = "horizontal",
-  isDark,
 }: Props) {
   const { ad_type, ad_category } = useLocalSearchParams<{
     ad_type: string;
@@ -36,6 +35,7 @@ const Advertisement = memo(function Advertisement({
   const user = useAuthStore((state) => state.user);
   const { t } = useTranslation("common");
   const { isRTL } = useUserPreferencesStore();
+  const { dark } = useTheme()
   const { protectAction } = useAuthGuard();
   const { mutate } = useToggleFavorite();
 
@@ -86,7 +86,7 @@ const Advertisement = memo(function Advertisement({
                   <Ionicons
                     name="location-outline"
                     size={22}
-                    color={isDark ? "white" : "black"}
+                    color={dark ? "white" : "black"}
                   />
                   <Text
                     numberOfLines={1}
@@ -108,7 +108,7 @@ const Advertisement = memo(function Advertisement({
                   <MaterialCommunityIcons
                     name="gas-station-outline"
                     size={20}
-                    color={isDark ? "white" : "black"}
+                    color={dark ? "white" : "black"}
                   />
                   <Text
                     numberOfLines={1}
@@ -125,7 +125,7 @@ const Advertisement = memo(function Advertisement({
                   <AntDesign
                     name="control"
                     size={20}
-                    color={isDark ? "white" : "black"}
+                    color={dark ? "white" : "black"}
                   />
                   <Text
                     numberOfLines={1}

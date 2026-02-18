@@ -12,7 +12,7 @@ export default function SelectedAdType({ label, icon }: SelectedAdTypeProps) {
     return (
         <View
             style={styles.wrapper}
-            className='flex-row items-center self-center gap-2 ps-6  border border-grayish'
+            className='flex-row items-center self-center gap-2 ps-6  border-[0.5px] border-grayish'
         >
             <View className='items-center justify-center'>
                 {icon}

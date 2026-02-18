@@ -12,13 +12,7 @@ import { toast } from "sonner-native";
 import { useFormHook } from "../use-form-hook";
 
 export function useProfile(defaultValues: UpdateProfileInterface | null) {
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    getValues,
-    formState: { errors, isSubmitting },
-  } = useFormHook(UpdateProfileSchema, {
+  const methods = useFormHook(UpdateProfileSchema, {
     values: defaultValues ?? undefined,
   });
 
@@ -56,14 +50,7 @@ export function useProfile(defaultValues: UpdateProfileInterface | null) {
   //   }
   // };
 
-  return {
-    control,
-    setValue,
-    getValues,
-    handleSubmit,
-    errors,
-    isSubmitting,
-  };
+  return methods;
 }
 
 export function useUpdatePassword(phone?: string) {

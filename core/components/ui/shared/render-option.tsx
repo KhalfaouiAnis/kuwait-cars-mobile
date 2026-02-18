@@ -1,4 +1,4 @@
-import Checkbox from "@/core/components/ui/input/checkbox";
+import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
 import { preferencesStore } from "@/core/store/preferences.store";
 import { ProvinceArea, SelectOption } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";

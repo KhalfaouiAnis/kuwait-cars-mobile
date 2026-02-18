@@ -1,24 +1,24 @@
 import { boxShadow } from '@/core/utils/cn';
 import React from 'react';
-import { ActivityIndicator, Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 interface Props {
     onPress: any;
     isPending: boolean,
-    progress: number,
+    // progress: number,
     title: string
 }
 
-export const ProgressButton = ({ onPress, isPending, progress, title }: Props) => {
-    const progressWidth = React.useRef(new Animated.Value(0)).current;
+export const ProgressButton = ({ onPress, isPending, title }: Props) => {
+    // const progressWidth = React.useRef(new Animated.Value(0)).current;
 
-    React.useEffect(() => {
-        Animated.timing(progressWidth, {
-            toValue: progress,
-            duration: 300,
-            useNativeDriver: false,
-        }).start();
-    }, [progress, progressWidth]);
+    // React.useEffect(() => {
+    //     Animated.timing(progressWidth, {
+    //         toValue: progress,
+    //         duration: 300,
+    //         useNativeDriver: false,
+    //     }).start();
+    // }, [progress, progressWidth]);
 
     return (
         <TouchableOpacity

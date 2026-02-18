@@ -1,18 +1,15 @@
 import { HIDE_TABBAR_ROUTES } from '@/core/constants';
-import useUserPreferencesStore from '@/core/store/preferences.store';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { NavigationRoute, ParamListBase } from '@react-navigation/native';
+import { NavigationRoute, ParamListBase, useTheme } from '@react-navigation/native';
 import { usePathname } from 'expo-router';
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-    const { theme } = useUserPreferencesStore()
     const { bottom } = useSafeAreaInsets();
-    const isDark = theme === 'dark';
-
     const pathname = usePathname()
+    const { dark } = useTheme()
 
     const onPress = useCallback((route: NavigationRoute<ParamListBase, string>, isFocused: boolean) => {
         const event = navigation.emit({
@@ -44,7 +41,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                 {
                     bottom: bottom + 6,
                     height: 49,
-                    backgroundColor: isDark ? 'rgb(0 0 0 / 0.5)' : 'rgb(230 225 225 / 0.7)',
+                    backgroundColor: dark ? 'rgb(0 0 0 / 0.5)' : 'rgb(230 225 225 / 0.7)',
                 },
             ]}
             pointerEvents="box-none"
@@ -65,7 +62,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
                         style={styles.tabButton}
                     >
                         {
-                            options.tabBarIcon?.({ focused: isFocused, color: getIconColor(isDark, isFocused), size: 30 })
+                            options.tabBarIcon?.({ focused: isFocused, color: getIconColor(dark, isFocused), size: 30 })
                         }
                     </TouchableOpacity>
                 );

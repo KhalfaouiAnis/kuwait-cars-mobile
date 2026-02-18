@@ -2,6 +2,7 @@ import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AreaOption, ProvinceArea } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { clsx } from "clsx";
 import React, { ReactNode, useCallback, useState } from "react";
 import {
@@ -42,8 +43,8 @@ export default function AreaSelector<TForm extends FieldValues>({
   primary,
 }: AreaSelectorProps<TForm>) {
   const { t } = useTranslation("common");
-  const { isRTL, theme } = useUserPreferencesStore();
-  const isDark = theme !== "light";
+  const { isRTL } = useUserPreferencesStore();
+  const { dark } = useTheme()
   const [showModal, setShowModal] = useState(false);
   const {
     field: { onChange, value },
@@ -90,7 +91,7 @@ export default function AreaSelector<TForm extends FieldValues>({
           <MaterialIcons
             name="location-city"
             size={20}
-            color={isDark ? "white" : "gray"}
+            color={dark ? "white" : "gray"}
           />
           <Text
             className={`${value?.area ? "text-[#333]" : "text-gray-400"} dark:text-white`}
@@ -102,7 +103,7 @@ export default function AreaSelector<TForm extends FieldValues>({
           <Ionicons
             name={isRTL ? "chevron-back" : "chevron-forward"}
             size={20}
-            color={isDark ? "white" : "black"}
+            color={dark ? "white" : "black"}
           />
         </View>
       </Pressable>

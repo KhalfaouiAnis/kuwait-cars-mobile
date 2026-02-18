@@ -1,4 +1,4 @@
-import Checkbox from "@/core/components/ui/input/checkbox";
+import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";

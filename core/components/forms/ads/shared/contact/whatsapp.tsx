@@ -1,4 +1,4 @@
-import Checkbox from "@/core/components/ui/input/checkbox";
+import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
 import { DIMENSIONS } from "@/core/constants";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";

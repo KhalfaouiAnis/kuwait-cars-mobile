@@ -29,8 +29,6 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
     setActiveKey(key);
   };
 
-  console.log({ activeKey });
-
   return (
     <>
       <ScrollView
@@ -52,13 +50,10 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
           </View>
         </Pressable>
         {Object.entries(filterConfig).map(([filterKey, config]) => {
-          console.log({ filterKey });
-
           return (
             <FilterButton
               key={filterKey}
               filterKey={filterKey}
-              isDark={isDark}
               title={config.title}
               handleOpen={handleOpen}
             />
@@ -66,7 +61,6 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
         })}
         <FilterButton
           filterKey="price"
-          isDark={isDark}
           title={"price"}
           handleOpen={() => handleOpen("price")}
         />
@@ -110,9 +104,7 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
           applyFilters();
           setActiveKey(null);
         }}
-        header={
-          <Reset reset={() => resetDraftFilter(activeKey as CombinedFilterKeys)} />
-        }
+        header={<Reset reset={() => resetDraftFilter(activeKey as CombinedFilterKeys)} />}
         renderContent={() => {
           if (!activeKey) return null;
 

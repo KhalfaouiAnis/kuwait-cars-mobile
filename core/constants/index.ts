@@ -1,14 +1,18 @@
 import { Dimensions } from "react-native";
-import { Language, ProvinceOption, SelectOption } from "../types";
+import {
+  GlobalSelectOption,
+  Language,
+  ProvinceOption
+} from "../types";
 import { generateYears } from "../utils/date";
 
-export const DIMENSIONS = Dimensions.get("screen");
+export const DIMENSIONS = Dimensions.get("window");
 
 export const PLATE_RECOGNIZER_API_URL =
   "https://api.platerecognizer.com/v1/plate-reader/";
 export const ADS_PAGE_SIZE = 4;
 export const MAX_DRAFTS_COUNT =
-  Number(process.env.EXPO_PUBLIC_MAX_DRAFTS_COUNT) || 2;
+  Number(process.env.EXPO_PUBLIC_MAX_DRAFTS_COUNT) || 3;
 
 export const APP_STORAGE_KEY = "KC_APP_STORAGE_KEY";
 export const AUTH_STORAGE_KEY = "KC_AUTH_STORAGE";
@@ -36,8 +40,15 @@ export const COUNTRIES = [
 ];
 
 export const HIDE_TABBAR_ROUTES: string[] = ["/create"];
+export const APP_SCHEMA = "x-car//create";
 
-export const CAR_COLORS: SelectOption[] = [
+export const OVERALL_MIN_PRICE = 0;
+export const OVERALL_MAX_PRICE = 99000;
+
+export const OVERALL_MIN_MILEAGE = 0;
+export const OVERALL_MAX_MILEAGE = 99000;
+
+export const CAR_COLORS: GlobalSelectOption[] = [
   { id: "None", label: "None", value: "None" },
   { id: "White", label: "White", value: "White" },
   { id: "Black", label: "Black", value: "Black" },
@@ -65,7 +76,7 @@ export const CAR_COLORS: SelectOption[] = [
   { id: "Other", label: "Other", value: "Other" },
 ];
 
-export const YEARS: SelectOption[] = generateYears().map((year) => ({
+export const YEARS: GlobalSelectOption[] = generateYears().map((year) => ({
   id: year.toString(),
   label: year.toString(),
   value: year.toString(),
@@ -731,13 +742,85 @@ export const PROVINCES: ProvinceOption[] = [
   },
 ];
 
-export const OVERALL_MIN_PRICE = 0;
-export const OVERALL_MAX_PRICE = 99000;
-
-export const OVERALL_MIN_MILEAGE = 0;
-export const OVERALL_MAX_MILEAGE = 99000;
+export const PURE_PROVINCES: Omit<ProvinceOption, "areas">[] = [
+  {
+    province: "Al Asimah",
+    latitude: 29.34142578906314,
+    longitude: 47.97161303044713,
+  },
+  {
+    province: "Hawalli",
+    latitude: 29.337562213611356,
+    longitude: 48.02463827322325,
+  },
+  {
+    province: "Al Ahmadi",
+    latitude: 29.08681167762133,
+    longitude: 48.07514879647327,
+  },
+  {
+    province: "Farwaniyah",
+    latitude: 29.19528929129091,
+    longitude: 47.904396497421416,
+  },
+  {
+    province: "Al Jahra",
+    latitude: 29.33830455189348,
+    longitude: 47.67475489016851,
+  },
+  {
+    province: "Mubarek Al-kabeer",
+    latitude: 29.188843552556285,
+    longitude: 48.078176597276894,
+  },
+];
 
 export const UNIT_OPTIONS = [
   { id: "KM", label: "KM", value: "KM" },
   { id: "ML", label: "ML", value: "ML" },
+];
+
+export const YES_NO_OPTIONS = [
+  { id: "Yes", label: "yes", value: true },
+  { id: "No", label: "no", value: false },
+];
+
+export const FUEL_TYPE_OPTIONS = [
+  { id: "Petrol", label: "createAd.Petrol", value: "Petrol" },
+  { id: "Diesel", label: "createAd.Diesel", value: "Diesel" },
+  { id: "Electric", label: "createAd.Electric", value: "Electric" },
+  { id: "Hybrid", label: "createAd.Hybrid", value: "Hybrid" },
+];
+
+export const TRANSMISSION_OPTIONS = [
+  { id: "auto", label: "Auto", value: "Auto" },
+  { id: "manual", label: "Manual", value: "Manual" },
+];
+
+export const ROOF_OPTIONS = [
+  { id: "Sunroof", label: "createAd.Sunroof", value: "Sunroof" },
+  { id: "Panoramic", label: "createAd.Panoramic", value: "Panoramic" },
+  {
+    id: "Convertible Roof",
+    label: "createAd.ConvertibleRoof",
+    value: "ConvertibleRoof",
+  },
+];
+
+export const CAR_CYLENDERS = [
+  { id: "2", label: "2", value: "2" },
+  { id: "4", label: "4", value: "4" },
+  { id: "5", label: "5", value: "5" },
+  { id: "6", label: "6", value: "6" },
+  { id: "8", label: "8", value: "8" },
+  { id: "10", label: "10", value: "10" },
+  { id: "12", label: "12", value: "12" },
+];
+
+export const MOTORCYCLE_CYCLENDERS = [
+  { id: "1", label: "1", value: "1" },
+  { id: "2", label: "2", value: "2" },
+  { id: "3", label: "3", value: "3" },
+  { id: "4", label: "4", value: "4" },
+  { id: "6", label: "6", value: "6" },
 ];

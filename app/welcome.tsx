@@ -57,11 +57,11 @@ export default function Index() {
               boxShadow: boxShadow(4, 6, 20).button.boxShadow,
               width: DIMENSIONS.width - 80,
             }}
-            className="h-[55px] items-center justify-center rounded-3xl border border-grayish"
+            className="h-[55px] items-center justify-center rounded-3xl border-[0.5px] border-grayish"
             onPress={handleGuestSession}
           >
             <Text
-              className="font-inter-semibold text-center text-lg dark:text-white"
+              className="font-inter-semibold text-center dark:text-white"
               style={{ width: DIMENSIONS.width - 80 }}
             >
               {t("asAGuest")}
@@ -70,9 +70,12 @@ export default function Index() {
           <TouchableOpacity
             className="-mt-3"
             onPress={handleGuestSession}
-            style={{ width: DIMENSIONS.width - 80, direction: isRTL ? "rtl" : "ltr" }}
+            style={{ width: DIMENSIONS.width - 80 }}
           >
-            <Text className="font-normal text-sm self-end mr-3 dark:text-white">
+            <Text
+              className="font-normal text-sm self-end mr-3 dark:text-white"
+              style={{ flexDirection: isRTL ? "row" : "row" }}
+            >
               {t("skip")}{" "}
               <Fontisto
                 name={isRTL ? "arrow-left-l" : "arrow-right-l"}

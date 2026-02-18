@@ -9,6 +9,7 @@ import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Language } from "@/core/types";
 import { cn } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { Redirect, useRouter } from "expo-router";
 import {
   FlatList,
@@ -22,7 +23,8 @@ export default function Index() {
   const router = useRouter();
   useViewTrackerCleanup();
   const { user, isGuest, isReady, _hasHydrated } = authStore();
-  const { setLang, lang: currentLang, theme } = useUserPreferencesStore();
+  const { setLang, lang: currentLang, isRTL } = useUserPreferencesStore();
+  const { dark } = useTheme()
 
   const handleSelect = async (lang: Language) => {
     setLang(lang.code);
@@ -34,8 +36,8 @@ export default function Index() {
     <TouchableOpacity
       style={
         currentLang === item.code
-          ? [{ ...styles.buttonSelected, boxShadow: theme !== "light" ? styles.button.boxShadow: styles.buttonSelected.boxShadow }]
-          : [{ ...styles.button, boxShadow: theme !== "light" ? undefined : styles.button.boxShadow }]
+          ? [{ ...styles.buttonSelected, boxShadow: dark ? styles.button.boxShadow : styles.buttonSelected.boxShadow }, { flexDirection: isRTL ? "row-reverse" : "row" }]
+          : [{ ...styles.button, boxShadow: dark ? undefined : styles.button.boxShadow }, { flexDirection: isRTL ? "row-reverse" : "row" }]
       }
       className={cn(
         "flex-row items-center justify-between px-5 h-[55px] my-1.5 rounded-3xl border border-grayish bg-white dark:border-[#46464640]",
@@ -51,7 +53,7 @@ export default function Index() {
       <Ionicons
         name="chevron-forward"
         size={20}
-        color={theme !== "light" ? "white" : "black"}
+        color={dark ? "white" : "black"}
       />
     </TouchableOpacity>
   );
@@ -71,7 +73,7 @@ export default function Index() {
           showsVerticalScrollIndicator={false}
           contentContainerClassName="items-center gap-4 pb-4"
           ListHeaderComponent={
-            <View className="flex items-center pt-4">
+            <View className="flex items-center pt-4 mb-6">
               <AppLogo size={160} />
             </View>
           }

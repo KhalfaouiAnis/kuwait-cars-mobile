@@ -9,31 +9,33 @@ import SelectedAdType from "../ad-type-selector/selected-ad-type";
 import StepField from "../step-field";
 
 export default function BasicInfo<T extends FieldValues>({ fields }: BaseStepViewProps<T>) {
-    const { model, brand, ad_type } = useLocalSearchParams()
+    const { model, brand } = useLocalSearchParams()
     const { t } = useTranslation("common")
     const { t: tBrands } = useTranslation("car_categories")
     const { isRTL } = useUserPreferencesStore()
 
+    const label = `${tBrands(brand)}${model ? "-" + tBrands(model) : ""}`
+
     return (
         <>
             <View className="flex-row items-center justify-center w-full">
-                <View className="border border-primary-500 w-2/5" />
+                <View className="border-[1.5px] border-primary-500 w-2/5" />
                 <Text className="px-2 text-error font-inter text-lg">{t("createAd.requiredInformation")}</Text>
-                <View className="border border-primary-500 w-2/5" />
+                <View className="border-[1.5px] border-primary-500 w-2/5" />
             </View>
             <View className="gap-y-5 mt-2" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <View>
-                    <View className="flex-row items-center justify-between">
-                        <Text className="font-semibold mb-2 dark:text-white">{t("createAd.whatAreYouSelling")}</Text>
-                        <Text className="text-sm text-gray-300">{t("adCategories.used_cars")}</Text>
+                    <View className="flex-row items-center justify-between px-2 mb-3">
+                        <Text className="font-inter text-blue dark:text-white">{t("createAd.whatAreYouSelling")}</Text>
+                        <Text className="text-sm font-inter text-gray-300">{t("adCategories.used_cars")}</Text>
                     </View>
                     <SelectedAdType
-                        label={`${tBrands(brand)}-${tBrands(model)}`}
+                        label={label}
                         icon={<Ionicons name="car-sport-outline" color="black" size={20} />}
                     />
                 </View>
-                    <StepField config={fields.year!} />
-                    <StepField config={fields.exterior_color!} />
+                <StepField config={fields.year!} />
+                <StepField config={fields.exterior_color!} />
                 <View className="flex-row gap-4 items-center mx-5">
                     <View className="flex-1">
                         <StepField config={fields.mileage!} />
@@ -57,7 +59,7 @@ export default function BasicInfo<T extends FieldValues>({ fields }: BaseStepVie
                 <StepField config={fields.cylinders!} />
                 <StepField config={fields.transmission!} />
                 <StepField config={fields.under_warranty!} />
-                <StepField config={fields.roof!} />
+                {fields.roof && <StepField config={fields.roof!} />}
             </View>
         </>
     )

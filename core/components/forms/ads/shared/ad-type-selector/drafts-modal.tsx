@@ -1,7 +1,8 @@
 import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-list";
 import AppModal from "@/core/components/ui/dialog/modal";
+import { IMAGES } from "@/core/constants/images";
 import { useAdDraftMutations } from "@/core/services/ads/ad.drafts.mutations";
-import { useAdDraftsQuery } from "@/core/services/ads/ad.drafts.queries";
+import { useAdDraftsQueries } from "@/core/services/ads/ad.drafts.queries";
 import { useAdDraftStore } from "@/core/store/adDrafts.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdDraftInterface } from "@/core/types/schema/shared";
@@ -9,7 +10,8 @@ import { boxShadow } from "@/core/utils/cn";
 import { formatSmartDate } from "@/core/utils/date";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { useRef } from "react";
+import { router } from "expo-router";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
@@ -61,21 +63,34 @@ const LeftAction = ({
 
 interface Props {
     visible: boolean;
+    onClose: () => void
 }
 
-export default function AdDraftsModal({ visible }: Props) {
+export default function AdDraftsModal({ visible, onClose }: Props) {
+    const { drafts, setActiveDraft, syncWithServer } = useAdDraftStore()
     const { t } = useTranslation("common");
     const swipeableRef = useRef<any>(null);
     const { lang } = useUserPreferencesStore();
-    const { data, isLoading, refetch } = useAdDraftsQuery();
+    const { fetchDrafts: { data: serverDrafts, isLoading, isSuccess } } = useAdDraftsQueries();
     const { deleteDraft, deleteAllDrafts } = useAdDraftMutations();
-    const { drafts } = useAdDraftStore()
+
+    const handleEditDraft = (draftId: string) => {
+        setActiveDraft(draftId);
+        router.navigate({ pathname: `/create/${drafts[draftId].ad_type}` as any });
+        onClose()
+    };
+
+    useEffect(() => {
+        if (isSuccess && serverDrafts) {
+            syncWithServer(serverDrafts);
+        }
+    }, [isSuccess, serverDrafts, syncWithServer])
 
     const renderItem = ({ item }: { item: AdDraftInterface }) => {
         return (
             <Swipeable
-                ref={swipeableRef}
                 friction={2}
+                ref={swipeableRef}
                 leftThreshold={40}
                 renderLeftActions={(progress) => (
                     <LeftAction
@@ -88,9 +103,9 @@ export default function AdDraftsModal({ visible }: Props) {
                     {
                         item.content?.media && (
                             <Image
-                                source={{ uri: item.content.media?.[0]?.remoteUrl }}
-                                style={{ width: 60, height: 80, borderRadius: 4 }}
                                 contentFit="cover"
+                                style={{ width: 80, height: 80, borderRadius: 6 }}
+                                source={item.content?.media?.[0]?.transformed_url ? { uri: item?.content?.media?.[0]?.transformed_url } : IMAGES.DefaultImage}
                             />
                         )
                     }
@@ -120,7 +135,7 @@ export default function AdDraftsModal({ visible }: Props) {
                                 </Text>
                             )}
                         </View>
-                        <View className="flex-1 justify-evenly">
+                        <View className="flex-1 items-center justify-around">
                             <TouchableOpacity
                                 className="bg-error items-center py-1 px-3 mb-1 rounded-lg"
                                 onPress={() => deleteDraft.mutate(item.id)}
@@ -129,6 +144,7 @@ export default function AdDraftsModal({ visible }: Props) {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 className="bg-success items-center py-1 px-3 mb-1 rounded-lg"
+                                onPress={() => handleEditDraft(item.id)}
                             >
                                 <Text className="text-sm">{t("profile.editAd")}</Text>
                             </TouchableOpacity>
@@ -142,7 +158,7 @@ export default function AdDraftsModal({ visible }: Props) {
     return (
         <AppModal
             visible={visible}
-            onClose={() => { }}
+            onClose={onClose}
             renderContent={() => (
                 <View className="flex-1 mx-2">
                     <View
@@ -171,15 +187,11 @@ export default function AdDraftsModal({ visible }: Props) {
                             <AdSkeletonList />
                         ) : (
                             <FlatList
-                                data={Object.values(drafts)}
-                                onRefresh={refetch}
-                                refreshing={isLoading}
                                 renderItem={renderItem}
-                                onEndReachedThreshold={0.5}
-                                removeClippedSubviews={false}
-                                keyExtractor={(item) => item.id}
+                                data={Object.values(drafts)}
                                 showsVerticalScrollIndicator={false}
-                                contentContainerStyle={data?.length === 0 ? {} : { paddingBottom: 40 }}
+                                contentContainerStyle={{ paddingBottom: 40 }}
+                                keyExtractor={(item) => item.id || new Date().getMilliseconds.toString()}
                             />
                         )}
                     </View>

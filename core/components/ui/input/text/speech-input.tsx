@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { BaseTextInputProps } from '../..';
 
-export default function InputWithSpeech<TForm extends FieldValues>({ control, name, required, label, ...props }: BaseTextInputProps<TForm>) {
+export default function InputWithSpeech<TForm extends FieldValues>({ control, name, required, label, placeholder, ...props }: BaseTextInputProps<TForm>) {
     const { t } = useTranslation("common")
     const { isRTL } = useUserPreferencesStore();
 
@@ -23,29 +23,30 @@ export default function InputWithSpeech<TForm extends FieldValues>({ control, na
 
     return (
         <View>
-            {label && <Text className="text-base font-semibold mb-1 ms-5 dark:text-white">{label}</Text>}
+            {label && <Text className="font-inter-medium text-blue ms-2 dark:text-white">{t(label)}</Text>}
             <View
-                style={[styles.container, boxShadow().button]}
-                className='flex-row items-center justify-between p-3 border border-grayish'
+                style={[styles.container, boxShadow().button, { borderColor: error ? "#FF123D" : "#A8A8A8" }]}
+                className='flex-row items-center justify-between border-[0.5px]'
             >
                 <View className='flex-1 flex-row items-center justify-between'>
                     <TextInput
-                        className="dark:text-gray-100 flex-1"
-                        value={value}
-                        numberOfLines={1}
+                        {...props}
+                        className="dark:text-gray-100 flex-1 font-inter"
+                        placeholder={t(placeholder || "")}
                         onChangeText={onChange}
+                        numberOfLines={1}
+                        value={value}
                         style={{
                             writingDirection: isRTL ? "rtl" : "ltr",
                             textAlign: isRTL ? "right" : "left"
                         }}
-                        {...props}
                     />
                     <View className='flex-row items-center'>
                         {
                             required && <Text className='text-error text-lg'>*</Text>
                         }
-                        <TouchableOpacity hitSlop={10} onPress={isRecordingForThisField ? stopListening : startListening} className='border-none bg-transparent'>
-                            <Ionicons name="mic-outline" size={24} color={isRecordingForThisField ? "#FFF12E" : "gray"} style={styles.suffixIcon} />
+                        <TouchableOpacity hitSlop={10} onPress={isRecordingForThisField ? stopListening : startListening}>
+                            <Ionicons name="mic-outline" size={24} color={isRecordingForThisField ? "#FFF12E" : "black"} style={styles.suffixIcon} />
                         </TouchableOpacity>
                     </View>
                 </View>

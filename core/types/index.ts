@@ -8,6 +8,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import {
+  AdMediaAsset,
   AreaInterface,
   LocationInterface,
   ProvinceInterface,
@@ -24,6 +25,7 @@ export type SubscriptionDetail = {
   adTypes: string[];
   type: SUBSCRIPTION_TYPES | string;
   expires_in: number;
+  videoDuration: number;
   title: string;
   price: number;
   features: string[];
@@ -54,7 +56,7 @@ export interface User {
   province: ProvinceInterface;
   area?: AreaInterface | null;
   location?: LocationInterface | null;
-  avatar?: ProfilePictureMedia | null;
+  avatar?: AdMediaAsset;
   created_at: Date;
 }
 

@@ -24,7 +24,7 @@ const MainHeader = ({
     >
       {back && <BackArrow />}
       {drawer && <ProfileDrawer />}
-      <View className="flex-1 flex-row items-center justify-between rounded-[20px] border border-grayish px-4 mx-4 bg-transparent dark:bg-darkish">
+      <View className="flex-1 flex-row items-center justify-between rounded-[20px] border-[0.5px] border-grayish px-4 mx-4 bg-transparent dark:bg-darkish">
         <View className="flex-row items-center gap-x-2 flex-1">
           <Ionicons
             name="search-outline"

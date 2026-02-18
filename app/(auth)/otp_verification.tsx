@@ -38,7 +38,7 @@ export default function OTPVerificationScreen() {
                         height: 50,
                     }}
                 >
-                    <Text className="text-2xl font-inter-semibold text-center text-black disabled:text-gray-100">
+                    <Text className="text-lg font-inter-semibold text-center text-black disabled:text-gray-100">
                         {t("submit")}
                     </Text>
                 </TouchableOpacity>

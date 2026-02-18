@@ -5,6 +5,7 @@ import {
   createNewAdDraft,
   deleteAdDraft,
   deleteAllAdDraft,
+  promoteAd,
   updateAdDraft,
 } from "./ad.drafts.service";
 
@@ -46,6 +47,23 @@ export const useAdDraftMutations = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["ad-drafts"] });
+    },
+  });
+
+  const promoteAdDraft = useMutation({
+    mutationFn: (id: string) => promoteAd(id),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["ad-drafts"] });
+
+      const previousDrafts =
+        queryClient.getQueryData<AdDraftInterface[]>(["ad-drafts"]) || [];
+      return { previousDrafts };
+    },
+    onError: (err, newDraft, context) => {
+      queryClient.setQueryData(["ad-drafts"], context?.previousDrafts);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["ad-drafts", "ads"] });
     },
   });
 
@@ -103,5 +121,11 @@ export const useAdDraftMutations = () => {
     },
   });
 
-  return { createAdDraft, syncDraft, deleteDraft, deleteAllDrafts };
+  return {
+    createAdDraft,
+    promoteAdDraft,
+    syncDraft,
+    deleteDraft,
+    deleteAllDrafts,
+  };
 };

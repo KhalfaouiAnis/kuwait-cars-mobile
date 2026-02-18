@@ -1,35 +1,34 @@
-import Checkbox from "@/core/components/ui/input/checkbox";
+import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
 import { DIMENSIONS } from "@/core/constants";
 import { useSignIn } from "@/core/hooks/auth/useAuth";
 import { boxShadow } from "@/core/utils/cn";
 import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
-import AuthTextInput from "../../ui/input/text/auth-input";
+import BaseTextInput from "../../ui/input/text/base-text-input";
 
 export default function SignInForm() {
   const { t } = useTranslation("auth");
-  const { errors, handleSubmit, onSubmit, isSubmitting, control } = useSignIn();
+  const { handleSubmit, onSubmit, isSubmitting, control } = useSignIn();
 
   return (
     <View className="pt-10 px-4 pb-10">
       <View className="gap-8 items-center">
-        <AuthTextInput
+        <BaseTextInput
           name="phone"
+          maxLength={8}
           control={control}
           icon="call-outline"
-          placeholder={t("phoneNumber")}
           keyboardType="phone-pad"
-          error={errors.phone?.ref?.name}
+          translatedPlaceholder={t("phoneNumber")}
         />
-        <AuthTextInput
-          icon="lock-closed-outline"
-          placeholder={t("password")}
-          endIcon="eye-outline"
+        <BaseTextInput
           name="password"
-          error={errors.password?.ref?.name}
           secureTextEntry
           control={control}
+          endIcon="eye-outline"
+          icon="lock-closed-outline"
+          translatedPlaceholder={t("password")}
         />
       </View>
       <View className="flex-row items-center justify-between mt-8 px-4">
@@ -55,7 +54,7 @@ export default function SignInForm() {
         onPress={handleSubmit(onSubmit)}
         disabled={isSubmitting}
       >
-        <Text className="text-2xl font-inter-semibold text-center text-black">
+        <Text className="text-lg font-inter-semibold text-center text-black">
           {isSubmitting ? (
             <ActivityIndicator size="small" color="#fff" />
           ) : (

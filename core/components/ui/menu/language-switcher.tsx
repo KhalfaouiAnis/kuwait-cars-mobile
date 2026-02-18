@@ -1,10 +1,11 @@
 import Flag from "@/assets/svg/flag";
 import { SUPPORTED_LANGUAGES } from "@/core/constants";
+import { useDropdown } from "@/core/hooks/use-dropdown";
 import i18n from "@/core/i18n/i18n";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Language } from "@/core/types";
 import { cn } from "@/core/utils/cn";
-import React, { useRef, useState } from "react";
+import React from "react";
 import {
   FlatList,
   Modal,
@@ -20,24 +21,12 @@ type LanguageSwitcherProps = {
 export default function LanguageSwitcher({
   onLanguageChange,
 }: LanguageSwitcherProps) {
-  const { lang: selectedLang, setLang, isRTL } = useUserPreferencesStore();
-  const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0 });
-  const [isMeasured, setIsMeasured] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const iconRef = useRef<View | null>(null);
-
-  const openDropdown = () => {
-    setIsMeasured(false);
-    iconRef.current && iconRef.current.measure((x, y, width, height, pageX, pageY) => {
-      setDropdownPos({ top: pageY + height, left: 20 });
-      setIsMeasured(true);
-      setIsOpen(true);
-    });
-  };
+  const { lang: selectedLang, setLang } = useUserPreferencesStore();
+  const { close, coords, toggle, isVisible, triggerRef } = useDropdown()
 
   const handleSelect = (lang: Language) => {
     setLang(lang.code);
-    setIsOpen(false);
+    close();
     i18n.changeLanguage(lang.code);
     onLanguageChange?.(lang.code);
   };
@@ -57,10 +46,10 @@ export default function LanguageSwitcher({
   return (
     <View collapsable={false}>
       <TouchableOpacity
-        ref={iconRef}
+        ref={triggerRef}
         key={selectedLang}
         activeOpacity={0.7}
-        onPress={openDropdown}
+        onPress={toggle}
         className="w-10 h-10 items-center justify-center overflow-hidden"
       >
         <Flag name={selectedLang} size={30} />
@@ -68,17 +57,16 @@ export default function LanguageSwitcher({
 
       <Modal
         transparent
-        visible={isOpen}
+        visible={isVisible}
         animationType="fade"
       >
         <Pressable
-          className="flex-1 justify-center items-center bg-black/20" onPress={() => setIsOpen(false)}>
+          onPress={close}
+          className="flex-1 justify-center items-center bg-black/20">
           <View
             style={{
-              top: dropdownPos.top,
-              start: isRTL ? dropdownPos.left : undefined,
-              end: isRTL ? undefined : dropdownPos.left,
-              opacity: isMeasured ? 1 : 0
+              top: coords.top,
+              left: coords.left - 60,
             }}
             className="absolute bg-white p-4 dark:bg-darkish rounded-lg flex-1">
             <FlatList

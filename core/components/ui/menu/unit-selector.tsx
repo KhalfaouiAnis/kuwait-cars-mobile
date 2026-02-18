@@ -1,4 +1,4 @@
-import { DIMENSIONS } from "@/core/constants";
+import { DIMENSIONS, UNIT_OPTIONS } from "@/core/constants";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,11 +19,6 @@ type UnitSelectorProps<TForm extends FieldValues> = {
   control: Control<TForm>;
   name: FieldPath<TForm>;
 }
-
-const UNIT_OPTIONS = [
-  { value: 'KM' },
-  { value: 'ML' },
-];
 
 export default function UnitSelector<TForm extends FieldValues>({ control, name }: UnitSelectorProps<TForm>) {
   const { field: { onChange, value } } = useController({ control, name });
@@ -62,7 +57,7 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name 
     <View
       collapsable={false}
       style={styles.wrapper}
-      className='flex-1 items-center justify-center border border-grayish px-6'
+      className='flex-1 items-center justify-center border-[0.5px] border-grayish px-6'
     >
       <TouchableOpacity
         hitSlop={30}
@@ -71,7 +66,7 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name 
         onPress={openDropdown}
         className="flex-row items-center gap-2 overflow-hidden"
       >
-        <Text className="text-base text-gray-600 dark:text-white font-medium">{t(`unit.${value}`) || t("unit.KM")}</Text>
+        <Text className="text-base text-gray-600 dark:text-white font-medium">{value ? t(`unit.${value}`) : t("unit.KM")}</Text>
         <Ionicons name='chevron-down' size={20} />
       </TouchableOpacity>
 
@@ -80,22 +75,20 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name 
         visible={isOpen}
         animationType="fade"
       >
-        <Pressable
-          className="flex-1 justify-center items-center bg-black/20" onPress={() => setIsOpen(false)}
-        >
+        <Pressable className="flex-1 justify-center items-center bg-black/20" onPress={() => setIsOpen(false)}>
           <View
             style={{
               top: dropdownPos.top,
-              start: isRTL ? dropdownPos.right : undefined,
+              opacity: isMeasured ? 1 : 0,
               end: isRTL ? undefined : dropdownPos.left,
-              opacity: isMeasured ? 1 : 0
+              start: isRTL ? dropdownPos.right : undefined,
             }}
             className="absolute bg-white p-4 dark:bg-darkish rounded-lg flex-1">
             <FlatList
-              contentContainerClassName="gap-y-4 px-4"
-              keyExtractor={(item) => item.value}
-              renderItem={renderItem}
               data={UNIT_OPTIONS}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.value}
+              contentContainerClassName="gap-y-4 px-4"
             />
           </View>
         </Pressable>

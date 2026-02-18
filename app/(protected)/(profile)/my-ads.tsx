@@ -3,22 +3,23 @@ import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-l
 import Container from "@/core/components/ui/container";
 import ConfirmDeleteDialog from "@/core/components/ui/dialog/confirm-delete-dialog";
 import { EmptyState } from "@/core/components/ui/shared/empty-state";
-import { useRepostAd, useSoftDeletAd } from "@/core/services/ads/ad.mutations";
+import { useAdMutations, useRepostAd, useSoftDeletAd } from "@/core/services/ads/ad.mutations";
 import { useMyAdsQuery } from "@/core/services/ads/ad.queries";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdStatus, AdvertisementInterface } from "@/core/types";
 import { formatSmartDate } from "@/core/utils/date";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Reanimated, {
-    interpolate,
-    SharedValue,
-    useAnimatedStyle,
+  interpolate,
+  SharedValue,
+  useAnimatedStyle,
 } from "react-native-reanimated";
 
 const ReanimatedView = Reanimated.View;
@@ -65,6 +66,7 @@ export default function MyAdsScreen() {
   const swipeableRef = useRef<any>(null);
   const { lang } = useUserPreferencesStore();
   const { mutate } = useSoftDeletAd();
+  const { useEditAd: { mutate: editAd } } = useAdMutations()
   const { mutateAsync: repostAd } = useRepostAd();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
@@ -74,6 +76,16 @@ export default function MyAdsScreen() {
   const renderItem = ({ item }: { item: AdvertisementInterface }) => {
     const handleRepost = async () => {
       await repostAd(item.id);
+    };
+
+    const startEditingLiveAd = async (ad: AdvertisementInterface) => {
+      editAd(ad, {
+        onSuccess() {
+          // useDraftStore.getState().upsertDraftLocally(draft);
+          // useDraftStore.getState().setActiveDraft(draft.id);
+          router.navigate({ pathname: `/create/${ad.ad_type}` as any });
+        }
+      })
     };
 
     return (
@@ -142,7 +154,10 @@ export default function MyAdsScreen() {
                   <Text className="text-sm text-white">{t("delete")}</Text>
                 </TouchableOpacity>
               )}
-              <TouchableOpacity className="bg-success items-center py-1 px-3 mb-1 rounded-lg">
+              <TouchableOpacity
+                onPress={() => startEditingLiveAd(item)}
+                className="bg-success items-center py-1 px-3 mb-1 rounded-lg"
+              >
                 <Text className="text-sm">{t("profile.editAd")}</Text>
               </TouchableOpacity>
             </View>

@@ -7,6 +7,7 @@ import { FavoriteButton } from "@/core/components/ui/button/favorite-button";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdvertisementInterface } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
+import { useTheme } from "@react-navigation/native";
 import { getYear } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { ChatCTA } from "../communication/ad-cta/chat";
@@ -20,9 +21,8 @@ export default function AdvertisementDetails({
   adDetail: AdvertisementInterface;
 }) {
   const { t } = useTranslation("common");
-  const { isRTL, theme } = useUserPreferencesStore();
-
-  const isDark = theme !== "light";
+  const { isRTL } = useUserPreferencesStore();
+  const { dark } = useTheme()
 
   const thumbnail = adDetail.media.find(
     (pic) => pic.media_type === "THUMBNAIL",
@@ -71,7 +71,7 @@ export default function AdvertisementDetails({
               <Ionicons
                 name="location-outline"
                 size={22}
-                color={isDark ? "white" : "black"}
+                color={dark ? "white" : "black"}
               />
               <Text className="font-inter text-base dark:text-white">
                 {adDetail.province &&
@@ -206,7 +206,7 @@ export default function AdvertisementDetails({
                     </Text>
                     <FavoriteButton
                       isFavorite={adDetail?.is_favorited || false}
-                      onPress={() => {}}
+                      onPress={() => { }}
                     />
                   </View>
                 </View>
@@ -230,7 +230,7 @@ export default function AdvertisementDetails({
                     </Text>
                     <FavoriteButton
                       isFavorite={adDetail?.is_favorited || false}
-                      onPress={() => {}}
+                      onPress={() => { }}
                     />
                   </View>
                 </View>
@@ -254,7 +254,7 @@ export default function AdvertisementDetails({
                     </Text>
                     <FavoriteButton
                       isFavorite={adDetail?.is_favorited || false}
-                      onPress={() => {}}
+                      onPress={() => { }}
                     />
                   </View>
                 </View>

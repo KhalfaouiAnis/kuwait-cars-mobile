@@ -4,7 +4,7 @@ import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 export default function PickFromGallery({ addMedia, video, label, disabled }: { addMedia: () => void, label: string, video?: boolean, disabled?: boolean }) {
     return (
         <TouchableOpacity 
-        className="justify-center self-center w-[300px] h-52 bg-[#FAFAFA] rounded-[32px] border-2"
+        className="justify-center self-center w-[300px] h-52 bg-[#FAFAFA] rounded-[32px] border-[1px]"
             onPress={addMedia}
             disabled={disabled}
         >

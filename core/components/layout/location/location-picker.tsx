@@ -3,6 +3,7 @@ import useUserPreferencesStore from '@/core/store/preferences.store';
 import { AdFormStepProps } from '@/core/types';
 import { boxShadow } from '@/core/utils/cn';
 import { Ionicons, Octicons } from '@expo/vector-icons';
+import { useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { Pressable, Text, View } from 'react-native';
@@ -10,14 +11,13 @@ import MapViewer from './map-viewer';
 
 type LocationPickerProps = AdFormStepProps<any> & {
     label: string
-    primary?: boolean
 }
 
-export default function LocationPicker({ setValue, isDark, control, label, primary }: LocationPickerProps) {
-    const { isRTL } = useUserPreferencesStore()
+export default function LocationPicker({ setValue, control, label }: LocationPickerProps) {
     const location = useWatch({ control, name: "location" })
+    const { dark } = useTheme()
     const [showModal, setShowModal] = useState(false);
-
+    const { isRTL } = useUserPreferencesStore()
     function showMap() { setShowModal(true) }
     function hideMap() { setShowModal(false) }
 
@@ -33,16 +33,16 @@ export default function LocationPicker({ setValue, isDark, control, label, prima
                 }}
             >
                 <View className='flex-row gap-4 items-center'>
-                    <Octicons name="location" size={20} color={isDark ? "white" : "black"} />
+                    <Octicons name="location" size={20} color={dark ? "white" : "black"} />
                     <Text
-                        className={`${location?.latitude ? "text-[#333] dark:text-white overflow-hidden": "text-gray-400"}`}
+                        className={`${location?.latitude ? "text-[#333] dark:text-white overflow-hidden" : "text-gray-400"}`}
                         pointerEvents="none"
                     >
                         {location?.latitude ? Number(location.latitude).toFixed(5) : label}
                     </Text>
                 </View>
                 <View>
-                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={isDark ? "white" : "black"} />
+                    <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={dark ? "white" : "black"} />
                 </View>
             </Pressable>
             <MapViewer

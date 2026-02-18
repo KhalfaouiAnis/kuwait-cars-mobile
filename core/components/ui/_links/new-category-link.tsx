@@ -41,7 +41,7 @@ export default function NewCategoryLink({
         <View className="justify-center mt-3">
           <Text
             numberOfLines={2}
-            className="font-inter text-center text-black dark:text-white text-xs"
+            className="font-inter text-center text-blue text-xs"
           >
             {label}
           </Text>

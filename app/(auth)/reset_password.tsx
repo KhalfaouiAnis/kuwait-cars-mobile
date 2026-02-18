@@ -1,5 +1,5 @@
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
-import AuthTextInput from "@/core/components/ui/input/text/auth-input";
+import BaseTextInput from "@/core/components/ui/input/text/base-text-input";
 import { DIMENSIONS } from "@/core/constants";
 import { useResetPassword } from "@/core/hooks/auth/useAuth";
 import { boxShadow } from "@/core/utils/cn";
@@ -16,31 +16,28 @@ export default function ResetPasswordScreen() {
                 {t("createYourNewPassword")}
             </Text>
             <View className="pt-2 px-4 my-4 gap-y-4">
-                <AuthTextInput
+                <BaseTextInput
                     name="phone"
                     control={control}
                     icon="call-outline"
-                    placeholder={t("phoneNumber")}
-                    error={errors.phone?.ref?.name}
-                    label={t("yourPhone")}
+                    translatedLabel={t("yourPhone")}
+                    translatedPlaceholder={t("phoneNumber")}
                 />
-                <AuthTextInput
+                <BaseTextInput
                     name="password"
                     control={control}
-                    error={errors.password?.ref?.name}
-                    label={t("newPassword")}
                     endIcon="eye-outline"
                     icon="lock-closed-outline"
-                    placeholder={t("createNewPassword")}
+                    translatedLabel={t("newPassword")}
+                    translatedPlaceholder={t("createNewPassword")}
                 />
-                <AuthTextInput
+                <BaseTextInput
                     control={control}
-                    name="confirmPassword"
-                    error={errors.confirmPassword?.ref?.name}
-                    label={t("confirmPassword")}
                     endIcon="eye-outline"
+                    name="confirmPassword"
                     icon="lock-closed-outline"
-                    placeholder={t("confirmNewPassword")}
+                    translatedLabel={t("confirmPassword")}
+                    translatedPlaceholder={t("confirmNewPassword")}
                 />
             </View>
             <View className="px-4 pb-4 items-center">
@@ -54,7 +51,7 @@ export default function ResetPasswordScreen() {
                     onPress={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
                 >
-                    <Text className="text-xl font-inter-semibold text-center text-black">
+                    <Text className="text-lg font-inter-semibold text-center text-black">
                         {isSubmitting ? <ActivityIndicator size="small" color="#fff" /> : t("resetPassword")}
                     </Text>
                 </TouchableOpacity>

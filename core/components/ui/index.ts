@@ -1,4 +1,15 @@
-import { CAR_COLORS, PROVINCES, UNIT_OPTIONS, YEARS } from "@/core/constants";
+import {
+  CAR_COLORS,
+  CAR_CYLENDERS,
+  FUEL_TYPE_OPTIONS,
+  MOTORCYCLE_CYCLENDERS,
+  PURE_PROVINCES,
+  ROOF_OPTIONS,
+  TRANSMISSION_OPTIONS,
+  UNIT_OPTIONS,
+  YEARS,
+  YES_NO_OPTIONS,
+} from "@/core/constants";
 import { SUBSCRIPTION_PLANS } from "@/core/constants/ad";
 import {
   GlobalSelectOption,
@@ -7,27 +18,220 @@ import {
 } from "@/core/types";
 import { AD_MASTER_SCHEMA_KEY } from "@/core/types/schema/ads";
 import { SelectAdapters } from "@/core/utils/select-adapters";
+import { Ionicons } from "@expo/vector-icons";
 import { ReactNode } from "react";
 import { Control, FieldValues, Path } from "react-hook-form";
 import { TextInputProps } from "react-native";
 import BasicInfo from "../forms/ads/shared/steps/basic-info";
-import GalleryPicker from "../forms/ads/shared/steps/gallery-picker";
+import DetailedInfo from "../forms/ads/shared/steps/detailed-info";
+import DetailedInfo2 from "../forms/ads/shared/steps/detailed-info-2";
 import AdMedia from "../forms/ads/shared/steps/media";
 import PlanSelection from "../forms/ads/shared/steps/plan-selection";
+import ShowVideo from "../forms/ads/shared/steps/showVideo";
+import AdVideo from "../forms/ads/shared/steps/video";
+import GalleryPicker from "../layout/media/gallery-picker";
+import ShowVideoPicker from "../layout/media/show-video-picker";
+import SoundEffectPicker from "../layout/media/soundEffectPicker";
+import VideoPicker from "../layout/media/video-picker";
+import AdContactOption from "./input/checkbox/ad-contact-option";
+import LocationPicker from "./input/location/location-picker";
 import RadioGroup from "./input/radio-group";
 import AppSelect from "./input/select/app-select";
-import AreaSelect from "./input/select/area-select";
+import AdProvinceSelector from "./input/select/province-selector";
+import AdRegionSelector from "./input/select/region-selector";
 import BaseTextInput from "./input/text/base-text-input";
 import InputWithSpeech from "./input/text/speech-input";
 import TextAreaSpeech from "./input/text/text-area-speech";
-import MediaUploader from "./media/media-uploader";
 import UnitSelector from "./menu/unit-selector";
 import PlanSelector from "./plan/plan-selector";
+
+const FIELDS_REGISTRY = {
+  plan: {
+    type: "plan",
+    name: "plan",
+    plans: SUBSCRIPTION_PLANS,
+  },
+  year: {
+    required: true,
+    type: "select",
+    name: "year",
+    placeholder: "year",
+    options: YEARS,
+    adapter: SelectAdapters.fromPrimitive,
+  },
+  exterior_color: {
+    type: "select",
+    required: true,
+    name: "exterior_color",
+    placeholder: "createAd.exteriorColor",
+    label: "color",
+    options: CAR_COLORS,
+    adapter: SelectAdapters.fromPrimitive,
+  },
+  mileage: {
+    name: "mileage",
+    required: true,
+    fullWidth: false,
+    type: "text",
+    keyboardType: "number-pad",
+    placeholder: "createAd.Mileage",
+  },
+  mileage_unit: {
+    placeholder: "KM",
+    name: "mileage_unit",
+    type: "unitSelector",
+    options: UNIT_OPTIONS,
+    adapter: SelectAdapters.fromPrimitive,
+  },
+  hide_license_plate: {
+    name: "hide_license_plate",
+    type: "radio",
+    fullWidth: true,
+    bordered: true,
+    borderRadius: 30,
+    options: YES_NO_OPTIONS,
+    label: "createAd.Hidevehiclelicenseplate",
+  },
+  fuel_type: {
+    name: "fuel_type",
+    type: "radio",
+    label: "createAd.fuelType",
+    fullWidth: true,
+    options: FUEL_TYPE_OPTIONS,
+  },
+  cylinders: {
+    name: "cylinders",
+    type: "radio",
+    label: "createAd.Cylinders",
+    square: true,
+    borderRadius: 5,
+    options: CAR_CYLENDERS,
+  },
+  transmission: {
+    name: "transmission",
+    type: "radio",
+    label: "transmission",
+    fullWidth: true,
+    bordered: true,
+    borderRadius: 30,
+    options: TRANSMISSION_OPTIONS,
+  },
+  under_warranty: {
+    name: "under_warranty",
+    type: "radio",
+    label: "createAd.underWarranty",
+    fullWidth: true,
+    bordered: true,
+    borderRadius: 30,
+    options: YES_NO_OPTIONS,
+  },
+  roof: {
+    name: "roof",
+    type: "radio",
+    label: "createAd.roof",
+    borderRadius: 20,
+    options: ROOF_OPTIONS,
+  },
+  province: {
+    required: true,
+    name: "province",
+    type: "provinceSelect",
+    options: PURE_PROVINCES,
+    placeholder: "yourProvince",
+    adapter: SelectAdapters.fromObject("province"),
+  },
+  area: {
+    name: "area",
+    options: [] as any,
+    type: "areaselect",
+    placeholder: "area",
+    adapter: SelectAdapters.fromObject("area"),
+  },
+  location: {
+    name: " location",
+    type: "location",
+    label: "location",
+  },
+  price: {
+    name: "price",
+    type: "text",
+    required: true,
+    placeholder: "createAd.WriteYourPrice",
+    label: "createAd.Price",
+    keyboardType: "number-pad",
+  },
+  title: {
+    name: "title",
+    maxLength: 30,
+    required: true,
+    type: "textSpeech",
+    label: "createAd.Title",
+    placeholder: "createAd.WriteYourAdvertisementTitle",
+  },
+  description: {
+    required: true,
+    maxLength: 500,
+    name: "description",
+    label: "description",
+    type: "textareaSpeech",
+    placeholder: "createAd.WriteYourAdvertisementDescription",
+  },
+  additional_number: {
+    type: "text",
+    keyboardType: "numeric",
+    name: "additional_number",
+    placeholder: "createAd.AddAdditionalNumber",
+  },
+  second_additional_number: {
+    type: "text",
+    keyboardType: "numeric",
+    name: "second_additional_number",
+    placeholder: "createAd.AddAdditionalNumber",
+  },
+  contact_whatsapp: {
+    type: "contact",
+    name: "contact_whatsapp",
+    label: "createAd.ContactViaWhatsApp",
+  },
+  receive_calls: {
+    type: "contact",
+    name: "receive_calls",
+    label: "createAd.ReceiveCalls",
+  },
+  xcar_calls: {
+    type: "contact",
+    name: "xcar_calls",
+    label: "createAd.ReceiveCallViaXCar",
+  },
+  xcar_chat: {
+    type: "contact",
+    name: "xcar_chat",
+    label: "createAd.ChatViaXcar",
+  },
+  media: {
+    name: "media",
+    type: "media",
+    maxImages: 6,
+  },
+  video: {
+    name: "video",
+    type: "video",
+  },
+  show_video: {
+    name: "video",
+    type: "showVideo",
+  },
+  sound_effect: {
+    name: "sound_effect",
+    type: "soundEffect",
+  },
+} as const;
 
 export type AdStepKey =
   | "basic_info"
   | "media"
   | "video"
+  | "show_video"
   | "detailed_info"
   | "detailed_info_2"
   | "choose_plan";
@@ -36,14 +240,18 @@ interface BaseInputProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
   label?: string;
+  translatedLabel?: string;
   placeholder?: string;
+  translatedPlaceholder?: string;
   required?: boolean;
   disabled?: boolean;
+  icon?: keyof typeof Ionicons.glyphMap;
+  customIcon?: ReactNode;
+  endIcon?: keyof typeof Ionicons.glyphMap;
 }
 
 export interface BaseTextInputProps<T extends FieldValues>
   extends TextInputProps, BaseInputProps<T> {
-  icon?: ReactNode;
   fullWidth?: boolean;
 }
 
@@ -55,6 +263,10 @@ export interface PlanSelectorProps<T extends FieldValues> {
 export interface MediaSelectorProps {
   name: string;
   maxImages?: number;
+}
+
+export interface VideoSelectorProps {
+  name: string;
 }
 
 export interface BaseRadioInputProps<T extends FieldValues>
@@ -90,157 +302,50 @@ export interface BaseUnitSelectorInputProps<
 }
 
 export const FIELD_COMPONENTS = {
-  areaselect: AreaSelect,
-  plan: PlanSelector,
-  media: GalleryPicker,
-  select: AppSelect,
   radio: RadioGroup,
+  select: AppSelect,
+  provinceSelect: AdProvinceSelector,
+  video: VideoPicker,
+  showVideo: ShowVideoPicker,
+  soundEffect: SoundEffectPicker,
+  plan: PlanSelector,
   text: BaseTextInput,
+  location: LocationPicker,
+  media: GalleryPicker,
+  areaselect: AdRegionSelector,
+  contact: AdContactOption,
+  unitSelector: UnitSelector,
   textSpeech: InputWithSpeech,
   textareaSpeech: TextAreaSpeech,
-  unitSelector: UnitSelector,
 } as const;
 
-type Blueprint<P> = Omit<P, "control" | "errors">;
+type Blueprint<P> = Omit<P, "control">;
 
 export type TFieldConfig<T extends FieldValues> =
-  | ({ type: "text" } & BaseTextInputProps<T>)
-  | ({ type: "select" } & BaseSelectInputProps<T, any>)
-  | ({ type: "radio" } & BaseRadioInputProps<T>)
+  | ({ type: "media" } & MediaSelectorProps)
+  | ({ type: "video" | "showVideo" | "soundEffect" } & VideoSelectorProps)
   | ({ type: "plan" } & PlanSelectorProps<T>)
+  | ({ type: "radio" } & BaseRadioInputProps<T>)
+  | ({ type: "select" } & BaseSelectInputProps<T, any>)
+  | ({ type: "provinceSelect" | "areaselect" } & BaseSelectInputProps<T, any>)
   | ({ type: "unitSelector" } & BaseUnitSelectorInputProps<T>)
-  | ({ type: "media" } & MediaSelectorProps);
+  | ({
+      type: "text" | "textSpeech" | "textareaSpeech" | "contact" | "location";
+    } & BaseTextInputProps<T>);
 
 export type FieldBlueprint<T extends FieldValues> =
-  | ({ type: "text" } & Blueprint<BaseTextInputProps<T>>)
+  | ({
+      type: "text" | "textSpeech" | "textareaSpeech" | "contact" | "location";
+    } & Blueprint<BaseTextInputProps<T>>)
   | ({ type: "select" } & Blueprint<BaseSelectInputProps<T>>)
+  | ({ type: "provinceSelect" | "areaselect" } & Blueprint<
+      BaseSelectInputProps<T>
+    >)
   | ({ type: "radio" } & Blueprint<BaseRadioInputProps<T>>)
   | ({ type: "plan" } & Blueprint<PlanSelectorProps<T>>)
   | ({ type: "media" } & Blueprint<MediaSelectorProps>)
+  | ({ type: "video" | "showVideo" | "soundEffect" } & VideoSelectorProps)
   | ({ type: "unitSelector" } & Blueprint<BaseUnitSelectorInputProps<T>>);
-
-export type StepFieldKeysRegistry = Record<
-  AD_MASTER_SCHEMA_KEY,
-  Partial<Record<AdStepKey, string[]>>
->;
-
-const STEP_FIELD_KEYS: StepFieldKeysRegistry = {
-  used_cars: {
-    basic_info: [
-      "year",
-      "exterior_color",
-      "mileage",
-      "mileage_unit",
-      "hide_license_plate",
-      "fuel_type",
-      "cylinders",
-      "transmission",
-      "under_warranty",
-      "roof",
-    ],
-    media: ["media"],
-    video: ["video"],
-    detailed_info: [
-      "province",
-      "area",
-      "location",
-      "price",
-      "title",
-      "description",
-    ],
-    detailed_info_2: [
-      "additional_number",
-      "additional_number2",
-      "contact_whatsapp",
-      "receive_calls",
-      "xcar_calls",
-      "xcar_chat",
-    ],
-    choose_plan: ["plan"],
-  },
-  motorcycles: {
-    basic_info: [
-      "year",
-      "exterior_color",
-      "mileage",
-      "mileage_unit",
-      "hide_license_plate",
-      "fuel_type",
-      "cylinders",
-      "transmission",
-      "under_warranty",
-      "roof",
-    ],
-    media: ["media"],
-    video: ["video"],
-    detailed_info: [
-      "province",
-      "area",
-      "location",
-      "price",
-      "title",
-      "description",
-    ],
-    detailed_info_2: [
-      "additional_number",
-      "additional_number2",
-      "contact_whatsapp",
-      "receive_calls",
-      "xcar_calls",
-      "xcar_chat",
-    ],
-    choose_plan: ["plan"],
-  },
-  part_accessories: {
-    detailed_info: [
-      "province",
-      "area",
-      "location",
-      "hide_license_plate",
-      "price",
-      "title",
-      "description",
-    ],
-    media: ["media"],
-    video: ["video"],
-    detailed_info_2: [
-      "additional_number",
-      "additional_number2",
-      "contact_whatsapp",
-      "receive_calls",
-      "xcar_calls",
-      "xcar_chat",
-    ],
-    choose_plan: ["plan"],
-  },
-  show: {
-    detailed_info: ["hide_license_plate", "title", "description"],
-    media: ["media"],
-    video: ["video"],
-    detailed_info_2: [
-      "additional_number",
-      "additional_number2",
-      "xcar_calls",
-      "xcar_chat",
-    ],
-    choose_plan: ["plan"],
-  },
-  common: {
-    detailed_info: [
-      "province",
-      "area",
-      "location",
-      "hide_license_plate",
-      "price",
-      "title",
-      "description",
-    ],
-    media: ["media"],
-    video: ["video"],
-    detailed_info_2: ["additional_number", "contact_whatsapp"],
-    choose_plan: ["plan"],
-  },
-} as const;
 
 export const FLOW_CONFIGS: Record<AD_MASTER_SCHEMA_KEY, AdStepKey[]> = {
   used_cars: [
@@ -266,7 +371,13 @@ export const FLOW_CONFIGS: Record<AD_MASTER_SCHEMA_KEY, AdStepKey[]> = {
     "video",
     "detailed_info_2",
   ],
-  show: ["choose_plan", "detailed_info", "media", "video", "detailed_info_2"],
+  show: [
+    "choose_plan",
+    "detailed_info",
+    "media",
+    "show_video",
+    "detailed_info_2",
+  ],
   common: ["choose_plan", "detailed_info", "media", "video", "detailed_info_2"],
 } as const;
 
@@ -275,154 +386,169 @@ export type StepFieldRegistry<T extends FieldValues> = Record<
   Record<string, FieldBlueprint<T>>
 >;
 
-export const STEP_FIELD_REGISTRY: StepFieldRegistry<any> = {
-  choose_plan: {
-    plan: {
-      type: "plan",
-      name: "plan",
-      plans: SUBSCRIPTION_PLANS,
+export type StepFieldConfiguration<T extends FieldValues> = Record<
+  AD_MASTER_SCHEMA_KEY,
+  Partial<Record<AdStepKey, Record<string, FieldBlueprint<T>>>>
+>;
+
+export const STEP_FIELD_CONFIGURATION: StepFieldConfiguration<any> = {
+  common: {
+    choose_plan: {
+      plan: FIELDS_REGISTRY.plan,
     },
-  },
-  basic_info: {
-    year: {
-      required: true,
-      type: "select",
-      name: "year",
-      placeholder: "year",
-      options: YEARS,
-      adapter: SelectAdapters.fromPrimitive,
+    detailed_info: {
+      province: FIELDS_REGISTRY.province,
+      area: FIELDS_REGISTRY.area,
+      location: FIELDS_REGISTRY.location,
+      hide_license_plate: FIELDS_REGISTRY.hide_license_plate,
+      price: FIELDS_REGISTRY.price,
+      title: FIELDS_REGISTRY.title,
+      description: FIELDS_REGISTRY.description,
     },
-    exterior_color: {
-      type: "select",
-      required: true,
-      name: "exterior_color",
-      placeholder: "createAd.exteriorColor",
-      label: "color",
-      options: CAR_COLORS,
-      adapter: SelectAdapters.fromPrimitive,
-    },
-    mileage: {
-      name: "mileage",
-      required: true,
-      fullWidth: false,
-      type: "text",
-      keyboardType: "number-pad",
-      placeholder: "createAd.Mileage",
-    },
-    mileage_unit: {
-      placeholder: "KM",
-      name: "mileage_unit",
-      type: "unitSelector",
-      options: UNIT_OPTIONS,
-      adapter: SelectAdapters.fromPrimitive,
-    },
-    hide_license_plate: {
-      name: "hide_license_plate",
-      type: "radio",
-      label: "createAd.Hidevehiclelicenseplate",
-      fullWidth: true,
-      bordered: true,
-      borderRadius: 30,
-      options: [
-        { id: "Yes", label: "yes", value: "Yes" },
-        { id: "No", label: "no", value: "No" },
-      ],
-    },
-    fuel_type: {
-      name: "fuel_type",
-      type: "radio",
-      label: "createAd.fuelType",
-      fullWidth: true,
-      options: [
-        { id: "Petrol", label: "createAd.Petrol", value: "Petrol" },
-        { id: "Diesel", label: "createAd.Diesel", value: "Diesel" },
-        { id: "Electric", label: "createAd.Electric", value: "Electric" },
-        { id: "Hybrid", label: "createAd.Hybrid", value: "Hybrid" },
-      ],
-    },
-    cylinders: {
-      name: "cylinders",
-      type: "radio",
-      label: "createAd.Cylinders",
-      square: true,
-      borderRadius: 5,
-      options: [
-        { id: "2", label: "2", value: "2" },
-        { id: "4", label: "4", value: "4" },
-        { id: "5", label: "5", value: "5" },
-        { id: "6", label: "6", value: "6" },
-        { id: "8", label: "8", value: "8" },
-        { id: "10", label: "10", value: "10" },
-        { id: "12", label: "12", value: "12" },
-      ],
-    },
-    transmission: {
-      name: "transmission",
-      type: "radio",
-      label: "createAd.transmission",
-      fullWidth: true,
-      bordered: true,
-      borderRadius: 30,
-      options: [
-        { id: "auto", label: "Auto", value: "Auto" },
-        { id: "manual", label: "Manual", value: "Manual" },
-      ],
-    },
-    under_warranty: {
-      name: "under_warranty",
-      type: "radio",
-      label: "createAd.under_warranty",
-      fullWidth: true,
-      bordered: true,
-      borderRadius: 30,
-      options: [
-        { id: "Yes", label: "yes", value: "Yes" },
-        { id: "No", label: "no", value: "No" },
-      ],
-    },
-    roof: {
-      name: "roof",
-      type: "radio",
-      label: "createAd.roof",
-      borderRadius: 20,
-      options: [
-        { id: "Sunroof", label: "createAd.Sunroof", value: "Sunroof" },
-        { id: "Panoramic", label: "createAd.Panoramic", value: "Panoramic" },
-        {
-          id: "Convertible Roof",
-          label: "createAd.ConvertibleRoof",
-          value: "ConvertibleRoof",
-        },
-      ],
-    },
-  },
-  detailed_info: {
-    province: {
-      name: "province",
-      type: "select",
-      label: "Province",
-      placeholder: "Province",
-      options: PROVINCES,
-      adapter: SelectAdapters.fromObject("province"),
-    },
-    area: {
-      name: "area",
-      options: [],
-      type: "select",
-      placeholder: "Area",
-      label: "Area",
-      adapter: SelectAdapters.fromObject("area"),
-    },
-  },
-  detailed_info_2: {},
-  media: {
     media: {
-      name: "media",
-      type: "media",
-      maxImages: 6,
+      media: FIELDS_REGISTRY.media,
+    },
+    video: {
+      video: FIELDS_REGISTRY.video,
+    },
+    detailed_info_2: {
+      additional_number: FIELDS_REGISTRY.additional_number,
+      second_additional_number: FIELDS_REGISTRY.second_additional_number,
+      contact_whatsapp: FIELDS_REGISTRY.contact_whatsapp,
+      receive_calls: FIELDS_REGISTRY.receive_calls,
+      xcar_calls: FIELDS_REGISTRY.xcar_calls,
+      xcar_chat: FIELDS_REGISTRY.xcar_chat,
     },
   },
-  video: {},
+  motorcycles: {
+    choose_plan: {
+      plan: FIELDS_REGISTRY.plan,
+    },
+    basic_info: {
+      year: FIELDS_REGISTRY.year,
+      exterior_color: FIELDS_REGISTRY.exterior_color,
+      mileage: FIELDS_REGISTRY.mileage,
+      mileage_unit: FIELDS_REGISTRY.mileage_unit,
+      hide_license_plate: FIELDS_REGISTRY.hide_license_plate,
+      fuel_type: FIELDS_REGISTRY.fuel_type,
+      cylinders: {
+        ...FIELDS_REGISTRY.cylinders,
+        options: MOTORCYCLE_CYCLENDERS,
+      },
+      transmission: FIELDS_REGISTRY.transmission,
+      under_warranty: FIELDS_REGISTRY.under_warranty,
+    },
+    detailed_info: {
+      province: FIELDS_REGISTRY.province,
+      area: FIELDS_REGISTRY.area,
+      location: FIELDS_REGISTRY.location,
+      price: FIELDS_REGISTRY.price,
+      title: FIELDS_REGISTRY.title,
+      description: FIELDS_REGISTRY.description,
+    },
+    detailed_info_2: {
+      additional_number: FIELDS_REGISTRY.additional_number,
+      second_additional_number: FIELDS_REGISTRY.second_additional_number,
+      contact_whatsapp: FIELDS_REGISTRY.contact_whatsapp,
+      receive_calls: FIELDS_REGISTRY.receive_calls,
+      xcar_calls: FIELDS_REGISTRY.xcar_calls,
+      xcar_chat: FIELDS_REGISTRY.xcar_chat,
+    },
+    media: {
+      media: FIELDS_REGISTRY.media,
+    },
+    video: {
+      video: FIELDS_REGISTRY.video,
+    },
+  },
+  part_accessories: {
+    choose_plan: {
+      plan: FIELDS_REGISTRY.plan,
+    },
+    detailed_info: {
+      province: FIELDS_REGISTRY.province,
+      area: FIELDS_REGISTRY.area,
+      location: FIELDS_REGISTRY.location,
+      hide_license_plate: FIELDS_REGISTRY.hide_license_plate,
+      price: FIELDS_REGISTRY.price,
+      title: FIELDS_REGISTRY.title,
+      description: FIELDS_REGISTRY.description,
+    },
+    media: {
+      media: FIELDS_REGISTRY.media,
+    },
+    video: {
+      video: FIELDS_REGISTRY.video,
+    },
+    detailed_info_2: {
+      additional_number: FIELDS_REGISTRY.additional_number,
+      second_additional_number: FIELDS_REGISTRY.second_additional_number,
+      contact_whatsapp: FIELDS_REGISTRY.contact_whatsapp,
+      receive_calls: FIELDS_REGISTRY.receive_calls,
+      xcar_calls: FIELDS_REGISTRY.xcar_calls,
+      xcar_chat: FIELDS_REGISTRY.xcar_chat,
+    },
+  },
+  show: {
+    choose_plan: {
+      plan: FIELDS_REGISTRY.plan,
+    },
+    detailed_info: {
+      hide_license_plate: FIELDS_REGISTRY.hide_license_plate,
+      title: FIELDS_REGISTRY.title,
+      description: FIELDS_REGISTRY.description,
+    },
+    media: {
+      media: FIELDS_REGISTRY.media,
+    },
+    show_video: {
+      video: FIELDS_REGISTRY.show_video,
+      sound_effect: FIELDS_REGISTRY.sound_effect,
+    },
+    detailed_info_2: {
+      xcar_calls: FIELDS_REGISTRY.xcar_calls,
+      xcar_chat: FIELDS_REGISTRY.xcar_chat,
+    },
+  },
+  used_cars: {
+    choose_plan: {
+      plan: FIELDS_REGISTRY.plan,
+    },
+    basic_info: {
+      year: FIELDS_REGISTRY.year,
+      exterior_color: FIELDS_REGISTRY.exterior_color,
+      mileage: FIELDS_REGISTRY.mileage,
+      mileage_unit: FIELDS_REGISTRY.mileage_unit,
+      hide_license_plate: FIELDS_REGISTRY.hide_license_plate,
+      fuel_type: FIELDS_REGISTRY.fuel_type,
+      cylinders: FIELDS_REGISTRY.cylinders,
+      transmission: FIELDS_REGISTRY.transmission,
+      under_warranty: FIELDS_REGISTRY.under_warranty,
+      roof: FIELDS_REGISTRY.roof,
+    },
+    detailed_info: {
+      province: FIELDS_REGISTRY.province,
+      area: FIELDS_REGISTRY.area,
+      location: FIELDS_REGISTRY.location,
+      price: FIELDS_REGISTRY.price,
+      title: FIELDS_REGISTRY.title,
+      description: FIELDS_REGISTRY.description,
+    },
+    detailed_info_2: {
+      additional_number: FIELDS_REGISTRY.additional_number,
+      second_additional_number: FIELDS_REGISTRY.second_additional_number,
+      contact_whatsapp: FIELDS_REGISTRY.contact_whatsapp,
+      receive_calls: FIELDS_REGISTRY.receive_calls,
+      xcar_calls: FIELDS_REGISTRY.xcar_calls,
+      xcar_chat: FIELDS_REGISTRY.xcar_chat,
+    },
+    media: {
+      media: FIELDS_REGISTRY.media,
+    },
+    video: {
+      video: FIELDS_REGISTRY.video,
+    },
+  },
 };
 
 export interface BaseStepViewProps<T extends FieldValues> {
@@ -430,10 +556,11 @@ export interface BaseStepViewProps<T extends FieldValues> {
 }
 
 export const STEP_VIEWS: Record<AdStepKey, React.FC<any>> = {
-  media: AdMedia,
   choose_plan: PlanSelection,
   basic_info: BasicInfo,
-  video: MediaUploader,
-  detailed_info: MediaUploader,
-  detailed_info_2: MediaUploader,
+  media: AdMedia,
+  video: AdVideo,
+  show_video: ShowVideo,
+  detailed_info: DetailedInfo,
+  detailed_info_2: DetailedInfo2,
 };

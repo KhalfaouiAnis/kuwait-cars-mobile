@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { BaseTextInputProps } from '../..';
 
-export default function TextAreaSpeech<TForm extends FieldValues>({ control, name, icon, required, label, ...props }: BaseTextInputProps<TForm>) {
+export default function TextAreaSpeech<TForm extends FieldValues>({ control, name, icon, required, label, placeholder, ...props }: BaseTextInputProps<TForm>) {
     const { isRTL } = useUserPreferencesStore();
     const { t } = useTranslation("common")
     const {
@@ -22,42 +22,34 @@ export default function TextAreaSpeech<TForm extends FieldValues>({ control, nam
 
     return (
         <View>
-            {label && <Text className="text-base ms-5 font-semibold mb-1 dark:text-white">{label}</Text>}
-            <View className='flex-row items-center justify-between p-3 bordered-box'
-                style={[styles.container, boxShadow().button]}
+            {label && <Text className="font-inter-medium text-blue ms-2 dark:text-white">{t(label)}</Text>}
+            <View
+                className='justify-between border-[0.5px]'
+                style={[styles.container, boxShadow().button, { borderColor: error ? "#FF123D" : "#A8A8A8" }]}
             >
-                {
-                    icon && <View className='ms-2 items-center'>
-                        {icon}
-                    </View>
-                }
-                <View className='flex-1 flex-row items-start relative'>
+                <View className='flex-1 flex-row items-start'>
                     <TextInput
-                        className="dark:text-gray-100 flex-1"
-                        value={value}
-                        numberOfLines={10}
+                        {...props}
+                        className="dark:text-gray-100 flex-1 font-inter"
+                        placeholder={t(placeholder || "")}
                         onChangeText={onChange}
+                        numberOfLines={10}
                         multiline={true}
+                        value={value}
                         style={{
                             writingDirection: isRTL ? "rtl" : "ltr",
                             textAlign: isRTL ? "right" : "left",
                             textAlignVertical: "top",
-                            height: 140,
                         }}
-                        {...props}
                     />
-                    <View className='flex-row items-center'>
+                    <View className='items-center justify-between h-full py-2'>
                         {
-                            required && <Text className='text-error text-lg me-2 mt-2'>*</Text>
+                            required && <Text className='text-error text-lg me-2'>*</Text>
                         }
+                        <TouchableOpacity hitSlop={10} onPress={isRecordingForThisField ? stopListening : startListening} >
+                            <Ionicons name="mic-outline" size={24} color={isRecordingForThisField ? "#FFF12E" : "black"} />
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={isRecordingForThisField ? stopListening : startListening} className='border-none bg-transparent absolute end-0 bottom-0'>
-                        {isRecordingForThisField ? (
-                            <Text className='text-lg'>🛑</Text>
-                        ) : (
-                            <Ionicons name="mic-outline" size={24} color="gray" style={styles.suffixIcon} />
-                        )}
-                    </TouchableOpacity>
                 </View>
             </View>
             {
@@ -73,13 +65,10 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignSelf: "center",
-        alignItems: 'center',
         paddingHorizontal: 10,
         borderRadius: 10,
-        ...boxShadow().button,
+        height: 170,
         width: DIMENSIONS.width - 60,
-    },
-    suffixIcon: {
-        marginStart: 4,
-    },
+        ...boxShadow().button,
+    }
 });
