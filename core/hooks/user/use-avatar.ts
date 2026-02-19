@@ -1,52 +1,56 @@
+import { MediaAsset } from "@/core/types/schema/shared";
+import { generateId } from "@/core/utils";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
+import { ControllerRenderProps, FieldValues } from "react-hook-form";
 import { getFileSize, Image } from "react-native-compressor";
 
-export const useAvatar = (setValue: any) => {
-  const [avatar, setAvatar] = useState<any>(null);
-
+export const useAvatar = (
+  field: ControllerRenderProps<FieldValues, string>,
+) => {
   const addAvatar = async (fromCamera: boolean) => {
-    const options: ImagePicker.ImagePickerOptions | undefined = {
-      mediaTypes: ["images"],
-      aspect: [4, 3],
-      quality: 0.8,
-    };
-    const result = await (fromCamera
-      ? ImagePicker.launchCameraAsync(options)
-      : ImagePicker.launchImageLibraryAsync(options));
+    try {
+      const options: ImagePicker.ImagePickerOptions | undefined = {
+        mediaTypes: ["images"],
+        videoQuality: 3,
+        quality: 0.8,
+      };
 
-    if (result.canceled || !result.assets) return;
+      const result = await (fromCamera
+        ? ImagePicker.launchCameraAsync(options)
+        : ImagePicker.launchImageLibraryAsync(options));
 
-    const { uri } = result.assets[0];
+      if (result.canceled || !result.assets) return;
 
-    const compressedUri = await Image.compress(uri, {
-      output: "jpg",
-      disablePngTransparency: true,
-    });
+      const { uri: originalUri } = result.assets[0];
 
-    const compressedSize = await getFileSize(compressedUri);
+      const compressedUri = await Image.compress(originalUri, {
+        output: "jpg",
+        disablePngTransparency: true,
+      });
 
-    const fileObj: any = {
-      uri: compressedUri,
-      type: result.assets[0].mimeType,
-      name: result.assets[0].fileName,
-      size: compressedSize,
-    };
+      const compressedSize = await getFileSize(compressedUri);
 
-    setAvatar(fileObj);
-    setValue?.("avatar", fileObj);
+      const video: MediaAsset = {
+        uri: compressedUri,
+        media_type: "IMAGE",
+        size: Number(compressedSize),
+        type: result.assets[0].mimeType,
+        id: result.assets[0].assetId || generateId(),
+        name: result.assets[0].fileName || generateId(),
+      };
+
+      field.onChange(video);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const removeAvatar = (uri: string) => {
-    setAvatar(null);
-    setValue("avatar", undefined);
-    return;
+  const removeAvatar = () => {
+    field.onChange(null);
   };
 
   return {
-    avatar,
     addAvatar,
-    setAvatar,
     removeAvatar,
   };
 };

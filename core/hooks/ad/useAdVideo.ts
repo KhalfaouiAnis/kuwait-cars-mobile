@@ -1,4 +1,4 @@
-import { AdMediaAsset } from "@/core/types/schema/shared";
+import { MediaAsset } from "@/core/types/schema/shared";
 import { generateId } from "@/core/utils";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
@@ -34,7 +34,7 @@ export const useAdVideo = (
 
       const compressedSize = await getFileSize(compressedUri);
 
-      const video: AdMediaAsset = {
+      const video: MediaAsset = {
         uri: compressedUri,
         media_type: "VIDEO",
         size: Number(compressedSize),

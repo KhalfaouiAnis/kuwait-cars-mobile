@@ -2,16 +2,16 @@ import OTPVerificationInput from "@/core/components/base/otp-verification-input"
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
 import { ResendOTPTimer } from "@/core/components/ui/shared/resend-otp-timer";
 import { DIMENSIONS } from "@/core/constants";
-import { useOTP } from "@/core/hooks/auth/useAuth";
+import useAuth from "@/core/hooks/auth/useAuth";
 import { boxShadow } from "@/core/utils/cn";
 import { useLocalSearchParams } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function OTPVerificationScreen() {
-    const { t } = useTranslation("auth");
-
     const { phone } = useLocalSearchParams()
+    const { t } = useTranslation("auth");
+    const { useOTP } = useAuth();
     const { verifyOtp } = useOTP()
 
     return (

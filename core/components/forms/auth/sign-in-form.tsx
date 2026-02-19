@@ -1,6 +1,6 @@
 import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
 import { DIMENSIONS } from "@/core/constants";
-import { useSignIn } from "@/core/hooks/auth/useAuth";
+import useAuth from "@/core/hooks/auth/useAuth";
 import { boxShadow } from "@/core/utils/cn";
 import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,8 @@ import BaseTextInput from "../../ui/input/text/base-text-input";
 
 export default function SignInForm() {
   const { t } = useTranslation("auth");
-  const { handleSubmit, onSubmit, isSubmitting, control } = useSignIn();
+  const { useSignIn } = useAuth();
+  const { control, handleSubmit, onSubmit, isSubmitting} = useSignIn()
 
   return (
     <View className="pt-10 px-4 pb-10">

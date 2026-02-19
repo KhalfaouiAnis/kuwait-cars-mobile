@@ -1,4 +1,4 @@
-import { AdMediaAsset } from "@/core/types/schema/shared";
+import { MediaAsset } from "@/core/types/schema/shared";
 import { generateId } from "@/core/utils";
 import * as ImagePicker from "expo-image-picker";
 import { Image, getFileSize } from "react-native-compressor";
@@ -35,7 +35,7 @@ export const useMediaUploader = (
 
         const compressedSize = await getFileSize(compressedUri);
 
-        const newAsset: AdMediaAsset = {
+        const newAsset: MediaAsset = {
           id: asset.assetId || generateId(),
           type: asset.mimeType,
           uri: compressedUri,

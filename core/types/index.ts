@@ -8,9 +8,9 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import {
-  AdMediaAsset,
   AreaInterface,
   LocationInterface,
+  MediaAsset,
   ProvinceInterface,
 } from "./schema/shared";
 
@@ -56,7 +56,7 @@ export interface User {
   province: ProvinceInterface;
   area?: AreaInterface | null;
   location?: LocationInterface | null;
-  avatar?: AdMediaAsset;
+  avatar?: MediaAsset;
   created_at: Date;
 }
 

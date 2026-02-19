@@ -28,7 +28,7 @@ export const ProvinceSchema = z.object({
   longitude: z.coerce.number(),
 });
 
-export const AdMediaAssetSchema = z
+export const MediaAssetSchema = z
   .object({
     id: z.string(),
     uri: z.string().optional(),
@@ -57,8 +57,8 @@ export const BaseAdSchema = z.object({
   model: z.string().optional(),
   is_paid: z.boolean().optional(),
   is_free: z.boolean().optional(),
-  media: z.array(AdMediaAssetSchema).min(1),
-  video: AdMediaAssetSchema.nullish(),
+  media: z.array(MediaAssetSchema).min(1),
+  video: MediaAssetSchema.nullish(),
 
   additional_number: z.string().optional(),
   second_additional_number: z.string().optional(),
@@ -76,7 +76,7 @@ export const AdDraftInputSchema = z.object({
   step_index: z.coerce.number().int().min(0),
 });
 
-export type AdMediaAsset = z.infer<typeof AdMediaAssetSchema>;
+export type MediaAsset = z.infer<typeof MediaAssetSchema>;
 
 export const PaymentObjectSchema = z.object({
   amount: z.object({

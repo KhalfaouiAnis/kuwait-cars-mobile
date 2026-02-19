@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useMemo } from "react";
-import { FlatList, Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeInLeft, FadeInRight, FadeOut } from 'react-native-reanimated';
 import Reset from "../reset";
 
@@ -22,7 +22,7 @@ interface Props {
 export default function SearchHistory({ onNewSearch }: Props) {
     const { isRTL } = useUserPreferencesStore();
     const { clearHistory } = useSearchStore();
-    const { data } = useAdsQuery();
+    const { data, isLoading } = useAdsQuery();
 
     const ads = useMemo(
         () => data?.pages.flatMap((page) => page.data.sort((ad1, ad2) => ad2.plan.price - ad1.plan.price)) ?? [],
@@ -74,58 +74,62 @@ export default function SearchHistory({ onNewSearch }: Props) {
                 <Text className="text-center text-lg font-inter-medium">Saved searches</Text>
                 <Reset reset={clearHistory} />
             </View>
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                style={{ direction: isRTL ? "rtl" : "ltr" }}
-                contentContainerStyle={{ paddingBottom: 120, paddingTop: 20 }}
-            >
-                <View className="gap-4 mx-8">
-                    <View className="flex-row items-center gap-2 ms-4">
-                        <Ionicons name="search-outline" color="#1F51FF" size={20} />
-                        <Text className="text-blue">Recent search</Text>
-                    </View>
-                    <View
-                        style={{
-                            boxShadow: boxShadow().button.boxShadow, borderRadius: 20, borderWidth: 0.5, borderColor: "#A8A8A8",
-                            width: DIMENSIONS.width - 80, height: 160
-                        }}
-                        className="self-center justify-end gap-6 p-6">
-                        <View className="flex-row items-center gap-6">
-                            <Ionicons name="car-sport-outline" size={20} />
-                            <Text className="text-center">used car</Text>
-                        </View>
-                        <View className="flex-row items-center gap-6">
-                            <Ionicons name="car-sport-outline" size={20} />
-                            <Text className="text-center">mercedes-bens</Text>
-                        </View>
-                        <Text className="text-center text-orange">searching again</Text>
-                    </View>
+            <View className="gap-4 mx-8 mt-4">
+                <View className="flex-row items-center gap-2">
+                    <Ionicons name="search-outline" color="#1F51FF" size={20} />
+                    <Text className="text-blue">Recent search</Text>
                 </View>
-                <Text className="text-blue ms-12 mt-12">Highlighted ads</Text>
-                <FlatList
-                    data={ads}
-                    horizontal
-                    renderItem={renderItem}
-                    keyExtractor={keyExtractor}
-                    contentContainerStyle={{ gap: 20, paddingHorizontal: 20, flexDirection: isRTL ? 'row-reverse' : "row" }}
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerClassName=" py-6"
-                />
-                <TouchableOpacity
-                    onPress={onNewSearch}
-                    className="bg-primary-500 flex-row justify-center self-center rounded-[22px] items-center gap-4 mt-6"
+                <View
                     style={{
-                        boxShadow: boxShadow(4, 6, 20).button.boxShadow,
-                        width: 250,
-                        height: 55,
+                        boxShadow: boxShadow().button.boxShadow, borderRadius: 20, borderWidth: 0.5, borderColor: "#A8A8A8",
+                        width: DIMENSIONS.width - 80, height: 160
                     }}
-                >
-                    <Ionicons name="search-outline" size={20} />
-                    <Text className="text-center font-inter-medium">
-                        start searching
-                    </Text>
-                </TouchableOpacity>
-            </ScrollView>
+                    className="self-center justify-end gap-5 p-6">
+                    <View className="gap-5">
+                        <View className="flex-row items-center">
+                            <Ionicons name="car-sport-outline" size={20} />
+                            <Text className="text-center flex-1 font-inter">used car</Text>
+                        </View>
+                        <View className="flex-row items-center">
+                            <Image
+                                style={{ height: 20, width: 20, borderRadius: 100 }}
+                                source={IMAGES.CarMercedesLogo}
+                                contentFit="contain"
+                            />
+                            <Text className="text-center flex-1 font-inter">mercedes-bens</Text>
+                        </View>
+                    </View>
+                    <Text className="text-center text-orange font-inter">searching again</Text>
+                </View>
+            </View>
+            <Text className="text-blue ms-6 mt-12">Highlighted ads</Text>
+            {
+                isLoading ? <ActivityIndicator size="large" color="#FFF12E" /> : (
+                    <FlatList
+                        data={ads}
+                        horizontal
+                        renderItem={renderItem}
+                        keyExtractor={keyExtractor}
+                        contentContainerStyle={{ gap: 20, paddingHorizontal: 10, flexDirection: isRTL ? 'row-reverse' : "row" }}
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerClassName="py-6"
+                    />
+                )
+            }
+            <TouchableOpacity
+                onPress={onNewSearch}
+                className="bg-primary-500 flex-row justify-center self-center rounded-[22px] items-center gap-4 mt-auto mb-safe-offset-0"
+                style={{
+                    boxShadow: boxShadow(4, 6, 20).button.boxShadow,
+                    width: 250,
+                    height: 55,
+                }}
+            >
+                <Ionicons name="search-outline" size={20} />
+                <Text className="text-center font-inter-medium">
+                    start searching
+                </Text>
+            </TouchableOpacity>
         </Container>
     )
 }

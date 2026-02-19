@@ -39,8 +39,9 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
             style={[
                 styles.container,
                 {
-                    bottom: bottom + 6,
                     height: 49,
+                    direction: "ltr",
+                    bottom: bottom + 6,
                     backgroundColor: dark ? 'rgb(0 0 0 / 0.5)' : 'rgb(230 225 225 / 0.7)',
                 },
             ]}

@@ -1,9 +1,5 @@
 import { Dimensions } from "react-native";
-import {
-  GlobalSelectOption,
-  Language,
-  ProvinceOption
-} from "../types";
+import { GlobalSelectOption, Language, ProvinceOption } from "../types";
 import { generateYears } from "../utils/date";
 
 export const DIMENSIONS = Dimensions.get("window");
@@ -39,7 +35,7 @@ export const COUNTRIES = [
   { name: "Kuwait", cca2: "KW", callingCode: ["965"], flag: "🇰🇼" },
 ];
 
-export const HIDE_TABBAR_ROUTES: string[] = ["/create"];
+export const HIDE_TABBAR_ROUTES: string[] = ["/create", "/search"];
 export const APP_SCHEMA = "x-car//create";
 
 export const OVERALL_MIN_PRICE = 0;

@@ -37,8 +37,8 @@ import AdContactOption from "./input/checkbox/ad-contact-option";
 import LocationPicker from "./input/location/location-picker";
 import RadioGroup from "./input/radio-group";
 import AppSelect from "./input/select/app-select";
-import AdProvinceSelector from "./input/select/province-selector";
-import AdRegionSelector from "./input/select/region-selector";
+import AreaSelector from "./input/select/area-selector";
+import ProvinceSelector from "./input/select/province-selector";
 import BaseTextInput from "./input/text/base-text-input";
 import InputWithSpeech from "./input/text/speech-input";
 import TextAreaSpeech from "./input/text/text-area-speech";
@@ -304,7 +304,8 @@ export interface BaseUnitSelectorInputProps<
 export const FIELD_COMPONENTS = {
   radio: RadioGroup,
   select: AppSelect,
-  provinceSelect: AdProvinceSelector,
+  provinceSelect: ProvinceSelector,
+  areaselect: AreaSelector,
   video: VideoPicker,
   showVideo: ShowVideoPicker,
   soundEffect: SoundEffectPicker,
@@ -312,7 +313,6 @@ export const FIELD_COMPONENTS = {
   text: BaseTextInput,
   location: LocationPicker,
   media: GalleryPicker,
-  areaselect: AdRegionSelector,
   contact: AdContactOption,
   unitSelector: UnitSelector,
   textSpeech: InputWithSpeech,

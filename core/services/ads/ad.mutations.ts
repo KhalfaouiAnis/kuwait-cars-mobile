@@ -1,6 +1,6 @@
 import { httpClient } from "@/core/api/httpClient";
 import { CloudinarySignRequestInterface } from "@/core/types";
-import { AdMediaAsset } from "@/core/types/schema/shared";
+import { MediaAsset } from "@/core/types/schema/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner-native";
 import {
@@ -13,7 +13,7 @@ import {
 } from "./ad.service";
 
 export type UploadFileType = {
-  file: AdMediaAsset;
+  file: MediaAsset;
   signingParams: CloudinarySignRequestInterface;
 };
 

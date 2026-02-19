@@ -38,7 +38,7 @@ export default function CategoriesScreen() {
                     style={boxShadow(4, 6, 20, 0, "rgba(168 168 168 / 1)").button}
                     className="mt-4 rounded-t-[36px] bg-white dark:bg-darkish pt-6 pb-48"
                 >
-                    <View className="gap-y-6 flex-row items-center justify-between flex-wrap px-4">
+                    <View className="gap-y-6 flex-row items-start justify-between flex-wrap px-4">
                         <View className="w-full flex-row gap-4 px-1 mb-2">
                             <Pressable
                                 className="flex-1 items-center"

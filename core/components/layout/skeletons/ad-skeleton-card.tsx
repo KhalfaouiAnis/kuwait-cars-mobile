@@ -1,19 +1,19 @@
-import useUserPreferencesStore from '@/core/store/preferences.store';
+import { useTheme } from '@react-navigation/native';
 import { MotiView } from 'moti';
 import { Skeleton } from 'moti/skeleton';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-export const AdCardSkeleton = () => {
-    const { theme } = useUserPreferencesStore()
-    const colorMode = theme === "light" ? "light" : "dark";
+export const AdCardSkeleton = ({ height = 180 }: { height?: number }) => {
+    const { dark } = useTheme()
+    const colorMode = dark ? "dark" : "light";
 
     return (
         <MotiView
-            transition={{ type: 'timing' }}
             style={styles.container}
+            transition={{ type: 'timing' }}
         >
-            <Skeleton colorMode={colorMode} height={180} width={'100%'} radius={12} />
+            <Skeleton colorMode={colorMode} height={height} width={'100%'} radius={12} />
 
             <View style={styles.content}>
                 <View style={{ marginBottom: 8 }}>

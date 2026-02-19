@@ -11,7 +11,7 @@ import {
   AD_MASTER_SCHEMA_KEY,
   AD_MASTER_SCHEMAS,
 } from "@/core/types/schema/ads";
-import { AdMediaAsset } from "@/core/types/schema/shared";
+import { MediaAsset } from "@/core/types/schema/shared";
 import { delay } from "@/core/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isAxiosError } from "axios";
@@ -141,7 +141,7 @@ export const useDraftForm = () => {
 
             const medias: UploadFileType[] = [];
 
-            media.forEach((file: AdMediaAsset) => {
+            media.forEach((file: MediaAsset) => {
               medias.push({
                 file,
                 signingParams: { mediaType: "image" },
@@ -160,7 +160,7 @@ export const useDraftForm = () => {
               setValue("media", filterUris(uploadResponse));
             }
           } else if (["video", "show_video"].includes(currentStepKey)) {
-            const video = getValues(currentStepFields)[0] as AdMediaAsset;
+            const video = getValues(currentStepFields)[0] as MediaAsset;
             const plan = getValues("plan") as SubscriptionDetail;
             const duration = video?.duration;
 
@@ -252,7 +252,7 @@ export const useDraftForm = () => {
   };
 };
 
-const filterUris = (data: AdMediaAsset[]) => {
+const filterUris = (data: MediaAsset[]) => {
   return data.map((asset) => {
     if (asset.transformed_url || asset.original_url) {
       const { uri, ...rest } = asset;

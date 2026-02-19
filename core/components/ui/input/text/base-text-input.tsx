@@ -23,7 +23,7 @@ export default function BaseTextInput<TForm extends FieldValues>({
 
     return (
         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
-            {displayedLabel && <Text className="font-inter-medium text-blue font-semibold ms-2 dark:text-white">{t(displayedLabel)}</Text>}
+            {displayedLabel && <Text className="font-inter text-base text-blue font-semibold ms-2 dark:text-white">{t(displayedLabel)}</Text>}
             <View
                 className="flex-row items-center dark:border-[#46464640] dark:bg-[#1B1B1B80] px-3"
                 style={
@@ -49,20 +49,19 @@ export default function BaseTextInput<TForm extends FieldValues>({
                         {...props}
                         numberOfLines={1}
                         className={cn(
-                            "flex-1 overflow-hidden text-[#333] dark:text-white ms-2 font-inter",
+                            "flex-1 overflow-hidden text-[#333] dark:text-white ms-2 ",
                             { "text-error dark:text-error": error },
                         )}
                         placeholder={displayedPlaceholder}
-                        placeholderTextColor="#A8A8A8"
                         onChangeText={onChange}
-                        value={value as string}
+                        value={value}
                         secureTextEntry={props.secureTextEntry && !showPassword}
                         style={{
                             writingDirection: isRTL ? "rtl" : "ltr",
                             textAlign: isRTL ? "right" : "left"
                         }}
                     />
-                    <View className="flex-row mx-2 gap-4 items-center">
+                    <View className="flex-row mx-2 gap-2 items-center">
                         {endIcon && (
                             <Pressable
                                 hitSlop={6}

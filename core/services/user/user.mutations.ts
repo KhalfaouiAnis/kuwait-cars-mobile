@@ -5,7 +5,7 @@ import { UpdateProfileInterface } from "@/core/types/schema/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useUpdateProfile = () => {
-  const { totalProgress, setFileProgress, upload } = useUploadMedia();
+  const { setLoading, upload } = useUploadMedia();
   const queryClient = useQueryClient();
   const { setUser, user } = useAuthStore((state) => state);
 
@@ -17,17 +17,16 @@ export const useUpdateProfile = () => {
       if (avatar && "uri" in avatar) {
         const uploadResponse = await upload([
           {
-            file: { ...avatar, name: `avatar_${user?.id}` },
-            media_type: "IMAGE",
+            file: {
+              ...avatar,
+              name: `avatar_${user?.id}`,
+              media_type: "IMAGE",
+            },
             signingParams: { mediaType: "profile_pic" },
           },
         ]);
         if (uploadResponse) {
-          avatarData = {
-            public_id: uploadResponse[0].public_id,
-            original_url: uploadResponse[0].original_url,
-            media_type: "IMAGE",
-          };
+          avatarData = uploadResponse[0];
         }
       }
 
@@ -41,10 +40,9 @@ export const useUpdateProfile = () => {
     onSuccess: (updatedUser) => {
       setUser(updatedUser);
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      setFileProgress({});
     },
-    onError: () => setFileProgress({}),
+    onSettled: () => setLoading(false),
   });
 
-  return { ...mutation, uploadProgress: totalProgress };
+  return { ...mutation };
 };

@@ -10,7 +10,7 @@ export default function EditProfileScreen() {
 
     return (
         <Container scrollable backgroundColor={theme !== "light" ? "black" : "#FAED02"} header={<ProfileHeader title={t("profile.editProfile")} />}>
-            <EditProfileForm t={t} />
+            <EditProfileForm />
         </Container>
     )
 }

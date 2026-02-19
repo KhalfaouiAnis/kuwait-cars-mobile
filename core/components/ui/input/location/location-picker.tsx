@@ -5,19 +5,18 @@ import useUserPreferencesStore from '@/core/store/preferences.store';
 import { boxShadow } from '@/core/utils/cn';
 import { Ionicons, Octicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { BaseTextInputProps } from '../..';
 
-export default function LocationPicker({ label }: BaseTextInputProps<any>) {
-    const { control } = useFormContext()
-    const { t } = useTranslation("common");
+export default function LocationPicker({ label, control }: BaseTextInputProps<any>) {
     const { field: { onChange, value } } = useController({ control, name: "location" })
     const [showModal, setShowModal] = useState(false);
     const { isRTL, theme } = useUserPreferencesStore()
-    function showMap() { setShowModal(true) }
     function hideMap() { setShowModal(false) }
+    function showMap() { setShowModal(true) }
+    const { t } = useTranslation("common");
 
     return (
         <>
@@ -34,7 +33,7 @@ export default function LocationPicker({ label }: BaseTextInputProps<any>) {
                     <View className='flex-row gap-4 items-center'>
                         <Octicons name="location" size={20} color={theme !== "light" ? "white" : "black"} />
                         <Text
-                            className={`${value?.latitude ? "text-[#333] dark:text-white overflow-hidden" : "text-gray-400"}`}
+                            className={`font-inter text-sm ${value?.latitude ? "text-[#333] dark:text-white overflow-hidden" : "text-gray-400"}`}
                             pointerEvents="none"
                         >
                             {value?.latitude ? Number(value.latitude).toFixed(5) : t(label || "location")}
@@ -55,7 +54,7 @@ export default function LocationPicker({ label }: BaseTextInputProps<any>) {
             </View>
             {
                 value && (
-                    <View className="mt-4 px-2 w-full h-32 rounded-lg" pointerEvents="none">
+                    <View className="px-5 w-full h-32 rounded-lg" pointerEvents="none">
                         <StaticMapPreview lat={value.latitude} lng={value.longitude} />
                     </View>
                 )

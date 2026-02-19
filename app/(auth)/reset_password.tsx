@@ -1,13 +1,14 @@
 import FormWrapper from "@/core/components/forms/auth/form-wrapper";
 import BaseTextInput from "@/core/components/ui/input/text/base-text-input";
 import { DIMENSIONS } from "@/core/constants";
-import { useResetPassword } from "@/core/hooks/auth/useAuth";
+import useAuth from "@/core/hooks/auth/useAuth";
 import { boxShadow } from "@/core/utils/cn";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 export default function ResetPasswordScreen() {
-    const { control, errors, isSubmitting, handleSubmit, onSubmit } = useResetPassword()
+    const { useResetPassword } = useAuth();
+    const { control, handleSubmit, onSubmit, isSubmitting } = useResetPassword()
     const { t } = useTranslation("auth");
 
     return (

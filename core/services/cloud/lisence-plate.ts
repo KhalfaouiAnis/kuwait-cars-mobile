@@ -1,9 +1,9 @@
 import { PLATE_RECOGNIZER_API_URL } from "@/core/constants";
-import { AdMediaAsset } from "@/core/types/schema/shared";
+import { MediaAsset } from "@/core/types/schema/shared";
 import { delay } from "@/core/utils";
 
-export const processLicensePlates = async (assets: AdMediaAsset[]) => {
-  const processedAssets: AdMediaAsset[] = [];
+export const processLicensePlates = async (assets: MediaAsset[]) => {
+  const processedAssets: MediaAsset[] = [];
 
   for (const asset of assets) {
     try {

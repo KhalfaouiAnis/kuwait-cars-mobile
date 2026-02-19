@@ -40,7 +40,7 @@ export default function ProfileScreen() {
       header={<ProfileHeader title={t("profile.profile")} />}
     >
       <View className="flex-1 mt-2 bg-white dark:bg-black px-4 py-2">
-        <View className="flex-row justify-between w-full border border-primary-500 rounded-lg px-4 pt-1 pb-3">
+        <View className="flex-row justify-between w-full px-4 pt-1 pb-3">
           <View>
             <Text className="font-inter-semibold text-xl dark:text-white">
               {user?.fullname}
@@ -90,7 +90,7 @@ export default function ProfileScreen() {
 
         <View
           style={{ direction: isRTL ? "rtl" : "ltr" }}
-          className="flex-1 py-2 px-4 mt-4 border bg-white dark:bg-black border-primary-500 rounded-lg gap-y-6"
+          className="flex-1 py-2 px-4 mt-4 bg-white dark:bg-black gap-y-6"
         >
           <SettingsLink
             isRtl={isRTL}

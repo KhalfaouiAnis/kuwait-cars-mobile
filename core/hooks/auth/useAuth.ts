@@ -113,3 +113,99 @@ export function useOTP() {
 
   return { verifyOtp };
 }
+
+export default function useAuth() {
+  const router = useRouter();
+
+  const useSignIn = () => {
+    const {
+      handleSubmit,
+      formState: { errors, isSubmitting },
+      control,
+    } = useFormHook(LoginSchema, {
+      defaultValues: { phone: "", password: "" },
+    });
+
+    const onSubmit = async ({ phone, password }: LoginInterface) => {
+      try {
+        const {
+          data: { accessToken, refreshToken, user },
+        } = await attemptLogin(phone, password);
+        storage.set(ACC_TOKEN_STORAGE_KEY, accessToken);
+        storage.set(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
+        authStore.setState({ user });
+        router.replace("/categories");
+      } catch (error) {
+        console.log({ error });
+      }
+    };
+
+    return { handleSubmit, onSubmit, errors, isSubmitting, control };
+  };
+
+  const useSignUp = () => {
+    const {
+      control,
+      handleSubmit,
+      formState: { errors, isSubmitting },
+    } = useFormHook(SignupSchema, {
+      defaultValues: {
+        email: undefined,
+        password: "",
+        fullname: "",
+        phone: "",
+        province: undefined,
+      },
+    });
+
+    const onSubmit = async (data: SignupInterface) => {
+      try {
+        await createAccount(data);
+        // await requestOTP(data.phone);
+        // router.navigate(`/otp_verification?phone=${data.phone}`);
+        router.replace("/signin");
+      } catch (error) {
+        console.log({ error });
+      }
+    };
+
+    return { control, handleSubmit, onSubmit, errors, isSubmitting };
+  };
+
+  const useResetPassword = () => {
+    const {
+      control,
+      formState: { errors, isSubmitting },
+      handleSubmit,
+    } = useFormHook(ResetPasswordSchema, {
+      defaultValues: { phone: "", password: "", confirmPassword: "" },
+    });
+
+    const onSubmit = (data: ResetPasswordInterface) => {
+      router.replace("/authentication_success");
+    };
+
+    return { control, errors, isSubmitting, handleSubmit, onSubmit };
+  };
+
+  const useOTP = () => {
+    const verifyOtp = async (email: string, code: string) => {
+      try {
+        const {
+          data: { accessToken, refreshToken, user },
+        } = await verifyOTP(email, code);
+        storage.set(ACC_TOKEN_STORAGE_KEY, accessToken);
+        storage.set(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
+
+        authStore.setState({ user });
+        router.replace("/categories");
+      } catch (error) {
+        console.log({ error });
+      }
+    };
+
+    return { verifyOtp };
+  };
+
+  return { useSignIn, useSignUp, useResetPassword, useOTP };
+}

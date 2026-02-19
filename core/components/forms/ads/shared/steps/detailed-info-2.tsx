@@ -1,6 +1,5 @@
 import { BaseStepViewProps } from "@/core/components/ui";
 import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
-import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useState } from "react";
@@ -10,15 +9,15 @@ import { Text, TouchableOpacity, View } from "react-native";
 import StepField from "../step-field";
 
 export default function DetailedInfo2<T extends FieldValues>({ fields }: BaseStepViewProps<T>) {
+    const { t } = useTranslation("common")
     const { getValues } = useFormContext()
     const [showSecondNumber, setShowSecondNumber] = useState(() => getValues("second_additional_number") !== undefined)
-    const { isRTL } = useUserPreferencesStore()
-    const { t } = useTranslation("common")
 
     return (
-        <View className="gap-y-2 mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+        <View className="gap-2 mt-4 items-center">
             {fields.contact_whatsapp && <>
                 <View className="relative">
+                    <StepField config={fields.additional_number!} />
                     {
                         (!showSecondNumber) && (
                             <TouchableOpacity
@@ -29,7 +28,6 @@ export default function DetailedInfo2<T extends FieldValues>({ fields }: BaseSte
                             </TouchableOpacity>
                         )
                     }
-                    <StepField config={fields.additional_number!} />
                 </View>
                 <View style={{ opacity: showSecondNumber ? 1 : 0, marginTop: 4 }}>
                     <StepField config={fields.second_additional_number!} />

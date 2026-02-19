@@ -37,10 +37,10 @@ const MainHeader = ({
             autoCapitalize="none"
           />
         </View>
-        <View className="flex-row gap-x-2">
+        <View className="flex-row gap-x-4">
           <Ionicons
             name="mic-outline"
-            size={24}
+            size={22}
             color={theme !== "light" ? "#ffffffb3" : "black"}
           />
           <Ionicons

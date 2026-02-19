@@ -36,7 +36,6 @@ export default function MainSearch() {
 
     const scrollRef = useRef<ScrollView>(null);
     const itemLayouts = useRef<Map<string, number>>(new Map());
-    // const activeFields = useMemo(() => new Set(AD_FILTER_CONFIG[ad_type as keyof typeof AD_FILTER_CONFIG] || AD_FILTER_CONFIG.common), [])
     const activeFields = useMemo(() => {
         return Object.keys(AD_FILTER_OPTIONS_CONFIG[ad_type as AdTypeField] || {}) as FilterField[];
     }, [ad_type]);
@@ -117,17 +116,6 @@ export default function MainSearch() {
                             config={AD_FILTER_OPTIONS_CONFIG[ad_type as AdTypeField][field.key as FilterField]}
                         />
                     ))}
-                    {/* {visibleFilters.map(item => (
-                        <SearchItem
-                            key={item.id}
-                            isRTL={isRTL}
-                            isDark={isDark}
-                            label={item.label}
-                            icon={item.icon.name}
-                            onPress={() => handleOpen(item.key)}
-                            family={item.icon.family as "Ionicons" | "AntDesign" | "MaterialCommunityIcons" | "Octicons"}
-                        />
-                    ))} */}
                     {
                         FILTER_DATA.length > 5 && (
                             <TouchableOpacity
@@ -147,26 +135,26 @@ export default function MainSearch() {
                         )
                     }
 
-                    <TouchableOpacity
-                        className="bg-primary-500 flex-row justify-center rounded-[20px] items-center gap-4"
-                        style={{
-                            boxShadow: boxShadow(4, 6, 20).button.boxShadow,
-                            marginTop: isExpanded ? 6 : 40,
-                            width: 250,
-                            height: 50,
-                        }}
-                    >
-                        <Ionicons name="search-outline" size={20} />
-                        <Text className="text-center font-inter">
-                            {
-                                isLoading ?
-                                    <ActivityIndicator size="small" />
-                                    : t(`advancedSearch.offersFound`, { OffersCount: data?.pages?.[0]?.meta?.totalCount })
-                            }
-                            {/* show  offers  1234 */}
-                        </Text>
-                    </TouchableOpacity>
                 </ScrollView>
+                <TouchableOpacity
+                    className="bg-primary-500 flex-row justify-center rounded-[20px] items-center gap-4 mt-auto mb-safe-offset-0"
+                    style={{
+                        boxShadow: boxShadow(4, 6, 20).button.boxShadow,
+                        marginTop: isExpanded ? 6 : 40,
+                        width: 250,
+                        height: 50,
+                    }}
+                >
+                    <Ionicons name="search-outline" size={20} />
+                    <Text className="text-center font-inter">
+                        {
+                            isLoading ?
+                                <ActivityIndicator size="small" />
+                                : t(`advancedSearch.offersFound`, { OffersCount: data?.pages?.[0]?.meta?.totalCount })
+                        }
+                        {/* show  offers  1234 */}
+                    </Text>
+                </TouchableOpacity>
             </View>
             {/* <AppModal
                 visible={!!activeKey}

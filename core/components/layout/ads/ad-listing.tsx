@@ -42,7 +42,6 @@ export const AdsListing = ({ view }: Props) => {
     <FlashList
       data={ads}
       pagingEnabled
-      // ref={flashListRef}
       onRefresh={refetch}
       snapToInterval={330}
       refreshing={isLoading}

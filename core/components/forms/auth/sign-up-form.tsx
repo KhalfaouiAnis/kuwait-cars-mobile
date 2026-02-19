@@ -1,19 +1,20 @@
 import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
-import { DIMENSIONS, PROVINCES } from "@/core/constants";
-import { useSignUp } from "@/core/hooks/auth/useAuth";
+import { DIMENSIONS, PURE_PROVINCES } from "@/core/constants";
+import useAuth from "@/core/hooks/auth/useAuth";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { boxShadow } from "@/core/utils/cn";
+import { SelectAdapters } from "@/core/utils/select-adapters";
 import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
-import ProvinceSelect from "../../ui/input/select/province-select";
+import ProvinceSelector from "../../ui/input/select/province-selector";
 import BaseTextInput from "../../ui/input/text/base-text-input";
-import { renderProvinceAreaOption } from "../../ui/shared/render-option";
 
 export default function SignUpForm() {
+  const { useSignUp } = useAuth();
   const { t } = useTranslation("auth");
   const { isRTL } = useUserPreferencesStore()
-  const { control, handleSubmit, onSubmit, isSubmitting, errors } = useSignUp();
+  const { control, handleSubmit, onSubmit, isSubmitting } = useSignUp();
 
   return (
     <View className="pt-8 px-4 pb-10">
@@ -43,16 +44,13 @@ export default function SignUpForm() {
           required
           endIcon="eye-outline"
         />
-        <ProvinceSelect
-          control={control}
+        <ProvinceSelector
           name="province"
           required
-          options={PROVINCES}
-          renderOption={(option, selected) =>
-            renderProvinceAreaOption(option, selected)
-          }
+          options={PURE_PROVINCES}
           placeholder={t("yourProvince")}
-          error={errors.province?.ref?.name}
+          control={control}
+          adapter={SelectAdapters.fromObject("province")}
         />
         <BaseTextInput
           name="email"
