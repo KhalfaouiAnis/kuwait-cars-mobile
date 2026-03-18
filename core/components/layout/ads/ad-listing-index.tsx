@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import Container from "../../ui/container";
-import MainHeader from "../header/main-header";
+import MainHeader from "../header/main/main-header";
 import { AdsListing } from "./ad-listing";
 import { MainFilters } from "./filters/main-filters";
 
@@ -27,11 +27,13 @@ export default function AdCategoryIndex({ filterConfig }: Props) {
             header={
                 <View className="flex mb-2 mt-4 pl-0.5">
                     <MainHeader back={true} />
-                    <MainFilters
-                        isDark={dark}
-                        setView={setView}
-                        filterConfig={filterConfig}
-                    />
+                    <View className="mt-2">
+                        <MainFilters
+                            isDark={dark}
+                            setView={setView}
+                            filterConfig={filterConfig}
+                        />
+                    </View>
                 </View>
             }
         >

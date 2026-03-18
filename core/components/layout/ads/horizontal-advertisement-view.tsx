@@ -5,10 +5,12 @@ import { useToggleFavorite } from "@/core/services/ads/ad.mutations";
 import useAuthStore from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { AdvertisementInterface } from "@/core/types";
+import { formatViews } from "@/core/utils";
 import { boxShadow } from "@/core/utils/cn";
 import { formatSmartDate } from "@/core/utils/date";
 import { distanceToMyLocation } from "@/core/utils/location";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
 import { memo, useRef } from "react";
@@ -57,8 +59,8 @@ const RightAction = ({
           justifyContent: "space-around",
           alignItems: "center",
           borderRadius: 16,
-          width: "100%",
           height: "100%",
+          width: "100%",
         }}
         onPress={toggleFavorite}
       >
@@ -81,12 +83,13 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
     ad_type: string;
     ad_category: string;
   }>();
-  const swipeableRef = useRef<any>(null);
+  const { isRTL, lang } = useUserPreferencesStore();
   const user = useAuthStore((state) => state.user);
-  const { t } = useTranslation("common");
-  const { isRTL, lang, theme } = useUserPreferencesStore();
   const { protectAction } = useAuthGuard();
+  const swipeableRef = useRef<any>(null);
+  const { t } = useTranslation("common");
   const { mutate } = useToggleFavorite();
+  const { dark } = useTheme()
 
   const path = `/categories/${ad_type}/${ad_category ? `${ad_category}/${data.id}` : `${data.id}`}`;
 
@@ -103,29 +106,25 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
         />
       )}
     >
-
       <Pressable
         onPress={() => router.push(path as any)}
         style={[boxShadow(0, 4, 4).button, { borderWidth: 0.5 }]}
-        className="flex-row flex-1 rounded-lg border-[#CCC7C7] bg-transparent overflow-hidden mx-2 ms-1"
+        className="flex-row flex-1 rounded-lg border-[#CCC7C7] dark:border-[rgb(168 168 168 / 0.25)] bg-transparent overflow-hidden mx-2 ms-1 mb-4 dark:bg-darkish"
       >
         <Image
-          source={
-            data.media.find((media) => media.media_type === "THUMBNAIL")
-              ?.transformed_url
-          }
+          source={data.media.find((media) => media.media_type === "THUMBNAIL")?.transformed_url}
           contentFit="fill"
           style={{
-            width: DIMENSIONS.width / 3 + 40,
             height: 120,
+            width: DIMENSIONS.width / 3 + 40,
           }}
         />
         <View
-          className="flex-1 w-full rounded-r-lg p-2 gap-y-2"
           style={{ direction: isRTL ? "rtl" : "ltr" }}
+          className="flex-1 w-full rounded-r-lg p-2 gap-y-2"
         >
           <View className="flex-row items-center justify-between">
-            <Text className="font-inter-medium text-lg text-black dark:text-white">
+            <Text className="font-inter-medium text-base text-black dark:text-white">
               {data.title}
             </Text>
             {data.year && (
@@ -134,7 +133,7 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
               </Text>
             )}
           </View>
-          <Text className="flex-1 font-inter text-sm text-gray-400" ellipsizeMode="tail" numberOfLines={1}>
+          <Text className="flex-1 font-inter text-sm text-gray-400 dark:text-white/70" ellipsizeMode="tail" numberOfLines={1}>
             {data.description}
           </Text>
           <View className="flex-row items-center justify-between">
@@ -142,14 +141,17 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
               {formatSmartDate(data.created_at, lang)}
             </Text>
             {data.mileage && (
-              <Text className="font-inter text-xs text-gray-400">{`${data.mileage}${t(`unit.${data.mileage_unit}`).toLowerCase()}`}</Text>
+              <Text className="font-inter text-xs text-gray-400">{`${data.mileage}${t(`unit.${data.mileage_unit || "KM"}`).toLowerCase()}`}</Text>
             )}
           </View>
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center">
-              <Ionicons name="location-outline" color={theme !== "light" ? "white" : "black"} size={14} />
+              <Ionicons name="location-outline" color={dark ? "#9ca3af" : "black"} size={14} />
               {data.province && (
-                <Text className="font-inter text-sm text-black dark:text-white">
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  className="font-inter text-sm text-black dark:text-gray-400 max-w-28">
                   {t(`provinces.${data.province?.province}`)}
                 </Text>
               )}
@@ -163,8 +165,8 @@ const HorizontalAdvertisementView = memo(function Advertisement({ data }: Props)
             </View>
             <View>
               {data.price && (
-                <Text className="font-inter text-sm text-black dark:text-white">
-                  ${data.price}
+                <Text className="font-inter text-sm text-blue dark:text-[#00A6DA]">
+                  ${formatViews(data.price)}
                 </Text>
               )}
             </View>

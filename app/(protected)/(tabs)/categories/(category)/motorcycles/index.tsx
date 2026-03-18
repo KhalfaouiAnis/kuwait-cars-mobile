@@ -1,4 +1,4 @@
-import MainHeader from "@/core/components/layout/header/main-header";
+import MainHeader from "@/core/components/layout/header/main/main-header";
 import CategoryLink from "@/core/components/ui/_links/category-link";
 import Container from "@/core/components/ui/container";
 import { AD_TYPES } from "@/core/constants/ad";

@@ -16,9 +16,14 @@ export const useAuthGuard = () => {
         actionButtonStyle: {
           borderWidth: 1,
           borderColor: "#FAED02",
-          backgroundColor: "transparent",
+          backgroundColor: "#FFF12E",
           paddingHorizontal: 10,
           paddingVertical: 4,
+        },
+        actionButtonTextStyle: {
+          fontFamily: "InterMedium",
+          fontSize: 12,
+          color: "white",
         },
         action: {
           label: t("signUp"),

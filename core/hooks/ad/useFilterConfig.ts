@@ -1,4 +1,9 @@
-import { CAR_COLORS, YEARS } from "@/core/constants";
+import {
+  CAR_COLORS,
+  CAR_CYLENDERS,
+  TRANSMISSION_OPTIONS,
+  YEARS,
+} from "@/core/constants";
 import { CAR_BRAND_TYPES } from "@/core/constants/ad";
 import { FilterOption } from "@/core/types";
 import { useFlattenBrands, useFlattenModels } from "@/core/utils";
@@ -26,12 +31,19 @@ export const useUsedCarsFilterConfig = () => {
       showSearch: true,
       options: YEARS as FilterOption[],
     },
-    exterior_color: {
-      title: "color",
+    cylinders: {
+      title: "cylinders",
       showRegionHelper: false,
-      showSearch: true,
+      showSearch: false,
       parentKey: null,
-      options: CAR_COLORS as FilterOption[],
+      options: CAR_CYLENDERS as FilterOption[],
+    },
+    transmission: {
+      title: "transmission",
+      showRegionHelper: false,
+      showSearch: false,
+      parentKey: null,
+      options: TRANSMISSION_OPTIONS as FilterOption[],
     },
   } as const;
 };

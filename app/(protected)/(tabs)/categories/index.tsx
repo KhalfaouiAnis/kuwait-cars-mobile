@@ -1,4 +1,4 @@
-import MainHeader from "@/core/components/layout/header/main-header";
+import MainHeader from "@/core/components/layout/header/main/main-header";
 import NewCategoryLink from "@/core/components/ui/_links/new-category-link";
 import SpecialcategoryLink from "@/core/components/ui/_links/special-category-link";
 import { FavoriteButton } from "@/core/components/ui/button/favorite-button";
@@ -74,7 +74,7 @@ export default function CategoriesScreen() {
 
                     {/* QUICK SALE VIEOS */}
                     <View className="dark:bg-darkish my-12" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                        <Text className="font-inter-medium text-lg ms-6 text-blue">
+                        <Text className="font-inter-medium text-lg ms-6 text-blue dark:text-[#00A6DA]">
                             {t("Quick Sale Videos")}
                         </Text>
                         <ScrollView
@@ -115,7 +115,7 @@ export default function CategoriesScreen() {
 
                     {/* HIGHLAGHTED ADS */}
                     <View className="dark:bg-darkish mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                        <Text className="font-inter-medium text-lg ms-6 text-blue">
+                        <Text className="font-inter-medium text-lg ms-6 text-blue dark:text-[#00A6DA]">
                             {t("Highlighted ads")}
                         </Text>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -254,7 +254,7 @@ export default function CategoriesScreen() {
 
                     {/* LAST SEEN */}
                     <View className="dark:bg-darkish mt-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                        <Text className="font-inter-medium text-lg ms-6 text-blue">
+                        <Text className="font-inter-medium text-lg ms-6 text-blue dark:text-[#00A6DA]">
                             {t("Last seen")}
                         </Text>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>

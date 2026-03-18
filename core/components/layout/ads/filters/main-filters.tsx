@@ -1,7 +1,7 @@
 import AppModal from "@/core/components/ui/dialog/modal";
-import useSearchStore, { CombinedFilterKeys } from "@/core/store/search.store";
+import useSearchStore, { CombinedFilterKeys, FilterState } from "@/core/store/search.store";
 import { FilterConfigItem } from "@/core/types";
-import { Fontisto, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome6, Fontisto, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ interface Props {
 export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
   const { t } = useTranslation("common");
   const { ad_type } = useLocalSearchParams<{ ad_type: string }>();
-  const { syncDraftToApplied, applyFilters, resetDraftFilter } = useSearchStore();
+  const { syncDraftToApplied, applyFilters, resetDraftFilter, appliedFilters } = useSearchStore();
   const [activeKey, setActiveKey] = useState<keyof typeof filterConfig | null>(null);
 
   const handleOpen = (key: keyof typeof filterConfig) => {
@@ -33,41 +33,28 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
     <>
       <ScrollView
         horizontal
-        contentContainerClassName="pe-2"
+        contentContainerClassName="px-6 gap-3 mb-1"
         showsHorizontalScrollIndicator={false}
       >
-        <Pressable>
-          <View className="ml-2 border border-[#EFEFEF] dark:border-transparent dark:border-b-[#ffffffb3] dark:rounded-none p-2 rounded-3xl flex-row items-center dark:bg-black">
-            <Ionicons
-              size={16}
-              name="filter"
-              style={{ fontWeight: "bold" }}
-              color={isDark ? "white" : "black"}
-            />
-            <Text className="ms-2 text-black dark:text-white">
-              {t("advancedSearch.filters")}
-            </Text>
-          </View>
-        </Pressable>
         {Object.entries(filterConfig).map(([filterKey, config]) => {
           return (
             <FilterButton
               key={filterKey}
-              filterKey={filterKey}
               title={config.title}
-              handleOpen={handleOpen}
+              handleOpen={() => handleOpen(filterKey)}
+              active={!!appliedFilters[filterKey as keyof FilterState]}
             />
           )
         })}
         <FilterButton
-          filterKey="price"
           title={"price"}
+          active={!!appliedFilters.price}
           handleOpen={() => handleOpen("price")}
         />
       </ScrollView>
-      <View className="flex-row items-center mt-2 gap-x-2 px-2">
+      <View className="flex-row items-center my-3 gap-x-4 ps-6">
         <Pressable
-          className="border border-[#EFEFEF] p-2 rounded-3xl flex-row items-center gap-x-2 dark:bg-black"
+          className="flex-row items-center gap-x-2 dark:bg-black"
           onPress={() =>
             setView((prevState) =>
               prevState === "horizontal" ? "vertical" : "horizontal",
@@ -77,20 +64,33 @@ export const MainFilters = ({ isDark, setView, filterConfig }: Props) => {
           <Fontisto
             name="nav-icon-list-a"
             size={16}
-            color={isDark ? "white" : "black"}
+            color={isDark ? "rgb(255 255 255 / 0.75)" : "black"}
           />
-          <Text className="text-black dark:text-white">{t("changeView")}</Text>
+          <Text className="text-black text-sm dark:text-white/70">{t("changeView")}</Text>
         </Pressable>
         <Pressable
-          className="border border-[#EFEFEF] p-2 rounded-3xl flex-row items-center gap-x-2 dark:bg-black"
+          className="flex-row items-center gap-x-2 dark:bg-black"
           onPress={() => handleOpen("sorting")}
         >
           <MaterialCommunityIcons
             name="sort"
             size={18}
-            color={isDark ? "white" : "black"}
+            color={isDark ? "rgb(255 255 255 / 0.75)" : "black"}
           />
-          <Text className="text-black dark:text-white">{t("sort.sortBy")}</Text>
+          <Text className="text-black text-sm dark:text-white/70">{t("sort.sortBy")}</Text>
+        </Pressable>
+        <Pressable>
+          <View className="ml-2 dark:border-transparent dark:border-b-[#ffffffb3] flex-row items-center dark:bg-black">
+            <FontAwesome6
+              name="sliders"
+              size={16}
+              style={{ fontWeight: "bold" }}
+              color={isDark ? "rgb(255 255 255 / 0.75)" : "black"}
+            />
+            <Text className="ms-2 text-black text-sm dark:text-white/70">
+              {t("advancedSearch.filters")}
+            </Text>
+          </View>
         </Pressable>
         {ad_type && (
           <Text className="text-[#D3D3D3] dark:text-white ms-auto me-3">

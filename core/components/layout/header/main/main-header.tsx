@@ -1,10 +1,14 @@
 import useNotificationStore from "@/core/store/notification.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Text, TextInput, View } from "react-native";
-import BackArrow from "../../ui/shared/back-arrow";
-import { ProfileDrawer } from "../../ui/shared/profile-drawer";
+import { Pressable, Text, TextInput, View } from "react-native";
+import BackArrow from "../../../ui/shared/back-arrow";
+import { ProfileDrawer } from "../../../ui/shared/profile-drawer";
+import ImageSearch from "./image-search";
+import VoiceSearch from "./voice-search";
 
 const MainHeader = ({
   drawer = false,
@@ -14,8 +18,12 @@ const MainHeader = ({
   back?: boolean;
 }) => {
   const unreadCount = useNotificationStore((state) => state.unreadCount);
-  const { theme, isRTL } = useUserPreferencesStore();
+  const isRTL = useUserPreferencesStore(state => state.isRTL);
   const { t } = useTranslation("common");
+  const { dark } = useTheme()
+  const router = useRouter()
+
+  const handleNavigateToNotifs = () => router.navigate("/notifications")
 
   return (
     <View
@@ -24,37 +32,32 @@ const MainHeader = ({
     >
       {back && <BackArrow />}
       {drawer && <ProfileDrawer />}
-      <View className="flex-1 flex-row items-center justify-between rounded-[20px] border-[0.5px] border-grayish px-4 mx-4 bg-transparent dark:bg-darkish">
+      <View className="flex-1 flex-row items-center justify-between rounded-[20px] border-[0.5px] border-[#464646] px-4 mx-4 bg-transparent dark:bg-darkish">
         <View className="flex-row items-center gap-x-2 flex-1">
           <Ionicons
-            name="search-outline"
             size={18}
-            color={theme !== "light" ? "#ffffffb3" : "black"}
+            name="search-outline"
+            color={dark ? "#B3B3B3" : "black"}
           />
           <TextInput
             placeholder={`${t("search")}...`}
-            className="flex-1 text-black dark:text-white"
+            className="flex-1 text-black dark:text-white dark:placeholder:text-[#A8A8A8]"
             autoCapitalize="none"
           />
         </View>
         <View className="flex-row gap-x-4">
-          <Ionicons
-            name="mic-outline"
-            size={22}
-            color={theme !== "light" ? "#ffffffb3" : "black"}
-          />
-          <Ionicons
-            name="camera-outline"
-            size={24}
-            color={theme !== "light" ? "#ffffffb3" : "black"}
-          />
+          <VoiceSearch />
+          <ImageSearch />
         </View>
       </View>
-      <View className="ms-1 relative">
+      <Pressable
+        className="ms-1 relative"
+        onPress={handleNavigateToNotifs}
+      >
         <MaterialCommunityIcons
           name="bell-ring-outline"
           size={24}
-          color={theme !== "light" ? "#ffffffb3" : "black"}
+          color={dark ? "#B3B3B3" : "black"}
         />
         {unreadCount > 0 && (
           <View className="absolute -top-1 -end-1 bg-error rounded-full h-5 w-5 flex items-center justify-center border border-white">
@@ -63,7 +66,7 @@ const MainHeader = ({
             </Text>
           </View>
         )}
-      </View>
+      </Pressable>
     </View>
   );
 };

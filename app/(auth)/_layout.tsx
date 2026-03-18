@@ -2,9 +2,9 @@ import useAuthStore from "@/core/store/auth.store";
 import { Redirect, Stack } from "expo-router";
 
 export default function AuthLayout() {
-    const { user } = useAuthStore();
+    const { user, isGuest } = useAuthStore();
 
-    if (user) {
+    if (user && !isGuest) {
         return <Redirect href="/categories" />;
     }
     

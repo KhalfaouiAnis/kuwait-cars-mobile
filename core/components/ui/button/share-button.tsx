@@ -1,13 +1,13 @@
-import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Feather } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable } from "react-native";
 import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    withSequence,
-    withSpring,
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withSpring,
 } from "react-native-reanimated";
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const ShareButton = ({ disabled, onPress, color, size = 22 }: Props) => {
-  const { theme } = useUserPreferencesStore();
+  const { dark } = useTheme()
   const scale = useSharedValue(1);
 
   const snappySpring = {
@@ -41,7 +41,7 @@ export const ShareButton = ({ disabled, onPress, color, size = 22 }: Props) => {
     onPress();
   };
 
-  const iconColor = color ? color : theme !== "light" ? "white" : "black";
+  const iconColor = color ? color : dark ? "white" : "black";
 
   return (
     <Pressable onPress={handlePress} hitSlop={10} disabled={disabled}>

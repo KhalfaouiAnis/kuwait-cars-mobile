@@ -820,3 +820,11 @@ export const MOTORCYCLE_CYCLENDERS = [
   { id: "4", label: "4", value: "4" },
   { id: "6", label: "6", value: "6" },
 ];
+
+export const ERROR_CODES = {
+  BAD_CREDENTIALS: "BAD_CREDENTIALS",
+  SOCIAL_ERROR: "SOCIAL_ERROR",
+  REREQUEST_OTP: "REREQUEST_OTP",
+  ID_TOKEN_REQUIRED: "ID_TOKEN_REQUIRED",
+  INVALID_TOKEN: "INVALID_TOKEN",
+};

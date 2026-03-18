@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "sonner-native";
+import i18n from "../i18n/i18n";
 import { TokenService } from "../services/token-manager";
 
 export const httpClient = axios.create({
@@ -72,7 +73,11 @@ httpClient.interceptors.response.use(
         },
       );
     } else {
-      toast.error(data?.message || "An unexpected error occurred");
+      toast.error(
+        data?.message
+          ? i18n.t(`common.errors.${data?.message}`)
+          : "An unexpected error occurred",
+      );
     }
     return Promise.reject(error);
   },

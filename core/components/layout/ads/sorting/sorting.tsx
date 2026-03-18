@@ -12,7 +12,7 @@ const sortOptions: (SortingItem & { label: string })[] = [
 
 export const SortingContent = () => {
     const { t } = useTranslation("common")
-    const { isRTL } = useUserPreferencesStore()
+    const isRTL = useUserPreferencesStore(state => state.isRTL)
     const { draftFilters: { sorting }, setExternalFilter } = useSearchStore((state) => state);
 
     const renderItem = ({ item }: { item: typeof sortOptions[0] }) => {
@@ -20,11 +20,11 @@ export const SortingContent = () => {
 
         return (
             <TouchableOpacity
-                className={`flex-row items-center p-3 my-1 border-b border-gray-200 ${isSelected ? 'bg-primary-500' : ''}`}
                 onPress={() => setExternalFilter("sorting", item)}
+                className={`flex-row items-center p-3 my-1 border-b border-gray-200 ${isSelected ? 'bg-primary-500' : 'bg-darkish'}`}
             >
                 <View className="flex-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                    <Text className="font-medium">{t(`sort.${item.label}`)}</Text>
+                    <Text className="font-medium dark:text-white">{t(`sort.${item.label}`)}</Text>
                 </View>
             </TouchableOpacity>
         )

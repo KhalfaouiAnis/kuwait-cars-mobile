@@ -1,15 +1,13 @@
 import ShowAdComponent from "@/core/components/layout/ads/show-car-ad";
-import MainHeader from "@/core/components/layout/header/main-header";
+import MainHeader from "@/core/components/layout/header/main/main-header";
 import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-list";
-import Container from "@/core/components/ui/container";
 import { AD_TYPES } from "@/core/constants/ad";
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useAdsQuery } from "@/core/services/ads/ad.queries";
 import useSearchStore from "@/core/store/search.store";
-import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { ActivityIndicator, Dimensions, FlatList, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Dimensions, FlatList, View } from "react-native";
 
 const { height } = Dimensions.get("window");
 
@@ -54,52 +52,50 @@ export default function ShowCarsCategoryScreen() {
   if (isLoading) return <AdSkeletonList />;
 
   return (
-    <Container backgroundColor="transparent">
-      <View className="relative">
-        <View className="w-full mb-2 mt-2 pl-0.5 absolute top-0 start-0 z-20">
-          <MainHeader back={true} />
-        </View>
-        <FlatList
-          data={ads}
-          pagingEnabled
-          onRefresh={refetch}
-          refreshing={isLoading}
-          snapToInterval={height}
-          decelerationRate="fast"
-          snapToAlignment="center"
-          nestedScrollEnabled
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item, index }) => (
-            <ShowAdComponent
-              ad={item}
-              isVisible={index === activeVerticalIndex}
-            />
-          )}
-          onEndReached={() =>
-            hasNextPage && !isFetchingNextPage && fetchNextPage()
-          }
-          onViewableItemsChanged={onViewableItemsChanged}
-          viewabilityConfig={{
-            itemVisiblePercentThreshold: 50,
-            minimumViewTime: 50,
-          }}
-          ListFooterComponent={
-            isFetchingNextPage ? (
-              <ActivityIndicator
-                size="small"
-                style={{ backgroundColor: "#FAED02" }}
-              />
-            ) : null
-          }
-        />
-        <TouchableOpacity
-          className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500"
-          onPress={handleNavigate}
-        >
-          <Ionicons name="add" size={38} />
-        </TouchableOpacity>
+    <View className="relative">
+      <View className="w-full mb-2 mt-2 pl-0.5 absolute top-0 start-0 z-20">
+        <MainHeader back={true} />
       </View>
-    </Container>
+      <FlatList
+        data={ads}
+        pagingEnabled
+        onRefresh={refetch}
+        refreshing={isLoading}
+        snapToInterval={height}
+        decelerationRate="fast"
+        snapToAlignment="center"
+        nestedScrollEnabled
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <ShowAdComponent
+            ad={item}
+            isVisible={index === activeVerticalIndex}
+          />
+        )}
+        onEndReached={() =>
+          hasNextPage && !isFetchingNextPage && fetchNextPage()
+        }
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 50,
+          minimumViewTime: 50,
+        }}
+        ListFooterComponent={
+          isFetchingNextPage ? (
+            <ActivityIndicator
+              size="small"
+              style={{ backgroundColor: "#FAED02" }}
+            />
+          ) : null
+        }
+      />
+      {/* <TouchableOpacity
+        className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500"
+        onPress={handleNavigate}
+      >
+        <Ionicons name="add" size={38} />
+      </TouchableOpacity> */}
+    </View>
   );
 }

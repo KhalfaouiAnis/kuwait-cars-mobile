@@ -1,8 +1,10 @@
+import { DIMENSIONS } from '@/core/constants';
 import { Ionicons } from "@expo/vector-icons";
 import { useEvent } from "expo";
+import * as Haptics from 'expo-haptics';
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, GestureResponderEvent, Pressable, Text, View } from "react-native";
 import AudioTrackProgress from "./audio-track-progress";
 
 const formatTime = (seconds: number) => {
@@ -11,6 +13,8 @@ const formatTime = (seconds: number) => {
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 };
+
+const { width } = DIMENSIONS
 
 export default function VideoPlayer({
   source,
@@ -33,12 +37,21 @@ export default function VideoPlayer({
     (player) => {
       player.loop = false;
       autoPlay && isVisible && player.play();
+      player.timeUpdateEventInterval = 0.3
     },
   );
 
   const duration = videoPlayer.duration || 0;
   const position = videoPlayer.currentTime || 0;
-  const progress = duration > 0 ? (position / duration) * 100 : 0;
+
+  const { currentTime } = useEvent(videoPlayer, 'timeUpdate', {
+    currentTime: videoPlayer.currentTime,
+    bufferedPosition: videoPlayer.bufferedPosition,
+    currentLiveTimestamp: videoPlayer.currentLiveTimestamp,
+    currentOffsetFromLive: videoPlayer.currentOffsetFromLive
+  });
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   const { isPlaying } = useEvent(videoPlayer, "playingChange", {
     isPlaying: videoPlayer.playing,
@@ -61,6 +74,22 @@ export default function VideoPlayer({
         setIsControlsVisible(false);
       }
     }, 2000);
+  };
+
+  const handlePressIn = (event: GestureResponderEvent) => {
+    const touchX = event.nativeEvent.locationX;
+    if (touchX > width / 2) {
+      videoPlayer.playbackRate = 10;
+    } else {
+      videoPlayer.playbackRate = 0.5;
+    }
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  };
+
+  const handlePressOut = () => {
+    videoPlayer.playbackRate = 1.0;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   useEffect(() => {
@@ -86,16 +115,20 @@ export default function VideoPlayer({
   }
 
   return (
-    <View className="bg-slate-900 overflow-hidden relative flex-1 rounded-lg">
+    <Pressable
+      className="bg-slate-900 overflow-hidden relative flex-1"
+      onPressOut={handlePressOut}
+      onPressIn={handlePressIn}
+    >
       <VideoView
-        style={{ flex: 1 }}
         contentFit="cover"
+        style={{ flex: 1 }}
         player={videoPlayer}
         nativeControls={false}
         fullscreenOptions={{ enable: false }}
         onTouchStart={() => setIsControlsVisible(!isControlsVisible)}
       />
-      {isControlsVisible && (
+      {/* {isControlsVisible && ( */}
         <View className="absolute inset-0 flex justify-center items-center">
           {status === "loading" ? (
             <ActivityIndicator size="large" color="#FFFFFF" />
@@ -107,8 +140,8 @@ export default function VideoPlayer({
               >
                 <Ionicons
                   name={isPlaying ? "stop" : "play"}
+                  color="gray"
                   size={24}
-                  color={"yellow"}
                 />
               </Pressable>
               <View className="absolute bottom-0 left-0 right-0 p-3 bg-slate-800 flex-row items-center">
@@ -120,7 +153,7 @@ export default function VideoPlayer({
             </>
           )}
         </View>
-      )}
-    </View>
+      {/* // )} */}
+    </Pressable>
   );
 }

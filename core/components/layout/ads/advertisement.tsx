@@ -46,7 +46,7 @@ const Advertisement = memo(function Advertisement({
       <Pressable
         style={boxShadow(0, 4, 4).button}
         onPress={() => router.push(path as any)}
-        className="w-svw rounded-lg pt-0.5 pb-4 mx-0.5"
+        className="w-svw rounded-lg pt-0.5 pb-4 mx-0.5 dark:bg-darkish"
       >
         <Carousel items={data.media} />
         <View
@@ -57,12 +57,12 @@ const Advertisement = memo(function Advertisement({
             <Text
               numberOfLines={1}
               ellipsizeMode="tail"
-              className="flex-1 font-inter-medium text-lg text-black dark:text-white"
+              className="flex-1 font-inter-medium text-base text-black dark:text-white"
             >
               {data.title} {data.year}
             </Text>
             {data.price && (
-              <Text className="font-inter-medium text-black dark:text-white">
+              <Text className="font-inter-medium text-blue dark:text-white">
                 ${data.price}
               </Text>
             )}
@@ -71,12 +71,12 @@ const Advertisement = memo(function Advertisement({
             <Text
               numberOfLines={1}
               ellipsizeMode="tail"
-              className="flex-1 font-inter text-sm text-gray-400"
+              className="flex-1 font-inter text-sm text-gray-400 dark:text-white/70"
             >
               {data.description}
             </Text>
             {data.mileage && (
-              <Text className="font-inter text-xs text-gray-400">{`${t(`unit.${data.mileage_unit || "KM"}`)} ${data.mileage}`}</Text>
+              <Text className="font-inter text-xs text-gray-400 dark:text-white/70">{`${t(`unit.${data.mileage_unit || "KM"}`)} ${data.mileage}`}</Text>
             )}
           </View>
           <View className="flex-row items-center justify-between mt-2 gap-1">
@@ -91,11 +91,11 @@ const Advertisement = memo(function Advertisement({
                   <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    className="font-inter text-base text-black dark:text-white max-w-28"
+                    className="font-inter text-sm text-black dark:text-white max-w-28"
                   >
                     {t(`provinces.${data.province.province}`)}
                   </Text>
-                  <Text className="font-inter text-gray-400 ms-1">
+                  <Text className="font-inter text-sm text-gray-400 ms-1">
                     {user && distanceToMyLocation(user, data)}
                     {t(`unit.KM`)?.toLowerCase()}
                   </Text>

@@ -1,5 +1,5 @@
 import Advertisement from "@/core/components/layout/ads/advertisement";
-import MainHeader from "@/core/components/layout/header/main-header";
+import MainHeader from "@/core/components/layout/header/main/main-header";
 import { AdSkeletonList } from "@/core/components/layout/skeletons/ad-skeleton-list";
 import Container from "@/core/components/ui/container";
 import { EmptyState } from "@/core/components/ui/shared/empty-state";

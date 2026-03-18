@@ -34,14 +34,14 @@ export default function TabLayout() {
             ({ navigation }: { navigation: any }) => ({
                 tabPress: (e: EventArg<"tabPress", true, undefined>) => {
                     e.preventDefault();
-                    if (route === "create") {
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'index' }],
-                        });
-                    }
                     protectAction(() => {
                         navigation.navigate(route);
+                        if (route === "create") {
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'index' }],
+                            });
+                        }
                     });
                 }
             })

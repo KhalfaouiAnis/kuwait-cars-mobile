@@ -3,6 +3,7 @@ import { AD_TYPES } from "@/core/constants/ad";
 import { DataItem } from "@/core/types/schema/shared";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -32,6 +33,7 @@ export default function AdTypeSelector({
   data,
   isRTL,
 }: AdTypeSelectorProps) {
+  const { dark } = useTheme()
   const { t } = useTranslation("car_categories");
   const [showModal, setShowModal] = useState(false);
   const [expandedPaths, setExpandedPaths] = useState<Set<string>>(new Set());
@@ -60,50 +62,54 @@ export default function AdTypeSelector({
 
     const isLeaf = !hasChildren;
 
+    const handlePress = () => {
+      {
+        if (AD_TYPES.used_cars === path[0]) {
+          const [brand, model] = item.value.split("/");
+          handleSelect({
+            ad_type: AD_TYPES.used_cars,
+            params: { model, brand, label: t(item.label) },
+          });
+        } else if (AD_TYPES.motorcycles === path[0]) {
+          const [ad_category, brand] = item.value.split("/");
+          handleSelect({
+            ad_type: AD_TYPES.motorcycles,
+            params: { ad_category, brand, label: t(item.label) },
+          });
+        } else if (AD_TYPES.parts_accessories === path[0]) {
+          handleSelect({
+            ad_type: AD_TYPES.parts_accessories,
+            params: { ad_category: item.value, label: t(item.label) },
+          });
+        } else if (AD_TYPES.home_services === path[0]) {
+          handleSelect({
+            ad_type: AD_TYPES.home_services,
+            params: { ad_category: item.value, label: t(item.label) },
+          });
+        } else {
+          handleSelect({
+            ad_type: item.value,
+            params: { label: t(item.label) },
+          });
+        }
+      }
+    }
+
     if (isLeaf) {
       return (
         <TouchableOpacity
+          onPress={handlePress}
           style={styles.selectButton}
-          className="flex-row items-center self-center my-1.5 px-5"
-          onPress={() => {
-            if (AD_TYPES.used_cars === path[0]) {
-              const [brand, model] = item.value.split("/");
-              handleSelect({
-                ad_type: AD_TYPES.used_cars,
-                params: { model, brand, label: t(item.label) },
-              });
-            } else if (AD_TYPES.motorcycles === path[0]) {
-              const [ad_category, brand] = item.value.split("/");
-              handleSelect({
-                ad_type: AD_TYPES.motorcycles,
-                params: { ad_category, brand, label: t(item.label) },
-              });
-            } else if (AD_TYPES.parts_accessories === path[0]) {
-              handleSelect({
-                ad_type: AD_TYPES.parts_accessories,
-                params: { ad_category: item.value, label: t(item.label) },
-              });
-            } else if (AD_TYPES.home_services === path[0]) {
-              handleSelect({
-                ad_type: AD_TYPES.home_services,
-                params: { ad_category: item.value, label: t(item.label) },
-              });
-            } else {
-              handleSelect({
-                ad_type: item.value,
-                params: { label: t(item.label) },
-              });
-            }
-          }}
+          className="flex-row items-center self-center my-1.5 px-5 dark:bg-white"
         >
           <Ionicons name={item?.icon} size={20} color="gray" />
-          <Text className="flex-1 ms-4 text-sm font-semibold">
+          <Text className={`flex-1 ms-4 text-sm font-semibold ${AD_TYPES.show === itemPath ? "text-rose" : "text-blue"}`}>
             {t(item.label)}
           </Text>
           <Ionicons
+            size={20}
             className="justify-start"
             name={isRTL ? "chevron-back" : "chevron-forward"}
-            size={20}
           />
         </TouchableOpacity>
       );
@@ -112,12 +118,12 @@ export default function AdTypeSelector({
     return (
       <>
         <TouchableOpacity
-          style={[styles.selectButton, { backgroundColor: level === 0 && isExpanded ? "#D9D9D9" : undefined }]}
+          style={[styles.selectButton, { backgroundColor: level === 0 && isExpanded ? "#FFB84E" : dark ? "white" : undefined }]}
           className="flex-row self-center items-center my-1.5 px-5"
           onPress={() => hasChildren && toggleExpand(itemPath)}
         >
           <Ionicons name={item?.icon} size={20} color="gray" />
-          <Text className="flex-1 ms-4 text-sm font-semibold">
+          <Text className="flex-1 ms-4 text-sm font-semibold text-blue">
             {t(item.label)}
           </Text>
           <Ionicons
@@ -146,7 +152,7 @@ export default function AdTypeSelector({
           ))}
       </>
     )
-  }, [expandedPaths, isRTL, t, toggleExpand])
+  }, [expandedPaths, isRTL, dark, t, toggleExpand])
 
   const handleSelect = (value: any) => {
     onChange(value);

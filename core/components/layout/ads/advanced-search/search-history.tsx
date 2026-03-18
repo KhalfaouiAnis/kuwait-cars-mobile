@@ -8,6 +8,7 @@ import useSearchStore from "@/core/store/search.store";
 import { AdvertisementInterface } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useMemo } from "react";
@@ -23,6 +24,8 @@ export default function SearchHistory({ onNewSearch }: Props) {
     const { isRTL } = useUserPreferencesStore();
     const { clearHistory } = useSearchStore();
     const { data, isLoading } = useAdsQuery();
+    const { dark } = useTheme()
+
 
     const ads = useMemo(
         () => data?.pages.flatMap((page) => page.data.sort((ad1, ad2) => ad2.plan.price - ad1.plan.price)) ?? [],
@@ -71,13 +74,13 @@ export default function SearchHistory({ onNewSearch }: Props) {
         <Container>
             <View className="flex-row justify-between gap-2 mt-3 ms-4 me-4 items-center">
                 <BackArrow />
-                <Text className="text-center text-lg font-inter-medium">Saved searches</Text>
+                <Text className="text-center text-lg font-inter-medium dark:text-white">Saved searches</Text>
                 <Reset reset={clearHistory} />
             </View>
             <View className="gap-4 mx-8 mt-4">
                 <View className="flex-row items-center gap-2">
-                    <Ionicons name="search-outline" color="#1F51FF" size={20} />
-                    <Text className="text-blue">Recent search</Text>
+                    <Ionicons name="search-outline" color={dark ? "white" : "#1F51FF"} size={20} />
+                    <Text className="text-blue dark:text-white">Recent search</Text>
                 </View>
                 <View
                     style={{
@@ -87,8 +90,8 @@ export default function SearchHistory({ onNewSearch }: Props) {
                     className="self-center justify-end gap-5 p-6">
                     <View className="gap-5">
                         <View className="flex-row items-center">
-                            <Ionicons name="car-sport-outline" size={20} />
-                            <Text className="text-center flex-1 font-inter">used car</Text>
+                            <Ionicons name="car-sport-outline" size={20} color={dark ? "white" : "black"} />
+                            <Text className="text-center flex-1 font-inter dark:text-white">used car</Text>
                         </View>
                         <View className="flex-row items-center">
                             <Image
@@ -96,13 +99,13 @@ export default function SearchHistory({ onNewSearch }: Props) {
                                 source={IMAGES.CarMercedesLogo}
                                 contentFit="contain"
                             />
-                            <Text className="text-center flex-1 font-inter">mercedes-bens</Text>
+                            <Text className="text-center flex-1 font-inter dark:text-white">mercedes-bens</Text>
                         </View>
                     </View>
                     <Text className="text-center text-orange font-inter">searching again</Text>
                 </View>
             </View>
-            <Text className="text-blue ms-6 mt-12">Highlighted ads</Text>
+            <Text className="text-blue ms-6 mt-12 dark:text-white">Highlighted ads</Text>
             {
                 isLoading ? <ActivityIndicator size="large" color="#FFF12E" /> : (
                     <FlatList

@@ -4,6 +4,7 @@ import { DIMENSIONS } from '@/core/constants';
 import useUserPreferencesStore from '@/core/store/preferences.store';
 import { boxShadow } from '@/core/utils/cn';
 import { Ionicons, Octicons } from '@expo/vector-icons';
+import { useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,10 +14,11 @@ import { BaseTextInputProps } from '../..';
 export default function LocationPicker({ label, control }: BaseTextInputProps<any>) {
     const { field: { onChange, value } } = useController({ control, name: "location" })
     const [showModal, setShowModal] = useState(false);
-    const { isRTL, theme } = useUserPreferencesStore()
+    const { isRTL } = useUserPreferencesStore()
     function hideMap() { setShowModal(false) }
     function showMap() { setShowModal(true) }
     const { t } = useTranslation("common");
+    const { dark } = useTheme()
 
     return (
         <>
@@ -31,7 +33,7 @@ export default function LocationPicker({ label, control }: BaseTextInputProps<an
                     }}
                 >
                     <View className='flex-row gap-4 items-center'>
-                        <Octicons name="location" size={20} color={theme !== "light" ? "white" : "black"} />
+                        <Octicons name="location" size={20} color={dark ? "white" : "black"} />
                         <Text
                             className={`font-inter text-sm ${value?.latitude ? "text-[#333] dark:text-white overflow-hidden" : "text-gray-400"}`}
                             pointerEvents="none"
@@ -40,7 +42,7 @@ export default function LocationPicker({ label, control }: BaseTextInputProps<an
                         </Text>
                     </View>
                     <View>
-                        <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={theme !== "light" ? "white" : "black"} />
+                        <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={20} color={dark ? "white" : "black"} />
                     </View>
                 </Pressable>
                 <MapViewer

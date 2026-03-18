@@ -18,8 +18,8 @@ interface Props {
 
 export default function AvatarPicker({ user, control }: Props) {
     const { field } = useController({ name: "avatar", control });
-    const { addAvatar } = useAvatar(field);
     const [showModal, setShowModal] = useState(false);
+    const { addAvatar } = useAvatar(field);
     const { t } = useTranslation("common");
 
     return (

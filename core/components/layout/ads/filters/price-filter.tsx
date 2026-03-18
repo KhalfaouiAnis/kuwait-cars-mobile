@@ -17,7 +17,7 @@ export const PriceFilterContent = () => {
 
     return (
         <View
-            className="border justify-center mx-auto border-grayish px-4"
+            className="border-[0.5px] justify-center mx-auto border-grayish px-4"
             style={{ direction: isRTL ? "rtl" : "ltr", borderRadius: 10, width: DIMENSIONS.width - 40, height: 235, backgroundColor: "#F5F5F5" }}>
             <Text className="text-lg font-semibold">{t("advancedSearch.priceRange")}</Text>
 

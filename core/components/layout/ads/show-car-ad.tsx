@@ -77,24 +77,25 @@ const ShowAdComponent = memo(function Advertisement({
           onMomentumScrollEnd={handleScroll}
           showsHorizontalScrollIndicator={false}
         >
-          {ad.media.map((item, index) => (
-            <View style={{ width, height }} key={getMappingKey(item.public_id, index)}>
-              {item.media_type === "VIDEO" ? (
-                <VideoPlayer
-                  autoPlay
-                  isVisible={isVisible && index === activeHorizontalIndex}
-                  source={item.transformed_url}
-                />
-              ) : (
-                <Image
-                  source={{ uri: item.transformed_url }}
-                  style={styles.fullScreenImage}
-                  contentFit="cover"
-                  transition={200}
-                />
-              )}
-            </View>
-          ))}
+          {ad.media.sort((a, b) => b.media_type.localeCompare(a.media_type))
+            .map((item, index) => (
+              <View style={{ width, height }} key={getMappingKey(item.public_id, index)}>
+                {item.media_type === "VIDEO" ? (
+                  <VideoPlayer
+                    autoPlay
+                    isVisible={isVisible && index === activeHorizontalIndex}
+                    source={item.transformed_url}
+                  />
+                ) : (
+                  <Image
+                    source={{ uri: item.transformed_url }}
+                    style={styles.fullScreenImage}
+                    contentFit="cover"
+                    transition={200}
+                  />
+                )}
+              </View>
+            ))}
         </ScrollView>
       )}
 

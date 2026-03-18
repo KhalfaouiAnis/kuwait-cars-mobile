@@ -1,30 +1,33 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text } from "react-native";
 
 interface Props {
-    filterKey: any;
     title: string;
-    handleOpen: (filterKey: any) => void
+    active: boolean,
+    handleOpen: () => void
 }
 
-export default function FilterButton({ filterKey, title, handleOpen }: Props) {
+export default function FilterButton({ title, handleOpen, active }: Props) {
     const { t } = useTranslation("common");
     const { dark } = useTheme()
+
     return (
-        <Pressable onPress={() => handleOpen(filterKey)}>
-            <View className="ml-2 border border-[#EFEFEF] p-2 rounded-3xl flex-row items-center dark:bg-black">
-                <Text className="ms-2 text-black dark:text-white">
-                    {t(`advancedSearch.${title}`)}
-                </Text>
-                <Ionicons
-                    name="chevron-down"
-                    size={16}
-                    color={dark ? "white" : "black"}
-                    style={{ fontWeight: "900", paddingTop: 2 }}
-                />
-            </View>
+        <Pressable
+            onPress={handleOpen}
+            className={`flex-row items-center ${active ? "border-b-2 border-primary-500" : "border-b border-gray-300"}`}
+
+        >
+            <Text className="font-inter text-black dark:bg-darkish text-sm dark:text-white/75">
+                {t(`advancedSearch.${title}`)}
+            </Text>
+            <Ionicons
+                size={14}
+                name="chevron-down"
+                style={{ fontWeight: "900", marginStart: 4 }}
+                color={dark ? "rgb(255 255 255 / 0.75)" : "black"}
+            />
         </Pressable>
     )
 }

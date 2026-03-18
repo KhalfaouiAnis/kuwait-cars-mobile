@@ -77,10 +77,8 @@ export default function MainSearch() {
                             <Pressable
                                 key={category}
                                 onPress={() => setExternalFilter("ad_type", category)}
-                                onLayout={(event) => {
-                                    itemLayouts.current.set(category, event.nativeEvent.layout.x);
-                                }}
-                                className={`border-b-2 items-center ${ad_type === category ? "border-blue" : "border-gray-100"}`}
+                                onLayout={(event) => { itemLayouts.current.set(category, event.nativeEvent.layout.x) }}
+                                className={`items-center ${ad_type === category ? "border-b-2 border-blue" : "border-b border-gray-300"}`}
                             >
                                 <View className="flex-row items-center">
                                     {ad_type === category && (
@@ -111,8 +109,8 @@ export default function MainSearch() {
                 >
                     {visibleFilters.map((field) => (
                         <FilterController
-                            key={`${ad_type}-${field.id}`}
                             field={field.label}
+                            key={`${ad_type}-${field.id}`}
                             config={AD_FILTER_OPTIONS_CONFIG[ad_type as AdTypeField][field.key as FilterField]}
                         />
                     ))}

@@ -1,5 +1,5 @@
-import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import React from "react";
 import { Pressable } from "react-native";
@@ -25,7 +25,7 @@ export const FlagButton = ({
   color,
   size = 22,
 }: Props) => {
-  const { theme } = useUserPreferencesStore();
+  const { dark } = useTheme()
   const scale = useSharedValue(1);
 
   const snappySpring = {
@@ -50,7 +50,7 @@ export const FlagButton = ({
     onPress();
   };
 
-  const iconColor = color ? color : theme !== "light" ? "white" : "black";
+  const iconColor = color ? color : dark ? "white" : "black";
 
   return (
     <Pressable

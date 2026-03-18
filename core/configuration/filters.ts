@@ -36,12 +36,12 @@ export const AD_FILTER_CONFIG: Record<string, FilterField[]> = {
     "model",
     "year",
     "price",
-    "mileage",
     "province",
     "cylinders",
     "exterior_color",
     "under_warranty",
     "transmission",
+    "mileage",
     "fuel_type",
   ],
   motorcycles: ["brand", "price", "year", "province"],
@@ -66,6 +66,16 @@ export const AD_FILTER_OPTIONS_CONFIG: Record<
   Partial<Record<FilterField, any>>
 > = {
   used_cars: {
+    brand: {
+      options: YEARS,
+      strategy: FilterUIStrategy.DROPDOWN,
+      adapter: SelectAdapters.fromPrimitive,
+    },
+    model: {
+      options: YEARS,
+      strategy: FilterUIStrategy.DROPDOWN,
+      adapter: SelectAdapters.fromPrimitive,
+    },
     year: {
       options: YEARS,
       strategy: FilterUIStrategy.DROPDOWN,
@@ -105,6 +115,11 @@ export const AD_FILTER_OPTIONS_CONFIG: Record<
       options: FUEL_TYPE_OPTIONS,
       strategy: FilterUIStrategy.DROPDOWN,
       adapter: SelectAdapters.fromPrimitive,
+    },
+    mileage: {
+      strategy: FilterUIStrategy.MODAL_CENTER,
+      min: 0,
+      max: 1000000,
     },
   },
   motorcycles: {

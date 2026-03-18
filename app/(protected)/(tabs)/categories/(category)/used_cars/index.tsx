@@ -17,8 +17,6 @@ export default function UsedCarsCategoryScreen() {
     );
 
     return (
-        <AdCategoryIndex
-            filterConfig={filterConfig}
-        />
+        <AdCategoryIndex filterConfig={filterConfig} />
     )
 }

@@ -13,9 +13,9 @@ export type MultiFilterKeys =
   | "brand"
   | "model"
   | "year"
-  | "engine"
+  | "cylinders"
   | "transmission"
-  | "location"
+  | "province"
   | "exterior_color";
 export type SingleFilterKeys = "ad_type" | "ad_category" | "mileage" | "price";
 
@@ -32,12 +32,12 @@ export interface FilterState {
   brand?: string[];
   model?: string[];
   year?: string[];
-  engine?: string[];
+  cylinders?: string[];
+  province?: string[];
   transmission?: string[];
-  location?: string[];
+  price?: [number, number];
   exterior_color?: string[];
   mileage?: [number, number];
-  price?: [number, number];
 
   q: string;
   region?: string[];
@@ -52,6 +52,9 @@ const initialFilters: FilterState = {
   model: [],
   year: [],
   exterior_color: [],
+  transmission: [],
+  cylinders: [],
+  province: [],
   mileage: [OVERALL_MIN_MILEAGE, OVERALL_MAX_MILEAGE],
   price: [OVERALL_MIN_PRICE, OVERALL_MAX_PRICE],
   sorting: {

@@ -1,5 +1,5 @@
-import useUserPreferencesStore from '@/core/store/preferences.store';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '@react-navigation/native';
 import { Pressable, Text, View } from 'react-native';
 import BackArrow from './shared/back-arrow';
 
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Header = ({ title, headerAction }: Props) => {
-    const { theme } = useUserPreferencesStore()
+    const { dark } = useTheme()
 
     return (
         <View className='mb-4 flex flex-row items-center justify-between px-2 '>
@@ -23,7 +23,7 @@ const Header = ({ title, headerAction }: Props) => {
             {
                 headerAction && (
                     <Pressable onPress={headerAction.onPress} >
-                        <Ionicons name={headerAction.name} size={24} color={theme !== "light" ? "white" : "black"} />
+                        <Ionicons name={headerAction.name} size={24} color={dark ? "white" : "black"} />
                     </Pressable>
                 )
             }

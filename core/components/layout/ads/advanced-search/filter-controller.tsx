@@ -62,8 +62,8 @@ const FilterController = ({ field, config }: { field: string, config: any }) => 
                 ref={triggerRef}
                 onPress={toggle}
                 icon={config.icon}
-                label={config.label || field}
                 isActive={isVisible}
+                label={config.label || field}
             />
 
             <Modal visible={isVisible} transparent animationType="fade">
