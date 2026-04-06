@@ -1,6 +1,8 @@
 import { BaseStepViewProps } from "@/core/components/ui";
 import Checkbox from "@/core/components/ui/input/checkbox/checkbox";
+import { boxShadow } from "@/core/utils/cn";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { FieldValues, useFormContext } from "react-hook-form";
@@ -9,6 +11,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import StepField from "../step-field";
 
 export default function DetailedInfo2<T extends FieldValues>({ fields }: BaseStepViewProps<T>) {
+    const { dark } = useTheme()
     const { t } = useTranslation("common")
     const { getValues } = useFormContext()
     const [showSecondNumber, setShowSecondNumber] = useState(() => getValues("second_additional_number") !== undefined)
@@ -22,9 +25,10 @@ export default function DetailedInfo2<T extends FieldValues>({ fields }: BaseSte
                         (!showSecondNumber) && (
                             <TouchableOpacity
                                 hitSlop={20}
+                                onPress={() => setShowSecondNumber(true)}
                                 className="absolute top-3.5 end-10 w-10 h-10 z-20 items-center justify-center"
-                                onPress={() => setShowSecondNumber(true)}>
-                                <Ionicons name="add" size={28} />
+                            >
+                                <Ionicons name="add" size={28} color={dark ? "white" : "black"} />
                             </TouchableOpacity>
                         )
                     }
@@ -43,10 +47,11 @@ export default function DetailedInfo2<T extends FieldValues>({ fields }: BaseSte
             {
                 !fields.contact_whatsapp && (
                     <>
-                        <View className="border border-error gap-y-2 p-3 mt-6">
-                            <View>
-                                <Text className="font-inter-semibold">{t("createAd.TermsAndConditions.TermsAndConditions")}</Text>
-                            </View>
+                        <View
+                            className="border border-error gap-y-2 p-3 mt-6 mx-8 w-full"
+                            style={{ ...boxShadow(0, 5, 10).button }}
+                        >
+                            <Text className="font-inter-semibold">{t("createAd.TermsAndConditions.TermsAndConditions")}</Text>
                             <View>
                                 <View className="flex-row items-center gap-2">
                                     <Ionicons name="checkmark-outline" color="#FAED02" size={20} />
@@ -66,22 +71,20 @@ export default function DetailedInfo2<T extends FieldValues>({ fields }: BaseSte
                                 </View>
                             </View>
                             <View className="flex-row items-center gap-2 flex-1">
-                                <Text className="flex-1">
+                                <Text className="flex-1 dark:text-white">
                                     {t("createAd.TermsAndConditions.AccessingThisServiceConstitutesYour")} <Text className="text-error">{t("createAd.TermsAndConditions.agreement")}</Text> {t("createAd.TermsAndConditions.toOur")} <Text className="text-error">{t("createAd.TermsAndConditions.terms")}</Text>, {t("createAd.TermsAndConditions.whichGovernUseAndAreAvailableFor")} <Text className="text-error">{t("createAd.TermsAndConditions.review")}</Text> {t("createAd.TermsAndConditions.OnOurWebsite")}
                                 </Text>
                                 <Checkbox size={40} />
                             </View>
                         </View>
-                        <View>
-                            <Link href="/general-condition">
-                                <View className="flex-row items-start">
-                                    <Text className="underline text-[#0004DD]">
-                                        {t("createAd.TermsAndConditions.readTermsAndConditions")}
-                                    </Text>
-                                    <Ionicons name="chevron-forward-outline" size={18} color="#0004DD" />
-                                </View>
-                            </Link>
-                        </View>
+                        <Link href="/general-condition" className="self-start">
+                            <View className="flex-row items-start self-start">
+                                <Text className="underline text-[#0004DD]">
+                                    {t("createAd.TermsAndConditions.readTermsAndConditions")}
+                                </Text>
+                                <Ionicons name="chevron-forward-outline" size={18} color="#0004DD" />
+                            </View>
+                        </Link>
                     </>
                 )
             }

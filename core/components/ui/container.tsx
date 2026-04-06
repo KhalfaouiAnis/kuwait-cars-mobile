@@ -1,8 +1,8 @@
 import { PropsWithChildren, ReactNode } from "react";
 import { ScrollView } from "react-native";
 import {
-    SafeAreaView,
-    useSafeAreaInsets,
+  SafeAreaView,
+  useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
 const Container = ({
@@ -18,8 +18,8 @@ const Container = ({
   const { bottom } = useSafeAreaInsets();
   return (
     <SafeAreaView
-      edges={["top", "left", "right"]}
       className="flex-1"
+      edges={["top", "left", "right"]}
       style={{ marginBottom: bottom, backgroundColor }}
     >
       {scrollable ? (

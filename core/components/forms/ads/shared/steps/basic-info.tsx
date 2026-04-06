@@ -9,10 +9,10 @@ import SelectedAdType from "../ad-type-selector/selected-ad-type";
 import StepField from "../step-field";
 
 export default function BasicInfo<T extends FieldValues>({ fields }: BaseStepViewProps<T>) {
-    const { model, brand } = useLocalSearchParams()
-    const { t } = useTranslation("common")
     const { t: tBrands } = useTranslation("car_categories")
+    const { model, brand } = useLocalSearchParams()
     const { isRTL } = useUserPreferencesStore()
+    const { t } = useTranslation("common")
 
     const label = `${tBrands(brand)}${model ? "-" + tBrands(model) : ""}`
 

@@ -36,7 +36,7 @@ export default function SoundEffectPicker({ name }: VideoSelectorProps) {
 
     return (
         <View className="gap-2 mt-6">
-            <Text className="text-xl font-inter-bold mb-2">{t("createAd.addVideoSoundEffect")}</Text>
+            <Text className="text-xl font-inter-bold mb-2 dark:text-white">{t("createAd.addVideoSoundEffect")}</Text>
             <View className="mt-2 gap-3 flex-row-reverse flex-wrap">
                 {
                     SOUND_EFFECTS_NAMES.map(effect => (
@@ -50,7 +50,7 @@ export default function SoundEffectPicker({ name }: VideoSelectorProps) {
                                 setShowModal(true)
                             }}
                         >
-                            <Text className="text-center font-inter-semibold">
+                            <Text className="text-center font-inter-semibold dark:text-white">
                                 {t(`createAd.soundEffects.${effect}`)}
                             </Text>
                         </TouchableOpacity>

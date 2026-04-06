@@ -29,7 +29,7 @@ export default function RadioButton({
       style={[styles.wrapper, { borderRadius, width: square ? 40 : undefined }]}
       className={cn("p-3  border border-grayish", {
         "bg-[#D9D9D9]": selected,
-        "bg-white": !selected,
+        "bg-white dark:bg-darkish": !selected,
         "flex-1": fullWidth,
       })}
     >

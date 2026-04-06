@@ -61,7 +61,7 @@ export default function ImageSearch() {
                 <Ionicons
                     name="camera-outline"
                     size={24}
-                    color={dark ? "#B3B3B3" : "black"}
+                    color={dark ? "#ffffffb3" : "#000000b3"}
                 />
             </Pressable>
             <AppModal

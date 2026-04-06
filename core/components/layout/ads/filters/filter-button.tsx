@@ -6,20 +6,28 @@ import { Pressable, Text } from "react-native";
 interface Props {
     title: string;
     active: boolean,
-    handleOpen: () => void
+    disabled?: boolean,
+    handleOpen: () => void,
 }
 
-export default function FilterButton({ title, handleOpen, active }: Props) {
+function getBorder(active: boolean, disabled: boolean) {
+    const className = "flex-row items-center ";
+    if (disabled) return className;
+    if (active) return className.concat("border-b-2 border-blue");
+    return className.concat("border-b border-gray-300")
+}
+
+export default function FilterButton({ title, handleOpen, active, disabled = false }: Props) {
     const { t } = useTranslation("common");
     const { dark } = useTheme()
 
     return (
         <Pressable
+            disabled={disabled}
             onPress={handleOpen}
-            className={`flex-row items-center ${active ? "border-b-2 border-primary-500" : "border-b border-gray-300"}`}
-
+            className={getBorder(active, disabled)}
         >
-            <Text className="font-inter text-black dark:bg-darkish text-sm dark:text-white/75">
+            <Text disabled={disabled} className="font-inter text-black dark:bg-darkish text-sm dark:text-white/75 disabled:text-black/50 dark:disabled:text-white/50">
                 {t(`advancedSearch.${title}`)}
             </Text>
             <Ionicons

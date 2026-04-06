@@ -42,17 +42,17 @@ export default function ProfileScreen() {
       <View className="flex-1 mt-2 bg-white dark:bg-black px-4 py-2">
         <View className="flex-row justify-between w-full px-4 pt-1 pb-3">
           <View>
-            <Text className="font-inter-semibold text-xl dark:text-white">
+            <Text numberOfLines={1} ellipsizeMode="tail" className="font-inter-medium text-xl dark:text-white">
               {user?.fullname}
             </Text>
-            <Text className="my-2 font-inter text-black dark:text-white">
+            <Text className="my-2 font-inter text-sm text-black dark:text-white">
               {t("profile.viewEditProfile")}
             </Text>
             <View className="flex-row items-start">
               {user?.province.province && (
                 <Ionicons name="location-outline" size={20} color="#FAED02" />
               )}
-              <Text className="ms-2 text-black dark:text-white">
+              <Text numberOfLines={1} ellipsizeMode="tail" className="ms-2 text-sm text-black dark:text-white">
                 {user?.province?.province
                   ? t(`provinces.${user?.province?.province}`)
                   : ""}
@@ -74,20 +74,17 @@ export default function ProfileScreen() {
                 <Ionicons name="camera-outline" size={24} />
               </View>
             </View>
-            <TouchableOpacity
-              onPress={handleEditProfile}
-              className="bg-primary-500 rounded-lg mt-4"
-            >
-              <View className="flex-row px-3 py-2 items-center justify-center gap-1">
-                <Text className="font-inter-medium text-sm text-center" numberOfLines={1} ellipsizeMode="tail">
-                  {t("profile.editProfile")}
-                </Text>
-                <Feather name="edit-3" size={16} color="black" />
-              </View>
-            </TouchableOpacity>
           </View>
         </View>
-
+        <TouchableOpacity
+          onPress={handleEditProfile}
+          className="bg-primary-500 rounded-lg mt-2 flex-row px-3 py-2 items-center justify-center gap-1 self-end me-4"
+        >
+          <Text className="font-inter-medium text-sm text-center">
+            {t("profile.editProfile")}
+          </Text>
+          <Feather name="edit-3" size={16} color="black" />
+        </TouchableOpacity>
         <View
           style={{ direction: isRTL ? "rtl" : "ltr" }}
           className="flex-1 py-2 px-4 mt-4 bg-white dark:bg-black gap-y-6"

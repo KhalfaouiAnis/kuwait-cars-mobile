@@ -1,3 +1,4 @@
+import { useNotificationSetup } from "@/core/hooks/notifications/useNotificationSetup";
 import useAuthStore from "@/core/store/auth.store";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Redirect, Stack } from "expo-router";
@@ -5,6 +6,7 @@ import { Redirect, Stack } from "expo-router";
 export default function ProtectedLayout() {
     const { isRTL } = useUserPreferencesStore()
     const { user, isGuest } = useAuthStore();
+    useNotificationSetup();
 
     if (!user && !isGuest) {
         return <Redirect href="/signin" />;

@@ -93,8 +93,8 @@ export default function NewAdScreen() {
             Object.keys(drafts).length > 0 && (
               <TouchableOpacity
                 className="py-3 rounded-lg bg-primary-500 disabled:bg-grayish"
-                style={styles.nextButton}
                 onPress={() => setVisible(true)}
+                style={styles.nextButton}
               >
                 <Text className="text-center text-xl font-inter-semibold">
                   My drafts
@@ -104,7 +104,7 @@ export default function NewAdScreen() {
           }
 
           <TouchableOpacity
-            className="py-3 rounded-lg bg-primary-500 disabled:bg-grayish"
+            className="py-3 bg-primary-500 disabled:bg-grayish"
             disabled={!canCreate || !adType}
             style={styles.nextButton}
             onPress={handleNavigate}
@@ -124,8 +124,10 @@ const styles = StyleSheet.create({
   nextButton: {
     height: 45,
     width: 200,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
+    textTransform: "uppercase",
     ...boxShadow(4, 6, 20).button
   }
 })

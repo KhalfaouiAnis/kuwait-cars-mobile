@@ -28,7 +28,7 @@ export default function FavoritesScreen() {
                             contentContainerStyle={{ paddingBottom: 180 }}
                             showsVerticalScrollIndicator={false}
                             removeClippedSubviews={false}
-                            ListEmptyComponent={!isLoading ? <EmptyState showReset={false} title="" description="noFavoritedAds" /> : null}
+                            ListEmptyComponent={!isLoading ? <EmptyState title="" description="noFavoritedAds" /> : null}
                         />
                     )
                 }

@@ -33,7 +33,8 @@ export default function SearchHistory({ onNewSearch }: Props) {
     );
 
     const renderItem = useCallback(({ item, index }: { item: AdvertisementInterface, index: number }) => {
-        const path: any = `/categories/${item.ad_type}/${item.ad_category ? `${item.ad_category}/${item.id}` : `${item.id}`}`;
+        const path: any = `/categories/${item.ad_type}/${item.ad_category ? `${item.ad_category.toLowerCase()}/${item.id}` : `${item.id}`}`;
+
         const Fade = isRTL ? FadeInRight.delay(index * 100).duration(500) : FadeInLeft.delay(index * 100).duration(500)
 
         return (
@@ -73,7 +74,7 @@ export default function SearchHistory({ onNewSearch }: Props) {
     return (
         <Container>
             <View className="flex-row justify-between gap-2 mt-3 ms-4 me-4 items-center">
-                <BackArrow />
+                <BackArrow ignoreRTL />
                 <Text className="text-center text-lg font-inter-medium dark:text-white">Saved searches</Text>
                 <Reset reset={clearHistory} />
             </View>

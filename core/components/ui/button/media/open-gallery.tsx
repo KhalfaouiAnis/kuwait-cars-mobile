@@ -12,7 +12,7 @@ export default function PickFromGallery({ addMedia, video, label, disabled }: { 
                 disabled ? <ActivityIndicator className="text-primary-500" size="large" /> : (
                     <View className="items-center">
                         {video ? <Octicons name="video" size={24} color="#9E9E9E" /> : <EvilIcons name="image" size={32} color="#9E9E9E" />}
-                        <Text className=" dark:text-white mt-2">{label}</Text>
+                        <Text className="text-gray-400 mt-2">{label}</Text>
                     </View>
                 )
             }

@@ -66,6 +66,23 @@ export enum UserRole {
   USER = "USER",
 }
 
+export enum NotificationType {
+  ADVERTISE_EXPIRED = "ADVERTISE_EXPIRED",
+  ADVERTISE_EXPIRING_SOON = "ADVERTISE_EXPIRING_SOON",
+  PAYMENT_SUCCESS = "PAYMENT_SUCCESS",
+  MISSED_CALL = "MISSED_CALL",
+}
+
+export interface AppNotification {
+  id: string;
+  title: string;
+  body: string;
+  data: Record<string, unknown> | null;
+  is_read: boolean;
+  status: string;
+  created_at: string;
+}
+
 export type ThemeType = "light" | "dark" | "system";
 export type LanguageCode = "en" | "ar" | "fr" | "es" | "hi" | "ur";
 export type Language = { code: LanguageCode; name: string; flag: string };

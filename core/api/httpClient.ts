@@ -73,10 +73,13 @@ httpClient.interceptors.response.use(
         },
       );
     } else {
+      const messageKey = error.response?.data?.message;
+      const fullKey = `errors.${messageKey}`;
+
       toast.error(
-        data?.message
-          ? i18n.t(`common.errors.${data?.message}`)
-          : "An unexpected error occurred",
+        i18n.t(fullKey, {
+          defaultValue: messageKey || "An unexpected error occurred",
+        }),
       );
     }
     return Promise.reject(error);

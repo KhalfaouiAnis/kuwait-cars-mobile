@@ -32,11 +32,11 @@ i18n
     },
     async (err) => {
       preferencesStore?.getState().setI18NReady(true);
-    }
+    },
   );
 
 i18n.services.formatter?.add("direction", (value) =>
-  RTL_LANGUAGES.includes(value) ? "rtl" : "ltr"
+  RTL_LANGUAGES.includes(value) ? "rtl" : "ltr",
 );
 
 export default i18n;

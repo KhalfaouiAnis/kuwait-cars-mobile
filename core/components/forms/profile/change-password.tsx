@@ -74,14 +74,14 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
           required
         />
         <BaseTextInput
-          control={control}
-          name="confirmPassword"
-          secureTextEntry
-          translatedLabel={t("profile.confirmPassword")}
-          icon="lock-closed-outline"
-          translatedPlaceholder={t("profile.confirmNewPassword")}
-          endIcon="eye-outline"
           required
+          secureTextEntry
+          control={control}
+          endIcon="eye-outline"
+          name="confirmPassword"
+          icon="lock-closed-outline"
+          translatedLabel={t("profile.confirmPassword")}
+          translatedPlaceholder={t("profile.confirmNewPassword")}
         />
       </View>
       <View className="flex-1 items-center pt-12">
@@ -89,7 +89,7 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
           className="bg-primary-500 py-3 rounded-3xl items-center disabled:bg-yellow-200"
           onPress={handleUpdate}
           disabled={isSubmitting}
-          style={{width: DIMENSIONS.width - 80}}
+          style={{ width: DIMENSIONS.width - 80 }}
         >
           <Text className="text-lg font-semibold text-secondary-900">
             {isSubmitting ? (

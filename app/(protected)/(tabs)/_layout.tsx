@@ -36,12 +36,12 @@ export default function TabLayout() {
                     e.preventDefault();
                     protectAction(() => {
                         navigation.navigate(route);
-                        if (route === "create") {
-                            navigation.reset({
-                                index: 0,
-                                routes: [{ name: 'index' }],
-                            });
-                        }
+                        // if (route === "create") {
+                        //     navigation.reset({
+                        //         index: 0,
+                        //         routes: [{ name: 'index' }],
+                        //     });
+                        // }
                     });
                 }
             })
@@ -90,14 +90,16 @@ export default function TabLayout() {
             />
             <Tabs.Screen
                 name="chat"
-                options={{ tabBarIcon: ({ color }) => <TabIconButton name="chatbox-ellipses-outline" color={color} dark={dark} /> }}
                 listeners={protectionListeners("chat")}
+                options={{ tabBarIcon: ({ color }) => <TabIconButton name="chatbox-ellipses-outline" color={color} dark={dark} /> }}
             />
             <Tabs.Screen
                 name="favorites"
-                options={{ tabBarIcon: ({ color }) => <TabIconButton name="star-outline" color={color} dark={dark} /> }}
                 listeners={protectionListeners("favorites")}
+                options={{ tabBarIcon: ({ color }) => <TabIconButton name="star-outline" color={color} dark={dark} /> }}
             />
+
+
         </Tabs>
     );
 }

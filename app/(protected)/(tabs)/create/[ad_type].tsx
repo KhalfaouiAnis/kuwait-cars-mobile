@@ -32,15 +32,15 @@ const getStepTitle = (step: AdStepKey, t: TFunction) => {
 const flow_types = Object.keys(FLOW_CONFIGS)
 
 export default function CreateAdScreenMasterController() {
-    const { ad_type } = useLocalSearchParams<{ ad_type: string }>();
+    const { ad_type } = useLocalSearchParams<{ ad_type: AD_MASTER_SCHEMA_KEY }>();
     const { t } = useTranslation("common")
 
-    const adType = flow_types.includes(ad_type) ? ad_type as AD_MASTER_SCHEMA_KEY : "common"
+    const adType = flow_types.includes(ad_type) ? ad_type : "common"
 
     const flow = FLOW_CONFIGS[adType]
 
     const { methods, currentDraft, showDialog, loading, handleBack, handleStay, handleLeave, handleNext, handleReset } = useDraftForm()
-    const currentStepKey = flow[currentDraft.step_index];
+    const currentStepKey = flow[currentDraft?.step_index ?? 0];
 
     if (!currentDraft) return <Redirect href="/create" />;
 

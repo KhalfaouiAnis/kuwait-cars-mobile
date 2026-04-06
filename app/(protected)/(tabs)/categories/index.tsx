@@ -9,7 +9,7 @@ import { IMAGES } from "@/core/constants/images";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { boxShadow } from "@/core/utils/cn";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
@@ -21,13 +21,13 @@ export default function CategoriesScreen() {
     return (
         <Container header={<MainHeader drawer back={false} />}>
             <ScrollView showsVerticalScrollIndicator={false} style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                <View className="mt-6 px-4 flex-row items-center justify-between">
+                <View className="mt-6 px-6 flex-row items-center justify-between">
                     <SpecialcategoryLink label="X AI" />
                     <SpecialcategoryLink label="Photo editor" />
                     <SpecialcategoryLink label="Tier size" />
                 </View>
                 <Pressable
-                    className="w-full items-center px-4 mt-4"
+                    className="w-full items-center px-6 mt-4"
                     onPress={() => router.navigate("/categories/show")}
                 >
                     <View className="w-full h-[75px] rounded-[22px] bg-white dark:border-[#46464640] border-[0.5px] border-grayish">
@@ -40,16 +40,14 @@ export default function CategoriesScreen() {
                 >
                     <View className="gap-y-6 flex-row items-start justify-between flex-wrap px-4">
                         <View className="w-full flex-row gap-4 px-1 mb-2">
+                            <Link className="flex-1 items-center" href={{ pathname: "/categories/used_cars", params: { ad_type: AD_TYPES.used_cars } }} asChild>
+                                <Pressable className="flex-1 items-center">
+                                    <View className="w-full h-[90px] rounded-[35px] dark:border-[#46464640] border-[0.5px] border-grayish dark:bg-white" />
+                                    <Text className="font-inter mt-2 text-blue">Used car sale</Text>
+                                </Pressable>
+                            </Link>
                             <Pressable
                                 className="flex-1 items-center"
-                                onPress={() => router.navigate("/categories/used_cars")}
-                            >
-                                <View className="w-full h-[90px] rounded-[35px] dark:border-[#46464640] border-[0.5px] border-grayish dark:bg-white" />
-                                <Text className="font-inter mt-2 text-blue">Used car sale</Text>
-                            </Pressable>
-                            <Pressable
-                                className="flex-1 items-center"
-                            // onPress={() => router.navigate("/categories/used_cars")}
                             >
                                 <View className="w-full h-[90px] rounded-[35px] dark:border-[#46464640] border-[0.5px] border-grayish dark:bg-white" />
                                 <Text className="font-inter mt-2 text-blue">Quick Sale Videos</Text>
@@ -118,123 +116,136 @@ export default function CategoriesScreen() {
                         <Text className="font-inter-medium text-lg ms-6 text-blue dark:text-[#00A6DA]">
                             {t("Highlighted ads")}
                         </Text>
-                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerClassName="ps-3"
+                        >
                             <View
                                 style={boxShadow(0, 4, 4).button}
-                                className="bg-white rounded-2xl p-1 my-4 gap-x-2 items-center border-[0.5px] border-grayish dark:border-[#46464640] dark:bg-black/50 ms-2 me-4">
+                                className="bg-white rounded-[20px] p-1 my-4 items-center border border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
                                 <Image
-                                    style={{ height: 130, width: 130, borderRadius: 15 }}
                                     source={IMAGES.CarHyunday}
+                                    style={{ height: 130, width: 146, borderRadius: 15 }}
                                     contentFit="cover"
                                 />
-                                <View className="gap-y-5">
-                                    <View className="flex-row gap-1 items-start">
+                                <View className="px-2 mt-3">
+                                    <View className="flex-row items-center">
                                         <Image
-                                            style={{ height: 20, width: 20, borderRadius: 100, marginTop: 4 }}
+                                            style={{ height: 14, width: 14, borderRadius: 100, marginEnd: 2 }}
                                             source={IMAGES.CarMercedesLogo}
-                                            contentFit="contain"
+                                            contentFit="fill"
                                         />
                                         <Text
-                                            className="font-inter-medium max-w-36 dark:text-white text-center"
                                             numberOfLines={2}
+                                            ellipsizeMode="tail"
+                                            className="font-inter-medium text-sm max-w-36 dark:text-white"
                                         >
-                                            Mercedes Benz C-Class
+                                            Chevrxyz - Corvette
                                         </Text>
                                     </View>
                                     <View className="flex-row items-center justify-end">
-                                        <View className="justify-center">
+                                        <View className="justify-center ms-4">
                                             <Text className="font-inter max-w-36 dark:text-white">
+                                                C-Class
+                                            </Text>
+                                            <Text className="font-inter max-w-36 dark:text-white -mt-1">
                                                 2023
                                             </Text>
-                                            <Text className="me-10 font-inter dark:text-white text-blue">
+                                            <Text className="me-10 font-inter dark:text-white text-blue -mt-1">
                                                 $52500
                                             </Text>
                                         </View>
                                         <FavoriteButton
-                                            isFavorite={false}
                                             onPress={() => { }}
+                                            isFavorite={false}
                                             size={30}
-                                            color="#A3A2A2"
                                         />
                                     </View>
                                 </View>
                             </View>
                             <View
                                 style={boxShadow(0, 4, 4).button}
-                                className="bg-white rounded-2xl p-1 my-4 gap-x-2 items-center border border-transparent dark:border-[#46464640] dark:bg-black/50 me-4">
+                                className="bg-white rounded-[20px] p-1 my-4 items-center border border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
                                 <Image
                                     source={IMAGES.CarHyunday}
-                                    style={{ height: 130, width: 130, borderRadius: 15 }}
+                                    style={{ height: 130, width: 146, borderRadius: 15 }}
                                     contentFit="cover"
                                 />
-                                <View className="gap-y-5">
-                                    <View className="flex-row gap-2 items-start">
+                                <View className="px-2 mt-3">
+                                    <View className="flex-row items-center">
                                         <Image
-                                            style={{ height: 20, width: 20, borderRadius: 100, marginTop: 4 }}
+                                            style={{ height: 14, width: 14, borderRadius: 100, marginEnd: 2 }}
                                             source={IMAGES.CarMercedesLogo}
-                                            contentFit="contain"
+                                            contentFit="fill"
                                         />
-                                    <Text
-                                        className="font-inter-medium max-w-36 dark:text-white text-center"
-                                        numberOfLines={2}
-                                    >
-                                        Mercedes Benz C-Class
-                                    </Text>
+                                        <Text
+                                            numberOfLines={2}
+                                            ellipsizeMode="tail"
+                                            className="font-inter-medium text-sm max-w-36 dark:text-white"
+                                        >
+                                            Chevrxyz - Corvette
+                                        </Text>
                                     </View>
                                     <View className="flex-row items-center justify-end">
-                                        <View className="justify-center">
+                                        <View className="justify-center ms-4">
                                             <Text className="font-inter max-w-36 dark:text-white">
+                                                C-Class
+                                            </Text>
+                                            <Text className="font-inter max-w-36 dark:text-white -mt-1">
                                                 2023
                                             </Text>
-                                            <Text className="me-10 font-inter dark:text-white text-blue">
+                                            <Text className="me-10 font-inter dark:text-white text-blue -mt-1">
                                                 $52500
                                             </Text>
                                         </View>
                                         <FavoriteButton
-                                            isFavorite={false}
                                             onPress={() => { }}
+                                            isFavorite={false}
                                             size={30}
-                                            color="#A3A2A2"
                                         />
                                     </View>
                                 </View>
                             </View>
                             <View
                                 style={boxShadow(0, 4, 4).button}
-                                className="bg-white rounded-2xl p-1 my-4 gap-x-2 items-center border border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
+                                className="bg-white rounded-[20px] p-1 my-4 items-center border border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
                                 <Image
                                     source={IMAGES.CarHyunday}
-                                    style={{ height: 130, width: 130, borderRadius: 15 }}
+                                    style={{ height: 130, width: 146, borderRadius: 15 }}
                                     contentFit="cover"
                                 />
-                                <View className="gap-y-5">
-                                    <View className="flex-row gap-2 items-start">
+                                <View className="px-2 mt-3">
+                                    <View className="flex-row items-center">
                                         <Image
-                                            style={{ height: 20, width: 20, borderRadius: 100, marginTop: 4 }}
+                                            style={{ height: 14, width: 14, borderRadius: 100, marginEnd: 2 }}
                                             source={IMAGES.CarMercedesLogo}
-                                            contentFit="contain"
+                                            contentFit="fill"
                                         />
-                                    <Text
-                                        className="font-inter-medium max-w-36 dark:text-white text-center"
-                                        numberOfLines={2}
-                                    >
-                                        Mercedes Benz C-Class
-                                    </Text>
+                                        <Text
+                                            numberOfLines={2}
+                                            ellipsizeMode="tail"
+                                            className="font-inter-medium text-sm max-w-36 dark:text-white"
+                                        >
+                                            Chevrxyz - Corvette
+                                        </Text>
                                     </View>
                                     <View className="flex-row items-center justify-end">
-                                        <View className="justify-center">
+                                        <View className="justify-center ms-4">
                                             <Text className="font-inter max-w-36 dark:text-white">
+                                                C-Class
+                                            </Text>
+                                            <Text className="font-inter max-w-36 dark:text-white -mt-1">
                                                 2023
                                             </Text>
-                                            <Text className="me-10 font-inter dark:text-white text-blue">
+                                            <Text className="me-10 font-inter dark:text-white text-blue -mt-1">
                                                 $52500
                                             </Text>
                                         </View>
                                         <FavoriteButton
-                                            isFavorite={false}
                                             onPress={() => { }}
+                                            isFavorite={true}
                                             size={30}
-                                            color="#FF1493"
                                         />
                                     </View>
                                 </View>
@@ -266,10 +277,10 @@ export default function CategoriesScreen() {
                                     source={IMAGES.CarHyunday}
                                     contentFit="cover"
                                 />
-                                <View className="gap-y-5">
+                                <View className="pe-2">
                                     <View className="flex-row gap-2 items-start">
                                         <Image
-                                            style={{ height: 20, width: 20, borderRadius: 100, marginTop: 4 }}
+                                            style={{ height: 20, width: 20, borderRadius: 100 }}
                                             source={IMAGES.CarMercedesLogo}
                                             contentFit="contain"
                                         />
@@ -277,11 +288,14 @@ export default function CategoriesScreen() {
                                             className="font-inter-medium max-w-36 dark:text-white"
                                             numberOfLines={2}
                                         >
-                                            Mercedes Benz C-Class
+                                            MERCEDES BENZ
                                         </Text>
                                     </View>
                                     <View className="flex-row items-center justify-end">
                                         <View className="justify-center">
+                                            <Text className="font-inter max-w-36 dark:text-white">
+                                                C-CLASS
+                                            </Text>
                                             <Text className="font-inter max-w-36 dark:text-white">
                                                 2023
                                             </Text>
@@ -290,9 +304,8 @@ export default function CategoriesScreen() {
                                             </Text>
                                         </View>
                                         <FavoriteButton
-                                            isFavorite={false}
                                             onPress={() => { }}
-                                            color="#FF1493"
+                                            isFavorite={true}
                                             size={30}
                                         />
                                     </View>
@@ -300,16 +313,16 @@ export default function CategoriesScreen() {
                             </View>
                             <View
                                 style={boxShadow(0, 0, 12.9, 0, "rgba(000 000 000 / 0.2)").button}
-                                className="bg-white rounded-2xl p-1 my-4 flex-row gap-x-2 items-center border border-transparent dark:border-[#46464640] dark:bg-black/50 me-4">
+                                className="bg-white rounded-2xl p-1 my-4 flex-row gap-x-2 items-center border border-transparent dark:border-[#46464640] dark:bg-black/50 ms-2 me-4">
                                 <Image
-                                    source={IMAGES.CarHyunday}
                                     style={{ height: 130, width: 170, borderRadius: 15 }}
+                                    source={IMAGES.CarHyunday}
                                     contentFit="cover"
                                 />
-                                <View className="gap-y-5">
+                                <View className="pe-2">
                                     <View className="flex-row gap-2 items-start">
                                         <Image
-                                            style={{ height: 20, width: 20, borderRadius: 100, marginTop: 4 }}
+                                            style={{ height: 20, width: 20, borderRadius: 100 }}
                                             source={IMAGES.CarMercedesLogo}
                                             contentFit="contain"
                                         />
@@ -317,11 +330,14 @@ export default function CategoriesScreen() {
                                             className="font-inter-medium max-w-36 dark:text-white"
                                             numberOfLines={2}
                                         >
-                                            Mercedes Benz C-Class
+                                            MERCEDES BENZ
                                         </Text>
                                     </View>
                                     <View className="flex-row items-center justify-end">
                                         <View className="justify-center">
+                                            <Text className="font-inter max-w-36 dark:text-white">
+                                                C-CLASS
+                                            </Text>
                                             <Text className="font-inter max-w-36 dark:text-white">
                                                 2023
                                             </Text>
@@ -330,9 +346,8 @@ export default function CategoriesScreen() {
                                             </Text>
                                         </View>
                                         <FavoriteButton
-                                            isFavorite={false}
                                             onPress={() => { }}
-                                            color="#FF1493"
+                                            isFavorite={false}
                                             size={30}
                                         />
                                     </View>

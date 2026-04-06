@@ -1,16 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
-export default function Reset({ reset }: { reset: () => void }) {
+export default function Reset({ reset, disabled }: { reset: () => void, disabled?: boolean }) {
     const { t } = useTranslation("common")
 
     return (
-        <View>
-            <TouchableOpacity className='p-2' onPress={reset}>
-                <Text className='text-error'>
-                    {t("reset")}
-                </Text>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity className='p-2' onPress={reset} disabled={disabled}>
+            <Text disabled={disabled} className='text-error disabled:text-black/50 dark:disabled:text-white/50'>
+                {t("reset")}
+            </Text>
+        </TouchableOpacity>
     )
 }

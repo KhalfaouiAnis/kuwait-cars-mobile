@@ -35,14 +35,18 @@ export const COUNTRIES = [
   { name: "Kuwait", cca2: "KW", callingCode: ["965"], flag: "🇰🇼" },
 ];
 
-export const HIDE_TABBAR_ROUTES: string[] = ["/create", "/search"];
+export const HIDE_TABBAR_ROUTES: string[] = [
+  "/create",
+  "/search",
+  "/search/search-result",
+];
 export const APP_SCHEMA = "x-car//create";
 
 export const OVERALL_MIN_PRICE = 0;
 export const OVERALL_MAX_PRICE = 99000;
 
 export const OVERALL_MIN_MILEAGE = 0;
-export const OVERALL_MAX_MILEAGE = 99000;
+export const OVERALL_MAX_MILEAGE = 990000;
 
 export const CAR_COLORS: GlobalSelectOption[] = [
   { id: "None", label: "None", value: "None" },
@@ -75,7 +79,7 @@ export const CAR_COLORS: GlobalSelectOption[] = [
 export const YEARS: GlobalSelectOption[] = generateYears().map((year) => ({
   id: year.toString(),
   label: year.toString(),
-  value: year.toString(),
+  value: year,
 }));
 
 export const PROVINCES: ProvinceOption[] = [
@@ -768,6 +772,72 @@ export const PURE_PROVINCES: Omit<ProvinceOption, "areas">[] = [
     province: "Mubarek Al-kabeer",
     latitude: 29.188843552556285,
     longitude: 48.078176597276894,
+  },
+];
+
+export const BASIC_PROVINCES: GlobalSelectOption[] = [
+  {
+    id: "Al Asimah",
+    label: "Al Asimah",
+    value: "Al Asimah",
+  },
+  {
+    id: "Hawalli",
+    label: "Hawalli",
+    value: "Hawalli",
+  },
+  {
+    id: "Al Ahmadi",
+    label: "Al Ahmadi",
+    value: "Al Ahmadi",
+  },
+  {
+    id: "Farwaniyah",
+    label: "Farwaniyah",
+    value: "Farwaniyah",
+  },
+  {
+    id: "Al Jahra",
+    label: "Al Jahra",
+    value: "Al Jahra",
+  },
+  {
+    id: "Mubarek Al-kabeer",
+    label: "Mubarek Al-kabeer",
+    value: "Mubarek Al-kabeer",
+  },
+];
+
+export const REGIONS: GlobalSelectOption[] = [
+  {
+    id: "All",
+    label: "All",
+    value: "All",
+  },
+  {
+    id: "Europe",
+    label: "Europe",
+    value: "Europe",
+  },
+  {
+    id: "American",
+    label: "American",
+    value: "American",
+  },
+  {
+    id: "Asian",
+    label: "Asian",
+    value: "Asian",
+  },
+  {
+    id: "Chinese",
+    label: "Chinese",
+    value: "Chinese",
+  },
+  {
+    id: "Others",
+    label: "Others",
+    value: "Others",
   },
 ];
 

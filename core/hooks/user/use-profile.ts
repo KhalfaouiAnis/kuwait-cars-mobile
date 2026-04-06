@@ -21,7 +21,7 @@ export function useUpdatePassword(phone?: string) {
 
   const onSubmit = async ({ password }: ResetPasswordInterface) => {
     try {
-      await httpClient.patch("/users", { password });
+      await httpClient.put("/users/update-password", { password });
 
       toast.success("Password updated successfully.");
       router.navigate("/profile");

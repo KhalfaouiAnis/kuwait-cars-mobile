@@ -8,7 +8,7 @@ export default function VoiceSearch() {
         <Ionicons
             name="mic-outline"
             size={22}
-            color={dark ? "#B3B3B3" : "black"}
+            color={dark ? "#ffffffb3" : "#000000b3"}
         />
     )
 }

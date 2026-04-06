@@ -40,7 +40,7 @@ export default function UnitSelector<TForm extends FieldValues>({ control, name 
       onPress={() => handleSelect(value)}
       activeOpacity={0.7}
     >
-      <Text className="text-base text-gray-700 font-medium">{t(`unit.${value}`)}</Text>
+      <Text className="text-base text-gray-700 dark:text-white font-medium">{t(`unit.${value}`)}</Text>
     </TouchableOpacity>
   );
 

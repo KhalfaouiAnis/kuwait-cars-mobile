@@ -18,7 +18,8 @@ export const PriceFilterContent = () => {
     return (
         <View
             className="border-[0.5px] justify-center mx-auto border-grayish px-4"
-            style={{ direction: isRTL ? "rtl" : "ltr", borderRadius: 10, width: DIMENSIONS.width - 40, height: 235, backgroundColor: "#F5F5F5" }}>
+            style={{ direction: isRTL ? "rtl" : "ltr", borderRadius: 10, width: DIMENSIONS.width - 40, height: 235, backgroundColor: "#F5F5F5" }}
+        >
             <Text className="text-lg font-semibold">{t("advancedSearch.priceRange")}</Text>
 
             <View className='flex-row gap-4 items-center justify-center mt-4'>
@@ -33,9 +34,9 @@ export const PriceFilterContent = () => {
 
             <MultiSlider
                 step={100}
+                allowOverlap={false}
                 min={OVERALL_MIN_PRICE}
                 max={OVERALL_MAX_PRICE}
-                allowOverlap={false}
                 sliderLength={DIMENSIONS.width - 120}
                 selectedStyle={{ backgroundColor: '#FF123D' }}
                 containerStyle={{ alignSelf: 'center', margin: 0 }}

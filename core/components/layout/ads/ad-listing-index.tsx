@@ -1,6 +1,5 @@
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity, View } from "react-native";
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export default function AdCategoryIndex({ filterConfig }: Props) {
-    const { dark } = useTheme()
     const { protectAction } = useAuthGuard()
     const [view, setView] = useState<"vertical" | "horizontal">("vertical");
 
@@ -29,7 +27,7 @@ export default function AdCategoryIndex({ filterConfig }: Props) {
                     <MainHeader back={true} />
                     <View className="mt-2">
                         <MainFilters
-                            isDark={dark}
+                            showAdType
                             setView={setView}
                             filterConfig={filterConfig}
                         />
@@ -40,8 +38,8 @@ export default function AdCategoryIndex({ filterConfig }: Props) {
             <View className="px-0.5 relative flex-1">
                 <AdsListing view={view} />
                 <TouchableOpacity
-                    className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500"
                     onPress={handleNavigate}
+                    className="absolute right-5 bottom-3 z-20 p-2 rounded-full bg-primary-500"
                 >
                     <Ionicons name="add" size={38} />
                 </TouchableOpacity>

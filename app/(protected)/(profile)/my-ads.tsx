@@ -206,7 +206,6 @@ export default function MyAdsScreen() {
               ListEmptyComponent={
                 !isLoading ? (
                   <EmptyState
-                    showReset={false}
                     title=""
                     description="noAdsYet"
                   />

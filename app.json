@@ -14,16 +14,11 @@
         "FacebookAppID": "1277409807481340",
         "FacebookClientToken": "your-client-token",
         "FacebookDisplayName": "Xcars",
-        "LSApplicationQueriesSchemes": [
-          "fbapi",
-          "fb-messenger-api"
-        ],
+        "LSApplicationQueriesSchemes": ["fbapi", "fb-messenger-api"],
         "NSFaceIDUsageDescription": "Your app uses Apple Sign-In for secure login."
       },
       "entitlements": {
-        "com.apple.developer.applesignin": [
-          "Default"
-        ]
+        "com.apple.developer.applesignin": ["Default"]
       },
       "config": {
         "googleMapsApiKey": "AIzaSyBrYZrom9xF_auXAO9bo4Hhadj-AWu_Gvk"
@@ -85,6 +80,15 @@
             "image": "./assets/images/logo.png",
             "backgroundColor": "#000000"
           }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/logo.png",
+          "color": "#ffffff",
+          "defaultChannel": "default",
+          "androidMode": "default"
         }
       ],
       "react-native-fbsdk-next",

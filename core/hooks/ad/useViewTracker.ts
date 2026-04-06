@@ -20,7 +20,6 @@ export const useViewTracker = (
           try {
             recordView(adId);
             storage.set(`view_ts_${adId}`, Date.now());
-            console.log(`View registered for ${adId}`);
           } catch (e) {
             console.error(e);
           }

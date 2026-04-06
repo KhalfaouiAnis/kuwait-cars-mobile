@@ -28,12 +28,12 @@ export const useDraftForm = () => {
   const { startPayment, isProcessing } = usePayment();
   const [showDialog, setShowDialog] = useState(false);
   const {
-    activeId,
     drafts,
-    updateActiveDraftContent,
+    activeId,
     saveStep,
-    setActiveDraft,
     removeDraft,
+    setActiveDraft,
+    updateActiveDraftContent,
   } = useAdDraftStore();
   const { loading: isProcessingMedia, setLoading, upload } = useUploadMedia();
   const {
@@ -43,10 +43,10 @@ export const useDraftForm = () => {
   const currentDraft = drafts[activeId!];
 
   const flow =
-    FLOW_CONFIGS[currentDraft.ad_type as AD_MASTER_SCHEMA_KEY] ||
+    FLOW_CONFIGS[currentDraft?.ad_type as AD_MASTER_SCHEMA_KEY] ||
     FLOW_CONFIGS["common"];
 
-  const currentStepKey = flow[currentDraft.step_index];
+  const currentStepKey = flow[currentDraft?.step_index ?? 0];
 
   const SCHEMA =
     AD_MASTER_SCHEMAS[currentDraft.ad_type as AD_MASTER_SCHEMA_KEY] ||
@@ -67,23 +67,23 @@ export const useDraftForm = () => {
   } = methods;
 
   const finalizeAdCreation = async () => {
-    try {
-      setLoading(true);
-      promoteAd(currentDraft.id, {
-        onSuccess() {
-          router.replace("/create/success");
+    setLoading(true);
+    promoteAd(currentDraft.id, {
+      onSuccess() {
+        router.replace("/create/success");
+        setTimeout(() => {
           removeDraft(currentDraft.id);
           setActiveDraft(null);
-        },
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        "Error, Ad created but local sync failed. Check your profile.",
-      );
-    } finally {
-      setLoading(false);
-    }
+        }, 0);
+      },
+      onError(error) {
+        toast.error("Promotion failed. Please try again.");
+        console.error(error);
+      },
+      onSettled() {
+        setLoading(false);
+      },
+    });
   };
 
   const handleUpdateDraft = async () => {
@@ -236,6 +236,21 @@ export const useDraftForm = () => {
     updateActiveDraftContent(null);
     saveStep(0);
   };
+
+  if (!currentDraft) {
+    return {
+      methods,
+      showDialog: false,
+      currentDraft: null,
+      loading: false,
+      handleBack: () => "route",
+      handleNext: async () => {},
+      handleReset: () => {},
+      handleStay: () => {},
+      handleLeave: () => {},
+      setShowDialog: () => {},
+    };
+  }
 
   return {
     methods,

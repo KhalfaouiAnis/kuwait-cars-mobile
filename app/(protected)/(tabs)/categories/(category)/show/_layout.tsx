@@ -1,17 +1,16 @@
+import { hideSystemBars, showSystemBars } from '@/core/lib/navigation-bar';
 import { Stack } from 'expo-router';
-import { setStatusBarHidden } from "expo-status-bar";
 import { useEffect } from 'react';
 
 export default function ShowCarLayout() {
     useEffect(() => {
-        setStatusBarHidden(true, "none")
-
-        return () => setStatusBarHidden(false, "none")
+        hideSystemBars(false)
+        return () => {
+            showSystemBars()
+        }
     }, [])
 
     return (
-        <Stack
-            screenOptions={{ headerShown: false }}
-        />
+        <Stack screenOptions={{ headerShown: false }} />
     );
 }

@@ -47,7 +47,7 @@ export default function AppSelect<TForm extends FieldValues, O>({
 
     const renderSelectOption = (option: GlobalSelectOption, handleSelect: any) => (
         <Pressable onPress={() => handleSelect(option.value)}
-            className="flex-row items-center py-3 my-2.5 mx-8 px-4"
+            className="flex-row items-center py-3 my-2.5 mx-8 px-4 dark:bg-darkish"
             style={[styles.selectOption, { direction: isRTL ? "rtl" : "ltr" }]}
         >
             <View className='flex-1 ms-2'>

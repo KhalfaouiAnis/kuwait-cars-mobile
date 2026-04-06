@@ -193,7 +193,7 @@ export default function AdTypeSelector({
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => { }}
-            className="bg-white dark:bg-black pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-4"
+            className="bg-white dark:bg-darkish pt-6 mb-10 rounded-t-3xl p-2 w-full h-[86%] min-h-0 px-4"
           >
             <FlashList
               data={data}

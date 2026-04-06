@@ -1,4 +1,5 @@
 import {
+  BASIC_PROVINCES,
   CAR_COLORS,
   CAR_CYLENDERS,
   TRANSMISSION_OPTIONS,
@@ -12,38 +13,45 @@ export const useUsedCarsFilterConfig = () => {
   return {
     brand: {
       title: "brand",
+      showSearch: true,
       parentKey: "region",
       showRegionHelper: true,
-      showSearch: true,
       options: useFlattenBrands(CAR_BRAND_TYPES[0]),
     },
     model: {
       title: "model",
       parentKey: null,
-      showRegionHelper: false,
       showSearch: true,
+      showRegionHelper: false,
       options: useFlattenModels(CAR_BRAND_TYPES[0]),
     },
     year: {
       title: "year",
       parentKey: null,
-      showRegionHelper: false,
       showSearch: true,
+      showRegionHelper: false,
       options: YEARS as FilterOption[],
     },
     cylinders: {
+      parentKey: null,
+      showSearch: false,
       title: "cylinders",
       showRegionHelper: false,
-      showSearch: false,
-      parentKey: null,
       options: CAR_CYLENDERS as FilterOption[],
     },
     transmission: {
+      parentKey: null,
+      showSearch: false,
       title: "transmission",
       showRegionHelper: false,
-      showSearch: false,
-      parentKey: null,
       options: TRANSMISSION_OPTIONS as FilterOption[],
+    },
+    location: {
+      parentKey: null,
+      showSearch: false,
+      title: "location",
+      showRegionHelper: false,
+      options: BASIC_PROVINCES as FilterOption[],
     },
   } as const;
 };

@@ -52,7 +52,7 @@ export const AdsListing = ({ view }: Props) => {
       keyExtractor={keyExtractor}
       showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={ItemSeparator}
-      ListEmptyComponent={<EmptyState showReset={false} />}
+      ListEmptyComponent={<EmptyState />}
       onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
       contentContainerStyle={
         ads.length === 0

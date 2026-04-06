@@ -21,7 +21,7 @@ export const SortingContent = () => {
         return (
             <TouchableOpacity
                 onPress={() => setExternalFilter("sorting", item)}
-                className={`flex-row items-center p-3 my-1 border-b border-gray-200 ${isSelected ? 'bg-primary-500' : 'bg-darkish'}`}
+                className={`flex-row items-center p-3 my-1 border-b border-gray-200 ${isSelected ? 'bg-primary-500' : 'bg-white dark:bg-darkish'}`}
             >
                 <View className="flex-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
                     <Text className="font-medium dark:text-white">{t(`sort.${item.label}`)}</Text>
@@ -34,9 +34,9 @@ export const SortingContent = () => {
         <View className="flex-1">
             <FlatList
                 data={sortOptions}
-                keyExtractor={(item) => `${item.field}__${item.direction}`}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => `${item.field}__${item.direction}`}
             />
         </View>
     );
