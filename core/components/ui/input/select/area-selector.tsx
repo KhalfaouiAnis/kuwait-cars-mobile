@@ -1,5 +1,4 @@
 import { DIMENSIONS, PROVINCES } from "@/core/constants";
-import { useDropdown } from "@/core/hooks/use-dropdown";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { GlobalSelectOption } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
@@ -21,6 +20,7 @@ import {
     Text,
     View
 } from "react-native";
+import { useDropdown } from "react-native-anchor-dropdown";
 import { BaseSelectInputProps } from "../..";
 
 export default function AreaSelector<TForm extends FieldValues, O>({
@@ -35,7 +35,14 @@ export default function AreaSelector<TForm extends FieldValues, O>({
     const { dark } = useTheme()
     const { t } = useTranslation("common");
     const { isRTL } = useUserPreferencesStore();
-    const { triggerRef, coords, open, close, isVisible } = useDropdown()
+    const {
+        triggerRef,
+        coords,
+        isVisible,
+        onDropdownLayout,
+        close,
+        open,
+    } = useDropdown({ maxHeight: 200, gap: 8, placement: "auto" });
     const { field: { onChange, value }, fieldState: { error } } = useController({ control, name });
 
     const selectedProvince = useWatch({
@@ -45,7 +52,7 @@ export default function AreaSelector<TForm extends FieldValues, O>({
 
     const renderSelectOption = useCallback((option: GlobalSelectOption, handleSelect: any) => (
         <Pressable onPress={() => handleSelect(option)}>
-            <View style={[styles.selectOption, { backgroundColor: adapter.isSelected(value, option.value) ? "#D9D9D9" : "white" }]}>
+            <View style={[styles.selectOption, { backgroundColor: adapter.isSelected(value, option.value) ? "#ffb84e" : "white" }]}>
                 <Text className="text-center text-xs font-inter-semibold">{adapter.getLabel(option.value)}</Text>
             </View>
         </Pressable>
@@ -91,8 +98,8 @@ export default function AreaSelector<TForm extends FieldValues, O>({
                 </Text>
             )}
             <Pressable
-                ref={triggerRef}
                 onPress={open}
+                ref={triggerRef}
                 className="relative ps-4 self-center justify-center border-[0.5px]"
                 style={[styles.wrapper, { borderColor: error ? "#FF123D" : "#A8A8A8" }]}
             >
@@ -125,19 +132,10 @@ export default function AreaSelector<TForm extends FieldValues, O>({
                 animationType="fade"
                 onRequestClose={close}
             >
-                <Pressable
-                    onPress={close}
-                    className="flex-1 justify-center items-center bg-black/10"
-                >
+                <Pressable style={StyleSheet.absoluteFill} onPress={close} className="flex-1">
                     <View
-                        style={{
-                            top: coords.top,
-                            borderRadius: 20,
-                            bottom: coords.bottom,
-                            ...boxShadow().button,
-                            [isRTL ? "left" : "right"]: coords.left,
-                        }}
-                        className="absolute bg-white p-4 dark:bg-darkish rounded-lg flex-1 max-h-80 min-h-0"
+                        onLayout={onDropdownLayout}
+                        style={[coords, styles.dropdown]}
                     >
                         <FlatList
                             data={areaOptions}
@@ -167,5 +165,18 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         ...boxShadow(0, 4, 9).button,
+    },
+    dropdown: {
+        position: "absolute",
+        backgroundColor: "white",
+        borderRadius: 20,
+        width: "auto",
+        padding: 4,
+        ...boxShadow().button,
+    },
+    listContent: {
+        gap: 12,
+        padding: 6,
+        paddingBottom: 12,
     }
 });

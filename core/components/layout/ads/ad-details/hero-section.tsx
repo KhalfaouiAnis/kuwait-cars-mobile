@@ -8,9 +8,9 @@ import { AdvertisementInterface, AdvertisementMedia } from "@/core/types";
 import { formatViews } from "@/core/utils";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Dimensions, FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import AdMediaGalleryComponent from "./ad-media-gallery";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -22,8 +22,8 @@ export default function HeroSection({ ad }: { ad: AdvertisementInterface }) {
     const [heroImage, setHeroImage] = useState(ad.media[0].transformed_url)
     const isGuest = useAuthStore(state => state.isGuest);
     const [currentIndex, setCurrentIndex] = useState(1)
+    const [modalView, setModalView] = useState(false);
     const { mutate: favorite } = useToggleFavorite();
-    const router = useRouter()
 
     const renderMediaItem = ({ item, index }: { item: AdvertisementMedia, index: number }) => (
         <View key={item.public_id}>
@@ -48,12 +48,35 @@ export default function HeroSection({ ad }: { ad: AdvertisementInterface }) {
         </View>
     );
 
+    if (modalView) {
+        return (
+            <Modal
+                visible
+                animationType="slide"
+                statusBarTranslucent
+                navigationBarTranslucent
+                style={{ direction: "rtl" }}
+            >
+                <View style={{ flex: 1, backgroundColor: "#0f172a" }}>
+                    <View style={{ width, position: "relative" }}>
+                        <Pressable
+                            onPress={() => setModalView(false)}
+                            style={{ width: 30, height: 30, borderRadius: 5 }}
+                            className="absolute top-12 start-8 items-center justify-center z-20 bg-gray-400"
+                        >
+                            <Ionicons name="chevron-back-outline" color="white" size={20} />
+                        </Pressable>
+                        <AdMediaGalleryComponent ad={ad} currentIndex={Number(currentIndex)} />
+                    </View>
+                </View>
+            </Modal>
+        )
+    }
+
     return (
         <View style={{ width, position: "relative" }}>
             <View style={{ width, height: height / 2, position: "relative" }}>
-                <Pressable
-                    onPress={() => router.navigate({ pathname: "/gallery", params: { id: ad.id, currentIndex } })}
-                >
+                <Pressable onPress={() => setModalView(true)}>
                     <Image
                         style={styles.fullScreenImage}
                         source={{ uri: heroImage }}

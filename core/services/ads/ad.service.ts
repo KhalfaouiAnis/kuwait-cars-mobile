@@ -27,6 +27,16 @@ export const fetchAds = async ({
   return data;
 };
 
+export const fetchAdsAutocomplete = async (
+  query: string,
+): Promise<AdvertisementInterface[]> => {
+  const { data } = await httpClient.get<AdvertisementInterface[]>(
+    `/ads/autocomplete?query=${query}`,
+  );
+
+  return data;
+};
+
 export const fetchBatchAds = async (ids: string[]) => {
   const { data } = await httpClient.post<AdvertisementInterface[]>(
     "/ads/batch-list",

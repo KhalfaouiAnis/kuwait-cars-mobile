@@ -9,7 +9,7 @@ export default function SpecialcategoryLink({ label }: Props) {
         <View className="items-center">
             <View className="w-[100px] h-[55px] rounded-[22px] bg-white dark:border-[#46464640] border-[0.5px] border-grayish">
             </View>
-            <Text className="font-inter mt-0.5 text-blue dark:text-[#00A6DA]">{label}</Text>
+            <Text className="font-inter mt-0.5 text-blue dark:text-cyan">{label}</Text>
         </View>
     )
 }

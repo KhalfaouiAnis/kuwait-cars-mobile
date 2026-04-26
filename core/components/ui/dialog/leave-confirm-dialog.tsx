@@ -17,8 +17,8 @@ export default function LeaveDialog({
 
   return (
     <Modal
-      visible={show}
       transparent
+      visible={show}
       animationType="fade"
       onRequestClose={onStay}
     >

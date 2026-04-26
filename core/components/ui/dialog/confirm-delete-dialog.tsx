@@ -29,8 +29,8 @@ export default function ConfirmDeleteDialog({
 
   return (
     <Modal
-      visible={show}
       transparent
+      visible={show}
       animationType="fade"
       onRequestClose={handleCancel}
     >

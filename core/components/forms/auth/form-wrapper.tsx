@@ -18,7 +18,7 @@ export default function FormWrapper({
         contentContainerClassName="items-center bg-white dark:bg-black"
       >
         <View className="pt-2">
-          <AppLogo size={160} />
+          <AppLogo size={150} />
         </View>
         <View
           className="w-full pt-5 mt-5 bg-white dark:bg-darkish rounded-t-[36px]"

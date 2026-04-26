@@ -10,7 +10,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { BaseTextInputProps } from '../..';
 
 export default function BaseTextInput<TForm extends FieldValues>({
-    control, name, label, translatedLabel, icon, customIcon, endIcon, required, fullWidth = true, placeholder, translatedPlaceholder, ...props
+    control, name, label, translatedLabel, icon, customIcon, endIcon, required, fullWidth = true, placeholder, translatedPlaceholder, omitValidationError = true, ...props
 }: BaseTextInputProps<TForm>) {
     const { field: { onChange, value }, fieldState: { error } } = useController({ control, name });
     const [showPassword, setShowPassword] = useState(false);
@@ -25,13 +25,14 @@ export default function BaseTextInput<TForm extends FieldValues>({
         <View style={{ direction: isRTL ? "rtl" : "ltr" }}>
             {displayedLabel && <Text className="font-inter text-base text-blue font-semibold ms-2 dark:text-white">{t(displayedLabel)}</Text>}
             <View
-                className="flex-row items-center dark:border-[#46464640] dark:bg-[#1B1B1B80] px-3"
+                className="dark:border-[#46464640] dark:bg-[#1B1B1B80]"
                 style={
                     [
                         styles.wrapper,
                         {
-                            width: fullWidth ? DIMENSIONS.width - 60 : undefined, borderWidth: 0.5,
-                            borderColor: error ? "#FF123D" : "#A8A8A8"
+                            width: fullWidth ? DIMENSIONS.width - 60 : undefined,
+                            borderColor: "#A8A8A8"
+                            // borderColor: error ? "#FF123D" : "#A8A8A8"
                         }
                     ]}
             >
@@ -78,6 +79,7 @@ export default function BaseTextInput<TForm extends FieldValues>({
                     </View>
                 </View>
             </View>
+            {!omitValidationError && error && <Text className="font-inter text-red-400 mt-1 ms-2 font-semibold text-sm dark:text-white">{t(`validation.${error?.ref?.name}`)}</Text>}
         </View>
     );
 }
@@ -85,7 +87,11 @@ export default function BaseTextInput<TForm extends FieldValues>({
 const styles = StyleSheet.create({
     wrapper: {
         height: 60,
-        borderRadius: 20,
+        borderWidth: 0.7,
+        borderRadius: 22,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 12,
         ...boxShadow().button,
     }
 });

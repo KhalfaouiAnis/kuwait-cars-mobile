@@ -21,6 +21,7 @@ export default function ResetPasswordScreen() {
                     name="phone"
                     control={control}
                     icon="call-outline"
+                    omitValidationError={false}
                     translatedLabel={t("yourPhone")}
                     translatedPlaceholder={t("phoneNumber")}
                 />
@@ -29,6 +30,7 @@ export default function ResetPasswordScreen() {
                     control={control}
                     endIcon="eye-outline"
                     icon="lock-closed-outline"
+                    omitValidationError={false}
                     translatedLabel={t("newPassword")}
                     translatedPlaceholder={t("createNewPassword")}
                 />
@@ -37,6 +39,7 @@ export default function ResetPasswordScreen() {
                     endIcon="eye-outline"
                     name="confirmPassword"
                     icon="lock-closed-outline"
+                    omitValidationError={false}
                     translatedLabel={t("confirmPassword")}
                     translatedPlaceholder={t("confirmNewPassword")}
                 />

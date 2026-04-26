@@ -115,7 +115,7 @@ export default function NewAdScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <AdDraftsModal visible={visible} onClose={() => setVisible(false)} />
+      <AdDraftsModal visible={visible} reachedLimit={!canCreate} onClose={() => setVisible(false)} />
     </Container>
   );
 }

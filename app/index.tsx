@@ -20,11 +20,11 @@ import {
 } from "react-native";
 
 export default function Index() {
-  const router = useRouter();
   useViewTrackerCleanup();
+  const router = useRouter();
+  const { dark } = useTheme()
   const { user, isGuest, isReady, _hasHydrated } = authStore();
   const { setLang, lang: currentLang, isRTL } = useUserPreferencesStore();
-  const { dark } = useTheme()
 
   const handleSelect = async (lang: Language) => {
     setLang(lang.code);
@@ -34,26 +34,24 @@ export default function Index() {
 
   const renderItem = ({ item }: { item: Language }) => (
     <TouchableOpacity
-      style={
-        currentLang === item.code
-          ? [{ ...styles.buttonSelected, boxShadow: dark ? styles.button.boxShadow : styles.buttonSelected.boxShadow }, { flexDirection: isRTL ? "row-reverse" : "row" }]
-          : [{ ...styles.button, boxShadow: dark ? undefined : styles.button.boxShadow }, { flexDirection: isRTL ? "row-reverse" : "row" }]
-      }
+      style={styles.button}
       className={cn(
-        "flex-row items-center justify-between px-5 h-[55px] my-1.5 rounded-3xl border border-grayish bg-white dark:border-[#46464640]",
-        { "dark:bg-[#1B1B1B29]": currentLang === item.code },
-        { "dark:bg-darkish": currentLang !== item.code },
+        "flex-row items-center justify-between px-5  border bg-white dark:border-[#46464640]",
+        { "dark:bg-[#1B1B1B29] border-black": currentLang === item.code },
+        { "dark:bg-darkish border-grayish": currentLang !== item.code },
+        { "flex-row-reverse": isRTL },
+        { "flex-row": !isRTL },
       )}
       onPress={() => handleSelect(item)}
     >
-      <Flag name={item.code} />
+      <Flag name={item.code} size={38} />
       <Text className="text-base font-inter-bold dark:text-white">
         {item.name}
       </Text>
       <Ionicons
-        name="chevron-forward"
         size={20}
         color={dark ? "white" : "black"}
+        name={isRTL ? "chevron-back" : "chevron-forward"}
       />
     </TouchableOpacity>
   );
@@ -66,15 +64,15 @@ export default function Index() {
     <Container>
       <View className="flex-1 items-center mt-2 w-full dark:bg-black">
         <FlatList
-          data={SUPPORTED_LANGUAGES}
-          keyExtractor={(item) => item.code}
           renderItem={renderItem}
           className="flex-1 w-full"
+          data={SUPPORTED_LANGUAGES}
+          keyExtractor={(item) => item.code}
           showsVerticalScrollIndicator={false}
-          contentContainerClassName="items-center gap-4 pb-4"
+          contentContainerClassName="items-center gap-6 pb-4"
           ListHeaderComponent={
             <View className="flex items-center pt-4 mb-6">
-              <AppLogo size={160} />
+              <AppLogo size={150} />
             </View>
           }
         />
@@ -85,6 +83,8 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   button: {
+    height: 55,
+    borderRadius: 22,
     width: DIMENSIONS.width - 100,
     boxShadow: [
       {
@@ -93,18 +93,6 @@ const styles = StyleSheet.create({
         blurRadius: 20,
         spreadDistance: 0,
         color: "rgb(168 168 168 / 1)",
-      },
-    ],
-  },
-  buttonSelected: {
-    width: DIMENSIONS.width - 100,
-    boxShadow: [
-      {
-        offsetX: 7,
-        offsetY: 7,
-        blurRadius: 0,
-        spreadDistance: 0,
-        color: "rgba(168, 168, 168, 1)",
       },
     ],
   },

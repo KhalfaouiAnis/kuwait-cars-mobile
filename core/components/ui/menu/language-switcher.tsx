@@ -1,6 +1,5 @@
 import Flag from "@/assets/svg/flag";
 import { SUPPORTED_LANGUAGES } from "@/core/constants";
-import { useDropdown } from "@/core/hooks/use-dropdown";
 import i18n from "@/core/i18n/i18n";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { Language } from "@/core/types";
@@ -10,9 +9,11 @@ import {
   FlatList,
   Modal,
   Pressable,
+  StyleSheet,
   TouchableOpacity,
   View
 } from "react-native";
+import { useDropdown } from "react-native-anchor-dropdown";
 
 type LanguageSwitcherProps = {
   onLanguageChange?: (code: string) => void;
@@ -22,7 +23,14 @@ export default function LanguageSwitcher({
   onLanguageChange,
 }: LanguageSwitcherProps) {
   const { lang: selectedLang, setLang } = useUserPreferencesStore();
-  const { close, coords, toggle, isVisible, triggerRef } = useDropdown()
+  const {
+    triggerRef,
+    coords,
+    isVisible,
+    onDropdownLayout,
+    close,
+    open,
+  } = useDropdown({ maxHeight: 300, gap: 8, placement: "auto" });
 
   const handleSelect = (lang: Language) => {
     setLang(lang.code);
@@ -46,29 +54,25 @@ export default function LanguageSwitcher({
   return (
     <View collapsable={false}>
       <TouchableOpacity
+        onPress={open}
         ref={triggerRef}
         key={selectedLang}
         activeOpacity={0.7}
-        onPress={toggle}
         className="w-10 h-10 items-center justify-center overflow-hidden"
       >
         <Flag name={selectedLang} size={30} />
       </TouchableOpacity>
-
       <Modal
         transparent
         visible={isVisible}
         animationType="fade"
       >
-        <Pressable
-          onPress={close}
-          className="flex-1 justify-center items-center bg-black/20">
+        <Pressable style={StyleSheet.absoluteFill} onPress={close} className="flex-1">
           <View
-            style={{
-              top: coords.top,
-              left: coords.left - 60,
-            }}
-            className="absolute bg-white p-4 dark:bg-darkish rounded-lg flex-1">
+            onLayout={onDropdownLayout}
+            className="bg-white dark:bg-darkish"
+            style={[{ ...coords, left: "80%" }, styles.dropdown]}
+          >
             <FlatList
               contentContainerClassName="gap-y-4 px-4"
               keyExtractor={(item) => item.code}
@@ -81,3 +85,17 @@ export default function LanguageSwitcher({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  dropdown: {
+    position: "absolute",
+    borderRadius: 20,
+    width: "auto",
+    padding: 4,
+  },
+  listContent: {
+    gap: 12,
+    padding: 6,
+    paddingBottom: 12,
+  },
+});

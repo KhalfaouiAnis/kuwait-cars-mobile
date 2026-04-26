@@ -10,7 +10,7 @@ import BaseTextInput from "../../ui/input/text/base-text-input";
 export default function SignInForm() {
   const { t } = useTranslation("auth");
   const { useSignIn } = useAuth();
-  const { control, handleSubmit, onSubmit, isSubmitting} = useSignIn()
+  const { control, handleSubmit, onSubmit, isSubmitting } = useSignIn()
 
   return (
     <View className="pt-10 px-4 pb-10">
@@ -21,6 +21,7 @@ export default function SignInForm() {
           control={control}
           icon="call-outline"
           keyboardType="phone-pad"
+          omitValidationError={false}
           translatedPlaceholder={t("phoneNumber")}
         />
         <BaseTextInput
@@ -29,6 +30,7 @@ export default function SignInForm() {
           control={control}
           endIcon="eye-outline"
           icon="lock-closed-outline"
+          omitValidationError={false}
           translatedPlaceholder={t("password")}
         />
       </View>
@@ -40,7 +42,7 @@ export default function SignInForm() {
           </Text>
         </View>
         <Link href={"/(auth)/forgot_password"} className="items-center">
-          <Text className="text-sm font-inter-semibold text-grayish dark:text-grayish">
+          <Text className="text-sm font-inter-medium text-grayish">
             {t("passwordForgotten")}
           </Text>
         </Link>
@@ -48,7 +50,7 @@ export default function SignInForm() {
       <TouchableOpacity
         style={{
           boxShadow: boxShadow(4, 6, 20).button.boxShadow,
-          width: DIMENSIONS.width / 2 + 20,
+          width: (DIMENSIONS.width / 2) + 20,
           height: 50,
         }}
         className="bg-primary-500 items-center justify-center rounded-3xl self-center mt-20"

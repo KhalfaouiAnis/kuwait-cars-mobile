@@ -240,13 +240,14 @@ interface BaseInputProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
   label?: string;
-  translatedLabel?: string;
-  placeholder?: string;
-  translatedPlaceholder?: string;
   required?: boolean;
   disabled?: boolean;
-  icon?: keyof typeof Ionicons.glyphMap;
+  placeholder?: string;
   customIcon?: ReactNode;
+  translatedLabel?: string;
+  translatedPlaceholder?: string;
+  omitValidationError?: boolean;
+  icon?: keyof typeof Ionicons.glyphMap;
   endIcon?: keyof typeof Ionicons.glyphMap;
 }
 

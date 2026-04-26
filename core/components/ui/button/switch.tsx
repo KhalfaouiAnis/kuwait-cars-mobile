@@ -1,3 +1,4 @@
+import useUserPreferencesStore from "@/core/store/preferences.store";
 import React, { useEffect } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Animated, {
@@ -10,12 +11,11 @@ import Animated, {
 const Switch = ({
   value,
   onValueChange,
-  isRTL,
 }: {
   value: boolean;
-  isRTL: boolean;
   onValueChange?: (newValue: boolean) => void;
 }) => {
+  const isRTL = useUserPreferencesStore(store => store.isRTL)
   const progress = useSharedValue(value ? 1 : 0);
 
   useEffect(() => {

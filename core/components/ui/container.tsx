@@ -19,7 +19,7 @@ const Container = ({
   return (
     <SafeAreaView
       className="flex-1"
-      edges={["top", "left", "right"]}
+      edges={["left", "right"]}
       style={{ marginBottom: bottom, backgroundColor }}
     >
       {scrollable ? (

@@ -26,8 +26,10 @@ export default function ForgotPasswordScreen() {
             <View className="py-6 px-4 items-center">
                 <BaseTextInput
                     name="phone"
+                    maxLength={8}
                     control={control}
                     keyboardType="phone-pad"
+                    omitValidationError={false}
                     translatedPlaceholder={t("enterWhatsappNumber")}
                     customIcon={<Ionicons name="logo-whatsapp" size={20} color="#25D366" className="ms-2" />}
                 />
@@ -36,6 +38,7 @@ export default function ForgotPasswordScreen() {
                     name="email"
                     control={control}
                     icon="mail-outline"
+                    omitValidationError={false}
                     translatedPlaceholder={t("enterEmail")}
                 />
                 <TouchableOpacity

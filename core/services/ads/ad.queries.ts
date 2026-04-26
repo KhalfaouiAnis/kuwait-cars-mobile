@@ -1,6 +1,7 @@
 import { ADS_PAGE_SIZE } from "@/core/constants";
 import {
   fetchAds,
+  fetchAdsAutocomplete,
   fetchBatchAds,
   fetchMyAds,
   fetchMyFavoritedAds,
@@ -8,7 +9,10 @@ import {
 } from "@/core/services/ads/ad.service";
 import useRecentlyViewedStore from "@/core/store/recently-viewed-ad.store";
 import useSearchStore from "@/core/store/search.store";
-import { AdStatus } from "@/core/types";
+import {
+  AdStatus,
+  AdvertisementInterface
+} from "@/core/types";
 import { sanitizeFiltersForApi } from "@/core/utils/filter-sanitizer";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
@@ -67,3 +71,31 @@ export const useAdDetailQuery = (adId: string) => {
     staleTime: 1000 * 60 * 2,
   });
 };
+
+const MIN_QUERY_LENGTH = 3;
+const STALE_TIME = 1000 * 30; // 30s — autocomplete results are reusable
+
+export type Dataset = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+};
+
+/**
+ * - Does NOT fire below MIN_QUERY_LENGTH characters
+ * - Receives an already-debounced query string
+ * - Keeps previous data visible while fetching (no flickering)
+ */
+export function useDatasetSearch(debouncedQuery: string) {
+  const enabled = debouncedQuery.trim().length >= MIN_QUERY_LENGTH;
+
+  return useQuery<AdvertisementInterface[]>({
+    queryKey: ["datasets", "search", debouncedQuery],
+    queryFn: () => fetchAdsAutocomplete(debouncedQuery),
+    enabled,
+    staleTime: STALE_TIME,
+    placeholderData: (previousData) => previousData,
+    select: (data) => data,
+  });
+}

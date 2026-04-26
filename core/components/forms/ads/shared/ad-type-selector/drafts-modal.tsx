@@ -63,10 +63,11 @@ const LeftAction = ({
 
 interface Props {
     visible: boolean;
+    reachedLimit: boolean;
     onClose: () => void
 }
 
-export default function AdDraftsModal({ visible, onClose }: Props) {
+export default function AdDraftsModal({ visible, reachedLimit, onClose }: Props) {
     const { drafts, setActiveDraft, syncWithServer } = useAdDraftStore()
     const { t } = useTranslation("common");
     const swipeableRef = useRef<any>(null);
@@ -161,7 +162,7 @@ export default function AdDraftsModal({ visible, onClose }: Props) {
             onClose={onClose}
             renderContent={() => (
                 <View className="flex-1 mx-2">
-                    <View
+                    {reachedLimit && (<View
                         style={boxShadow().button}
                         className="mx-2 py-2 items-center rounded-2xl border-[0.5px] border-blue"
 
@@ -172,7 +173,7 @@ export default function AdDraftsModal({ visible, onClose }: Props) {
                         <Text className="text-center text-error font-inter-medium">
                             Delete one or more drafts to continue.
                         </Text>
-                    </View>
+                    </View>)}
                     <TouchableOpacity
                         className="bg-error items-center justify-center my-4 rounded-3xl self-center"
                         style={{ width: 166, height: 35, ...boxShadow(4, 6, 20, 0).button }}

@@ -1,26 +1,28 @@
 import FilterButton from "@/core/components/layout/ads/advanced-search/filter-button";
 import { FilterUIStrategy } from "@/core/configuration/filters";
-import { DIMENSIONS } from "@/core/constants";
-import { useDropdown } from "@/core/hooks/use-dropdown";
-import useUserPreferencesStore from "@/core/store/preferences.store";
 import useSearchStore, { MultiFilterKeys } from "@/core/store/search.store";
 import { GlobalSelectOption } from "@/core/types";
 import { boxShadow } from "@/core/utils/cn";
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FlatList, Modal, Pressable, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { useDropdown } from "react-native-anchor-dropdown";
 import { MileageFilterContent } from "../filters/mileage-filter";
 import { PriceFilterContent } from "../filters/price-filter";
 
 const FilterController = ({ filterKey, label, config }: { filterKey: MultiFilterKeys, label: string, config: any }) => {
     const toggleMultiFilter = useSearchStore((state) => state.toggleDraftMultiFilter);
     const applyFilters = useSearchStore((state) => state.applyFilters);
-    const { triggerRef, isVisible, coords, toggle, close } = useDropdown();
+    const {
+        triggerRef,
+        coords,
+        isVisible,
+        onDropdownLayout,
+        close,
+        toggle,
+    } = useDropdown({ maxHeight: 200, gap: 8, placement: "auto" });
     const selectedValues = useSearchStore(state => state.appliedFilters)
-    const { isRTL } = useUserPreferencesStore();
     const { t } = useTranslation("common");
-    const { bottom } = useSafeAreaInsets()
 
     const normalizedOptions = useMemo(() => {
         if (!Array.isArray(config.options)) return [];
@@ -36,7 +38,7 @@ const FilterController = ({ filterKey, label, config }: { filterKey: MultiFilter
 
     const renderSelectOption = useCallback((option: GlobalSelectOption, handleSelect: any) => (
         <Pressable onPress={() => handleSelect(option)}>
-            <View style={[styles.selectOption, { backgroundColor: selectedValues[filterKey]?.includes(option.value) ? "#D9D9D9" : "white" }]}>
+            <View style={[styles.selectOption, { backgroundColor: selectedValues[filterKey]?.includes(option.value) ? "#ffb84e" : "white" }]}>
                 <Text className="text-center text-xs font-inter-semibold">{t(config.adapter.getLabel(option.value?.label || option.label))}</Text>
             </View>
         </Pressable>
@@ -48,24 +50,6 @@ const FilterController = ({ filterKey, label, config }: { filterKey: MultiFilter
         renderSelectOption(item, handleSelect)
     )
 
-    const overlayStyle = config.strategy === FilterUIStrategy.DROPDOWN
-        ? {
-            position: 'absolute' as const,
-            top: coords.top,
-            [!isRTL ? 'right' : 'left']: coords.left,
-            bottom: bottom + 10,
-            maxHeight: DIMENSIONS.height * 0.4,
-            alignSelf: 'flex-start',
-            borderRadius: 20,
-            ...boxShadow().button,
-            backgroundColor: 'white',
-        }
-        : {
-            alignSelf: 'center' as const,
-            marginTop: 100,
-            width: '90%',
-        }
-
     return (
         <>
             <FilterButton
@@ -76,12 +60,13 @@ const FilterController = ({ filterKey, label, config }: { filterKey: MultiFilter
                 isActive={isVisible}
                 family={config.family}
             />
-
-            <Modal visible={isVisible} transparent animationType="fade">
-                <Pressable className="flex-1 bg-black/10" onPress={close}>
-                    <Pressable
-                        style={[overlayStyle as any]}
-                        onPress={() => { }}
+            <Modal visible={isVisible} transparent animationType="fade" onRequestClose={close}>
+                <Pressable style={StyleSheet.absoluteFill} onPress={close} className="flex-1">
+                    <View
+                        onLayout={onDropdownLayout}
+                        style={config.strategy === FilterUIStrategy.DROPDOWN ? [coords, styles.dropdown] : {
+                            flex: 1,
+                        }}
                     >
                         {config.strategy === FilterUIStrategy.DROPDOWN && (
                             <FlatList
@@ -89,12 +74,20 @@ const FilterController = ({ filterKey, label, config }: { filterKey: MultiFilter
                                 data={normalizedOptions}
                                 keyExtractor={keyExtractor}
                                 showsVerticalScrollIndicator={false}
-                                contentContainerClassName="gap-2 p-3 pb-3"
+                                contentContainerStyle={styles.listContent}
                             />
                         )}
-                        {config.strategy === FilterUIStrategy.PRICE && <PriceFilterContent />}
-                        {config.strategy === FilterUIStrategy.MILEAGE && <MileageFilterContent />}
-                    </Pressable>
+                        <TouchableWithoutFeedback onPress={close}>
+                            <View className="flex-1 justify-center items-center bg-black/70">
+                                <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+                                    <View>
+                                        {config.strategy === FilterUIStrategy.PRICE && <PriceFilterContent />}
+                                        {config.strategy === FilterUIStrategy.MILEAGE && <MileageFilterContent />}
+                                    </View>
+                                </TouchableWithoutFeedback>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
                 </Pressable>
             </Modal>
         </>
@@ -104,6 +97,19 @@ const FilterController = ({ filterKey, label, config }: { filterKey: MultiFilter
 export default FilterController;
 
 const styles = StyleSheet.create({
+    dropdown: {
+        position: "absolute",
+        backgroundColor: "white",
+        borderRadius: 20,
+        width: "auto",
+        padding: 4,
+        ...boxShadow().button,
+    },
+    listContent: {
+        gap: 12,
+        padding: 6,
+        paddingBottom: 12,
+    },
     selectOption: {
         height: 30,
         minWidth: 100,

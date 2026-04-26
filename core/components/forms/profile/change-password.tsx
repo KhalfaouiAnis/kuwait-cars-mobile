@@ -3,7 +3,7 @@ import { IMAGES } from "@/core/constants/images";
 import { useAuthGuard } from "@/core/hooks/use-auth-guard";
 import { useUpdatePassword } from "@/core/hooks/user/use-profile";
 import useAuthStore from "@/core/store/auth.store";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { TFunction } from "i18next";
 import {
@@ -39,8 +39,13 @@ export default function ChangePasswordForm({ t }: { t: TFunction }) {
   return (
     <View className="flex-1 mt-2 bg-white dark:bg-black px-4 py-2 gap-y-8">
       <View className="flex-1 flex-row items-center justify-between w-full px-4 py-1">
-        <View>
-          <Text className="font-inter-semibold text-xl dark:text-white">
+        <View className="flex-row items-center gap-2">
+          <MaterialIcons
+            size={24}
+            name="verified"
+            color="#00A6DA"
+          />
+          <Text numberOfLines={1} ellipsizeMode="tail" className="font-inter-medium text-xl dark:text-white">
             {user?.fullname}
           </Text>
         </View>

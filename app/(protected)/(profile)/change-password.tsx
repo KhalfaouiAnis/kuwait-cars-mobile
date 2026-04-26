@@ -9,7 +9,7 @@ export default function ChangePasswordScreen() {
     const { dark } = useTheme()
 
     return (
-        <Container backgroundColor={dark ? "black" : "#FAED02"} header={<ProfileHeader title={t("profile.changePassword")} />}>
+        <Container backgroundColor={dark ? "black" : "#FFF"} header={<ProfileHeader title={t("profile.changePassword")} />}>
             <ChangePasswordForm t={t} />
         </Container>
     )

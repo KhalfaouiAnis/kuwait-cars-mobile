@@ -1,5 +1,7 @@
+import ThreeDots from "@/assets/svg/ThreeDots";
 import MainHeader from "@/core/components/layout/header/main/main-header";
 import NewCategoryLink from "@/core/components/ui/_links/new-category-link";
+import SocialLinks from "@/core/components/ui/_links/SocialLinks";
 import SpecialcategoryLink from "@/core/components/ui/_links/special-category-link";
 import { FavoriteButton } from "@/core/components/ui/button/favorite-button";
 import Container from "@/core/components/ui/container";
@@ -8,23 +10,34 @@ import { AD_TYPES } from "@/core/constants/ad";
 import { IMAGES } from "@/core/constants/images";
 import useUserPreferencesStore from "@/core/store/preferences.store";
 import { boxShadow } from "@/core/utils/cn";
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Link, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function CategoriesScreen() {
-    const { t } = useTranslation("common");
     const { isRTL } = useUserPreferencesStore()
+    const { t } = useTranslation("common");
     const router = useRouter()
 
     return (
-        <Container header={<MainHeader drawer back={false} />}>
+        // <Container header={<MainHeader drawer back={false} />}>
+        <Container header={
+            <MainHeader drawer back={false} />
+            // <AutocompleteSearch
+            //     placeholder="Search by title or description…"
+            //     onSelect={(dataset) => {
+            //         console.log(dataset);
+            //         // navigate, populate a form, etc.
+            //     }}
+            // />
+        }>
             <ScrollView showsVerticalScrollIndicator={false} style={{ direction: isRTL ? "rtl" : "ltr" }}>
                 <View className="mt-6 px-6 flex-row items-center justify-between">
-                    <SpecialcategoryLink label="X AI" />
+                    <SpecialcategoryLink label="X AI Cars" />
                     <SpecialcategoryLink label="Photo editor" />
-                    <SpecialcategoryLink label="Tier size" />
+                    <SpecialcategoryLink label="X Tier size" />
                 </View>
                 <Pressable
                     className="w-full items-center px-6 mt-4"
@@ -36,21 +49,21 @@ export default function CategoriesScreen() {
                 </Pressable>
                 <View
                     style={boxShadow(4, 6, 20, 0, "rgba(168 168 168 / 1)").button}
-                    className="mt-4 rounded-t-[36px] bg-white dark:bg-darkish pt-6 pb-48"
+                    className="mt-4 rounded-t-[36px] bg-white dark:bg-darkish pt-6 pb-24"
                 >
                     <View className="gap-y-6 flex-row items-start justify-between flex-wrap px-4">
                         <View className="w-full flex-row gap-4 px-1 mb-2">
                             <Link className="flex-1 items-center" href={{ pathname: "/categories/used_cars", params: { ad_type: AD_TYPES.used_cars } }} asChild>
                                 <Pressable className="flex-1 items-center">
-                                    <View className="w-full h-[90px] rounded-[35px] dark:border-[#46464640] border-[0.5px] border-grayish dark:bg-white" />
-                                    <Text className="font-inter mt-2 text-blue">Used car sale</Text>
+                                    <View className="w-full h-[90px] rounded-[35px] dark:border-[#46464640] border-[0.7px] border-grayish dark:bg-black" />
+                                    <Text className="font-inter mt-2 text-blue dark:text-cyan">Used car sale</Text>
                                 </Pressable>
                             </Link>
                             <Pressable
                                 className="flex-1 items-center"
                             >
-                                <View className="w-full h-[90px] rounded-[35px] dark:border-[#46464640] border-[0.5px] border-grayish dark:bg-white" />
-                                <Text className="font-inter mt-2 text-blue">Quick Sale Videos</Text>
+                                <View className="w-full h-[90px] rounded-[35px] dark:border-[#46464640] border-[0.7px] border-grayish dark:bg-black" />
+                                <Text className="font-inter mt-2 text-blue dark:text-cyan">Quick Sale Videos</Text>
                             </Pressable>
                         </View>
                         <NewCategoryLink href={`/categories/${AD_TYPES.new_cars}/`} params={{ ad_type: AD_TYPES.new_cars }} image={IMAGES.BrakesCategory} label={t("adCategories.new_cars")} />
@@ -70,50 +83,62 @@ export default function CategoriesScreen() {
                         <NewCategoryLink href={`/categories/${AD_TYPES.transport_delivery}/`} params={{ ad_type: AD_TYPES.transport_delivery }} image={IMAGES.BrakesCategory} label={t("adCategories.transport_delivery")} />
                     </View>
 
+                    {/* EMPTY BIG BOX */}
+                    <View
+                        className="relative self-center dark:bg-white"
+                        style={{
+                            boxShadow: boxShadow(0, 0, 22.9, 0, "rgba(000 000 000 / 0.2)").button.boxShadow,
+                            width: DIMENSIONS.width - 30, height: 240, borderRadius: 25, marginTop: 40
+                        }}
+                    >
+                        <View style={{
+                            position: "absolute",
+                            left: "46%",
+                            bottom: 6,
+                        }}>
+                            <ThreeDots />
+                        </View>
+                    </View>
+
+                    <TouchableOpacity className="p-1 rounded-full bg-[#00A6DA] self-end me-5 mt-2">
+                        <Ionicons name="add" size={20} />
+                    </TouchableOpacity>
+
                     {/* QUICK SALE VIEOS */}
-                    <View className="dark:bg-darkish my-12" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                        <Text className="font-inter-medium text-lg ms-6 text-blue dark:text-[#00A6DA]">
+                    <View className="dark:bg-darkish my-12 ms-2" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+                        <Text className="font-inter-medium mb-2 text-base ms-6 text-orange">
                             {t("Quick Sale Videos")}
                         </Text>
                         <ScrollView
                             horizontal
+                            // contentContainerClassName="py-4"
+                            contentContainerStyle={{ marginVertical: 16 }}
                             showsHorizontalScrollIndicator={false}
-                            contentContainerClassName="py-4"
                         >
                             <View
                                 style={[boxShadow(0, 0, 12.9, 0, "rgba(000 000 000 / 0.2)").button, {
                                     width: 200, height: 300
                                 }]}
-                                className="bg-white rounded-2xl ms-2 me-1">
+                                className="bg-white rounded-[22px] ms-2 me-2">
                             </View>
                             <View
                                 style={[boxShadow(0, 0, 12.9, 0, "rgba(000 000 000 / 0.2)").button, {
                                     width: 200, height: 300
                                 }]}
-                                className="bg-white rounded-2xl ms-2 me-1">
+                                className="bg-white rounded-[22px] ms-2 me-2">
                             </View>
                             <View
                                 style={[boxShadow(0, 0, 12.9, 0, "rgba(000 000 000 / 0.2)").button, {
                                     width: 200, height: 300
                                 }]}
-                                className="bg-white rounded-2xl ms-2 me-1">
+                                className="bg-white rounded-[22px] ms-2 me-2">
                             </View>
                         </ScrollView>
                     </View>
 
-                    {/* EMPTY BIG BOX */}
-                    <View
-                        className="items-center mx-auto justify-center my-8 rounded-[15px] dark:border-[#46464640] dark:bg-white"
-                        style={{
-                            boxShadow: boxShadow(0, 0, 22.9, 0, "rgba(000 000 000 / 0.2)").button.boxShadow,
-                            width: DIMENSIONS.width - 14, height: 240
-                        }}
-                    >
-                    </View>
-
                     {/* HIGHLAGHTED ADS */}
-                    <View className="dark:bg-darkish mt-4" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                        <Text className="font-inter-medium text-lg ms-6 text-blue dark:text-[#00A6DA]">
+                    <View className="dark:bg-darkish ms-2" style={{ direction: isRTL ? "rtl" : "ltr" }}>
+                        <Text className="font-inter-medium text-base ms-6 text-orange">
                             {t("Highlighted ads")}
                         </Text>
                         <ScrollView
@@ -123,16 +148,16 @@ export default function CategoriesScreen() {
                         >
                             <View
                                 style={boxShadow(0, 4, 4).button}
-                                className="bg-white rounded-[20px] p-1 my-4 items-center border border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
+                                className="bg-white rounded-[20px] p-1 my-4 items-center border-[0.5px] border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
                                 <Image
                                     source={IMAGES.CarHyunday}
-                                    style={{ height: 130, width: 146, borderRadius: 15 }}
+                                    style={{ height: 130, width: 158, borderRadius: 20 }}
                                     contentFit="cover"
                                 />
                                 <View className="px-2 mt-3">
-                                    <View className="flex-row items-center">
+                                    <View className="flex-row gap-1 items-center">
                                         <Image
-                                            style={{ height: 14, width: 14, borderRadius: 100, marginEnd: 2 }}
+                                            style={{ height: 12, width: 12, borderRadius: 100 }}
                                             source={IMAGES.CarMercedesLogo}
                                             contentFit="fill"
                                         />
@@ -145,15 +170,15 @@ export default function CategoriesScreen() {
                                         </Text>
                                     </View>
                                     <View className="flex-row items-center justify-end">
-                                        <View className="justify-center ms-4">
-                                            <Text className="font-inter max-w-36 dark:text-white">
+                                        <View className="justify-center">
+                                            <Text className="font-inter text-sm max-w-36 dark:text-white">
                                                 C-Class
                                             </Text>
-                                            <Text className="font-inter max-w-36 dark:text-white -mt-1">
+                                            <Text className="font-inter text-sm max-w-36 dark:text-white">
                                                 2023
                                             </Text>
-                                            <Text className="me-10 font-inter dark:text-white text-blue -mt-1">
-                                                $52500
+                                            <Text className="me-10 font-inter text-sm dark:text-cyan text-blue">
+                                                KWD 52500
                                             </Text>
                                         </View>
                                         <FavoriteButton
@@ -166,16 +191,16 @@ export default function CategoriesScreen() {
                             </View>
                             <View
                                 style={boxShadow(0, 4, 4).button}
-                                className="bg-white rounded-[20px] p-1 my-4 items-center border border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
+                                className="bg-white rounded-[20px] p-1 my-4 items-center border-[0.5px] border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
                                 <Image
                                     source={IMAGES.CarHyunday}
-                                    style={{ height: 130, width: 146, borderRadius: 15 }}
+                                    style={{ height: 130, width: 158, borderRadius: 20 }}
                                     contentFit="cover"
                                 />
                                 <View className="px-2 mt-3">
-                                    <View className="flex-row items-center">
+                                    <View className="flex-row gap-1 items-center">
                                         <Image
-                                            style={{ height: 14, width: 14, borderRadius: 100, marginEnd: 2 }}
+                                            style={{ height: 12, width: 12, borderRadius: 100 }}
                                             source={IMAGES.CarMercedesLogo}
                                             contentFit="fill"
                                         />
@@ -188,15 +213,15 @@ export default function CategoriesScreen() {
                                         </Text>
                                     </View>
                                     <View className="flex-row items-center justify-end">
-                                        <View className="justify-center ms-4">
-                                            <Text className="font-inter max-w-36 dark:text-white">
+                                        <View className="justify-center">
+                                            <Text className="font-inter text-sm max-w-36 dark:text-white">
                                                 C-Class
                                             </Text>
-                                            <Text className="font-inter max-w-36 dark:text-white -mt-1">
+                                            <Text className="font-inter text-sm max-w-36 dark:text-white">
                                                 2023
                                             </Text>
-                                            <Text className="me-10 font-inter dark:text-white text-blue -mt-1">
-                                                $52500
+                                            <Text className="me-10 font-inter text-sm dark:text-cyan text-blue">
+                                                KWD 52500
                                             </Text>
                                         </View>
                                         <FavoriteButton
@@ -209,16 +234,16 @@ export default function CategoriesScreen() {
                             </View>
                             <View
                                 style={boxShadow(0, 4, 4).button}
-                                className="bg-white rounded-[20px] p-1 my-4 items-center border border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
+                                className="bg-white rounded-[20px] p-1 my-4 items-center border-[0.5px] border-grayish dark:border-[#46464640] dark:bg-black/50 me-4">
                                 <Image
                                     source={IMAGES.CarHyunday}
-                                    style={{ height: 130, width: 146, borderRadius: 15 }}
+                                    style={{ height: 130, width: 158, borderRadius: 20 }}
                                     contentFit="cover"
                                 />
                                 <View className="px-2 mt-3">
-                                    <View className="flex-row items-center">
+                                    <View className="flex-row gap-1 items-center">
                                         <Image
-                                            style={{ height: 14, width: 14, borderRadius: 100, marginEnd: 2 }}
+                                            style={{ height: 12, width: 12, borderRadius: 100 }}
                                             source={IMAGES.CarMercedesLogo}
                                             contentFit="fill"
                                         />
@@ -231,15 +256,15 @@ export default function CategoriesScreen() {
                                         </Text>
                                     </View>
                                     <View className="flex-row items-center justify-end">
-                                        <View className="justify-center ms-4">
-                                            <Text className="font-inter max-w-36 dark:text-white">
+                                        <View className="justify-center">
+                                            <Text className="font-inter text-sm max-w-36 dark:text-white">
                                                 C-Class
                                             </Text>
-                                            <Text className="font-inter max-w-36 dark:text-white -mt-1">
+                                            <Text className="font-inter text-sm max-w-36 dark:text-white">
                                                 2023
                                             </Text>
-                                            <Text className="me-10 font-inter dark:text-white text-blue -mt-1">
-                                                $52500
+                                            <Text className="me-10 font-inter text-sm dark:text-cyan text-blue">
+                                                KWD 52500
                                             </Text>
                                         </View>
                                         <FavoriteButton
@@ -255,17 +280,27 @@ export default function CategoriesScreen() {
 
                     {/* EMPTY BIG BOX */}
                     <View
-                        className="items-center mx-auto justify-center my-12 rounded-[15px] dark:border-[#46464640] dark:bg-white"
+                        className="self-center dark:bg-white"
                         style={{
                             boxShadow: boxShadow(0, 0, 22.9, 0, "rgba(000 000 000 / 0.2)").button.boxShadow,
-                            width: DIMENSIONS.width - 14, height: 240
+                            width: DIMENSIONS.width - 30, height: 240, borderRadius: 25, marginTop: 40
                         }}
                     >
+                        <View style={{
+                            position: "absolute",
+                            left: "46%",
+                            bottom: 6,
+                        }}>
+                            <ThreeDots />
+                        </View>
                     </View>
+                    <TouchableOpacity className="p-1 dark:bg-black bg-white self-end me-5 mt-2 rounded-3xl py-1 border border-grayish dark:border-grayish/20">
+                        <Text className="dark:text-[#FBFBFB] text-xs font-inter">Add Ad +</Text>
+                    </TouchableOpacity>
 
                     {/* LAST SEEN */}
-                    <View className="dark:bg-darkish mt-1" style={{ direction: isRTL ? "rtl" : "ltr" }}>
-                        <Text className="font-inter-medium text-lg ms-6 text-blue dark:text-[#00A6DA]">
+                    <View className="dark:bg-darkish ms-2" style={{ direction: isRTL ? "rtl" : "ltr", marginTop: 40 }}>
+                        <Text className="font-inter-medium text-base ms-6 text-orange">
                             {t("Last seen")}
                         </Text>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -277,32 +312,31 @@ export default function CategoriesScreen() {
                                     source={IMAGES.CarHyunday}
                                     contentFit="cover"
                                 />
-                                <View className="pe-2">
-                                    <View className="flex-row gap-2 items-start">
+                                <View className="pe-2 ms-2">
+                                    <View className="flex-row gap-1 items-center">
                                         <Image
-                                            style={{ height: 20, width: 20, borderRadius: 100 }}
+                                            style={{ height: 14, width: 14, borderRadius: 100 }}
                                             source={IMAGES.CarMercedesLogo}
                                             contentFit="contain"
                                         />
-                                        <Text
-                                            className="font-inter-medium max-w-36 dark:text-white"
-                                            numberOfLines={2}
-                                        >
+                                        <Text className="font-inter max-w-36 dark:text-white" numberOfLines={2}>
                                             MERCEDES BENZ
                                         </Text>
                                     </View>
-                                    <View className="flex-row items-center justify-end">
-                                        <View className="justify-center">
-                                            <Text className="font-inter max-w-36 dark:text-white">
+                                    <View className="justify-between">
+                                        <View>
+                                            <Text className="font-inter text-base max-w-36 dark:text-white">
                                                 C-CLASS
                                             </Text>
-                                            <Text className="font-inter max-w-36 dark:text-white">
+                                            <Text className="font-inter text-base max-w-36 dark:text-white">
                                                 2023
                                             </Text>
-                                            <Text className="me-10 font-inter dark:text-white text-blue">
-                                                $52500
+                                            <Text className="font-inter text-base dark:text-cyan text-blue">
+                                                KWD 52500
                                             </Text>
                                         </View>
+                                    </View>
+                                    <View className="self-end">
                                         <FavoriteButton
                                             onPress={() => { }}
                                             isFavorite={true}
@@ -319,32 +353,31 @@ export default function CategoriesScreen() {
                                     source={IMAGES.CarHyunday}
                                     contentFit="cover"
                                 />
-                                <View className="pe-2">
-                                    <View className="flex-row gap-2 items-start">
+                                <View className="pe-2 ms-2">
+                                    <View className="flex-row gap-1 items-center">
                                         <Image
-                                            style={{ height: 20, width: 20, borderRadius: 100 }}
+                                            style={{ height: 14, width: 14, borderRadius: 100 }}
                                             source={IMAGES.CarMercedesLogo}
                                             contentFit="contain"
                                         />
-                                        <Text
-                                            className="font-inter-medium max-w-36 dark:text-white"
-                                            numberOfLines={2}
-                                        >
+                                        <Text className="font-inter max-w-36 dark:text-white" numberOfLines={2}>
                                             MERCEDES BENZ
                                         </Text>
                                     </View>
-                                    <View className="flex-row items-center justify-end">
-                                        <View className="justify-center">
-                                            <Text className="font-inter max-w-36 dark:text-white">
+                                    <View className="justify-between">
+                                        <View>
+                                            <Text className="font-inter text-base max-w-36 dark:text-white">
                                                 C-CLASS
                                             </Text>
-                                            <Text className="font-inter max-w-36 dark:text-white">
+                                            <Text className="font-inter text-base max-w-36 dark:text-white">
                                                 2023
                                             </Text>
-                                            <Text className="me-10 font-inter dark:text-white text-blue">
-                                                $52500
+                                            <Text className="font-inter text-base dark:text-cyan text-blue">
+                                                KWD 52500
                                             </Text>
                                         </View>
+                                    </View>
+                                    <View className="self-end">
                                         <FavoriteButton
                                             onPress={() => { }}
                                             isFavorite={false}
@@ -355,6 +388,31 @@ export default function CategoriesScreen() {
                             </View>
                         </ScrollView>
                     </View>
+
+                    {/* EMPTY BIG BOX */}
+                    <View
+                        className="self-center dark:bg-white"
+                        style={{
+                            boxShadow: boxShadow(0, 0, 22.9, 0, "rgba(000 000 000 / 0.2)").button.boxShadow,
+                            width: DIMENSIONS.width - 30, height: 240, borderRadius: 25, marginTop: 40,
+                        }}
+                    >
+                        <View style={{
+                            position: "absolute",
+                            left: "46%",
+                            bottom: 6,
+                        }}>
+                            <ThreeDots />
+                        </View>
+                    </View>
+                    <TouchableOpacity
+                        style={{ marginBottom: 80 }}
+                        className="p-1 dark:bg-black bg-white self-end me-5 mt-2 rounded-3xl py-1 border border-grayish dark:border-grayish/20">
+                        <Text className="dark:text-[#FBFBFB] text-xs font-inter">Add Ad +</Text>
+                    </TouchableOpacity>
+
+                    {/* SOCIAL LINKS */}
+                    <SocialLinks />
                 </View>
             </ScrollView>
         </Container>

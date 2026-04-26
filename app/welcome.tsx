@@ -55,9 +55,12 @@ export default function Index() {
           <TouchableOpacity
             style={{
               boxShadow: boxShadow(4, 6, 20).button.boxShadow,
-              width: DIMENSIONS.width - 80,
+              width: DIMENSIONS.width - 100,
+              borderWidth: 0.7,
+              borderRadius: 22,
+              height: 55,
             }}
-            className="h-[55px] items-center justify-center rounded-3xl border-[0.5px] border-grayish"
+            className="items-center justify-center border-grayish"
             onPress={handleGuestSession}
           >
             <Text

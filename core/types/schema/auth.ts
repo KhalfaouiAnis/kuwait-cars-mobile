@@ -45,6 +45,20 @@ export const RequestResetPasswordSchema = z
   .refine((data) => data.email || data.phone, {
     message: "Either an email address or a phone number must be provided",
     path: ["email"],
+  })
+  .superRefine(({ email, phone }, ctx) => {
+    if (!email && !phone) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "At least one contact method is required",
+        path: ["email"],
+      });
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "At least one contact method is required",
+        path: ["phone"],
+      });
+    }
   });
 
 export const ResetPasswordSchema = z

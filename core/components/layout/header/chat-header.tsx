@@ -10,7 +10,7 @@ import { WhatsappCTA } from '../communication/ad-cta/whatsapp';
 
 const ChatHeader = () => {
     return (
-        <View className='mt-1 flex-row items-center justify-center px-4 mb-2'>
+        <View className='mt-8 flex-row items-center justify-center px-4 mb-2'>
             <BackArrow />
             <View
                 style={boxShadow(0, 4, 4).button}

@@ -19,8 +19,8 @@ const AppModal: React.FC<AppModalProps> = ({
 
   return (
     <Modal
-      visible={visible}
       transparent
+      visible={visible}
       animationType="slide"
       onRequestClose={onClose}
     >

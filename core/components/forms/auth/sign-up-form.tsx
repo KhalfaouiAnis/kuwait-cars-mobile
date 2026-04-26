@@ -20,42 +20,47 @@ export default function SignUpForm() {
     <View className="pt-8 px-4 pb-10">
       <View className="gap-6 items-center">
         <BaseTextInput
-          control={control}
+          required
           name="fullname"
+          control={control}
           icon="person-outline"
+          omitValidationError={false}
           translatedPlaceholder={t("yourName")}
-          required
         />
         <BaseTextInput
-          control={control}
+          required
           name="phone"
-          keyboardType="phone-pad"
-          icon="call-outline"
-          translatedPlaceholder={t("phoneNumber")}
           maxLength={8}
-          required
+          control={control}
+          icon="call-outline"
+          keyboardType="phone-pad"
+          omitValidationError={false}
+          translatedPlaceholder={t("phoneNumber")}
         />
         <BaseTextInput
-          control={control}
+          required
           name="password"
           secureTextEntry
-          icon="lock-closed-outline"
-          translatedPlaceholder={t("password")}
-          required
+          control={control}
           endIcon="eye-outline"
+          icon="lock-closed-outline"
+          omitValidationError={false}
+          translatedPlaceholder={t("password")}
         />
         <ProvinceSelector
-          name="province"
           required
-          options={PURE_PROVINCES}
-          placeholder={t("yourProvince")}
+          name="province"
           control={control}
+          options={PURE_PROVINCES}
+          omitValidationError={false}
+          placeholder={t("yourProvince")}
           adapter={SelectAdapters.fromObject("province")}
         />
         <BaseTextInput
           name="email"
           control={control}
           icon="mail-outline"
+          omitValidationError={false}
           keyboardType="email-address"
           translatedPlaceholder={t("yourEmail")}
         />

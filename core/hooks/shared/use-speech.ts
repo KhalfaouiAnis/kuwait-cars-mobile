@@ -6,7 +6,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 
 export const useSpeechToForm = (fieldName: string, formOnChange: any) => {
-  const { lang } = useUserPreferencesStore();
+  const lang = useUserPreferencesStore((state) => state.lang);
   const [isRecording, setIsRecording] = useState(false);
   const [activeField, setActiveField] = useState<string | null>(null);
 

@@ -13,9 +13,7 @@ const AuthHeader = () => {
   };
 
   return (
-    <View
-      className={`mt-1 flex-row items-center justify-between px-4`}
-    >
+    <View className="mt-8 flex-row items-center justify-between px-4">
       <BackArrow navigate={handleNavigate} ignoreRTL />
       <LanguageSwitcher />
     </View>
